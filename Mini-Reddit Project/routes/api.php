@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/search','SearchingController@search');
+Route::post('/sendmsg','MessagesController@sendMsg');
