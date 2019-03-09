@@ -20,30 +20,33 @@ Welcome to the generated API reference.
 
 <!-- END_INFO -->
 
-#general
-<!-- START_875cd86a393e951f2e40dacfdafbf3bb -->
-## api/delete/account
+#Account settings
+<!-- START_815884eb756fda4323728b1d5e7659ec -->
+## Delete current user account
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X DELETE "http://localhost/api/delete/account" \
+curl -X DELETE "http://localhost/api/auth/delete/account" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"nDhRHIaQdNq2GJuS","token":"Vpb56wDvGeFVrjCh","password":"moC3OV1uOUWct5kT"}'
+    -d '{"password":"GlX583gcnlWllb4G"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/delete/account");
+const url = new URL("http://localhost/api/auth/delete/account");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "nDhRHIaQdNq2GJuS",
-    "token": "Vpb56wDvGeFVrjCh",
-    "password": "moC3OV1uOUWct5kT"
+    "password": "GlX583gcnlWllb4G"
 }
 
 fetch(url, {
@@ -58,47 +61,58 @@ fetch(url, {
 > Example response (200):
 
 ```json
-[]
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
 ```
 
 ### HTTP Request
-`DELETE api/delete/account`
+`DELETE api/auth/delete/account`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user
-    token | string |  required  | the token of the current user
     password | string |  required  | the password of te current user
 
-<!-- END_875cd86a393e951f2e40dacfdafbf3bb -->
+<!-- END_815884eb756fda4323728b1d5e7659ec -->
 
-<!-- START_03470c601f8743034f8c81ff2f9e0fa0 -->
-## api/change/password
+<!-- START_275f3a21a40a3c943e11c3042e080a07 -->
+## Change current user password
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X PATCH "http://localhost/api/change/password" \
+curl -X PATCH "http://localhost/api/auth/change/password" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"xfnCe8y2agSsOPzJ","token":"gi14QpCOUIND8hs6","password":"Iad7WVdmPFN9Wehh","new_password":"XaQSqJjvqq0TB03i","confirm_new_password":"f7nM6QBk2A5GvcAD"}'
+    -d '{"password":"oe6Ad4ln3872iOiM","new_password":"3VgcQt3C0YTYYNks","confirm_new_password":"RNEjonWhk8tSERyP"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/change/password");
+const url = new URL("http://localhost/api/auth/change/password");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "xfnCe8y2agSsOPzJ",
-    "token": "gi14QpCOUIND8hs6",
-    "password": "Iad7WVdmPFN9Wehh",
-    "new_password": "XaQSqJjvqq0TB03i",
-    "confirm_new_password": "f7nM6QBk2A5GvcAD"
+    "password": "oe6Ad4ln3872iOiM",
+    "new_password": "3VgcQt3C0YTYYNks",
+    "confirm_new_password": "RNEjonWhk8tSERyP"
 }
 
 fetch(url, {
@@ -113,42 +127,56 @@ fetch(url, {
 > Example response (200):
 
 ```json
-[]
+{
+    "success": "true"
+}
 ```
 > Example response (404):
 
 ```json
-{}
+{
+    "success": "false",
+    "error": "wrong password or the new one did not match the confirmed message"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
 ```
 
 ### HTTP Request
-`PATCH api/change/password`
+`PATCH api/auth/change/password`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user
-    token | string |  required  | the token of the current user
     password | string |  required  | the current password of the current user
     new_password | string |  required  | the new password of the current user
     confirm_new_password | string |  required  | the new password of the current user
 
-<!-- END_03470c601f8743034f8c81ff2f9e0fa0 -->
+<!-- END_275f3a21a40a3c943e11c3042e080a07 -->
 
-<!-- START_96349a87acc022862721573fa61a1cff -->
-## api/followers
+#Authentication
+sign in , sign up .....etc
+<!-- START_553263a6bfb69f6cfa88b1d2fcd5712a -->
+## Login a user
+
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/followers" \
+curl -X POST "http://localhost/api/unauth/login" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"z7ZQUtYsbmEQRvTx","token":"ZRhevvXyv5kZ4fBy"}'
+    -d '{"my_username":"R0hIwoxV6ghy58JW","password":"rNT1zCfQPGR2hf1i"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/followers");
+const url = new URL("http://localhost/api/unauth/login");
 
 let headers = {
     "Content-Type": "application/json",
@@ -156,8 +184,8 @@ let headers = {
 }
 
 let body = {
-    "my_username": "z7ZQUtYsbmEQRvTx",
-    "token": "ZRhevvXyv5kZ4fBy"
+    "my_username": "R0hIwoxV6ghy58JW",
+    "password": "rNT1zCfQPGR2hf1i"
 }
 
 fetch(url, {
@@ -173,37 +201,37 @@ fetch(url, {
 
 ```json
 {
-    "follwersList": [
-        "John Smith"
-    ]
+    "success": "true",
+    "token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
 }
 ```
 
 ### HTTP Request
-`POST api/followers`
+`POST api/unauth/login`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user
-    token | string |  required  | the token of the current user
+    my_username | string |  required  | the username of the current user.
+    password | string |  required  | The password of the user.
 
-<!-- END_96349a87acc022862721573fa61a1cff -->
+<!-- END_553263a6bfb69f6cfa88b1d2fcd5712a -->
 
-<!-- START_c73fde337ba9158af92919c2c62be618 -->
-## api/following
+<!-- START_7bb46f44c88791cf906ead98dec97533 -->
+## Signup a user
+
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/following" \
+curl -X POST "http://localhost/api/unauth/signUp" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"AbcmJuOJgAsBYrMu","token":"3KKIgWeVz3a6AI6c"}'
+    -d '{"my_username":"U4eh2lDrmjd6uR5F","password":"CYkuKQcWO91ff58n","confirm_password":"DUIVFOdk0SLij8tX","email":"AfpbeVVz3Q6nWMi5"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/following");
+const url = new URL("http://localhost/api/unauth/signUp");
 
 let headers = {
     "Content-Type": "application/json",
@@ -211,8 +239,10 @@ let headers = {
 }
 
 let body = {
-    "my_username": "AbcmJuOJgAsBYrMu",
-    "token": "3KKIgWeVz3a6AI6c"
+    "my_username": "U4eh2lDrmjd6uR5F",
+    "password": "CYkuKQcWO91ff58n",
+    "confirm_password": "DUIVFOdk0SLij8tX",
+    "email": "AfpbeVVz3Q6nWMi5"
 }
 
 fetch(url, {
@@ -228,37 +258,71 @@ fetch(url, {
 
 ```json
 {
-    "follwingList": [
-        "John Smith"
-    ]
+    "success": "true",
+    "token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "user is logged in"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "email already exists"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "username already exists"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "passwords mismatch"
 }
 ```
 
 ### HTTP Request
-`POST api/following`
+`POST api/unauth/signUp`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user
-    token | string |  required  | the token of the current user
+    my_username | string |  required  | the username of the current user.
+    password | string |  required  | The password of the user.
+    confirm_password | string |  required  | The confirm password of the user.
+    email | string |  required  | The email of the user.
 
-<!-- END_c73fde337ba9158af92919c2c62be618 -->
+<!-- END_7bb46f44c88791cf906ead98dec97533 -->
 
-<!-- START_a6599d3b09cd3dee40e8cdd1406e0362 -->
-## api/add/link
+<!-- START_bc8fed275be3bfaa2a6eedef61e0dc26 -->
+## Send Email to Reset Password [Under investigation]
+
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/add/link" \
+curl -X POST "http://localhost/api/unauth/forgetPassword" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"TUzlLKFtNIFHD1m2","token":"khAqPltZ65CvFyNv","post_content":"FYTp983aXUG7GokY","parent_link_ID":16,"post_title":"LvI43jGybpZVegtL","community_ID":16}'
+    -d '{"email":"dSFbUt9nGssvLxlt"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/add/link");
+const url = new URL("http://localhost/api/unauth/forgetPassword");
 
 let headers = {
     "Content-Type": "application/json",
@@ -266,12 +330,7 @@ let headers = {
 }
 
 let body = {
-    "my_username": "TUzlLKFtNIFHD1m2",
-    "token": "khAqPltZ65CvFyNv",
-    "post_content": "FYTp983aXUG7GokY",
-    "parent_link_ID": 16,
-    "post_title": "LvI43jGybpZVegtL",
-    "community_ID": 16
+    "email": "dSFbUt9nGssvLxlt"
 }
 
 fetch(url, {
@@ -286,38 +345,36 @@ fetch(url, {
 > Example response (200):
 
 ```json
-[]
+{
+    "success": "true"
+}
 ```
 
 ### HTTP Request
-`POST api/add/link`
+`POST api/unauth/forgetPassword`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user
-    token | string |  required  | the token of the current user
-    post_content | string |  required  | the content written in the post
-    parent_link_ID | integer |  required  | the ID of the parent link, this parameter should be 'null' if the link is a post
-    post_title | string |  optional  | this parameter is required only for posts
-    community_ID | integer |  optional  | this parameter is required only if the link is inside a community
+    email | string |  required  | The email of the user.
 
-<!-- END_a6599d3b09cd3dee40e8cdd1406e0362 -->
+<!-- END_bc8fed275be3bfaa2a6eedef61e0dc26 -->
 
-<!-- START_a5149d059f60d19ba4c67da48b957a6c -->
-## api/pin/post
+<!-- START_ff5252a2a0c9ebc5b68a7d349c3cd8c0 -->
+## Reset User Password after receiving a mail [Under investigation]
+
 > Example request:
 
 ```bash
-curl -X PATCH "http://localhost/api/pin/post" \
+curl -X POST "http://localhost/api/unauth/resetPassword" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"vwDIrXGAzKbTXF7U","token":"8DjJQpx00qtCgkUF","post_id":14}'
+    -d '{"new_password":"wii3EVt9cPO1JFEI","confirm_new_password":"y6nJhztRm1o00Kft"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/pin/post");
+const url = new URL("http://localhost/api/unauth/resetPassword");
 
 let headers = {
     "Content-Type": "application/json",
@@ -325,9 +382,70 @@ let headers = {
 }
 
 let body = {
-    "my_username": "vwDIrXGAzKbTXF7U",
-    "token": "8DjJQpx00qtCgkUF",
-    "post_id": 14
+    "new_password": "wii3EVt9cPO1JFEI",
+    "confirm_new_password": "y6nJhztRm1o00Kft"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true",
+    "token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
+}
+```
+
+### HTTP Request
+`POST api/unauth/resetPassword`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    new_password | string |  required  | The new password of the user .
+    confirm_new_password | string |  required  | The new password confirmation of the user .
+
+<!-- END_ff5252a2a0c9ebc5b68a7d349c3cd8c0 -->
+
+#Communities
+all community features are handled by the following APIs
+<!-- START_03db6e40e67431da1e4b4d77be361de4 -->
+## Edit community rules or/and description.
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X PATCH "http://localhost/api/auth/editCommunity" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"comm_id":17,"rules_content":"BfvRd3IGvUaQx4KJ","des_content":"OR6jFCRtzNH5boxo"}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/editCommunity");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "comm_id": 17,
+    "rules_content": "BfvRd3IGvUaQx4KJ",
+    "des_content": "OR6jFCRtzNH5boxo"
 }
 
 fetch(url, {
@@ -342,45 +460,130 @@ fetch(url, {
 > Example response (200):
 
 ```json
-[]
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
 ```
 
 ### HTTP Request
-`PATCH api/pin/post`
+`PATCH api/auth/editCommunity`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    token | string |  required  | the token of the user and it is required for authontication.
-    post_id | integer |  required  | the id of the post that the user wants to pin
+    comm_id | integer |  required  | The ID of the community the user want to edit its rules& description.
+    rules_content | string |  required  | The edited rules of the community.
+    des_content | string |  required  | The edited discription of the community.
 
-<!-- END_a5149d059f60d19ba4c67da48b957a6c -->
+<!-- END_03db6e40e67431da1e4b4d77be361de4 -->
 
-<!-- START_1f0d9225d3f3ebf955bcdbe54c0f41b1 -->
-## api/remove/link
+<!-- START_423ebf50357e4010e3005269f1aea07d -->
+## Create a community
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X DELETE "http://localhost/api/remove/link" \
+curl -X POST "http://localhost/api/auth/createCommunity" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"XwfwpJzEc6QQU8E4","token":"RkCWbjX5a4mjQJId","link_ID":4}'
+    -d '{"comm_name":"wgT9D1OT79xVmY1Z"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/remove/link");
+const url = new URL("http://localhost/api/auth/createCommunity");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "XwfwpJzEc6QQU8E4",
-    "token": "RkCWbjX5a4mjQJId",
-    "link_ID": 4
+    "comm_name": "wgT9D1OT79xVmY1Z"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (204):
+
+```json
+{
+    "success": "false",
+    "error": "some of the needed contents are missed"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "you have to complete 30 days "
+}
+```
+
+### HTTP Request
+`POST api/auth/createCommunity`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    comm_name | string |  required  | The Name of the community to be created.
+
+<!-- END_423ebf50357e4010e3005269f1aea07d -->
+
+<!-- START_2d40c194d773fb89e8383f5a0c25e2ba -->
+## Remove an existing community
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X DELETE "http://localhost/api/auth/removeCommunity" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"comm_id":13}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/removeCommunity");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "comm_id": 13
 }
 
 fetch(url, {
@@ -395,368 +598,65 @@ fetch(url, {
 > Example response (200):
 
 ```json
-[]
+{
+    "success": "true"
+}
 ```
-> Example response (400):
+> Example response (401):
 
 ```json
 {
-    "message": "you are not authorized to remove the link"
+    "success": "false",
+    "error": "UnAuthorized"
 }
 ```
-
-### HTTP Request
-`DELETE api/remove/link`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user
-    token | string |  required  | the token of the current user
-    link_ID | integer |  required  | the ID of the link
-
-<!-- END_1f0d9225d3f3ebf955bcdbe54c0f41b1 -->
-
-<!-- START_e5dbda86a05b7b8cf4afaeea6d4c7b5b -->
-## api/blocked/users
-> Example request:
-
-```bash
-curl -X POST "http://localhost/api/blocked/users" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"1ZWd8wBq90MZpU1r","token":"NTWPbAYzYoYMBeZO"}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/blocked/users");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "1ZWd8wBq90MZpU1r",
-    "token": "NTWPbAYzYoYMBeZO"
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-> Example response (200):
+> Example response (403):
 
 ```json
 {
-    "blockedList": [
-        "John Smith"
-    ]
+    "success": "false",
+    "error": "community doesn't exist"
 }
 ```
 
 ### HTTP Request
-`POST api/blocked/users`
+`DELETE api/auth/removeCommunity`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user
-    token | string |  optional  | reuired the token of the current user
+    comm_id | integer |  required  | The ID of the community to be removed.
 
-<!-- END_e5dbda86a05b7b8cf4afaeea6d4c7b5b -->
+<!-- END_2d40c194d773fb89e8383f5a0c25e2ba -->
 
-<!-- START_17f942ce934edc56ba61a54525b301a5 -->
-## api/blocking/users
+<!-- START_9a172571e6f52a7c8d92fe39a004f06f -->
+## Add a moderator to a community
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/blocking/users" \
+curl -X POST "http://localhost/api/auth/addModerator" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"7yJjQC2DbvkXDRNI","token":"C5wBy6CtQb6A1Zei","username":"zoV6yKq2J0oFrkfW"}'
+    -d '{"comm_id":10,"mod_username":"kKGdh91gPJ3IAvgp"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/blocking/users");
+const url = new URL("http://localhost/api/auth/addModerator");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "7yJjQC2DbvkXDRNI",
-    "token": "C5wBy6CtQb6A1Zei",
-    "username": "zoV6yKq2J0oFrkfW"
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-> Example response (200):
-
-```json
-[]
-```
-
-### HTTP Request
-`POST api/blocking/users`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user
-    token | string |  required  | the token of the current user
-    username | string |  required  | the username of the user being un/blocked
-
-<!-- END_17f942ce934edc56ba61a54525b301a5 -->
-
-<!-- START_c3fa189a6c95ca36ad6ac4791a873d23 -->
-## APIs for managing authentication
-
-> Example request:
-
-```bash
-curl -X POST "http://localhost/api/login" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"3jlv8N5QygezBZ1W","password":"mjLZpnn8k3P8hMFI"}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/login");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "3jlv8N5QygezBZ1W",
-    "password": "mjLZpnn8k3P8hMFI"
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-> Example response (200):
-
-```json
-[]
-```
-
-### HTTP Request
-`POST api/login`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    password | string |  required  | The password of the user.
-
-<!-- END_c3fa189a6c95ca36ad6ac4791a873d23 -->
-
-<!-- START_68ff8c9e5dd1db295b6f780b9fcfbeb2 -->
-## APIs for managing authentication
-
-> Example request:
-
-```bash
-curl -X POST "http://localhost/api/signUp" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"Ye83h24qjk74HIkM","password":"LD24OGdqmmAgDIDK","email":"ID7QPLVwAdqRyO30"}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/signUp");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "Ye83h24qjk74HIkM",
-    "password": "LD24OGdqmmAgDIDK",
-    "email": "ID7QPLVwAdqRyO30"
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-> Example response (200):
-
-```json
-[]
-```
-
-### HTTP Request
-`POST api/signUp`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    password | string |  required  | The password of the user.
-    email | string |  required  | The email of the user.
-
-<!-- END_68ff8c9e5dd1db295b6f780b9fcfbeb2 -->
-
-<!-- START_458fb114ed2096a0e077809c606a66cd -->
-## APIs for managing authentication
-
-> Example request:
-
-```bash
-curl -X POST "http://localhost/api/forgetPassword" \
-    -H "Content-Type: application/json" \
-    -d '{"email":"2Bx1a21IzAtaSyCa"}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/forgetPassword");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "email": "2Bx1a21IzAtaSyCa"
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-> Example response (200):
-
-```json
-[]
-```
-
-### HTTP Request
-`POST api/forgetPassword`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    email | string |  required  | The email of the user.
-
-<!-- END_458fb114ed2096a0e077809c606a66cd -->
-
-<!-- START_b4f4625b609a18310a50b1dddf752a55 -->
-## APIs for managing authentication
-
-> Example request:
-
-```bash
-curl -X POST "http://localhost/api/resetPassword" \
-    -H "Content-Type: application/json" \
-    -d '{"my_new_password":"eCekxQHBhaNSO1xI","my_new_password_confirm":"OHNUI2jvzo39Za9K"}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/resetPassword");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_new_password": "eCekxQHBhaNSO1xI",
-    "my_new_password_confirm": "OHNUI2jvzo39Za9K"
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-> Example response (200):
-
-```json
-[]
-```
-
-### HTTP Request
-`POST api/resetPassword`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_new_password | string |  required  | The new password of the user .
-    my_new_password_confirm | string |  required  | The new password confirmation of the user .
-
-<!-- END_b4f4625b609a18310a50b1dddf752a55 -->
-
-<!-- START_5f094b60487491ed74578870381cb9d6 -->
-## APIs for managing user information
-
-> Example request:
-
-```bash
-curl -X POST "http://localhost/api/viewPrivateUserInfo" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"lErnWARfTtGgeWzI","token":"fkcGQtWn688Y2RUS"}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/viewPrivateUserInfo");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "lErnWARfTtGgeWzI",
-    "token": "fkcGQtWn688Y2RUS"
+    "comm_id": 10,
+    "mod_username": "kKGdh91gPJ3IAvgp"
 }
 
 fetch(url, {
@@ -772,45 +672,170 @@ fetch(url, {
 
 ```json
 {
-    "email": "john_bb@gmail"
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "user doesn't exist"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "community doesn't exist"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "user is already a moderator in that community"
 }
 ```
 
 ### HTTP Request
-`POST api/viewPrivateUserInfo`
+`POST api/auth/addModerator`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    token | string |  required  | the token of the user and it is required for authontication.
+    comm_id | integer |  required  | The ID of the community to add a moderator for.
+    mod_username | string |  required  | The username of the moderator to be set for the community.
 
-<!-- END_5f094b60487491ed74578870381cb9d6 -->
+<!-- END_9a172571e6f52a7c8d92fe39a004f06f -->
 
-<!-- START_1e834d0395489c39f26e9757f305ad2c -->
-## APIs for managing user information
+<!-- START_9cfe84fef8716a2352294f5b683aaa4c -->
+## Remove a moderator from a community
 
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/viewPublicUserInfo" \
+curl -X DELETE "http://localhost/api/auth/removeModerator" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"7IT2StteVbZ1EMCL","token":"0mDYj7bKJK88KCK3"}'
+    -d '{"comm_id":20,"mod_username":"jav6HW7ZuHgqSwTB"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/viewPublicUserInfo");
+const url = new URL("http://localhost/api/auth/removeModerator");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "7IT2StteVbZ1EMCL",
-    "token": "0mDYj7bKJK88KCK3"
+    "comm_id": 20,
+    "mod_username": "jav6HW7ZuHgqSwTB"
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "user doesn't exist"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "community doesn't exist"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "user isn't a moderator already in that community"
+}
+```
+
+### HTTP Request
+`DELETE api/auth/removeModerator`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    comm_id | integer |  required  | The ID of the community to remove a moderator from.
+    mod_username | string |  required  | The username of the moderator to be removed from the community.
+
+<!-- END_9cfe84fef8716a2352294f5b683aaa4c -->
+
+<!-- START_fe9703d357e06a738e2b8221312a839c -->
+## Subscribe a community
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/auth/subscribeCommunity" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"comm_id":5}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/subscribeCommunity");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "comm_id": 5
 }
 
 fetch(url, {
@@ -826,52 +851,75 @@ fetch(url, {
 
 ```json
 {
-    "username": "john",
-    "karma": 500,
-    "cake_day": "March 8, 2019",
-    "about": "be or not to be"
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "community doesn't exist"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "user already is subscribed in that community"
 }
 ```
 
 ### HTTP Request
-`POST api/viewPublicUserInfo`
+`POST api/auth/subscribeCommunity`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    token | string |  required  | the token of the user and it is required for authontication.
+    comm_id | integer |  required  | The ID of the community to be un/subscribed.
 
-<!-- END_1e834d0395489c39f26e9757f305ad2c -->
+<!-- END_fe9703d357e06a738e2b8221312a839c -->
 
-<!-- START_e85feccdd48f9f01868d7b854c38ad2c -->
-## api/viewUserCommunities
+<!-- START_876b196b4dffdfd4050c792ef33b684f -->
+## Unsubscribe a community
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/viewUserCommunities" \
+curl -X DELETE "http://localhost/api/auth/subscribeCommunity" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"5H20WuGnC0LCJFE7","username":"jVcgE5cACRu7tdw9","token":"Q0U2MRN8tawm0rId"}'
+    -d '{"comm_id":12}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/viewUserCommunities");
+const url = new URL("http://localhost/api/auth/subscribeCommunity");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "5H20WuGnC0LCJFE7",
-    "username": "jVcgE5cACRu7tdw9",
-    "token": "Q0U2MRN8tawm0rId"
+    "comm_id": 12
 }
 
 fetch(url, {
-    method: "POST",
+    method: "DELETE",
     headers: headers,
     body: body
 })
@@ -883,6 +931,83 @@ fetch(url, {
 
 ```json
 {
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "community doesn't exist"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "user already is not subscribed in that community"
+}
+```
+
+### HTTP Request
+`DELETE api/auth/subscribeCommunity`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    comm_id | integer |  required  | The ID of the community to be un/subscribed.
+
+<!-- END_876b196b4dffdfd4050c792ef33b684f -->
+
+<!-- START_2c1613bb279fcc1976917064b712fc07 -->
+## View the communities which the user has subscribed
+
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/unauth/viewUserCommunities" \
+    -H "Content-Type: application/json" \
+    -d '{"username":"TA8jDODE7kBnuAzS"}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/unauth/viewUserCommunities");
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "username": "TA8jDODE7kBnuAzS"
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true",
     "communities": [
         {
             "community_name": "Arduino",
@@ -895,33 +1020,40 @@ fetch(url, {
     ]
 }
 ```
+> Example response (204):
+
+```json
+{
+    "success": "true",
+    "error": "no communities to be shown"
+}
+```
 
 ### HTTP Request
-`POST api/viewUserCommunities`
+`GET api/unauth/viewUserCommunities`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
     username | string |  required  | the username of the user who has the communities.
-    token | string |  required  | the token of the user and it is required for authontication.
 
-<!-- END_e85feccdd48f9f01868d7b854c38ad2c -->
+<!-- END_2c1613bb279fcc1976917064b712fc07 -->
 
-<!-- START_ac82c7107f85f94d030c8065c314dc88 -->
-## api/hideOrUnhidePost
+<!-- START_3e81e368f9f489b339c704e1c18ad4be -->
+## View rules and description of a specific community
+
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/hideOrUnhidePost" \
+curl -X GET -G "http://localhost/api/unauth/communityRules" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"XmVKqZEitfXm4WE9","token":"CwgrOs7dPqsr0UGG","post_id":10}'
+    -d '{"comm_id":5}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/hideOrUnhidePost");
+const url = new URL("http://localhost/api/unauth/communityRules");
 
 let headers = {
     "Content-Type": "application/json",
@@ -929,8 +1061,678 @@ let headers = {
 }
 
 let body = {
-    "my_username": "XmVKqZEitfXm4WE9",
-    "token": "CwgrOs7dPqsr0UGG",
+    "comm_id": 5
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (204):
+
+```json
+{
+    "success": "true",
+    "error": "no rules to be shown"
+}
+```
+
+### HTTP Request
+`GET api/unauth/communityRules`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    comm_id | integer |  required  | The ID of the community the user want to show its rules and  description.
+
+<!-- END_3e81e368f9f489b339c704e1c18ad4be -->
+
+#Following
+<!-- START_ccdaeeb27930f362d9dc52d8bd41457b -->
+## View User&#039;s Followers
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/auth/followers" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"username":"ZGZVTrdybcXzXbQ0"}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/followers");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "username": "ZGZVTrdybcXzXbQ0"
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true",
+    "follwersList": [
+        "John Smith"
+    ]
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`GET api/auth/followers`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    username | string |  required  | Username to show his followers
+
+<!-- END_ccdaeeb27930f362d9dc52d8bd41457b -->
+
+<!-- START_f700781e554299c355d61830d75e81a0 -->
+## View Who User is Following
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/auth/following" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"username":"Kkxi0hiY9xWOmYnt"}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/following");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "username": "Kkxi0hiY9xWOmYnt"
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true",
+    "follwingList": [
+        "John Smith",
+        "John Kay"
+    ]
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`GET api/auth/following`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    username | string |  required  | Username to show his followering
+
+<!-- END_f700781e554299c355d61830d75e81a0 -->
+
+<!-- START_55d6ca855d9d056b6ecf2b90aad97fd3 -->
+## Follow a user
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/auth/follow" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"username":"PwPzhw1Hj2WABbiG"}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/follow");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "username": "PwPzhw1Hj2WABbiG"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "Already following"
+}
+```
+
+### HTTP Request
+`POST api/auth/follow`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    username | string |  required  | Username Want to follow.
+
+<!-- END_55d6ca855d9d056b6ecf2b90aad97fd3 -->
+
+<!-- START_2add768523e38391594c13409e2c13fb -->
+## Unfollow a user
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X DELETE "http://localhost/api/auth/follow" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"username":"EKkQRbiLurfSTlkz"}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/follow");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "username": "EKkQRbiLurfSTlkz"
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "Already unfollowing"
+}
+```
+
+### HTTP Request
+`DELETE api/auth/follow`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    username | string |  required  | Username Want to unfollow.
+
+<!-- END_2add768523e38391594c13409e2c13fb -->
+
+#Interacting Actions
+posts , comments and anything related
+<!-- START_fec7c4928bbbced52914728f12df0735 -->
+## Save Post, Comment or Reply.
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/auth/saveLink" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"link_id":9}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/saveLink");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "link_id": 9
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`POST api/auth/saveLink`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    link_id | integer |  required  | The ID of the post/comment to be saved or unsaved.
+
+<!-- END_fec7c4928bbbced52914728f12df0735 -->
+
+<!-- START_c4234d0ffb6d82f3420eeb126d111e5d -->
+## Unsave Post, Comment or Reply
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X DELETE "http://localhost/api/auth/saveLink" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"link_id":18}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/saveLink");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "link_id": 18
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`DELETE api/auth/saveLink`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    link_id | integer |  required  | The ID of the post/comment to be saved or unsaved.
+
+<!-- END_c4234d0ffb6d82f3420eeb126d111e5d -->
+
+<!-- START_852249fac82b4ffd44b4f83bf7cf156b -->
+## Add new Link
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/auth/addLink" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"post_content":"N21laxhZvIFXLv9G","parent_link_ID":7,"post_title":"YP52JzGREIRgoXKy","community_ID":10}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/addLink");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "post_content": "N21laxhZvIFXLv9G",
+    "parent_link_ID": 7,
+    "post_title": "YP52JzGREIRgoXKy",
+    "community_ID": 10
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`POST api/auth/addLink`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    post_content | string |  required  | the content written in the post
+    parent_link_ID | integer |  required  | the ID of the parent link, this parameter should be 'null' if the link is a post
+    post_title | string |  optional  | this parameter is required only for posts
+    community_ID | integer |  optional  | this parameter is required only if the link is inside a community
+
+<!-- END_852249fac82b4ffd44b4f83bf7cf156b -->
+
+<!-- START_91b9daa53d81bf9e0b76809894a5cf12 -->
+## Pin or unpin a post
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X PATCH "http://localhost/api/auth/pinPost" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"post_id":20}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/pinPost");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "post_id": 20
+}
+
+fetch(url, {
+    method: "PATCH",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`PATCH api/auth/pinPost`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    post_id | integer |  required  | the id of the post that the user wants to pin
+
+<!-- END_91b9daa53d81bf9e0b76809894a5cf12 -->
+
+<!-- START_6b332dbcf39f97a8cffe0f05f541ff2c -->
+## Remove post, comment or reply.
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X DELETE "http://localhost/api/auth/removeLink" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"link_ID":6}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/removeLink");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "link_ID": 6
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`DELETE api/auth/removeLink`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    link_ID | integer |  required  | the ID of the link
+
+<!-- END_6b332dbcf39f97a8cffe0f05f541ff2c -->
+
+<!-- START_36b17ee7dcddc0f62d5f96c4be165df1 -->
+## Hide a post
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/auth/hidePost" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"post_id":10}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/hidePost");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
     "post_id": 10
 }
 
@@ -946,49 +1748,332 @@ fetch(url, {
 > Example response (200):
 
 ```json
-[]
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "already hidden"
+}
 ```
 
 ### HTTP Request
-`POST api/hideOrUnhidePost`
+`POST api/auth/hidePost`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    token | string |  required  | the token of the user and it is required for authontication.
     post_id | integer |  required  | the id of the post that the user wants to hide
 
-<!-- END_ac82c7107f85f94d030c8065c314dc88 -->
+<!-- END_36b17ee7dcddc0f62d5f96c4be165df1 -->
 
-<!-- START_e07a871cd0422bf498c70034a3a062cc -->
-## api/editAPost
+<!-- START_4096829581148fe5f9cd1a2cd2fa4b7f -->
+## Unhide a post
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/editAPost" \
+curl -X DELETE "http://localhost/api/auth/hidePost" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"hQiqsr9aCcr6wRcK","token":"lFRrcVKICqf8uelE","post_id":12}'
+    -d '{"post_id":17}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/editAPost");
+const url = new URL("http://localhost/api/auth/hidePost");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "hQiqsr9aCcr6wRcK",
-    "token": "lFRrcVKICqf8uelE",
+    "post_id": 17
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "already unhidden"
+}
+```
+
+### HTTP Request
+`DELETE api/auth/hidePost`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    post_id | integer |  required  | the id of the post that the user wants to hide
+
+<!-- END_4096829581148fe5f9cd1a2cd2fa4b7f -->
+
+<!-- START_86c8750a7026719a977549da5fa8bf89 -->
+## Edit a post
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X PATCH "http://localhost/api/auth/editPost" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"post_id":11}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/editPost");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "post_id": 11
+}
+
+fetch(url, {
+    method: "PATCH",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`PATCH api/auth/editPost`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    post_id | integer |  required  | the id of the post that the user wants to edit
+
+<!-- END_86c8750a7026719a977549da5fa8bf89 -->
+
+<!-- START_aaa3e5368de55f5371eef86ba9480062 -->
+## Edit a comment
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X PATCH "http://localhost/api/auth/editComment" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"comment_id":15}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/editComment");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "comment_id": 15
+}
+
+fetch(url, {
+    method: "PATCH",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`PATCH api/auth/editComment`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    comment_id | integer |  required  | the id of the comment that the user wants to edit
+
+<!-- END_aaa3e5368de55f5371eef86ba9480062 -->
+
+<!-- START_6aa943d3a797b655e4d957bfc5595046 -->
+## Add Downvote to a post
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/auth/downVotePost" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"post_id":4}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/downVotePost");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "post_id": 4
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`POST api/auth/downVotePost`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    post_id | integer |  required  | the id of the post that the user wants to downvote
+
+<!-- END_6aa943d3a797b655e4d957bfc5595046 -->
+
+<!-- START_e88748fbdc2ed848c25f511d96308db7 -->
+## Remove Downvote from a post
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X DELETE "http://localhost/api/auth/downVotePost" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"post_id":12}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/downVotePost");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
     "post_id": 12
 }
 
 fetch(url, {
-    method: "POST",
+    method: "DELETE",
     headers: headers,
     body: body
 })
@@ -999,204 +2084,56 @@ fetch(url, {
 > Example response (200):
 
 ```json
-[]
-```
-
-### HTTP Request
-`POST api/editAPost`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    token | string |  required  | the token of the user and it is required for authontication.
-    post_id | integer |  required  | the id of the post that the user wants to edit
-
-<!-- END_e07a871cd0422bf498c70034a3a062cc -->
-
-<!-- START_cc0005e14d2ec89cc33b149d7dd83ff4 -->
-## api/editAComment
-> Example request:
-
-```bash
-curl -X POST "http://localhost/api/editAComment" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"6fHBWLiBHZbCUBel","token":"fVKmxDAKmPQ4uzu9","comment_id":10}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/editAComment");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
+{
+    "success": "true"
 }
-
-let body = {
-    "my_username": "6fHBWLiBHZbCUBel",
-    "token": "fVKmxDAKmPQ4uzu9",
-    "comment_id": 10
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
 ```
-
-> Example response (200):
+> Example response (401):
 
 ```json
-[]
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
 ```
 
 ### HTTP Request
-`POST api/editAComment`
+`DELETE api/auth/downVotePost`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    token | string |  required  | the token of the user and it is required for authontication.
-    comment_id | integer |  required  | the id of the comment that the user wants to edit
-
-<!-- END_cc0005e14d2ec89cc33b149d7dd83ff4 -->
-
-<!-- START_c72dfc475b091c89dda351eb1a1bac3d -->
-## api/pinOrUnpinAPost
-> Example request:
-
-```bash
-curl -X POST "http://localhost/api/pinOrUnpinAPost" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"g8v8Mq3WA13xA4l7","token":"zyn8pUnfsM9eidGu","post_id":14}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/pinOrUnpinAPost");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "g8v8Mq3WA13xA4l7",
-    "token": "zyn8pUnfsM9eidGu",
-    "post_id": 14
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-> Example response (200):
-
-```json
-[]
-```
-
-### HTTP Request
-`POST api/pinOrUnpinAPost`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    token | string |  required  | the token of the user and it is required for authontication.
-    post_id | integer |  required  | the id of the post that the user wants to pin
-
-<!-- END_c72dfc475b091c89dda351eb1a1bac3d -->
-
-<!-- START_ce420c8cc2fdc61a7e1d058d62b233f9 -->
-## api/addOrRemoveDownvotePost
-> Example request:
-
-```bash
-curl -X POST "http://localhost/api/addOrRemoveDownvotePost" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"iuDM9w2l2SDTRKc6","token":"iC8HDejtR34MdZam","post_id":14}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/addOrRemoveDownvotePost");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "iuDM9w2l2SDTRKc6",
-    "token": "iC8HDejtR34MdZam",
-    "post_id": 14
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-> Example response (200):
-
-```json
-[]
-```
-
-### HTTP Request
-`POST api/addOrRemoveDownvotePost`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    token | string |  required  | the token of the user and it is required for authontication.
     post_id | integer |  required  | the id of the post that the user wants to downvote
 
-<!-- END_ce420c8cc2fdc61a7e1d058d62b233f9 -->
+<!-- END_e88748fbdc2ed848c25f511d96308db7 -->
 
-<!-- START_4fa2974c36ffd9539405cf8b79503935 -->
-## api/addOrRemoveDownvoteComment
+<!-- START_9492acf0039d12be5358182c2d33fa20 -->
+## Add Downvote to a comment
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/addOrRemoveDownvoteComment" \
+curl -X POST "http://localhost/api/auth/downVoteComment" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"WEMKRYBHKVn6Z4HX","token":"QjcEjzNdIRpre6fa","comment_id":20}'
+    -d '{"comment_id":14}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/addOrRemoveDownvoteComment");
+const url = new URL("http://localhost/api/auth/downVoteComment");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "WEMKRYBHKVn6Z4HX",
-    "token": "QjcEjzNdIRpre6fa",
-    "comment_id": 20
+    "comment_id": 14
 }
 
 fetch(url, {
@@ -1211,36 +2148,815 @@ fetch(url, {
 > Example response (200):
 
 ```json
-[]
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
 ```
 
 ### HTTP Request
-`POST api/addOrRemoveDownvoteComment`
+`POST api/auth/downVoteComment`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    token | string |  required  | the token of the user and it is required for authontication.
     comment_id | integer |  required  | the id of the comment that the user wants to downvote
 
-<!-- END_4fa2974c36ffd9539405cf8b79503935 -->
+<!-- END_9492acf0039d12be5358182c2d33fa20 -->
 
-<!-- START_1b58ba75a2c14fa05e464b95d16fe8ce -->
-## APIs for managing user Messages
+<!-- START_10175d16ed6eb9802c465c00a852aa9c -->
+## Remove Downvote from a comment
 
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/viewAUserMessage" \
+curl -X DELETE "http://localhost/api/auth/downVoteComment" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"sOZ5RPUDugyjv5rY","token":"LIrSFmKEOumKiK7j","message_id":11}'
+    -d '{"comment_id":7}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/viewAUserMessage");
+const url = new URL("http://localhost/api/auth/downVoteComment");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "comment_id": 7
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`DELETE api/auth/downVoteComment`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    comment_id | integer |  required  | the id of the comment that the user wants to downvote
+
+<!-- END_10175d16ed6eb9802c465c00a852aa9c -->
+
+<!-- START_458aa7a53dd4926b83e6809e96922d7e -->
+## Add Upvote to a post
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/auth/upVotePost" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"post_id":13}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/upVotePost");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "post_id": 13
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`POST api/auth/upVotePost`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    post_id | integer |  required  | the id of the post that the user wants to downvote
+
+<!-- END_458aa7a53dd4926b83e6809e96922d7e -->
+
+<!-- START_163e0d7edcf99e485c67837f816ac6df -->
+## Remove Upvote from a post
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X DELETE "http://localhost/api/auth/upVotePost" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"post_id":6}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/upVotePost");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "post_id": 6
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`DELETE api/auth/upVotePost`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    post_id | integer |  required  | the id of the post that the user wants to downvote
+
+<!-- END_163e0d7edcf99e485c67837f816ac6df -->
+
+<!-- START_cadfb7fd8c176a6d5b5b623a2adb8f58 -->
+## Add Upvote to a comment
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/auth/upVoteComment" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"comment_id":7}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/upVoteComment");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "comment_id": 7
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`POST api/auth/upVoteComment`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    comment_id | integer |  required  | the id of the comment that the user wants to downvote
+
+<!-- END_cadfb7fd8c176a6d5b5b623a2adb8f58 -->
+
+<!-- START_d9ae157e84740549de866ecfecbc662e -->
+## Remove Upvote from a comment
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X DELETE "http://localhost/api/auth/upVoteComment" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"comment_id":13}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/upVoteComment");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "comment_id": 13
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`DELETE api/auth/upVoteComment`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    comment_id | integer |  required  | the id of the comment that the user wants to downvote
+
+<!-- END_d9ae157e84740549de866ecfecbc662e -->
+
+<!-- START_86d421d08d268de104db5e3be6b1782a -->
+## Viewing comments of a user on posts he/she has interacted with.
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/auth/viewComments" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"username":"lj6MYaigUh1V14Uo"}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/viewComments");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "username": "lj6MYaigUh1V14Uo"
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "comments": [
+        {
+            "comment_id": 1,
+            "body": "comment1",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "comment_id": 2,
+            "body": "comment2",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "comment_id": 3,
+            "body": "comment3",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        }
+    ]
+}
+```
+> Example response (404):
+
+```json
+{
+    "error": "somethimg wrong!!!!"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`GET api/auth/viewComments`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    username | string |  required  | if you visited another user profile this is his username.
+
+<!-- END_86d421d08d268de104db5e3be6b1782a -->
+
+<!-- START_f573b8826a3b9adf6bfce04e80913e16 -->
+## View the upvoted posts of the user or the downvoted ones
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/auth/viewUpOrDownvotedPosts" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"type":4}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/viewUpOrDownvotedPosts");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "type": 4
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "posts": [
+        {
+            "post_id": 1,
+            "body": "post1",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "post_id": 2,
+            "body": "post2",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "post_id": 3,
+            "body": "post3",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        }
+    ]
+}
+```
+> Example response (404):
+
+```json
+{
+    "error": "somethimg wrong!!!!"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`GET api/auth/viewUpOrDownvotedPosts`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    type | integer |  required  | it is one for the upvoted posts and zero for the downvoted ones.
+
+<!-- END_f573b8826a3b9adf6bfce04e80913e16 -->
+
+<!-- START_4f77c128815baa7567768a35d9cd1341 -->
+## View the overview of the user [Posts, comments, and links].
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/auth/viewOverview" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"username":"v7IPuEXOAyKCx9OY"}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/viewOverview");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "username": "v7IPuEXOAyKCx9OY"
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "posts": [
+        {
+            "post_id": 1,
+            "body": "post1",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "post_id": 2,
+            "body": "post2",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "post_id": 3,
+            "body": "post3",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        }
+    ],
+    "comments": [
+        {
+            "comment_id": 1,
+            "body": "comment1",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "comment_id": 2,
+            "body": "comment2",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "comment_id": 3,
+            "body": "comment3",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        }
+    ]
+}
+```
+> Example response (404):
+
+```json
+{
+    "error": "something wrong!!!"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`GET api/auth/viewOverview`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    username | string |  required  | if you visited another user profile this is his username.
+
+<!-- END_4f77c128815baa7567768a35d9cd1341 -->
+
+<!-- START_27cc02800063c6e70dae5179f50b36bf -->
+## View the saved Links by the user.
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/auth/viewSavedLinks" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}"
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/viewSavedLinks");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "links": [
+        {
+            "link_id": 1,
+            "body": "post1",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "link_id": 2,
+            "body": "post2",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "link_id": 3,
+            "body": "post3",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        }
+    ]
+}
+```
+> Example response (404):
+
+```json
+{
+    "error": "somethimg wrong!!!!"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`GET api/auth/viewSavedLinks`
+
+
+<!-- END_27cc02800063c6e70dae5179f50b36bf -->
+
+<!-- START_84a5a9632e17b6b55498c323b0035bb6 -->
+## Give Karma to a user.
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X POST "http://localhost/api/auth/giveReward" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"username":"G7bHKptKkHXXEnfO"}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/giveReward");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "username": "G7bHKptKkHXXEnfO"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (401):
+
+```json
+{}
+```
+
+### HTTP Request
+`POST api/auth/giveReward`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    username | string |  required  | Username to give to a reward.
+
+<!-- END_84a5a9632e17b6b55498c323b0035bb6 -->
+
+<!-- START_edcae718190ed16d0233549f42881d85 -->
+## Viewing the posts of a specific user or a community or both when you are on the home page.
+
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/unauth/ViewPosts" \
+    -H "Content-Type: application/json" \
+    -d '{"username":"IQ9swrtVCqY0gwog","community_id":2}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/unauth/ViewPosts");
 
 let headers = {
     "Content-Type": "application/json",
@@ -1248,13 +2964,186 @@ let headers = {
 }
 
 let body = {
-    "my_username": "sOZ5RPUDugyjv5rY",
-    "token": "LIrSFmKEOumKiK7j",
-    "message_id": 11
+    "username": "IQ9swrtVCqY0gwog",
+    "community_id": 2
 }
 
 fetch(url, {
-    method: "POST",
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "posts": [
+        {
+            "post_id": 1,
+            "body": "post1",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "post_id": 2,
+            "body": "post2",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "post_id": 3,
+            "body": "post3",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        }
+    ]
+}
+```
+> Example response (404):
+
+```json
+{
+    "error": "somethimg wrong!!!!"
+}
+```
+
+### HTTP Request
+`GET api/unauth/ViewPosts`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    username | string |  optional  | if you visited another user profile this is his username.
+    community_id | integer |  optional  | if you want to show the posts of a specific community this is its id.
+
+<!-- END_edcae718190ed16d0233549f42881d85 -->
+
+<!-- START_1cc48635a898d6e79adaa7887ec66b6b -->
+## Viewing comments of a specific post or replies of a specific comment
+
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/unauth/viewCommentsReplies" \
+    -H "Content-Type: application/json" \
+    -d '{"id":16}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/unauth/viewCommentsReplies");
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "id": 16
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "comments": [
+        {
+            "comment_id": 1,
+            "body": "comment1",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "comment_id": 2,
+            "body": "comment2",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        },
+        {
+            "comment_id": 3,
+            "body": "comment3",
+            "username": "ahmed",
+            "votes": 15,
+            "date": " 2 days ago ",
+            "comments_num": 0
+        }
+    ]
+}
+```
+> Example response (404):
+
+```json
+{
+    "error": "somethimg wrong!!!!"
+}
+```
+
+### HTTP Request
+`GET api/unauth/viewCommentsReplies`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    id | integer |  required  | the id of the post or the id of the comment.
+
+<!-- END_1cc48635a898d6e79adaa7887ec66b6b -->
+
+#Messages
+<!-- START_a3866fe0c9a833e61357bd41e54fbc4d -->
+## View the content of a specific message
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/auth/viewUserMessage" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"message_id":9}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/viewUserMessage");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "message_id": 9
+}
+
+fetch(url, {
+    method: "GET",
     headers: headers,
     body: body
 })
@@ -1267,53 +3156,54 @@ fetch(url, {
 ```json
 {
     "username2": "lolo",
-    "photo": "photo3",
+    "user_photo": "photo3",
     "message_content": "hello world"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
 }
 ```
 
 ### HTTP Request
-`POST api/viewAUserMessage`
+`GET api/auth/viewUserMessage`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    token | string |  required  | the token of the user and it is required for authontication.
     message_id | integer |  required  | the id of  the message that the user wants to see
 
-<!-- END_1b58ba75a2c14fa05e464b95d16fe8ce -->
+<!-- END_a3866fe0c9a833e61357bd41e54fbc4d -->
 
-<!-- START_b12374bc5ceb98711d916ceeaebc9117 -->
-## APIs for managing user Messages
+<!-- START_39c9aed4a7b992d52b5db4f1f43dfdac -->
+## View current user outbox messages
 
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/viewUserSentMessages" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"OAiUZcFpwxCpa4H0","token":"7HyviU2NbiHq5LVz"}'
-
+curl -X GET -G "http://localhost/api/auth/viewUserSentMessages" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}"
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/viewUserSentMessages");
+const url = new URL("http://localhost/api/auth/viewUserSentMessages");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "OAiUZcFpwxCpa4H0",
-    "token": "7HyviU2NbiHq5LVz"
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 fetch(url, {
-    method: "POST",
+    method: "GET",
     headers: headers,
-    body: body
 })
     .then(response => response.json())
     .then(json => console.log(json));
@@ -1323,57 +3213,143 @@ fetch(url, {
 
 ```json
 {
+    "success": "true",
     "messages": [
         {
             "reciever_name": "maged",
             "reciever_photo": "photo1",
-            "message_content": "hello world"
+            "message_content": "hello world",
+            "message_id": "5"
         },
         {
             "reciever_name": "nour",
             "reciever_photo": "photo2",
-            "message_content": "hello world tany"
+            "message_content": "hello world tany",
+            "message_id": "6"
         }
     ]
 }
 ```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
 
 ### HTTP Request
-`POST api/viewUserSentMessages`
+`GET api/auth/viewUserSentMessages`
+
+
+<!-- END_39c9aed4a7b992d52b5db4f1f43dfdac -->
+
+<!-- START_f4d8c50aa2297f3004921b5a43b5bb25 -->
+## View current user inbox Message
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/auth/viewUserInboxMessages" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"state":2}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/viewUserInboxMessages");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "state": 2
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true",
+    "messages": [
+        {
+            "sender_name": "maged",
+            "sender_photo": "photo1",
+            "message_content": "hello world",
+            "message_id": "1"
+        },
+        {
+            "sender_name": "nour",
+            "sender_photo": "photo2",
+            "message_content": "hello world tany",
+            "message_id": "3"
+        }
+    ]
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`GET api/auth/viewUserInboxMessages`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    token | string |  required  | the token of the user and it is required for authontication.
+    state | integer |  required  | 1 if unread messages ,2 if all messages,3 if notified messages
 
-<!-- END_b12374bc5ceb98711d916ceeaebc9117 -->
+<!-- END_f4d8c50aa2297f3004921b5a43b5bb25 -->
 
-<!-- START_4e1f7cd0181146447124a0cd1d1da9f9 -->
-## APIs for managing user Messages
+<!-- START_1c2dc085d932a4d3ed3555745054136d -->
+## Send a message to user from current user
 
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/viewUserInboxMessages" \
+curl -X POST "http://localhost/api/auth/sendMessage" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"lCb2dIjffb39ohym","token":"jjrVRe1vdCqJuFbW","state":3}'
+    -d '{"rec_username":"x1bsKbRHTbxIQ6pV","msg_content":"Q06qxzwQJSgKT8sm"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/viewUserInboxMessages");
+const url = new URL("http://localhost/api/auth/sendMessage");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "lCb2dIjffb39ohym",
-    "token": "jjrVRe1vdCqJuFbW",
-    "state": 3
+    "rec_username": "x1bsKbRHTbxIQ6pV",
+    "msg_content": "Q06qxzwQJSgKT8sm"
 }
 
 fetch(url, {
@@ -1389,1105 +3365,111 @@ fetch(url, {
 
 ```json
 {
-    "messages": [
-        {
-            "sender_name": "maged",
-            "sender_photo": "photo1",
-            "message_content": "hello world"
-        },
-        {
-            "sender_name": "nour",
-            "sender_photo": "photo2",
-            "message_content": "hello world tany"
-        }
-    ]
+    "success": "true"
 }
 ```
-
-### HTTP Request
-`POST api/viewUserInboxMessages`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
-    token | string |  required  | the token of the user and it is required for authontication.
-    state | integer |  required  | 1 if unread messages ,2 if all messages,3 if notified messages
-
-<!-- END_4e1f7cd0181146447124a0cd1d1da9f9 -->
-
-<!-- START_f7828fe70326ce6166fdba9c0c9d80ed -->
-## This is used to search for a community or a user.
-
-> Example request:
-
-```bash
-curl -X GET -G "http://localhost/api/search" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"uBxIjQW3DYAVcBMv","token":"hy7l9d38jxw6csY6","search_content":"iM2G8IeYZT06vppO"}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/search");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "uBxIjQW3DYAVcBMv",
-    "token": "hy7l9d38jxw6csY6",
-    "search_content": "iM2G8IeYZT06vppO"
-}
-
-fetch(url, {
-    method: "GET",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-> Example response (500):
+> Example response (401):
 
 ```json
 {
-    "message": "Too few arguments to function App\\Http\\Controllers\\SearchingController::search(), 0 passed and exactly 3 expected",
-    "exception": "Symfony\\Component\\Debug\\Exception\\FatalThrowableError",
-    "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\app\\Http\\Controllers\\SearchingController.php",
-    "line": 17,
-    "trace": [
-        {
-            "function": "search",
-            "class": "App\\Http\\Controllers\\SearchingController",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php",
-            "line": 54,
-            "function": "call_user_func_array"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php",
-            "line": 45,
-            "function": "callAction",
-            "class": "Illuminate\\Routing\\Controller",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php",
-            "line": 219,
-            "function": "dispatch",
-            "class": "Illuminate\\Routing\\ControllerDispatcher",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php",
-            "line": 176,
-            "function": "runController",
-            "class": "Illuminate\\Routing\\Route",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
-            "line": 680,
-            "function": "run",
-            "class": "Illuminate\\Routing\\Route",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 30,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Router",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php",
-            "line": 41,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php",
-            "line": 58,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 104,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
-            "line": 682,
-            "function": "then",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
-            "line": 657,
-            "function": "runRouteWithinStack",
-            "class": "Illuminate\\Routing\\Router",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
-            "line": 623,
-            "function": "runRoute",
-            "class": "Illuminate\\Routing\\Router",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
-            "line": 612,
-            "function": "dispatchToRoute",
-            "class": "Illuminate\\Routing\\Router",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",
-            "line": 176,
-            "function": "dispatch",
-            "class": "Illuminate\\Routing\\Router",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 30,
-            "function": "Illuminate\\Foundation\\Http\\{closure}",
-            "class": "Illuminate\\Foundation\\Http\\Kernel",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\fideloper\\proxy\\src\\TrustProxies.php",
-            "line": 57,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Fideloper\\Proxy\\TrustProxies",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",
-            "line": 21,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",
-            "line": 21,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php",
-            "line": 27,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode.php",
-            "line": 62,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 104,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",
-            "line": 151,
-            "function": "then",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",
-            "line": 116,
-            "function": "sendRequestThroughRouter",
-            "class": "Illuminate\\Foundation\\Http\\Kernel",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Tools\\ResponseStrategies\\ResponseCallStrategy.php",
-            "line": 275,
-            "function": "handle",
-            "class": "Illuminate\\Foundation\\Http\\Kernel",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Tools\\ResponseStrategies\\ResponseCallStrategy.php",
-            "line": 259,
-            "function": "callLaravelRoute",
-            "class": "Mpociot\\ApiDoc\\Tools\\ResponseStrategies\\ResponseCallStrategy",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Tools\\ResponseStrategies\\ResponseCallStrategy.php",
-            "line": 36,
-            "function": "makeApiCall",
-            "class": "Mpociot\\ApiDoc\\Tools\\ResponseStrategies\\ResponseCallStrategy",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Tools\\ResponseResolver.php",
-            "line": 49,
-            "function": "__invoke",
-            "class": "Mpociot\\ApiDoc\\Tools\\ResponseStrategies\\ResponseCallStrategy",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Tools\\ResponseResolver.php",
-            "line": 68,
-            "function": "resolve",
-            "class": "Mpociot\\ApiDoc\\Tools\\ResponseResolver",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Tools\\Generator.php",
-            "line": 57,
-            "function": "getResponse",
-            "class": "Mpociot\\ApiDoc\\Tools\\ResponseResolver",
-            "type": "::"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Commands\\GenerateDocumentation.php",
-            "line": 201,
-            "function": "processRoute",
-            "class": "Mpociot\\ApiDoc\\Tools\\Generator",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Commands\\GenerateDocumentation.php",
-            "line": 59,
-            "function": "processRoutes",
-            "class": "Mpociot\\ApiDoc\\Commands\\GenerateDocumentation",
-            "type": "->"
-        },
-        {
-            "function": "handle",
-            "class": "Mpociot\\ApiDoc\\Commands\\GenerateDocumentation",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php",
-            "line": 32,
-            "function": "call_user_func_array"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php",
-            "line": 90,
-            "function": "Illuminate\\Container\\{closure}",
-            "class": "Illuminate\\Container\\BoundMethod",
-            "type": "::"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php",
-            "line": 34,
-            "function": "callBoundMethod",
-            "class": "Illuminate\\Container\\BoundMethod",
-            "type": "::"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php",
-            "line": 580,
-            "function": "call",
-            "class": "Illuminate\\Container\\BoundMethod",
-            "type": "::"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php",
-            "line": 183,
-            "function": "call",
-            "class": "Illuminate\\Container\\Container",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\symfony\\console\\Command\\Command.php",
-            "line": 255,
-            "function": "execute",
-            "class": "Illuminate\\Console\\Command",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php",
-            "line": 170,
-            "function": "run",
-            "class": "Symfony\\Component\\Console\\Command\\Command",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\symfony\\console\\Application.php",
-            "line": 908,
-            "function": "run",
-            "class": "Illuminate\\Console\\Command",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\symfony\\console\\Application.php",
-            "line": 269,
-            "function": "doRunCommand",
-            "class": "Symfony\\Component\\Console\\Application",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\symfony\\console\\Application.php",
-            "line": 145,
-            "function": "doRun",
-            "class": "Symfony\\Component\\Console\\Application",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php",
-            "line": 90,
-            "function": "run",
-            "class": "Symfony\\Component\\Console\\Application",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php",
-            "line": 122,
-            "function": "run",
-            "class": "Illuminate\\Console\\Application",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\artisan",
-            "line": 37,
-            "function": "handle",
-            "class": "Illuminate\\Foundation\\Console\\Kernel",
-            "type": "->"
-        }
-    ]
+    "success": "false",
+    "error": "UnAuthorized"
 }
 ```
 
 ### HTTP Request
-`GET api/search`
+`POST api/auth/sendMessage`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | The username of the current user.
-    token | string |  required  | The token of the current user.
-    search_content | string |  required  | The string the user searching for.
-
-<!-- END_f7828fe70326ce6166fdba9c0c9d80ed -->
-
-<!-- START_e00fdc656f682e46daf03bfec3655e27 -->
-## This is used to send a message to another user.
-
-> Example request:
-
-```bash
-curl -X POST "http://localhost/api/sendMsg" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"s6zkZA1u9sCOpLWb","token":"95dy3lLawOzm9Ita","rec_username":"waRvjZpsvb3Ds6sb","msg_content":"OiAZqMPuOTAIhjBG"}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/sendMsg");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "s6zkZA1u9sCOpLWb",
-    "token": "95dy3lLawOzm9Ita",
-    "rec_username": "waRvjZpsvb3Ds6sb",
-    "msg_content": "OiAZqMPuOTAIhjBG"
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-### HTTP Request
-`POST api/sendMsg`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | The username of the sender user.
-    token | string |  required  | The token of the sender user.
     rec_username | string |  required  | The username of the reciever user.
     msg_content | string |  required  | The content of the message to be sent.
 
-<!-- END_e00fdc656f682e46daf03bfec3655e27 -->
+<!-- END_1c2dc085d932a4d3ed3555745054136d -->
 
-<!-- START_e160d221a0a1b0cc25c171415bb92fe7 -->
-## api/commRules
+#Privacy settings
+<!-- START_be7fc64a0aa69cf9b0967d89e3c5d561 -->
+## Show current user blocklist
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X GET -G "http://localhost/api/commRules" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"z1lEH8KpJVLYZ9pt","token":"lkBeWwMpoHsK9y2D","comm_id":18}'
-
+curl -X GET -G "http://localhost/api/auth/blockedUsers" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}"
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/commRules");
+const url = new URL("http://localhost/api/auth/blockedUsers");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "z1lEH8KpJVLYZ9pt",
-    "token": "lkBeWwMpoHsK9y2D",
-    "comm_id": 18
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 fetch(url, {
     method: "GET",
     headers: headers,
-    body: body
 })
     .then(response => response.json())
     .then(json => console.log(json));
 ```
 
-> Example response (500):
+> Example response (200):
 
 ```json
 {
-    "message": "Too few arguments to function App\\Http\\Controllers\\CommunitiesController::viewCommRulesDesc(), 0 passed and exactly 3 expected",
-    "exception": "Symfony\\Component\\Debug\\Exception\\FatalThrowableError",
-    "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\app\\Http\\Controllers\\CommunitiesController.php",
-    "line": 33,
-    "trace": [
-        {
-            "function": "viewCommRulesDesc",
-            "class": "App\\Http\\Controllers\\CommunitiesController",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php",
-            "line": 54,
-            "function": "call_user_func_array"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php",
-            "line": 45,
-            "function": "callAction",
-            "class": "Illuminate\\Routing\\Controller",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php",
-            "line": 219,
-            "function": "dispatch",
-            "class": "Illuminate\\Routing\\ControllerDispatcher",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php",
-            "line": 176,
-            "function": "runController",
-            "class": "Illuminate\\Routing\\Route",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
-            "line": 680,
-            "function": "run",
-            "class": "Illuminate\\Routing\\Route",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 30,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Router",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php",
-            "line": 41,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php",
-            "line": 58,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Illuminate\\Routing\\Middleware\\ThrottleRequests",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 104,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
-            "line": 682,
-            "function": "then",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
-            "line": 657,
-            "function": "runRouteWithinStack",
-            "class": "Illuminate\\Routing\\Router",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
-            "line": 623,
-            "function": "runRoute",
-            "class": "Illuminate\\Routing\\Router",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",
-            "line": 612,
-            "function": "dispatchToRoute",
-            "class": "Illuminate\\Routing\\Router",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",
-            "line": 176,
-            "function": "dispatch",
-            "class": "Illuminate\\Routing\\Router",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 30,
-            "function": "Illuminate\\Foundation\\Http\\{closure}",
-            "class": "Illuminate\\Foundation\\Http\\Kernel",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\fideloper\\proxy\\src\\TrustProxies.php",
-            "line": 57,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Fideloper\\Proxy\\TrustProxies",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",
-            "line": 21,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",
-            "line": 21,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php",
-            "line": 27,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode.php",
-            "line": 62,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 163,
-            "function": "handle",
-            "class": "Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",
-            "line": 53,
-            "function": "Illuminate\\Pipeline\\{closure}",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",
-            "line": 104,
-            "function": "Illuminate\\Routing\\{closure}",
-            "class": "Illuminate\\Routing\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",
-            "line": 151,
-            "function": "then",
-            "class": "Illuminate\\Pipeline\\Pipeline",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",
-            "line": 116,
-            "function": "sendRequestThroughRouter",
-            "class": "Illuminate\\Foundation\\Http\\Kernel",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Tools\\ResponseStrategies\\ResponseCallStrategy.php",
-            "line": 275,
-            "function": "handle",
-            "class": "Illuminate\\Foundation\\Http\\Kernel",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Tools\\ResponseStrategies\\ResponseCallStrategy.php",
-            "line": 259,
-            "function": "callLaravelRoute",
-            "class": "Mpociot\\ApiDoc\\Tools\\ResponseStrategies\\ResponseCallStrategy",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Tools\\ResponseStrategies\\ResponseCallStrategy.php",
-            "line": 36,
-            "function": "makeApiCall",
-            "class": "Mpociot\\ApiDoc\\Tools\\ResponseStrategies\\ResponseCallStrategy",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Tools\\ResponseResolver.php",
-            "line": 49,
-            "function": "__invoke",
-            "class": "Mpociot\\ApiDoc\\Tools\\ResponseStrategies\\ResponseCallStrategy",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Tools\\ResponseResolver.php",
-            "line": 68,
-            "function": "resolve",
-            "class": "Mpociot\\ApiDoc\\Tools\\ResponseResolver",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Tools\\Generator.php",
-            "line": 57,
-            "function": "getResponse",
-            "class": "Mpociot\\ApiDoc\\Tools\\ResponseResolver",
-            "type": "::"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Commands\\GenerateDocumentation.php",
-            "line": 201,
-            "function": "processRoute",
-            "class": "Mpociot\\ApiDoc\\Tools\\Generator",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\mpociot\\laravel-apidoc-generator\\src\\Commands\\GenerateDocumentation.php",
-            "line": 59,
-            "function": "processRoutes",
-            "class": "Mpociot\\ApiDoc\\Commands\\GenerateDocumentation",
-            "type": "->"
-        },
-        {
-            "function": "handle",
-            "class": "Mpociot\\ApiDoc\\Commands\\GenerateDocumentation",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php",
-            "line": 32,
-            "function": "call_user_func_array"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php",
-            "line": 90,
-            "function": "Illuminate\\Container\\{closure}",
-            "class": "Illuminate\\Container\\BoundMethod",
-            "type": "::"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php",
-            "line": 34,
-            "function": "callBoundMethod",
-            "class": "Illuminate\\Container\\BoundMethod",
-            "type": "::"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php",
-            "line": 580,
-            "function": "call",
-            "class": "Illuminate\\Container\\BoundMethod",
-            "type": "::"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php",
-            "line": 183,
-            "function": "call",
-            "class": "Illuminate\\Container\\Container",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\symfony\\console\\Command\\Command.php",
-            "line": 255,
-            "function": "execute",
-            "class": "Illuminate\\Console\\Command",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php",
-            "line": 170,
-            "function": "run",
-            "class": "Symfony\\Component\\Console\\Command\\Command",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\symfony\\console\\Application.php",
-            "line": 908,
-            "function": "run",
-            "class": "Illuminate\\Console\\Command",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\symfony\\console\\Application.php",
-            "line": 269,
-            "function": "doRunCommand",
-            "class": "Symfony\\Component\\Console\\Application",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\symfony\\console\\Application.php",
-            "line": 145,
-            "function": "doRun",
-            "class": "Symfony\\Component\\Console\\Application",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php",
-            "line": 90,
-            "function": "run",
-            "class": "Symfony\\Component\\Console\\Application",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php",
-            "line": 122,
-            "function": "run",
-            "class": "Illuminate\\Console\\Application",
-            "type": "->"
-        },
-        {
-            "file": "D:\\GitHub\\Mini-Reddit-BackEnd\\Mini-Reddit Project\\artisan",
-            "line": 37,
-            "function": "handle",
-            "class": "Illuminate\\Foundation\\Console\\Kernel",
-            "type": "->"
-        }
+    "success": "true",
+    "blockedList": [
+        "John Smith"
     ]
 }
 ```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
 
 ### HTTP Request
-`GET api/commRules`
+`GET api/auth/blockedUsers`
 
-#### Body Parameters
 
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | The username of the current user.
-    token | string |  required  | The token of the current user.
-    comm_id | integer |  required  | The ID of the community the user want to show its rules and description.
+<!-- END_be7fc64a0aa69cf9b0967d89e3c5d561 -->
 
-<!-- END_e160d221a0a1b0cc25c171415bb92fe7 -->
+<!-- START_c527621f70dad2e8f1bae3f5b3cc4575 -->
+## Block a user
 
-<!-- START_f3fee839178d60334b9eea2d27339aea -->
-## api/editComm
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X PATCH "http://localhost/api/editComm" \
+curl -X POST "http://localhost/api/auth/blockingUsers" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"Ft2ThcUSIrdEuD5s","token":"pvHaZ9Eej4Jm6LZE","comm_id":2,"rules_content":"JKNWSnsfl9xbFyxb","des_content":"9DmzcWWpfIemVY5u"}'
+    -d '{"username":"9P9bZVwQMoOasPhm"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/editComm");
+const url = new URL("http://localhost/api/auth/blockingUsers");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "Ft2ThcUSIrdEuD5s",
-    "token": "pvHaZ9Eej4Jm6LZE",
-    "comm_id": 2,
-    "rules_content": "JKNWSnsfl9xbFyxb",
-    "des_content": "9DmzcWWpfIemVY5u"
-}
-
-fetch(url, {
-    method: "PATCH",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-### HTTP Request
-`PATCH api/editComm`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | The username of the current user "should be the moderator of the community".
-    token | string |  required  | The token of the current user.
-    comm_id | integer |  required  | The ID of the community the user want to edit its rules& description.
-    rules_content | string |  required  | The edited rules of the community.
-    des_content | string |  required  | The edited discription of the community.
-
-<!-- END_f3fee839178d60334b9eea2d27339aea -->
-
-<!-- START_d09c8da2e2ceedb52aacd624bf20d7d5 -->
-## api/createComm
-> Example request:
-
-```bash
-curl -X POST "http://localhost/api/createComm" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"cK2DuVayO2dzmLDN","token":"2ClVoWE4m10DYtCQ","comm_name":"U1vrrY6omVBAUxwf"}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/createComm");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "cK2DuVayO2dzmLDN",
-    "token": "2ClVoWE4m10DYtCQ",
-    "comm_name": "U1vrrY6omVBAUxwf"
+    "username": "9P9bZVwQMoOasPhm"
 }
 
 fetch(url, {
@@ -2499,44 +3481,67 @@ fetch(url, {
     .then(json => console.log(json));
 ```
 
+> Example response (200):
+
+```json
+{
+    "sucess": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "sucess": "true",
+    "error": "UnAuthorized"
+}
+```
+> Example response (403):
+
+```json
+{
+    "sucess": "true",
+    "error": "Already blocked"
+}
+```
 
 ### HTTP Request
-`POST api/createComm`
+`POST api/auth/blockingUsers`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | The username of the current user.
-    token | string |  required  | The token of the current user.
-    comm_name | string |  required  | The Name of the community to be created.
+    username | string |  required  | the username of the user being blocked
 
-<!-- END_d09c8da2e2ceedb52aacd624bf20d7d5 -->
+<!-- END_c527621f70dad2e8f1bae3f5b3cc4575 -->
 
-<!-- START_c01395a16391dbcf8d6b781801dcec57 -->
-## This is used to remove an existing community.
+<!-- START_996839456288cc353bfd9f6567f5bf59 -->
+## Unblock a user
 
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X DELETE "http://localhost/api/removeComm" \
+curl -X DELETE "http://localhost/api/auth/blockingUsers" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"xwtQNo4j9FOsVFwS","token":"pW9BqlcPLczrGAnQ","comm_id":13}'
+    -d '{"username":"GgoS23vjlSpVySK9"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/removeComm");
+const url = new URL("http://localhost/api/auth/blockingUsers");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "xwtQNo4j9FOsVFwS",
-    "token": "pW9BqlcPLczrGAnQ",
-    "comm_id": 13
+    "username": "GgoS23vjlSpVySK9"
 }
 
 fetch(url, {
@@ -2548,243 +3553,67 @@ fetch(url, {
     .then(json => console.log(json));
 ```
 
+> Example response (200):
+
+```json
+{
+    "sucess": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "sucess": "true",
+    "error": "UnAuthorized"
+}
+```
+> Example response (403):
+
+```json
+{
+    "sucess": "true",
+    "error": "Already unblocked"
+}
+```
 
 ### HTTP Request
-`DELETE api/removeComm`
+`DELETE api/auth/blockingUsers`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | The username of the current user.
-    token | string |  required  | The token of the current user.
-    comm_id | integer |  required  | The ID of the community to be removed.
+    username | string |  required  | the username of the user being unblocked
 
-<!-- END_c01395a16391dbcf8d6b781801dcec57 -->
+<!-- END_996839456288cc353bfd9f6567f5bf59 -->
 
-<!-- START_f119272b420e1705e6f1dc4560489020 -->
-## This is used to add a moderator for an existing community.
+<!-- START_dfd1f84709d37e78da0a09b0dde49ae3 -->
+## Update current user Displayed Name
 
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X PATCH "http://localhost/api/addModerator" \
+curl -X PATCH "http://localhost/api/auth/updateDisplayName" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"K7dhH6qEbt6fOvH0","token":"tVRpWKQNOYvvAmwm","comm_id":9,"mod_username":"AY0lEXkxBaTgytcb"}'
+    -d '{"name":"AlcocbXMoLIXYaGY"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/addModerator");
+const url = new URL("http://localhost/api/auth/updateDisplayName");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "K7dhH6qEbt6fOvH0",
-    "token": "tVRpWKQNOYvvAmwm",
-    "comm_id": 9,
-    "mod_username": "AY0lEXkxBaTgytcb"
-}
-
-fetch(url, {
-    method: "PATCH",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-### HTTP Request
-`PATCH api/addModerator`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | The username of the current user.
-    token | string |  required  | The token of the current user.
-    comm_id | integer |  required  | The ID of the community to add a moderator for.
-    mod_username | string |  required  | The username of the moderator to be set for the community.
-
-<!-- END_f119272b420e1705e6f1dc4560489020 -->
-
-<!-- START_c466c4d60c2110954032ce8409e47be0 -->
-## This is used to remove an existing moderator of a community.
-
-> Example request:
-
-```bash
-curl -X PATCH "http://localhost/api/removeModerator" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"K3biwkJbl0ASfJyE","token":"jSeNoHDm8a3LFRvo","comm_id":4,"mod_username":"LOW3MbH8D4srBHMy"}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/removeModerator");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "K3biwkJbl0ASfJyE",
-    "token": "jSeNoHDm8a3LFRvo",
-    "comm_id": 4,
-    "mod_username": "LOW3MbH8D4srBHMy"
-}
-
-fetch(url, {
-    method: "PATCH",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-### HTTP Request
-`PATCH api/removeModerator`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | The username of the current user.
-    token | string |  required  | The token of the current user.
-    comm_id | integer |  required  | The ID of the community to remove a moderator from.
-    mod_username | string |  required  | The username of the moderator to be removed from the community.
-
-<!-- END_c466c4d60c2110954032ce8409e47be0 -->
-
-<!-- START_4d192ec263738cebee9b2b1f8da3d9dc -->
-## This is used to subscribe or unsubscribe an existing community.
-
-> Example request:
-
-```bash
-curl -X PATCH "http://localhost/api/subscriptionComm" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"gXC9hsuNSfXCJ1qh","token":"n1yNuNuL2iEwetf4","comm_id":19}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/subscriptionComm");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "gXC9hsuNSfXCJ1qh",
-    "token": "n1yNuNuL2iEwetf4",
-    "comm_id": 19
-}
-
-fetch(url, {
-    method: "PATCH",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-### HTTP Request
-`PATCH api/subscriptionComm`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | The username of the current user.
-    token | string |  required  | The token of the current user.
-    comm_id | integer |  required  | The ID of the community to be un/subscribed.
-
-<!-- END_4d192ec263738cebee9b2b1f8da3d9dc -->
-
-<!-- START_1781dab8090dc1418958fe7eae15d072 -->
-## This is used to save or unsave a post or a comment.
-
-> Example request:
-
-```bash
-curl -X PATCH "http://localhost/api/savingLink" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"IUSbRSozc4MxN3hT","token":"En8BrD7A26VRz3Rg","link_id":11}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/savingLink");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "IUSbRSozc4MxN3hT",
-    "token": "En8BrD7A26VRz3Rg",
-    "link_id": 11
-}
-
-fetch(url, {
-    method: "PATCH",
-    headers: headers,
-    body: body
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-### HTTP Request
-`PATCH api/savingLink`
-
-#### Body Parameters
-
-Parameter | Type | Status | Description
---------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | The username of the current user.
-    token | string |  required  | The token of the current user.
-    link_id | integer |  required  | The ID of the post/comment to be saved or unsaved.
-
-<!-- END_1781dab8090dc1418958fe7eae15d072 -->
-
-<!-- START_9cd007772ad33be318c0418f52e249a3 -->
-## api/update/display/name
-> Example request:
-
-```bash
-curl -X PATCH "http://localhost/api/update/display/name" \
-    -H "Content-Type: application/json" \
-    -d '{"my_username":"tgWyOxVcMJ2Pfy2p","token":"VnFIHOg0IjhCEJfU","display_name":"m6xlPPenMnVWsgme"}'
-
-```
-
-```javascript
-const url = new URL("http://localhost/api/update/display/name");
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-}
-
-let body = {
-    "my_username": "tgWyOxVcMJ2Pfy2p",
-    "token": "VnFIHOg0IjhCEJfU",
-    "display_name": "m6xlPPenMnVWsgme"
+    "name": "AlcocbXMoLIXYaGY"
 }
 
 fetch(url, {
@@ -2799,45 +3628,56 @@ fetch(url, {
 > Example response (200):
 
 ```json
-[]
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "sucess": "true",
+    "error": "UnAuthorized"
+}
 ```
 
 ### HTTP Request
-`PATCH api/update/display/name`
+`PATCH api/auth/updateDisplayName`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user
-    token | string |  required  | the token of the current user
-    display_name | string |  required  | the username of the user being un/blocked
+    name | string |  required  | The new name of user to update.
 
-<!-- END_9cd007772ad33be318c0418f52e249a3 -->
+<!-- END_dfd1f84709d37e78da0a09b0dde49ae3 -->
 
-<!-- START_b3210da22b1ea5a3e3362f3d87efcadd -->
-## api/update/about
+<!-- START_27bac20603448461f03965177b89d240 -->
+## Update current user About
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X PATCH "http://localhost/api/update/about" \
+curl -X PATCH "http://localhost/api/auth/updateAbout" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"1hehw2J0zsMJTZ6w","token":"Ef0xVhYMGHPdXaum","about":"x3Y8N9LOhRNGEBty"}'
+    -d '{"about":"ylwcXAZ9mBk426UF"}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/update/about");
+const url = new URL("http://localhost/api/auth/updateAbout");
 
 let headers = {
-    "Content-Type": "application/json",
     "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
 }
 
 let body = {
-    "my_username": "1hehw2J0zsMJTZ6w",
-    "token": "Ef0xVhYMGHPdXaum",
-    "about": "x3Y8N9LOhRNGEBty"
+    "about": "ylwcXAZ9mBk426UF"
 }
 
 fetch(url, {
@@ -2852,20 +3692,184 @@ fetch(url, {
 > Example response (200):
 
 ```json
-[]
+{
+    "success": "true"
+}
+```
+> Example response (401):
+
+```json
+{
+    "sucess": "true",
+    "error": "UnAuthorized"
+}
 ```
 
 ### HTTP Request
-`PATCH api/update/about`
+`PATCH api/auth/updateAbout`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user
-    token | string |  required  | the token of the current user
-    about | string |  required  | the username of the user being un/blocked
+    about | string |  required  | the content of about to be updated to
 
-<!-- END_b3210da22b1ea5a3e3362f3d87efcadd -->
+<!-- END_27bac20603448461f03965177b89d240 -->
+
+#Searching
+<!-- START_0f4b030572180f70ac4811706078f762 -->
+## Search for a community or a user
+
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/unauth/search" \
+    -H "Content-Type: application/json" \
+    -d '{"search_content":"zWlOHpcPK7QS1RbX"}'
+
+```
+
+```javascript
+const url = new URL("http://localhost/api/unauth/search");
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "search_content": "zWlOHpcPK7QS1RbX"
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{}
+```
+
+### HTTP Request
+`GET api/unauth/search`
+
+#### Body Parameters
+
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    search_content | string |  required  | The string the user searching for.
+
+<!-- END_0f4b030572180f70ac4811706078f762 -->
+
+#User Information
+<!-- START_b148d8fae4a198cdbc7dd7f4a488aa94 -->
+## Show user&#039;s private information
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/auth/viewPrivateUserInfo" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}"
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/viewPrivateUserInfo");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true",
+    "email": "john_bb@gmail"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`GET api/auth/viewPrivateUserInfo`
+
+
+<!-- END_b148d8fae4a198cdbc7dd7f4a488aa94 -->
+
+<!-- START_04225283fb39b5b7bc7411b813cfe4bf -->
+## Show user&#039;s public information
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/auth/viewPublicUserInfo" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}"
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/viewPublicUserInfo");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "success": "true",
+    "username": "john",
+    "karma": 500,
+    "cake_day": "March 8, 2019",
+    "about": "be or not to be"
+}
+```
+> Example response (401):
+
+```json
+{}
+```
+
+### HTTP Request
+`GET api/auth/viewPublicUserInfo`
+
+
+<!-- END_04225283fb39b5b7bc7411b813cfe4bf -->
 
 

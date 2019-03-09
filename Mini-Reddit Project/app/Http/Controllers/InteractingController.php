@@ -4,31 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-    /**
-    *@group all interacting actions (posts , comments and anything related )
-
-    */
+/**
+ * @group Interacting Actions
+ * posts , comments and anything related
+ */
 
 
 class InteractingController extends Controller
 {
-
-
 		/**
-		 *
+		 * Hide a post
 	   * @bodyParam post_id integer required the id of the post that the user wants to hide
-       * @authenticated
+     * @authenticated
 	   * @response 200 {
-       *  "success": "true"
-       * }
-       * @response 401 {
-       *  "success": "false",
-       *  "error": "UnAuthorized"
-       * }
-       *@response 403 {
-       * "success" : "false",
-       * "error" : "already hidden"
-       }
+     *  "success": "true"
+     * }
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     * }
+     *@response 403 {
+     * "success" : "false",
+     * "error" : "already hidden"
+     *}
 	   */
 		public function hidePost()
 		{
@@ -37,20 +35,20 @@ class InteractingController extends Controller
 
 
 		/**
-		 *
+		 * Unhide a post
 	   * @bodyParam post_id integer required the id of the post that the user wants to hide
-       * @authenticated
+     * @authenticated
 	   * @response 200 {
-       *  "success": "true"
-       * }
-       * @response 401 {
-       *  "success": "false",
-       *  "error": "UnAuthorized"
-       * }
-       *@response 403 {
-       * "success" : "false",
-       * "error" : "already unhidden"
-       }
+     *  "success": "true"
+     * }
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     * }
+     *@response 403 {
+     * "success" : "false",
+     * "error" : "already unhidden"
+     *}
 	   */
 		public function unhidePost()
 		{
@@ -60,6 +58,7 @@ class InteractingController extends Controller
 
 
     /**
+     * Edit a post
      * @bodyParam post_id integer required the id of the post that the user wants to edit
      * @bodyparam new_title string the new title of the post
      * @bodyparam new_content string the new content of the post
@@ -72,12 +71,13 @@ class InteractingController extends Controller
      *  "error": "UnAuthorized"
      * }
      */
-    public function editAPost()
+    public function editPost()
 		{
     		// ...
     }
 
     /**
+     * Edit a comment
      * @bodyParam comment_id integer required the id of the comment that the user wants to edit
      * @bodyparam new_content string the new content of the comment
      * @authenticated
@@ -89,13 +89,14 @@ class InteractingController extends Controller
      *  "error": "UnAuthorized"
      * }
      */
-		public function editAComment()
+		public function editComment()
 		{
     		// ...
-        }
+    }
 
 
     /**
+     * Pin or unpin a post
      * @bodyParam post_id integer required the id of the post that the user wants to pin
      * @authenticated
      * @response 200 {
@@ -113,6 +114,7 @@ class InteractingController extends Controller
 
 
     /**
+     * Add Downvote to a post
      * @bodyParam post_id integer required the id of the post that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -124,12 +126,13 @@ class InteractingController extends Controller
      * }
      */
     public function addDownvotePost()
-	{
+		{
     		// ...
     }
 
 
 		/**
+		 * Remove Downvote from a post
      * @bodyParam post_id integer required the id of the post that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -141,12 +144,13 @@ class InteractingController extends Controller
      * }
      */
     public function removeDownvotePost()
-	{
+		{
     		// ...
     }
 
 
     /**
+     * Add Downvote to a comment
      * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -164,6 +168,7 @@ class InteractingController extends Controller
 
 
 		/**
+		 * Remove Downvote from a comment
      * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -181,6 +186,7 @@ class InteractingController extends Controller
 
 
     /**
+     * Add Upvote to a post
      * @bodyParam post_id integer required the id of the post that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -190,7 +196,6 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
-
      */
     public function addUpvotePost()
 		{
@@ -199,6 +204,7 @@ class InteractingController extends Controller
 
 
 		/**
+		 * Remove Upvote from a post
      * @bodyParam post_id integer required the id of the post that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -210,12 +216,13 @@ class InteractingController extends Controller
      * }
      */
     public function removeUpvotePost()
-	{
+		{
     		// ...
     }
 
 
     /**
+     * Add Upvote to a comment
      * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -233,6 +240,7 @@ class InteractingController extends Controller
 
 
 		/**
+		 * Remove Upvote from a comment
      * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -251,16 +259,16 @@ class InteractingController extends Controller
 
 
 		/**
-		 * viewing the posts of a specific user or a community or both when you are on the home page.
+		 * Viewing the posts of a specific user or a community or both when you are on the home page.
 		 *
 	 	 * @bodyParam username string if you visited another user profile this is his username.
 	 	 * @bodyParam community_id int if you want to show the posts of a specific community this is its id.
-	     * @response 200 {
+	   * @response 200 {
 	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 } , { "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 } , { "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
 	 	 * }
 	 	 *
 	 	 * @response 404 {
-		 *	"message" :"somethimg wrong!!!!"
+		 *	"error" :"somethimg wrong!!!!"
 	 	 * }
 	 	 */
     public function ViewPosts()
@@ -277,16 +285,14 @@ class InteractingController extends Controller
   	 * @response 200 {
  		 *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 2 , "body" : "comment2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 3 , "body" : "comment3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
  		 * }
-
  		 *
  		 * @response 404 {
-		 *  "message" :"somethimg wrong!!!!"
+		 *  "error" :"somethimg wrong!!!!"
  		 * }
-
-         * @response 401 {
-         *  "success": "false",
-         *  "error": "UnAuthorized"
-         * }
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     * }
      */
     public function ViewComments()
     {
@@ -295,39 +301,36 @@ class InteractingController extends Controller
 
 
     /**
-		 * viewing comments of a specific post or replies of a specific comment
+		 * Viewing comments of a specific post or replies of a specific comment
 		 * @bodyParam id int required the id of the post or the id of the comment.
-
 		 * @response 200 {
  		 *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 2 , "body" : "comment2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 3 , "body" : "comment3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
  		 * }
  		 * @response 404 {
-		 *	"message" :"somethimg wrong!!!!"
+		 *	"error" :"somethimg wrong!!!!"
  		 * }
      */
-    public function ViewComments_RepliesOfPosts_Comments()
+    public function ViewCommentsAndRepliesOfPostsAndComments()
     {
 
     }
 
 
     /**
-		 * view the upvoted posts of the user or the downvoted ones
+		 * View the upvoted posts of the user or the downvoted ones
 		 * @bodyParam type int required it is one for the upvoted posts and zero for the downvoted ones.
-         * @authenticated
-        
+     * @authenticated
 		 * @response 200 {
  		 * 	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 } , { "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
  		 * }
  		 *
  		 * @response 404 {
-		 * 	"message" :"somethimg wrong!!!!"
+		 * 	"error" :"somethimg wrong!!!!"
  		 * }
-
-         * @response 401 {
-         *"success": "false",
-         *  "error": "UnAuthorized"
-         * }
+     * @response 401 {
+     * 	"success": "false",
+     *  "error": "UnAuthorized"
+     * }
      */
     public function ViewUpVotedOrDownVotedPosts( )
     {
@@ -335,37 +338,33 @@ class InteractingController extends Controller
     }
 
 
+
 		/**
-		 * view the overview of the user.
-         * @bodyParam username string required if you visited another user profile this is his username.
-         * @authenticated
-        
-
-         *@response 200 {
-             
-            * "posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 } , { "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }] ,
-
-            * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 2 , "body" : "comment2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 3 , "body" : "comment3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }] 
-
-         *}
-
-         *@response 404 {
-         * "message" : "something wrong!!!"
-         *}
-
-         * @response 401 {
-         *  "success": "false",
-         *  "error": "UnAuthorized"
-         * }
-
-        */
-
+		 * View the overview of the user [Posts, comments, and links].
+     * @bodyParam username string required if you visited another user profile this is his username.
+     * @authenticated
+ 		 * @response 200 {
+     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } ,
+     * 		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 } ,
+     * 		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }] ,
+     * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 2 , "body" : "comment2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 3 , "body" : "comment3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
+     * }
+     * @response 404 {
+     * "error" : "something wrong!!!"
+     * }
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     * }
+     */
     public function ViewOverview()
     {
 
     }
 
+
     /**
+     * Add new Link
      * @bodyParam post_content string required the content written in the post
      * @bodyParam parent_link_ID int required the ID of the parent link, this parameter should be 'null' if the link is a post
      * @bodyParam post_title string this parameter is required only for posts
@@ -379,7 +378,6 @@ class InteractingController extends Controller
      *  "error": "UnAuthorized"
      * }
      */
-
 	  public function addNewLink()
 	  {
 		    // ...
@@ -387,22 +385,20 @@ class InteractingController extends Controller
 
 
     /**
-		 * view the saved links by the user.
-		 * @bodyParam MyUserName string required The username of the account owner.
-		 * @bodyParam token
-         * @authenticated
-         
+		 * View the saved Links by the user.
+     * @authenticated
 		 * @response 200 {
- 		 *	 "links" :[ { "link_id": 1 , "body" : "post1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "link_id": 2 , "body" : "post2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "link_id": 3 , "body" : "post3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
+ 		 *	 "links" : [{ "link_id": 1 , "body" : "post1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } ,
+ 		 *	 	{ "link_id": 2 , "body" : "post2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } ,
+ 		 *	 	{ "link_id": 3 , "body" : "post3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
  		 * }
  		 * @response 404 {
-		 *	 "message" :"somethimg wrong!!!!"
+		 *	 "error" :"somethimg wrong!!!!"
  		 * }
-
-         * @response 401 {
-         *  "success": "false",
-         *  "error": "UnAuthorized"
-         *}
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     *}
      */
     public function ViewSavedLinks( )
     {
@@ -410,6 +406,7 @@ class InteractingController extends Controller
     }
 
     /**
+     * Remove post, comment or reply.
      * @bodyParam link_ID int required the ID of the link
      * @authenticated
      * @response 200 {
@@ -427,7 +424,7 @@ class InteractingController extends Controller
 
     /**
      *
-     * This is used to save a post or a comment.
+     * Save Post, Comment or Reply.
      *
      * @bodyParam link_id int required The ID of the post/comment to be saved or unsaved.
      * @authenticated
@@ -445,22 +442,17 @@ class InteractingController extends Controller
     }
 
 
-
-
-
-
     /**
      *
-     * This is used to unsave a post or a comment.
+     * Unsave Post, Comment or Reply
      *
      * @bodyParam link_id int required The ID of the post/comment to be saved or unsaved.
      * @authenticated
      * @response 200 {
      *  "success": "true"
      * }
-
      * @response 401 {
-     *  "success": "false"
+     *  "success": "false",
      *  "error": "UnAuthorized"
      * }
      */
@@ -468,4 +460,28 @@ class InteractingController extends Controller
     {
         // ...
     }
+
+		/**
+		 * Give Karma to a user.
+		 *
+		 * @authenticated
+		 * @bodyParam username string required Username to give to a reward.
+		 * @respone 200 {
+		 * 	"success": "true"
+		 * }
+		 *
+     * @response 401 {
+     *  "success": "false"
+     *  "error": "UnAuthorized"
+     * }
+     *
+     * @respone 403 {
+     * 	"success": "false",
+     * 	"error": "Already given before"
+     * }
+		 */
+		public function giveReward()
+		{
+				// ...
+		}
 }
