@@ -1,76 +1,13 @@
-
 <?php
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
 class InteractingController extends Controller
 {
 
-
-	/**
-      * @bodyParam my_username string required the username of the current user.
-      * @bodyParam token string required the token of the user and it is required for authontication.
-      * @bodyParam post_id integer required the id of the post that the user wants to hide
-      * @response 200{}
-      */
-	public function hideOrUnhidePost(){
-		// ...
-	}
-
-     /**
-      * @bodyParam my_username string required the username of the current user.
-      * @bodyParam token string required the token of the user and it is required for authontication.
-      * @bodyParam post_id integer required the id of the post that the user wants to edit
-      * @bodyparam new_title string the new title of the post
-      * @bodyparam new_content string the new content of the post
-      * @response 200{}
-      */
-     public function editAPost(){
-          // ...
-     }
-
-     /**
-      * @bodyParam my_username string required the username of the current user.
-      * @bodyParam token string required the token of the user and it is required for authontication.
-      * @bodyParam comment_id integer required the id of the comment that the user wants to edit
-      * @bodyparam new_content string the new content of the comment
-      * @response 200{}
-      */
-     public function editAComment(){
-          // ...
-     }
-
-     /**
-      * @bodyParam my_username string required the username of the current user.
-      * @bodyParam token string required the token of the user and it is required for authontication.
-      * @bodyParam post_id integer required the id of the post that the user wants to pin
-      * @response 200{}
-      */
-     public function pinOrUnpinAPost(){
-          // ...
-     }
-
-     /**
-      * @bodyParam my_username string required the username of the current user.
-      * @bodyParam token string required the token of the user and it is required for authontication.
-      * @bodyParam post_id integer required the id of the post that the user wants to downvote
-      * @response 200{}
-      */
-     public function addOrRemoveDownvotePost(){
-          // ...
-     }
-
-     /**
-      * @bodyParam my_username string required the username of the current user.
-      * @bodyParam token string required the token of the user and it is required for authontication.
-      * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
-      * @response 200{}
-      */
-     public function addOrRemoveDownvoteComment(){
-          // ...
-     }
 
 	/**
 		* viewing the posts of a specific user or a community or both when you are on the home page.
@@ -191,60 +128,65 @@ class InteractingController extends Controller
 
     }
 
-
     /**
-     * @bodyParam my_username string required the username of the current user
-     * @bodyParam token string required the token of the current user
-     * @bodyParam post_content string required the content written in the post
-     * @bodyParam parent_link_ID int required the ID of the parent link, this parameter should be 'null' if the link is a post 
-     * @bodyParam post_title string this parameter is required only for posts
-     * @bodyParam community_ID int this parameter is required only if the link is inside a community 
-     * @response 200
-     */
+		*view the hidden posts by the user.
+
+		*bodyParam my_username string required The username of the account owner.
+		*bodyParam token 
+
+		*@response {
+
+ 			"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
+ 		}
+
+ 		*@response 404 {
 	
-	public function addNewLink()
-	{
-	    // ...
-	}
+			"message" :"somethimg wrong!!!!"
+ 		}
+
+    */
+
+    public function ViewHiddenPosts( )
+    {
+
+    }
+
 
     /**
-
 		*view the saved links by the user.
-		*bodyParam MyUserName string required The username of the account owner.
-		*bodyParam Token
+
 		*bodyParam my_username string required The username of the account owner.
 		*bodyParam token
+
 		*@response {
 
  			"links" :[ { "link_id": 1 , "body" : "post1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "link_id": 2 , "body" : "post2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "link_id": 3 , "body" : "post3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
  		}
+
  		*@response 404 {
 	
 			"message" :"somethimg wrong!!!!"
  		} 
+
+
+
     */
+
+
+
 
     public function ViewSavedLinks( )
     {
-        // ...
+
     }
 
 
-     /**
-     * @bodyParam my_username string required the username of the current user
-     * @bodyParam token string required the token of the current user
-     * @bodyParam link_ID int required the ID of the link
-     * @response 200
-     * @response 400 {"message": "you are not authorized to remove the link"}
-     */
- 
-    
-    public function removeLink()
-    {
-        // ...
-    }
 
-     /**
+
+
+
+
+    /**
      * 
      * This is used to save or unsave a post or a comment.
      * 
@@ -253,13 +195,15 @@ class InteractingController extends Controller
      * @bodyParam link_id int required The ID of the post/comment to be saved or unsaved.
      * 
      */
-     public function savingLink()
+    public function savingLink ($my_username,$token,$link_id)
     {
-        // ...
-    }
 
-
-
+    } 
 
 }
+
+
+
+
+
 

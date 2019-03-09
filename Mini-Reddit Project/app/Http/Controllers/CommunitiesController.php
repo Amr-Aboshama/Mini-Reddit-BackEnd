@@ -6,25 +6,11 @@ use Illuminate\Http\Request;
 
 class CommunitiesController extends Controller
 {
-     /**
-      * @bodyParam my_username string required the username of the current user.
-      * @bodyParam username string required the username of the user who has the communities.
-      * @bodyParam token string required the token of the user and it is required for authontication.
-      * @response 200{
-      *   "communities" : [{
-      *   "community_name":"Arduino",
-      *   "community_logo":"logo1"
-      *   }, {
-      *   "community_name":"machine", 
-      *   "community_logo":"logo2"
-      *   }]
-      * }
-      */
-	public function viewUserCommunities(){
-		// ...
-	}
-
     /**
+     *
+     * @group View Community Rules& Description
+     * This is used to view the Rules and Description of a community.
+     * 
      * @bodyParam my_username string required The username of the current user.
      * @bodyParam token string required The token of the current user.
      * @bodyParam comm_id int required The ID of the community the user want to show its rules and description.
@@ -37,6 +23,10 @@ class CommunitiesController extends Controller
 
 
     /**
+     *
+     * @group Edit Community Rules& Description
+     * This is used to edit the Rules and Description of a community.
+     * 
      * @bodyParam my_username string required The username of the current user "should be the moderator of the community".
      * @bodyParam token string required The token of the current user.
      * @bodyParam comm_id int required The ID of the community the user want to edit its rules& description.
@@ -51,6 +41,10 @@ class CommunitiesController extends Controller
 
 
    /**
+     *
+     * @group Create Community
+     * This is used to create a new community.
+     * 
      * @bodyParam my_username string required The username of the current user.
      * @bodyParam token string required The token of the current user.
      * @bodyParam comm_name string required The Name of the community to be created.
@@ -63,6 +57,8 @@ class CommunitiesController extends Controller
 
 
     /**
+     *
+     * @group Remove Community
      * This is used to remove an existing community.
      * 
      * @bodyParam my_username string required The username of the current user.
@@ -78,7 +74,7 @@ class CommunitiesController extends Controller
 
     /**
      *
-     * 
+     * @group Add moderator
      * This is used to add a moderator for an existing community.
      * 
      * @bodyParam my_username string required The username of the current user.
@@ -95,7 +91,7 @@ class CommunitiesController extends Controller
     
     /**
      *
-     * 
+     * @group Remove moderator
      * This is used to remove an existing moderator of a community.
      * 
      * @bodyParam my_username string required The username of the current user.
@@ -112,7 +108,7 @@ class CommunitiesController extends Controller
 
     /**
      *
-     *
+     * @group subscription a Community
      * This is used to subscribe or unsubscribe an existing community.
      * 
      * @bodyParam my_username string required The username of the current user.
@@ -125,4 +121,3 @@ class CommunitiesController extends Controller
 
     }
 }
-
