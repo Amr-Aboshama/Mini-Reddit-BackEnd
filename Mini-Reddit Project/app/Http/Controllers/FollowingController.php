@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class FollowingController extends Controller
 {
+
     /**
      * @bodyParam my_username string required the username of the current user
      * @bodyParam token string required the token of the current user
@@ -27,5 +28,46 @@ class FollowingController extends Controller
 	{
 	    // ...
 	}
+
+
+	/**
+		*following a user.
+
+		*bodyParam MyUserName string required The username of the account owner.
+		*bodyParam UserName string required The username of the followed user.
+		*bodyParam Token
+
+		*@response 404 {
+			"message" : "Sth wrong !!!!!!"
+		} 
+
+    */
+
+   
+	public function FollowUser()
+	{
+
+	}
+
+
+	/**
+		*following a user.
+
+		*bodyParam MyUserName string required The username of the account owner.
+		*bodyParam UserName string required The username of the followed user.
+		*bodyParam Token 
+
+		*@response 404 {
+			"message" : "Sth wrong !!!!!!"
+		} 
+
+    */
+
+	public function UnfollowUser()
+	{
+
+	}
+
+
 
 }

@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+
 Route::delete('/delete/account', 'AccountSettingsController@deleteMyAccount');
 
 Route::patch('/change/password', 'AccountSettingsController@changePassword');
@@ -37,4 +38,16 @@ Route::post('/blocked/users', 'PrivacyController@showMyBlockedUsers');
 Route::post('/blocking/users', 'PrivacyController@blockOrUnblockUser');
 
 
+
+
+Route::get('/search','SearchingController@search');
+Route::post('/sendMsg','MessagesController@sendMsg');
+Route::get('/commRules','CommunitiesController@viewCommRulesDesc');
+Route::patch('/editComm','CommunitiesController@editComm');
+Route::post('/createComm','CommunitiesController@createComm');
+Route::delete('/removeComm','CommunitiesController@removeComm');
+Route::patch('/addModerator','CommunitiesController@addModretorForComm');
+Route::patch('/removeModerator','CommunitiesController@removeModretorFromComm');
+Route::patch('/subscriptionComm','CommunitiesController@subscriptionComm');
+Route::patch('/savingLink','InteractingController@savingLink');
 
