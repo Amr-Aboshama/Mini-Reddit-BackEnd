@@ -36,7 +36,7 @@ class PrivacyController extends Controller
      * @response 200 
      */
 	
-	public function PrivacyController() 
+	public function updateDisplayName() 
 	{
 	    // ...
 	}
