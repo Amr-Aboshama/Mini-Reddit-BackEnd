@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class MessagesController extends Controller
 {
     /**
-     *@group Messages
+     *
      * APIs for managing user Messages
      * @bodyParam my_username string required the username of the current user.
      * @bodyParam token string required the token of the user and it is required for authontication.
@@ -24,7 +24,7 @@ class MessagesController extends Controller
 	}
 
 	/**
-     *@group Messages
+     *
      * APIs for managing user Messages
      * @bodyParam my_username string required the username of the current user.
      * @bodyParam token string required the token of the user and it is required for authontication.
@@ -45,7 +45,7 @@ class MessagesController extends Controller
 	}
 
 	/**
-     *@group Messages
+     *
      * APIs for managing user Messages
      * @bodyParam my_username string required the username of the current user.
      * @bodyParam token string required the token of the user and it is required for authontication.
@@ -67,7 +67,7 @@ class MessagesController extends Controller
 	}
     /**
      *
-     * @group Send a Message
+     * 
      * This is used to send a message to another user.
      * 
      * @bodyParam my_username string required The username of the sender user.
