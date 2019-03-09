@@ -25,8 +25,8 @@ Route::delete('/delete/account', 'AccountSettingsController@deleteMyAccount');
 Route::patch('/change/password', 'AccountSettingsController@changePassword');
 
 
-Route::post('/viewPrivateUserInfo','InformationController@viewPrivateUserInfo');
-Route::post('/viewPublicUserInfo','InformationController@viewPublicUserInfo');
+Route::get('/viewPrivateUserInfo','InformationController@viewPrivateUserInfo');
+Route::get('/viewPublicUserInfo','InformationController@viewPublicUserInfo');
 
 
 Route::post('/followers', 'FollowingController@viewUserFollowers');
@@ -35,9 +35,9 @@ Route::post('/follow', 'FollowingController@followUser');//
 Route::delete('/follow', 'FollowingController@unfollowUser');//*
 
 
-Route::post('/viewAUserMessage','MessagesController@viewAUserMessage');
-Route::post('/viewUserSentMessages','MessagesController@viewUserSentMessages');
-Route::post('/viewUserInboxMessages','MessagesController@viewUserInboxMessages');
+Route::get('/viewAUserMessage','MessagesController@viewAUserMessage');
+Route::get('/viewUserSentMessages','MessagesController@viewUserSentMessages');
+Route::get('/viewUserInboxMessages','MessagesController@viewUserInboxMessages');
 Route::post('/sendMessage','MessagesController@sendMessage');
 
 
@@ -54,7 +54,7 @@ Route::patch('/update/display/name', 'PrivacyController@updateDisplayName');
 Route::patch('/update/about', 'PrivacyController@updateAbout');
 
 
-Route::post('/viewUserCommunities','CommunitiesController@viewUserCommunities');
+Route::get('/viewUserCommunities','CommunitiesController@viewUserCommunities');
 Route::get('/communityRules','CommunitiesController@viewCommunitiesRulesDesc');
 Route::patch('/editCommunity','CommunitiesController@editCommunity');
 Route::post('/createCommunity','CommunitiesController@createCommunity');
@@ -72,8 +72,8 @@ Route::patch('/pin/post', 'InteractingController@pinOrUnpinPost');
 Route::delete('/remove/link', 'InteractingController@removeLink');
 Route::post('/hidePost','InteractingController@hidePost'); //
 Route::delete('/hidePost','InteractingController@unhidePost');//*
-Route::post('/editAPost','InteractingController@editAPost');
-Route::post('/editAComment','InteractingController@editAComment');
+Route::patch('/editAPost','InteractingController@editAPost');
+Route::patch('/editAComment','InteractingController@editAComment');
 Route::post('/downVotePost','InteractingController@addDownvotePost');//
 Route::delete('/downVotePost','InteractingController@removeDownvotePost');//*
 Route::post('/downVoteComment','InteractingController@addDownvoteComment');//
