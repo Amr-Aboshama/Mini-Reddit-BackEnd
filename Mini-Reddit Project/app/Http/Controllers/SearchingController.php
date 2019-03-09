@@ -8,7 +8,7 @@ class SearchingController extends Controller
 {
     /**
      *
-     * @group Search
+     *
      * This is used to search for a community or a user.
      * 
      * @bodyParam my_username string required The username of the current user.

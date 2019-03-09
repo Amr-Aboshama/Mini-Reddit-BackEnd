@@ -78,7 +78,7 @@ class CommunitiesController extends Controller
 
     /**
      *
-     * @group Remove Community
+     *
      * This is used to remove an existing community.
      * 
      * @bodyParam my_username string required The username of the current user.
@@ -94,7 +94,7 @@ class CommunitiesController extends Controller
 
     /**
      *
-     * @group Add moderator
+     * 
      * This is used to add a moderator for an existing community.
      * 
      * @bodyParam my_username string required The username of the current user.
@@ -111,7 +111,7 @@ class CommunitiesController extends Controller
     
     /**
      *
-     * @group Remove moderator
+     * 
      * This is used to remove an existing moderator of a community.
      * 
      * @bodyParam my_username string required The username of the current user.
@@ -128,7 +128,7 @@ class CommunitiesController extends Controller
 
     /**
      *
-     * @group subscription a Community
+     *
      * This is used to subscribe or unsubscribe an existing community.
      * 
      * @bodyParam my_username string required The username of the current user.
