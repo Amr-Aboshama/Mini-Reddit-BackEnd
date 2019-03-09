@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-	/**
-	 *@group all APIs concerned with following and unfollowing stuff are included
-	*/
+/**
+ * @group Following
+ */
 
 class FollowingController extends Controller
 {

@@ -57,7 +57,7 @@ return [
                  * Match only routes whose paths match this pattern (use * as a wildcard to match any characters).
                  */
                 'prefixes' => [
-                    'api/*',
+                    'api/auth/*',
                     // 'users/*',
                 ],
 
@@ -85,6 +85,7 @@ return [
              * Note that the route must be referenced by name here (wildcards are supported).
              */
             'exclude' => [
+
                 // 'users.create', 'admin.*'
             ],
 
@@ -96,7 +97,9 @@ return [
                  * Specify headers to be added to the example requests
                  */
                 'headers' => [
-                    // 'Authorization' => 'Bearer {token}',
+                  'Accept' => 'application/json',
+                  'Authorization' => 'Bearer: {token}',
+                    // 'Authorization' => 'xxx {token}',
                     // 'Api-Version' => 'v2',
                 ],
 
@@ -153,6 +156,52 @@ return [
                      */
                     'body' => [
                         // 'key' => 'value',
+                    ],
+                ],
+            ],
+        ],
+        [
+            'match' => [
+
+                'domains' => [
+                    '*',
+                ],
+
+                'prefixes' => [
+                    'api/unauth/*',
+                ],
+
+                'versions' => [
+                    'v1',
+                ],
+            ],
+            'include' => [
+            ],
+            'exclude' => [
+            ],
+            'apply' => [
+                'headers' => [
+                ],
+
+                'response_calls' => [
+                    'methods' => ['GET'],
+
+                    'bindings' => [
+                    ],
+                    'env' => [
+                        'APP_ENV' => 'documentation',
+                        'APP_DEBUG' => false,
+                    ],
+
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                    ],
+
+                    'query' => [
+                    ],
+
+                    'body' => [
                     ],
                 ],
             ],

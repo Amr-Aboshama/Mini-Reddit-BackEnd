@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
     /**
-     *@group Communities 
-     *all community features are handled by the following APIs 
+     * @group Communities
+     * all community features are handled by the following APIs
     */
 
 class CommunitiesController extends Controller
 {
     /**
-     * view the communities which the user has subscribed
+     * View the communities which the user has subscribed
      * @bodyParam username string required the username of the user who has the communities.
      * @response 200{
-         "success" : "true",
+     *   "success" : "true",
      *   "communities" : [{
      *   "community_name":"Arduino",
      *   "community_logo":"logo1"
@@ -26,7 +26,7 @@ class CommunitiesController extends Controller
      * }
      * @response 204{
      *   "success" : "true",
-     *   "message" : "no communities to be shown"
+     *   "error" : "no communities to be shown"
      *   }
      */
 		public function viewUserCommunities()
@@ -35,24 +35,24 @@ class CommunitiesController extends Controller
 		}
 
     /**
-     * This is used to view the Rules and Description of a community.
+     * View rules and description of a specific community
      * @bodyParam comm_id int required The ID of the community the user want to show its rules and  description.
      * @response 200{
      *    "success":"true"
      * }
      * @response 204{
      *   "success" : "true",
-     *   "message" : "no rules to be shown"
+     *   "error" : "no rules to be shown"
      *   }
      */
-        public function viewCommunitiesRulesDesc($my_username,$token,$comm_id)
-        {
-             //...
-        }
+    public function viewCommunitiesRulesDesc()
+    {
+         //...
+    }
 
 
     /**
-     * This is used to edit the Rules and Description of a community.
+     * Edit community rules or/and description.
      * @authenticated
      * @bodyParam comm_id int required The ID of the community the user want to edit its rules& description.
      * @bodyParam rules_content string required The edited rules of the community.
@@ -65,14 +65,14 @@ class CommunitiesController extends Controller
      *  "error": "UnAuthorized"
      * }
      */
-        public function editCommunity($my_username,$token,$comm_id,$rules_content,$des_content)
-        {
+    public function editCommunity()
+    {
 
-        }
+		}
 
 
     /**
-     * This is used by a user to create a community.
+     * Create a community
      * @authenticated
      * @bodyParam comm_name string required The Name of the community to be created.
      * @response 200 {
@@ -80,97 +80,168 @@ class CommunitiesController extends Controller
      * }
      * @response 204 {
      *  "success": "false",
-        "message" : "some of the needed contents are missed"
+     *  "error" : "some of the needed contents are missed"
      * }
      * @response 401 {
      *  "success": "false",
-     *  "message" : "you have to complete 30 days "
+     *  "error" : "you have to complete 30 days "
+     * }
+     *
+     * @respone 403 {
+     *  "success": "false",
+     *  "error": "this name already exists"
      * }
      */
-        public function createCommunity($my_username,$token,$comm_name)
-        {
+		public function createCommunity()
+		{
 
-        }
+    }
 
 
     /**
-     * This is used to remove an existing community.
+     * Remove an existing community
      * @authenticated
      * @bodyParam comm_id int required The ID of the community to be removed.
      * @response 200 {
      *  "success": "true"
      * }
+     *
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "community doesn't exist"
+     * }
      */
-        public function removeCommunity($my_username,$token,$comm_id)
-        {
+    public function removeCommunity()
+    {
 
-        }
+    }
 
 
     /**
-     * This is used to add a moderator for an existing community.
+     * Add a moderator to a community
      * @authenticated
      * @bodyParam comm_id int required The ID of the community to add a moderator for.
      * @bodyParam mod_username string required The username of the moderator to be set for the community.
      * @response 200 {
      *  "success": "true"
      * }
+     *
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "user doesn't exist"
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "community doesn't exist"
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "user is already a moderator in that community"
+     * }
      */
-        public function addModretorForCommunity($my_username,$token,$comm_id,$mod_username)
-        {
+    public function addModretorForCommunity()
+    {
 
-        }
+    }
 
 
     /**
-     * This is used to remove an existing moderator of a community.
+     * Remove a moderator from a community
      * @authenticated
-     * @bodyParam my_username string required The username of the current user.
-     * @bodyParam token string required The token of the current user.
      * @bodyParam comm_id int required The ID of the community to remove a moderator from.
      * @bodyParam mod_username string required The username of the moderator to be removed from the community.
      * @response 200 {
      *  "success": "true"
      * }
+     *
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
-     */
-        public function removeModretorFromCommunity($my_username,$token,$comm_id,$mod_username)
-        {
-
-        }
-
-	/**
-     * This is used to subscribe an existing community.
-     * @authenticated
-     * @bodyParam comm_id int required The ID of the community to be un/subscribed.
-     * @response 200 {
-     *  "success": "true"
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "user doesn't exist"
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "community doesn't exist"
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "user isn't a moderator already in that community"
      * }
      */
-        public function subscribeCommunity($my_username,$token,$comm_id)
-        {
+    public function removeModretorFromCommunity()
+    {
 
-        }
+    }
 
-	/**
-     * This is used to unsubscribe an existing community.
-     * @authenticated
-     * @bodyParam comm_id int required The ID of the community to be un/subscribed.
-     * @response 200 {
-     *  "success": "true"
+		/**
+	   * Subscribe a community
+	   * @authenticated
+	   * @bodyParam comm_id int required The ID of the community to be un/subscribed.
+	   * @response 200 {
+	   *  "success": "true"
+	   * }
+	   *
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
      * }
-     */
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "community doesn't exist"
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "user already is subscribed in that community"
+     * }
+	   */
+    public function subscribeCommunity()
+    {
+
+    }
+
+		/**
+	   * Unsubscribe a community
+	   * @authenticated
+	   * @bodyParam comm_id int required The ID of the community to be un/subscribed.
+	   * @response 200 {
+	   *  "success": "true"
+	   * }
+	   *
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "community doesn't exist"
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "user already is not subscribed in that community"
+     * }
+	   */
 		public function unsubscribeCommunity()
 		{
 

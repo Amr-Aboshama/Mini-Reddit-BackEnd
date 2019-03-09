@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-     /**
-      *@group Account settings   
-     */
-
-
-
+/**
+ * @group Account settings
+ */
 class AccountSettingsController extends Controller
 {
     /**
@@ -44,7 +41,7 @@ class AccountSettingsController extends Controller
      *
      * @response 404 {
      * 	"success": "false",
-     * 	"message": "wrong password or the new one did not match the confirmed message"
+     * 	"error": "wrong password or the new one did not match the confirmed message"
      * }
      *
      * @response 401 {

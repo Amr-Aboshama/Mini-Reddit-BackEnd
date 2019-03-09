@@ -4,17 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-	/**
-	 *@group Authentication 
-	 *sign in , sign up .....etc  
-
-	*/
+/**
+ * @group Authentication
+ * sign in , sign up .....etc
+ */
 
 class AuthenticationController extends Controller
 {
 		/**
 	   *
-	   * Login of a user
+	   * Login a user
 	   * @bodyParam my_username string required the username of the current user.
 	   * @bodyParam password string required The password of the user.
 	   * @response 200 {
