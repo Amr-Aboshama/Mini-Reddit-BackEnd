@@ -16,3 +16,14 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/search','SearchingController@search');
+Route::post('/sendMsg','MessagesController@sendMsg');
+Route::get('/commRules','CommunitiesController@viewCommRulesDesc');
+Route::patch('/editComm','CommunitiesController@editComm');
+Route::post('/createComm','CommunitiesController@createComm');
+Route::delete('/removeComm','CommunitiesController@removeComm');
+Route::patch('/addModerator','CommunitiesController@addModretorForComm');
+Route::patch('/removeModerator','CommunitiesController@removeModretorFromComm');
+Route::patch('/subscriptionComm','CommunitiesController@subscriptionComm');
+Route::patch('/savingLink','InteractingController@savingLink');
