@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+    /**
+     *@group Public and Private information of the user
+
+    */
+
+
 class InformationController extends Controller
 {
 
@@ -24,7 +30,7 @@ class InformationController extends Controller
     public function viewPrivateUserInfo()
     {
         // ...
-	  }
+	}
 
   	/**
      *

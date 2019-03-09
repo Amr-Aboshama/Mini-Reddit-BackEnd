@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
+	/**
+	 *@group Privacy settings
+	*/
+
 class PrivacyController extends Controller
 {
 		/**
