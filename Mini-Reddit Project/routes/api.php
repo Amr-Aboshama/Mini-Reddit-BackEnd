@@ -26,3 +26,4 @@ Route::delete('/removeComm','CommunitiesController@removeComm');
 Route::patch('/addModerator','CommunitiesController@addModretorForComm');
 Route::patch('/removeModerator','CommunitiesController@removeModretorFromComm');
 Route::patch('/subscriptionComm','CommunitiesController@subscriptionComm');
+Route::patch('/savingLink','InteractingController@savingLink');
