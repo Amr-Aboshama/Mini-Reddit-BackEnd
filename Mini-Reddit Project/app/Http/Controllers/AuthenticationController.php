@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class AuthenticationController extends Controller
 {
 	/**
-      *
+      *@group Authentication
       * APIs for managing authentication 
       * @bodyParam my_username string required the username of the current user.
       * @bodyParam password string required The password of the user.
@@ -18,7 +18,7 @@ class AuthenticationController extends Controller
 	}
 
 	/**
-      *
+      *@group Authentication
       * APIs for managing authentication 
       * @bodyParam my_username string required the username of the current user.
       * @bodyParam password string required The password of the user.
@@ -30,7 +30,7 @@ class AuthenticationController extends Controller
 	}
 
 	/**
-      *
+      *@group Authentication
       * APIs for managing authentication 
       * @bodyParam email string required The email of the user.
       * @response 200{}
@@ -40,7 +40,7 @@ class AuthenticationController extends Controller
 	}
 
 	/**
-      *
+      *@group Authentication
       * APIs for managing authentication 
       * @bodyParam my_new_password string required The new password of the user .
       * @bodyParam my_new_password_confirm string required The new password confirmation of the user .

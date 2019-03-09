@@ -9,7 +9,7 @@ class InformationController extends Controller
 {
 
       /**
-       *
+       *@group UserInformation
        * APIs for managing user information 
        * @bodyParam my_username string required the username of the current user.
        * @bodyParam token string required the token of the user and it is required for authontication.
@@ -22,7 +22,7 @@ class InformationController extends Controller
 	}
 
 	/**
-       *
+       *@group UserInformation
        * APIs for managing user information 
        * @bodyParam my_username string required the username of the current user.
        * @bodyParam token string required the token of the user and it is required for authontication.
