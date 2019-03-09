@@ -50,3 +50,4 @@ class AuthenticationController extends Controller
 		// ...
 	}
 }
+
