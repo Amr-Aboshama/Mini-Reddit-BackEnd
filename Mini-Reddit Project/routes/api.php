@@ -69,3 +69,6 @@ Route::patch('/removeModerator','CommunitiesController@removeModretorFromComm');
 Route::patch('/subscriptionComm','CommunitiesController@subscriptionComm');
 Route::patch('/savingLink','InteractingController@savingLink');
 
+Route::patch('/update/display/name', 'PrivacyController@PrivacyController');
+
+Route::patch('/update/about', 'PrivacyController@updateAbout');
