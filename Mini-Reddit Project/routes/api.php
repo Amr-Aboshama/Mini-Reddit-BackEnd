@@ -18,4 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/search','SearchingController@search');
-Route::post('/sendmsg','MessagesController@sendMsg');
+Route::post('/sendMsg','MessagesController@sendMsg');
+Route::get('/commRules','CommunitiesController@viewCommRulesDesc');
+Route::patch('/editComm','CommunitiesController@editComm');
+Route::post('/createComm','CommunitiesController@createComm');
+Route::delete('/removeComm','CommunitiesController@removeComm');
+Route::patch('/addModerator','CommunitiesController@addModretorForComm');
+Route::patch('/removeModerator','CommunitiesController@removeModretorFromComm');
+Route::patch('/subscriptionComm','CommunitiesController@subscriptionComm');
