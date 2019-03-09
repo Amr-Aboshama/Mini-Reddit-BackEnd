@@ -53,6 +53,7 @@ Route::delete('/blocking/users', 'PrivacyController@unblockUser');//*
 Route::patch('/update/display/name', 'PrivacyController@updateDisplayName');
 Route::patch('/update/about', 'PrivacyController@updateAbout');
 
+	
 
 Route::post('/viewUserCommunities','CommunitiesController@viewUserCommunities');
 Route::get('/communityRules','CommunitiesController@viewCommunitiesRulesDesc');
@@ -63,6 +64,7 @@ Route::post('/addModerator','CommunitiesController@addModretorForCommunity');
 Route::delete('/removeModerator','CommunitiesController@removeModretorFromCommunity');
 Route::post('/subscribeCommunity','CommunitiesController@subscribeCommunity'); //
 Route::delete('/subscribeCommunity','CommunitiesController@unsubscribeCommunity'); //*
+
 
 
 Route::post('/saveLink','InteractingController@saveLink'); //
@@ -82,3 +84,11 @@ Route::post('/upVotePost','InteractingController@addUpvotePost');//
 Route::delete('/upVotePost','InteractingController@removeUpvotePost');//*
 Route::post('/upVoteComment','InteractingController@addUpvoteComment');//
 Route::delete('/upVoteComment','InteractingController@removeUpvoteComment');//*
+Route::get('/viewPost','InteractingController@viewPost');
+Route::get('/viewComments','InteractingController@viewComments');
+Route::get('/viewCommentsReplies' , 'InteractingController@ViewComments_RepliesOfPosts_Comments');
+Route::get('/viewUpOrDownvotedPosts', 'InteractingController@ViewUpVotedOrDownVotedPosts')
+Route::get('/viewOverview' , 'InteractingController@ViewOverview');
+Route::get('viewSavedLinks' , 'InteractingController@ViewSavedLinks');
+
+

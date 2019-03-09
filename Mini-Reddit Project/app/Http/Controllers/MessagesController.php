@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
+	/**
+	 *@group Messages
+	*/
+
+
 class MessagesController extends Controller
 {
     /**
@@ -15,6 +21,7 @@ class MessagesController extends Controller
      *  "photo":"photo3",
 	 	 *  "message_content":"hello world"
      * }
+
      */
     public function viewUserMessage()
 		{
@@ -48,7 +55,7 @@ class MessagesController extends Controller
 	   * APIs for managing user Messages
 	   * @bodyParam state integer required 1 if unread messages ,2 if all messages,3 if notified messages
 	   * @response 200{
-		 *  "messages" : [{
+	   *  "messages" : [{
 	   *   	 "sender_name":"maged",
 	   *   	 "sender_photo":"photo1",
 	   *   	 "message_content":"hello world"

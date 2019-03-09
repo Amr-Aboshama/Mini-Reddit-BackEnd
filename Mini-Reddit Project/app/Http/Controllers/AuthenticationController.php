@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+	/**
+	 *@group Authentication 
+	 *sign in , sign up .....etc  
+
+	*/
+
 class AuthenticationController extends Controller
 {
 		/**

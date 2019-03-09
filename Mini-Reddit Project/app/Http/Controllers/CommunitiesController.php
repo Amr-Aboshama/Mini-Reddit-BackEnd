@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+    /**
+     *@group Communities 
+     *all community features are handled by the following APIs 
+    */
+
 class CommunitiesController extends Controller
 {
     /**

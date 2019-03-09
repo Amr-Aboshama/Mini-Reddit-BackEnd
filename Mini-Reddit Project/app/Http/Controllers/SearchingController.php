@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+    /**
+     *@group Searching
+
+    */
+
 class SearchingController extends Controller
 {
     /**

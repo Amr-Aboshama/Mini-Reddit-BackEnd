@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+     /**
+      *@group Account settings   
+     */
+
+
+
 class AccountSettingsController extends Controller
 {
     /**
