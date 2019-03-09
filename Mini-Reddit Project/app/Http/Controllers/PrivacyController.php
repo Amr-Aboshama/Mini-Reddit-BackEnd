@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 class PrivacyController extends Controller
 {
-
      /**
      * @bodyParam my_username string required the username of the current user
      * @bodyParam token string reuired the token of the current user
@@ -29,5 +28,4 @@ class PrivacyController extends Controller
 	{
 	    // ...
 	}
-
 }

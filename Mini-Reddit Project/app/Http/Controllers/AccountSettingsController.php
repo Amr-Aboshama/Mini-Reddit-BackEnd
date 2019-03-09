@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 class AccountSettingsController extends Controller
 {
-
      /**
      * @bodyParam my_username string required the username of the current user
      * @bodyParam token string required the token of the current user
@@ -26,13 +25,12 @@ class AccountSettingsController extends Controller
      * @bodyParam new_password string required the new password of the current user
      * @bodyParam confirm_new_password string required the new password of the current user
      * @response 200
-     * @response 404 {"message": "wrong password or the confirmed password 
-     * did not match the new one"}
+     * @response 404 {"message": "wrong password or the new one did not 
+     * match the confirmed message"}
      */
 	
 	public function changePassword() 
 	{
 	    // ...
 	}
-
 }
