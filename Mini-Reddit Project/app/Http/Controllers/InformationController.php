@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Http\Controllers;
@@ -8,32 +7,44 @@ use Illuminate\Http\Request;
 class InformationController extends Controller
 {
 
-      /**
-       *
-       * APIs for managing user information 
-       * @bodyParam my_username string required the username of the current user.
-       * @bodyParam token string required the token of the user and it is required for authontication.
-       * @response 200{
-       *  "email":"john_bb@gmail"
-       * }
-       */
-      public function viewPrivateUserInfo(){
-		// ...
-	}
+    /**
+     *
+     * Showing user's private information
+     * @authenticated
+     * @response 200 {
+     *  "success": "true"
+     *  "email": "john_bb@gmail"
+     * }
+     *
+     * @response 401 {
+     *  "success": "false"
+     * 	"error": "UnAuthorized"
+     * }
+     */
+    public function viewPrivateUserInfo()
+    {
+        // ...
+	  }
 
-	/**
-       *
-       * APIs for managing user information 
-       * @bodyParam my_username string required the username of the current user.
-       * @bodyParam token string required the token of the user and it is required for authontication.
-       * @response 200{
-       *  "username": "john",
-       *  "karma":500,
-       *  "cake_day":"March 8, 2019",
-       *  "about":"be or not to be"
-       * }
-       */
-	public function viewPublicUserInfo(){
-		// ...
-	}
+  	/**
+     *
+     * Showing user's public information
+     * @authenticated
+     * @response 200 {
+     *  "success": "true"
+     *  "username": "john",
+     *  "karma":500,
+     *  "cake_day":"March 8, 2019",
+     *  "about":"be or not to be"
+     * }
+     *
+     * @response 401 {
+     *  "success": "false"
+     * 	"error": "UnAuthorized"
+     * }
+     */
+  	public function viewPublicUserInfo()
+    {
+        // ...
+  	}
 }

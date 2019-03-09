@@ -6,31 +6,48 @@ use Illuminate\Http\Request;
 
 class AccountSettingsController extends Controller
 {
-     /**
-     * @bodyParam my_username string required the username of the current user
-     * @bodyParam token string required the token of the current user
+    /**
+     * Delete current user account
+     * @authenticated
      * @bodyParam password string required the password of te current user
-     * @response 200
+     * @response 200 {
+     * 	"success": "true"
+     * }
+     *
+     * @response 401 {
+     * 	"success": "false",
+     * 	"error": "UnAuthorized"
+     * }
+     *
      */
-	
-	public function deleteMyAccount()
-	{
-	    // ...
-	}
+		public function deleteMyAccount()
+		{
+		    // ...
+		}
 
-	/**
-     * @bodyParam my_username string required the username of the current user
-     * @bodyParam token string required the token of the current user
+
+		/**
+		 * Change current user password
      * @bodyParam password string required the current password of the current user
      * @bodyParam new_password string required the new password of the current user
      * @bodyParam confirm_new_password string required the new password of the current user
-     * @response 200
-     * @response 404 {"message": "wrong password or the new one did not 
-     * match the confirmed message"}
+     * @authenticated
+     * @response 200 {
+     * 	"success": "true"
+     * }
+     *
+     * @response 404 {
+     * 	"success": "false",
+     * 	"message": "wrong password or the new one did not match the confirmed message"
+     * }
+     *
+     * @response 401 {
+     * 	"success": "false",
+     * 	"error": "UnAuthorized"
+     * }
      */
-	
-	public function changePassword() 
-	{
-	    // ...
-	}
+		public function changePassword()
+		{
+		    // ...
+		}
 }

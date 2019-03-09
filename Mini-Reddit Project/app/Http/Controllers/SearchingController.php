@@ -7,17 +7,15 @@ use Illuminate\Http\Request;
 class SearchingController extends Controller
 {
     /**
-     *
-     *
      * This is used to search for a community or a user.
-     * 
-     * @bodyParam my_username string required The username of the current user.
-     * @bodyParam token string required The token of the current user.
      * @bodyParam search_content string required The string the user searching for.
-     * 
+     * @response 200{
+     *  "usersContent": ["johnsmith", "stevenkay"],
+     *  "communityContent" ["Ahly", "BackEnd"]
+     * }
      */
-    public function search ($my_username,$token,$search_content)
+    public function search()
     {
-
+        //
     }
 }
