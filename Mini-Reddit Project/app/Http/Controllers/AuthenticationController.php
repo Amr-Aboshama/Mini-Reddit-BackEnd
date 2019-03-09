@@ -9,13 +9,17 @@ class AuthenticationController extends Controller
 		/**
 	   *
 	   * Login of a user
-	   * @authenticated
 	   * @bodyParam my_username string required the username of the current user.
 	   * @bodyParam password string required The password of the user.
-	   * @response 200{
+	   * @response 200 {
 	   * 	"success": "true",
+	   * 	"token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
 	   * }
 	   *
+	   * @respone 404 {
+	   * 	"success": "false",
+	   * 	"error": "username and password don't matched"
+	   * }
 	   */
 		public function login()
 		{
@@ -24,11 +28,40 @@ class AuthenticationController extends Controller
 
 		/**
 	   *
-	   * APIs for managing authentication
+	   * Signup a user
 	   * @bodyParam my_username string required the username of the current user.
 	   * @bodyParam password string required The password of the user.
+	   * @bodyParam confirm_password string required The confirm password of the user.
 	   * @bodyParam email string required The email of the user.
-	   * @response 200{}
+	   * @response 200 {
+	   * 	"success": "true",
+	   * 	"token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
+	   * }
+	   *
+	   * @respone 404 {
+	   * 	"success": "false",
+	   * 	"error": "username and password don't match"
+	   * }
+	   *
+	   * @response 403 {
+	   * 	"success": "false",
+	   * 	"error": "user is logged in"
+	   * }
+	   *
+	   * @response 403 {
+	   * 	"success": "false",
+	   * 	"error": "email already exists"
+	   * }
+	   *
+	   * @response 403 {
+	   * 	"success": "false",
+	   * 	"error": "username already exists"
+	   * }
+	   *
+	   * @response 403 {
+	   * 	"success": "false",
+	   * 	"error": "passwords mismatch"
+	   * }
 	   */
 		public function signUp()
 		{
@@ -37,9 +70,16 @@ class AuthenticationController extends Controller
 
 		/**
 	   *
-	   * APIs for managing authentication
+	   * Send Email to Reset Password [Under investigation]
 	   * @bodyParam email string required The email of the user.
-	   * @response 200{}
+	   * @response 200 {
+	   * 	"success": "true"
+	   * }
+	   *
+	   * @respone 404 {
+	   * 	"success": "false",
+	   * 	"error": "email doesn't exist"
+	   * }
 	   */
 		public function forgetPassword()
 		{
@@ -48,10 +88,23 @@ class AuthenticationController extends Controller
 
 		/**
 	   *
-	   * APIs for managing authentication
-	   * @bodyParam my_new_password string required The new password of the user .
-	   * @bodyParam my_new_password_confirm string required The new password confirmation of the user .
-	   * @response 200{}
+	   * Reset User Password after receiving a mail [Under investigation]
+	   * @bodyParam new_password string required The new password of the user .
+	   * @bodyParam confirm_new_password string required The new password confirmation of the user .
+	   * @response 200 {
+	   * 	"success": "true",
+	   * 	"token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
+	   * }
+	   *
+	   * @respone 403 {
+	   * 	"success": "false",
+	   * 	"error": "Passwords don't match"
+	   * }
+	   *
+	   * @respone 404 {
+	   * 	"success": "false",
+	   * 	"error": "Link expired"
+	   * }
 	   */
 		public function resetPassword()
 		{
