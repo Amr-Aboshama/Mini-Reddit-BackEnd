@@ -11,6 +11,13 @@
 |
 */
 
+
+
 Route::get('/', function () {
-    return view('welcome');
+    
+    //return view('welcome');
+    $data =array('a'=>[1,2,3]) ;
+    return $data;
+    
+
 });
