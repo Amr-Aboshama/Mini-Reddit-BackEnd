@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::post('/login','AuthenticationController@login');
 Route::post('/signUp','AuthenticationController@signUp');
 Route::post('/forgetPassword','AuthenticationController@forgetPassword');
@@ -34,3 +35,14 @@ Route::post('/addOrRemoveDownvoteComment','InteractingController@addOrRemoveDown
 Route::post('/viewAUserMessage','MessagesController@viewAUserMessage');
 Route::post('/viewUserSentMessages','MessagesController@viewUserSentMessages');
 Route::post('/viewUserInboxMessages','MessagesController@viewUserInboxMessages');
+
+Route::get('/search','SearchingController@search');
+Route::post('/sendMsg','MessagesController@sendMsg');
+Route::get('/commRules','CommunitiesController@viewCommRulesDesc');
+Route::patch('/editComm','CommunitiesController@editComm');
+Route::post('/createComm','CommunitiesController@createComm');
+Route::delete('/removeComm','CommunitiesController@removeComm');
+Route::patch('/addModerator','CommunitiesController@addModretorForComm');
+Route::patch('/removeModerator','CommunitiesController@removeModretorFromComm');
+Route::patch('/subscriptionComm','CommunitiesController@subscriptionComm');
+Route::patch('/savingLink','InteractingController@savingLink');
