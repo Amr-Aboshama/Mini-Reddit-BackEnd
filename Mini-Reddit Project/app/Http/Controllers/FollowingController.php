@@ -35,7 +35,7 @@ class FollowingController extends Controller
      * @bodyParam username string required Username to show his followering
 	   * @response 200 {
      *  "success": "true",
-	   * 	"follwingList": ["John Smith"]
+	   * 	"follwingList": ["John Smith", "John Kay"]
 	   * }
 	   *
      * @response 401 {
