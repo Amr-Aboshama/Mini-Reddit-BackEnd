@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 class CommunitiesController extends Controller
 {
      /**
-      *@group Communities
-      * APIs for managing communities 
       * @bodyParam my_username string required the username of the current user.
       * @bodyParam username string required the username of the user who has the communities.
       * @bodyParam token string required the token of the user and it is required for authontication.
@@ -27,10 +25,6 @@ class CommunitiesController extends Controller
 	}
 
     /**
-     *
-     * @group View Community Rules& Description
-     * This is used to view the Rules and Description of a community.
-     * 
      * @bodyParam my_username string required The username of the current user.
      * @bodyParam token string required The token of the current user.
      * @bodyParam comm_id int required The ID of the community the user want to show its rules and description.
@@ -43,10 +37,6 @@ class CommunitiesController extends Controller
 
 
     /**
-     *
-     * @group Edit Community Rules& Description
-     * This is used to edit the Rules and Description of a community.
-     * 
      * @bodyParam my_username string required The username of the current user "should be the moderator of the community".
      * @bodyParam token string required The token of the current user.
      * @bodyParam comm_id int required The ID of the community the user want to edit its rules& description.
@@ -61,10 +51,6 @@ class CommunitiesController extends Controller
 
 
    /**
-     *
-     * @group Create Community
-     * This is used to create a new community.
-     * 
      * @bodyParam my_username string required The username of the current user.
      * @bodyParam token string required The token of the current user.
      * @bodyParam comm_name string required The Name of the community to be created.
@@ -77,8 +63,6 @@ class CommunitiesController extends Controller
 
 
     /**
-     *
-     *
      * This is used to remove an existing community.
      * 
      * @bodyParam my_username string required The username of the current user.

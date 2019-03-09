@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-<<<<<<< HEAD
+
 Route::delete('/delete/account', 'AccountSettingsController@deleteMyAccount');
 
 Route::patch('/change/password', 'AccountSettingsController@changePassword');
@@ -39,7 +39,7 @@ Route::post('/blocking/users', 'PrivacyController@blockOrUnblockUser');
 
 
 
-=======
+
 Route::post('/login','AuthenticationController@login');
 Route::post('/signUp','AuthenticationController@signUp');
 Route::post('/forgetPassword','AuthenticationController@forgetPassword');
@@ -68,4 +68,4 @@ Route::patch('/addModerator','CommunitiesController@addModretorForComm');
 Route::patch('/removeModerator','CommunitiesController@removeModretorFromComm');
 Route::patch('/subscriptionComm','CommunitiesController@subscriptionComm');
 Route::patch('/savingLink','InteractingController@savingLink');
->>>>>>> bb848949e2d501e8ee169d431dccf6ce3d33dfe6
+

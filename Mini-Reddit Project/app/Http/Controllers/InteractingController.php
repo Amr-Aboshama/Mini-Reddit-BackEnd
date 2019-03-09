@@ -7,11 +7,9 @@ use Illuminate\Http\Request;
 
 class InteractingController extends Controller
 {
-<<<<<<< HEAD
-=======
+
+
 	/**
-      *@group Interacting
-      * APIs for managing user Interacting
       * @bodyParam my_username string required the username of the current user.
       * @bodyParam token string required the token of the user and it is required for authontication.
       * @bodyParam post_id integer required the id of the post that the user wants to hide
@@ -22,8 +20,6 @@ class InteractingController extends Controller
 	}
 
      /**
-      *@group Interacting
-      * APIs for managing user Interacting
       * @bodyParam my_username string required the username of the current user.
       * @bodyParam token string required the token of the user and it is required for authontication.
       * @bodyParam post_id integer required the id of the post that the user wants to edit
@@ -36,8 +32,6 @@ class InteractingController extends Controller
      }
 
      /**
-      *@group Interacting
-      * APIs for managing user Interacting
       * @bodyParam my_username string required the username of the current user.
       * @bodyParam token string required the token of the user and it is required for authontication.
       * @bodyParam comment_id integer required the id of the comment that the user wants to edit
@@ -49,8 +43,6 @@ class InteractingController extends Controller
      }
 
      /**
-      *@group Interacting
-      * APIs for managing user Interacting
       * @bodyParam my_username string required the username of the current user.
       * @bodyParam token string required the token of the user and it is required for authontication.
       * @bodyParam post_id integer required the id of the post that the user wants to pin
@@ -61,8 +53,6 @@ class InteractingController extends Controller
      }
 
      /**
-      *@group Interacting
-      * APIs for managing user Interacting
       * @bodyParam my_username string required the username of the current user.
       * @bodyParam token string required the token of the user and it is required for authontication.
       * @bodyParam post_id integer required the id of the post that the user wants to downvote
@@ -73,8 +63,6 @@ class InteractingController extends Controller
      }
 
      /**
-      *@group Interacting
-      * APIs for managing user Interacting
       * @bodyParam my_username string required the username of the current user.
       * @bodyParam token string required the token of the user and it is required for authontication.
       * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
@@ -203,7 +191,7 @@ class InteractingController extends Controller
 
     }
 
->>>>>>> bb848949e2d501e8ee169d431dccf6ce3d33dfe6
+
     /**
      * @bodyParam my_username string required the username of the current user
      * @bodyParam token string required the token of the current user
@@ -220,16 +208,7 @@ class InteractingController extends Controller
 	}
 
     /**
-<<<<<<< HEAD
-     * @bodyParam my_username string required the username of the current user
-     * @bodyParam token string required the token of the current user
-     * @bodyParam post_ID int required the ID of the post
-     * @response 200
-     * @response 400 {"message": "you are not authorized to pin/unpin the post"}
-     */
-    
-    public function pinAndUnPinPost()
-=======
+
 		*view the saved links by the user.
 		*bodyParam MyUserName string required The username of the account owner.
 		*bodyParam Token
@@ -246,20 +225,26 @@ class InteractingController extends Controller
     */
 
     public function ViewSavedLinks( )
->>>>>>> bb848949e2d501e8ee169d431dccf6ce3d33dfe6
     {
         // ...
     }
 
-<<<<<<< HEAD
+
      /**
      * @bodyParam my_username string required the username of the current user
      * @bodyParam token string required the token of the current user
      * @bodyParam link_ID int required the ID of the link
      * @response 200
      * @response 400 {"message": "you are not authorized to remove the link"}
-=======
-    /**
+     */
+ 
+    
+    public function removeLink()
+    {
+        // ...
+    }
+
+     /**
      * 
      * This is used to save or unsave a post or a comment.
      * 
@@ -267,23 +252,14 @@ class InteractingController extends Controller
      * @bodyParam token string required The token of the current user.
      * @bodyParam link_id int required The ID of the post/comment to be saved or unsaved.
      * 
->>>>>>> bb848949e2d501e8ee169d431dccf6ce3d33dfe6
      */
-    
-    public function removeLink()
+     public function savingLink()
     {
         // ...
     }
 
 
+
+
 }
-<<<<<<< HEAD
-=======
 
-
-
-
-
-
-
->>>>>>> bb848949e2d501e8ee169d431dccf6ce3d33dfe6
