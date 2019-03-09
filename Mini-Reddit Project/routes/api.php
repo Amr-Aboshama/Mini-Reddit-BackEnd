@@ -29,8 +29,8 @@ Route::post('/viewPrivateUserInfo','InformationController@viewPrivateUserInfo');
 Route::post('/viewPublicUserInfo','InformationController@viewPublicUserInfo');
 
 
-Route::post('/followers', 'FollowingController@viewUserFollowers');
-Route::post('/following', 'FollowingController@viewUserFollowing');
+Route::get('/followers', 'FollowingController@viewUserFollowers');
+Route::get('/following', 'FollowingController@viewUserFollowing');
 Route::post('/follow', 'FollowingController@followUser');//
 Route::delete('/follow', 'FollowingController@unfollowUser');//*
 
@@ -47,7 +47,7 @@ Route::post('/forgetPassword','AuthenticationController@forgetPassword');
 Route::post('/resetPassword','AuthenticationController@resetPassword');
 
 
-Route::post('/blocked/users', 'PrivacyController@showBlockedUsers');
+Route::get('/blocked/users', 'PrivacyController@showBlockedUsers');
 Route::post('/blocking/users', 'PrivacyController@blockUser');//
 Route::delete('/blocking/users', 'PrivacyController@unblockUser');//*
 Route::patch('/update/display/name', 'PrivacyController@updateDisplayName');
