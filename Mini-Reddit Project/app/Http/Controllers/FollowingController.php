@@ -6,44 +6,26 @@ use Illuminate\Http\Request;
 
 class FollowingController extends Controller
 {
-
-	/**
-		*following a user.
-
-		*bodyParam my_username string required The username of the account owner.
-		*bodyParam username string required The username of the followed user.
-		*bodyParam token
-
-		*@response 404 {
-			"message" : "Sth wrong !!!!!!"
-		} 
-
-    */
-
-   
-	public function FollowUser()
+    /**
+     * @bodyParam my_username string required the username of the current user
+     * @bodyParam token string required the token of the current user
+     * @response {"follwersList": ["John Smith"]}
+     */
+	
+	public function viewMyFollowers() 
 	{
-
+	    // ...
 	}
 
-
 	/**
-		*following a user.
-
-		*bodyParam my_username string required The username of the account owner.
-		*bodyParam user_name string required The username of the followed user.
-		*bodyParam token 
-
-		*@response 404 {
-			"message" : "Sth wrong !!!!!!"
-		} 
-
-    */
-
-	public function UnfollowUser()
+     * @bodyParam my_username string required the username of the current user
+     * @bodyParam token string required the token of the current user
+     * @response {"follwingList": ["John Smith"]}
+     */
+	
+	public function viewMyFollowing() 
 	{
-
+	    // ...
 	}
-
 
 }
