@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+
 Route::delete('/delete/account', 'AccountSettingsController@deleteMyAccount');
 
 Route::patch('/change/password', 'AccountSettingsController@changePassword');
@@ -37,4 +38,34 @@ Route::post('/blocked/users', 'PrivacyController@showMyBlockedUsers');
 Route::post('/blocking/users', 'PrivacyController@blockOrUnblockUser');
 
 
+
+
+Route::post('/login','AuthenticationController@login');
+Route::post('/signUp','AuthenticationController@signUp');
+Route::post('/forgetPassword','AuthenticationController@forgetPassword');
+Route::post('/resetPassword','AuthenticationController@resetPassword');
+Route::post('/viewPrivateUserInfo','InformationController@viewPrivateUserInfo');
+Route::post('/viewPublicUserInfo','InformationController@viewPublicUserInfo');
+Route::post('/viewUserCommunities','CommunitiesController@viewUserCommunities');
+Route::post('/hideOrUnhidePost','InteractingController@hideOrUnhidePost');
+Route::post('/editAPost','InteractingController@editAPost');
+Route::post('/editAComment','InteractingController@editAComment');
+Route::post('/pinOrUnpinAPost','InteractingController@pinOrUnpinAPost');
+Route::post('/addOrRemoveDownvotePost','InteractingController@addOrRemoveDownvotePost');
+Route::post('/addOrRemoveDownvoteComment','InteractingController@addOrRemoveDownvoteComment');
+
+Route::post('/viewAUserMessage','MessagesController@viewAUserMessage');
+Route::post('/viewUserSentMessages','MessagesController@viewUserSentMessages');
+Route::post('/viewUserInboxMessages','MessagesController@viewUserInboxMessages');
+
+Route::get('/search','SearchingController@search');
+Route::post('/sendMsg','MessagesController@sendMsg');
+Route::get('/commRules','CommunitiesController@viewCommRulesDesc');
+Route::patch('/editComm','CommunitiesController@editComm');
+Route::post('/createComm','CommunitiesController@createComm');
+Route::delete('/removeComm','CommunitiesController@removeComm');
+Route::patch('/addModerator','CommunitiesController@addModretorForComm');
+Route::patch('/removeModerator','CommunitiesController@removeModretorFromComm');
+Route::patch('/subscriptionComm','CommunitiesController@subscriptionComm');
+Route::patch('/savingLink','InteractingController@savingLink');
 
