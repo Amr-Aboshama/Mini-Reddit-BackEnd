@@ -24,10 +24,10 @@ class CommunitiesController extends Controller
      *   "community_logo":"logo2"
      *   }]
      * }
-     * @response 204{
-     *   "success" : "true",
-     *   "error" : "no communities to be shown"
-     *   }
+     * @response 403 {
+     * 	"success": "false",
+     * 	"error": "username doesn't exist"
+     * }
      */
 		public function viewUserCommunities()
 		{
@@ -36,14 +36,14 @@ class CommunitiesController extends Controller
 
     /**
      * View rules and description of a specific community
-     * @bodyParam comm_id int required The ID of the community the user want to show its rules and  description.
+     * @bodyParam community_id int required The ID of the community the user want to show its rules and  description.
      * @response 200{
      *    "success":"true"
      * }
-     * @response 204{
-     *   "success" : "true",
-     *   "error" : "no rules to be shown"
-     *   }
+     * @response 403 {
+     * 	"success": "false",
+     * 	"error": "community doesn't exist"
+     * }
      */
     public function viewCommunitiesRulesDesc()
     {
@@ -54,7 +54,7 @@ class CommunitiesController extends Controller
     /**
      * Edit community rules or/and description.
      * @authenticated
-     * @bodyParam comm_id int required The ID of the community the user want to edit its rules& description.
+     * @bodyParam community_id int required The ID of the community the user want to edit its rules& description.
      * @bodyParam rules_content string required The edited rules of the community.
      * @bodyParam des_content string required The edited discription of the community.
      * @response 200 {
@@ -63,6 +63,10 @@ class CommunitiesController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success": "false",
+     * 	"error": "community doesn't exist"
      * }
      */
     public function editCommunity()
@@ -74,7 +78,7 @@ class CommunitiesController extends Controller
     /**
      * Create a community
      * @authenticated
-     * @bodyParam comm_name string required The Name of the community to be created.
+     * @bodyParam community_name string required The Name of the community to be created.
      * @response 200 {
      *  "success": "true"
      * }
@@ -87,7 +91,7 @@ class CommunitiesController extends Controller
      *  "error" : "you have to complete 30 days "
      * }
      *
-     * @respone 403 {
+     * @response 403 {
      *  "success": "false",
      *  "error": "this name already exists"
      * }
@@ -101,7 +105,7 @@ class CommunitiesController extends Controller
     /**
      * Remove an existing community
      * @authenticated
-     * @bodyParam comm_id int required The ID of the community to be removed.
+     * @bodyParam community_id int required The ID of the community to be removed.
      * @response 200 {
      *  "success": "true"
      * }
@@ -125,7 +129,7 @@ class CommunitiesController extends Controller
     /**
      * Add a moderator to a community
      * @authenticated
-     * @bodyParam comm_id int required The ID of the community to add a moderator for.
+     * @bodyParam community_id int required The ID of the community to add a moderator for.
      * @bodyParam mod_username string required The username of the moderator to be set for the community.
      * @response 200 {
      *  "success": "true"
@@ -160,7 +164,7 @@ class CommunitiesController extends Controller
     /**
      * Remove a moderator from a community
      * @authenticated
-     * @bodyParam comm_id int required The ID of the community to remove a moderator from.
+     * @bodyParam community_id int required The ID of the community to remove a moderator from.
      * @bodyParam mod_username string required The username of the moderator to be removed from the community.
      * @response 200 {
      *  "success": "true"
@@ -194,7 +198,7 @@ class CommunitiesController extends Controller
 		/**
 	   * Subscribe a community
 	   * @authenticated
-	   * @bodyParam comm_id int required The ID of the community to be un/subscribed.
+	   * @bodyParam community_id int required The ID of the community to be un/subscribed.
 	   * @response 200 {
 	   *  "success": "true"
 	   * }
@@ -222,7 +226,7 @@ class CommunitiesController extends Controller
 		/**
 	   * Unsubscribe a community
 	   * @authenticated
-	   * @bodyParam comm_id int required The ID of the community to be un/subscribed.
+	   * @bodyParam community_id int required The ID of the community to be un/subscribed.
 	   * @response 200 {
 	   *  "success": "true"
 	   * }

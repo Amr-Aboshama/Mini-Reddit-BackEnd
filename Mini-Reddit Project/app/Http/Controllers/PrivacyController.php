@@ -48,6 +48,11 @@ class PrivacyController extends Controller
 	   * 	"sucess": "true",
      * 	"error": "Already blocked"
      * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "username doesn't exist"
+     * }
 	   */
 		public function blockUser()
 		{
@@ -72,6 +77,11 @@ class PrivacyController extends Controller
 	   * 	"sucess": "true",
      * 	"error": "Already unblocked"
      * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "username doesn't exist"
+     * }
 	   */
 		public function unblockUser()
 		{
@@ -90,6 +100,11 @@ class PrivacyController extends Controller
      * @response 401 {
 	   * 	"sucess": "true",
      * 	"error": "UnAuthorized"
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "user must have a name"
      * }
 	   */
 		public function updateDisplayName()
@@ -110,6 +125,7 @@ class PrivacyController extends Controller
 	   * 	"sucess": "true",
      * 	"error": "UnAuthorized"
      * }
+     *
 	   */
 		public function updateAbout()
 		{

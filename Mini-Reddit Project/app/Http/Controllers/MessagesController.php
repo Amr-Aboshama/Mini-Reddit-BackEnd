@@ -25,6 +25,10 @@ class MessagesController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "message doesn't exist"
+     * }
      */
     public function viewUserMessage()
 	  {
@@ -82,6 +86,10 @@ class MessagesController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "undefined state"
+     * }
   	 */
   	public function viewUserInboxMessages()
   	{
@@ -100,6 +108,16 @@ class MessagesController extends Controller
   	 * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "username doesn't exist"
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "message must have a content"
      * }
   	 */
   	public function sendMessage()

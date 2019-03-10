@@ -22,6 +22,10 @@ class AccountSettingsController extends Controller
      * 	"error": "UnAuthorized"
      * }
      *
+     * @response 403 {
+     * 	"success": "false",
+     * 	"error": "password isn't correct"
+     * }
      */
 		public function deleteMyAccount()
 		{
@@ -41,7 +45,12 @@ class AccountSettingsController extends Controller
      *
      * @response 404 {
      * 	"success": "false",
-     * 	"error": "wrong password or the new one did not match the confirmed message"
+     * 	"error": "new password doesn't match the confirmation"
+     * }
+     *
+     * @response 404 {
+     * 	"success": "false",
+     * 	"error": "wrong old passwords"
      * }
      *
      * @response 401 {

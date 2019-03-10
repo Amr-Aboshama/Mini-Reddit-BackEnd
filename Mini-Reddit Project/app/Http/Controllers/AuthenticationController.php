@@ -21,7 +21,7 @@ class AuthenticationController extends Controller
 	   * 	"token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
 	   * }
 	   *
-	   * @respone 404 {
+	   * @response 404 {
 	   * 	"success": "false",
 	   * 	"error": "username and password don't matched"
 	   * }
@@ -43,14 +43,14 @@ class AuthenticationController extends Controller
 	   * 	"token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
 	   * }
 	   *
-	   * @respone 404 {
+	   * @response 404 {
 	   * 	"success": "false",
 	   * 	"error": "username and password don't match"
 	   * }
 	   *
 	   * @response 403 {
 	   * 	"success": "false",
-	   * 	"error": "user is logged in"
+	   * 	"error": "user is logged in already"
 	   * }
 	   *
 	   * @response 403 {
@@ -81,7 +81,7 @@ class AuthenticationController extends Controller
 	   * 	"success": "true"
 	   * }
 	   *
-	   * @respone 404 {
+	   * @response 404 {
 	   * 	"success": "false",
 	   * 	"error": "email doesn't exist"
 	   * }
@@ -101,12 +101,12 @@ class AuthenticationController extends Controller
 	   * 	"token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
 	   * }
 	   *
-	   * @respone 403 {
+	   * @response 403 {
 	   * 	"success": "false",
 	   * 	"error": "Passwords don't match"
 	   * }
 	   *
-	   * @respone 404 {
+	   * @response 404 {
 	   * 	"success": "false",
 	   * 	"error": "Link expired"
 	   * }

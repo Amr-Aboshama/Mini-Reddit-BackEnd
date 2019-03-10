@@ -23,10 +23,14 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
-     *@response 403 {
-     * "success" : "false",
-     * "error" : "already hidden"
-     *}
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "already hidden"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
+     * }
 	   */
 		public function hidePost()
 		{
@@ -45,10 +49,14 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
-     *@response 403 {
-     * "success" : "false",
-     * "error" : "already unhidden"
-     *}
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "already unhidden"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
+     * }
 	   */
 		public function unhidePost()
 		{
@@ -70,6 +78,18 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post must have a title"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post must have a content"
+     * }
      */
     public function editPost()
 		{
@@ -88,6 +108,14 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "comment doesn't exist"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "comment must have a content"
+     * }
      */
 		public function editComment()
 		{
@@ -97,7 +125,7 @@ class InteractingController extends Controller
 
     /**
      * Pin or unpin a post
-     * @bodyParam post_id integer required the id of the post that the user wants to pin
+     * @bodyParam post_id integer required the id of the post that the user wants to pin or unpin
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -105,6 +133,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
      * }
      */
     public function pinOrUnpinPost()
@@ -124,6 +156,10 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
+     * }
      */
     public function addDownvotePost()
 		{
@@ -141,6 +177,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
      * }
      */
     public function removeDownvotePost()
@@ -160,6 +200,10 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "comment doesn't exist"
+     * }
      */
     public function addDownvoteComment()
 		{
@@ -177,6 +221,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "comment doesn't exist"
      * }
      */
     public function removeDownvoteComment()
@@ -196,6 +244,10 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
+     * }
      */
     public function addUpvotePost()
 		{
@@ -213,6 +265,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
      * }
      */
     public function removeUpvotePost()
@@ -232,6 +288,10 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "comment doesn't exist"
+     * }
      */
     public function addUpvoteComment()
 		{
@@ -249,6 +309,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "comment doesn't exist"
      * }
      */
 
@@ -272,6 +336,14 @@ class InteractingController extends Controller
 	 	 * @response 404 {
 		 *	"error" :"somethimg wrong!!!!"
 	 	 * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "username doesn't exist"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "community doesn't exist"
+     * }
 	 	 */
     public function ViewPosts()
     {
@@ -297,6 +369,10 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "username doesn't exist"
+     * }
      */
     public function ViewComments()
     {
@@ -306,15 +382,20 @@ class InteractingController extends Controller
 
     /**
 		 * Viewing comments of a specific post or replies of a specific comment
-		 * @bodyParam id int required the id of the post or the id of the comment.
+		 * @bodyParam link_id int required the id of the post or the id of the comment.
   	 * @response 200 {
  		 *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true"  } ,
  		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false"  } ,
  		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" }]
  		 * }
+		 * }
  		 * @response 404 {
 		 *	"error" :"somethimg wrong!!!!"
  		 * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "this post, comment or reply doesn't exist"
+     * }
      */
     public function ViewCommentsAndRepliesOfPostsAndComments()
     {
@@ -330,7 +411,6 @@ class InteractingController extends Controller
 	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden: "false" } ,
 	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden: "true" } ,
 	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden: "true" }]
-	 	 * }
  		 *
  		 * @response 404 {
 		 * 	"error" :"somethimg wrong!!!!"
@@ -338,6 +418,10 @@ class InteractingController extends Controller
      * @response 401 {
      * 	"success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "undefined type"
      * }
      */
     public function ViewUpVotedOrDownVotedPosts( )
@@ -367,6 +451,10 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "username doesn't exist"
+     * }
      */
     public function ViewOverview()
     {
@@ -377,9 +465,9 @@ class InteractingController extends Controller
     /**
      * Add new Link
      * @bodyParam post_content string required the content written in the post
-     * @bodyParam parent_link_ID int required the ID of the parent link, this parameter should be 'null' if the link is a post
-     * @bodyParam post_title string this parameter is required only for posts
-     * @bodyParam community_ID int this parameter is required only if the link is inside a community
+     * @bodyParam parent_link_id int required the ID of the parent link, this parameter should be 'null' if the link is a post
+     * @bodyParam post_title string this parameter is not required only for posts
+     * @bodyParam community_id int this parameter is required only if the link is inside a community
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -387,6 +475,22 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "post must have a title"
+     * }
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "post must have a content"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "parent doesn't exist"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "community doesn't exist"
      * }
      */
 	  public function addNewLink()
@@ -413,7 +517,7 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
-     *}
+     * }
      */
     public function ViewSavedLinks( )
     {
@@ -422,7 +526,7 @@ class InteractingController extends Controller
 
     /**
      * Remove post, comment or reply.
-     * @bodyParam link_ID int required the ID of the link
+     * @bodyParam link_id int required the ID of the link
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -430,6 +534,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "this post, comment or reply doesn't exist"
      * }
      */
     public function removeLink()
@@ -449,6 +557,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "this post, comment or reply doesn't exist"
      * }
      */
     public function saveLink()
@@ -470,6 +582,10 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "this post, comment or reply doesn't exist"
+     * }
      */
     public function unsaveLink()
     {
@@ -481,7 +597,7 @@ class InteractingController extends Controller
 		 *
 		 * @authenticated
 		 * @bodyParam username string required Username to give to a reward.
-		 * @respone 200 {
+		 * @response 200 {
 		 * 	"success": "true"
 		 * }
 		 *
@@ -490,9 +606,13 @@ class InteractingController extends Controller
      *  "error": "UnAuthorized"
      * }
      *
-     * @respone 403 {
+     * @response 403 {
      * 	"success": "false",
      * 	"error": "Already given before"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "username doesn't exist"
      * }
 		 */
 		public function giveReward()
