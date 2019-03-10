@@ -25,7 +25,7 @@
       </span>
     </a>
     <div class="tocify-wrapper">
-        <img src="images/logo.png" />
+        <img src="images/Mini-Reddit.png" />
                     <div class="lang-selector">
                                   <a href="#" data-language-name="bash">bash</a>
                                   <a href="#" data-language-name="javascript">javascript</a>
@@ -44,9 +44,10 @@
       <div class="dark-box"></div>
       <div class="content">
           <!-- START_INFO -->
-<h1>Info</h1>
-<p>Welcome to the generated API reference.
-<a href="http://localhost/docs/collection.json">Get Postman Collection</a></p>
+<h1>Mini-Reddit APIs Documentation</h1>
+<p>Welcome to Mini-Reddit APIs Documentation</p>
+<br>
+<p>We hope this Documentation is well-improved to be read and used easily ^^</p>
 <!-- END_INFO -->
 <h1>Account settings</h1>
 <!-- START_815884eb756fda4323728b1d5e7659ec -->
@@ -59,7 +60,7 @@
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"password":"81Nc6v7IDgPNnCsY"}'
+    -d '{"password":"X5JUkwIxSKyFloWe"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/delete/account");
 
@@ -70,7 +71,7 @@ let headers = {
 }
 
 let body = {
-    "password": "81Nc6v7IDgPNnCsY"
+    "password": "X5JUkwIxSKyFloWe"
 }
 
 fetch(url, {
@@ -92,6 +93,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "password isn't correct"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>DELETE api/auth/delete/account</code></p>
@@ -125,7 +133,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"password":"wvQxymkPcR92LWSl","new_password":"nLpGtsZi3OPiHOkR","confirm_new_password":"w8KwbJ3RGjwsNGts"}'
+    -d '{"password":"t8ItaR7FQIQ7m0Pq","new_password":"sK4lu7VHMRrNy4eH","confirm_new_password":"uPX6TmhsBjRX50bG"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/change/password");
 
@@ -136,9 +144,9 @@ let headers = {
 }
 
 let body = {
-    "password": "wvQxymkPcR92LWSl",
-    "new_password": "nLpGtsZi3OPiHOkR",
-    "confirm_new_password": "w8KwbJ3RGjwsNGts"
+    "password": "t8ItaR7FQIQ7m0Pq",
+    "new_password": "sK4lu7VHMRrNy4eH",
+    "confirm_new_password": "uPX6TmhsBjRX50bG"
 }
 
 fetch(url, {
@@ -159,7 +167,14 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-json">{
     "success": "false",
-    "error": "wrong password or the new one did not match the confirmed message"
+    "error": "new password doesn't match the confirmation"
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "wrong old passwords"
 }</code></pre>
 <blockquote>
 <p>Example response (401):</p>
@@ -211,7 +226,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X POST "http://localhost/api/unauth/login" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"lNArtVK3y0qOOVaT","password":"nHuX8PtIEXGwyNRa"}'
+    -d '{"my_username":"wlsHcqLsJn7TTXRq","password":"hBdZ6fsoPir8Optn"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/login");
 
@@ -221,8 +236,8 @@ let headers = {
 }
 
 let body = {
-    "my_username": "lNArtVK3y0qOOVaT",
-    "password": "nHuX8PtIEXGwyNRa"
+    "my_username": "wlsHcqLsJn7TTXRq",
+    "password": "hBdZ6fsoPir8Optn"
 }
 
 fetch(url, {
@@ -238,6 +253,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "true",
     "token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username and password don't matched"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/unauth/login</code></p>
@@ -274,7 +296,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X POST "http://localhost/api/unauth/signUp" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"TR80W61kSXBChR66","password":"HKZEW4wA7jQFtOVt","confirm_password":"2DX93e8BsznjLKzl","email":"qBjjl5NY96MWgrtf"}'
+    -d '{"my_username":"AMOEFSxrE27eSkcu","password":"yEO1w1ry7O2z08D1","confirm_password":"TBV5vZOrO7HMZxjG","email":"PP1dhrmBknWjLK02"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/signUp");
 
@@ -284,10 +306,10 @@ let headers = {
 }
 
 let body = {
-    "my_username": "TR80W61kSXBChR66",
-    "password": "HKZEW4wA7jQFtOVt",
-    "confirm_password": "2DX93e8BsznjLKzl",
-    "email": "qBjjl5NY96MWgrtf"
+    "my_username": "AMOEFSxrE27eSkcu",
+    "password": "yEO1w1ry7O2z08D1",
+    "confirm_password": "TBV5vZOrO7HMZxjG",
+    "email": "PP1dhrmBknWjLK02"
 }
 
 fetch(url, {
@@ -305,11 +327,18 @@ fetch(url, {
     "token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
 }</code></pre>
 <blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username and password don't match"
+}</code></pre>
+<blockquote>
 <p>Example response (403):</p>
 </blockquote>
 <pre><code class="language-json">{
     "success": "false",
-    "error": "user is logged in"
+    "error": "user is logged in already"
 }</code></pre>
 <blockquote>
 <p>Example response (403):</p>
@@ -379,7 +408,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X POST "http://localhost/api/unauth/forgetPassword" \
     -H "Content-Type: application/json" \
-    -d '{"email":"Rj9VOV3uw8kFMIbB"}'
+    -d '{"email":"YisGpwOC6QMu3Vbz"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/forgetPassword");
 
@@ -389,7 +418,7 @@ let headers = {
 }
 
 let body = {
-    "email": "Rj9VOV3uw8kFMIbB"
+    "email": "YisGpwOC6QMu3Vbz"
 }
 
 fetch(url, {
@@ -404,6 +433,13 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-json">{
     "success": "true"
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "email doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/unauth/forgetPassword</code></p>
@@ -434,7 +470,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X POST "http://localhost/api/unauth/resetPassword" \
     -H "Content-Type: application/json" \
-    -d '{"new_password":"zCyb28kJZNwfJ1Vs","confirm_new_password":"6BvKYi2gvEYVDigC"}'
+    -d '{"new_password":"QNM8HEO8iBDIRSzT","confirm_new_password":"4SQKYfIhJOKNNUBp"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/resetPassword");
 
@@ -444,8 +480,8 @@ let headers = {
 }
 
 let body = {
-    "new_password": "zCyb28kJZNwfJ1Vs",
-    "confirm_new_password": "6BvKYi2gvEYVDigC"
+    "new_password": "QNM8HEO8iBDIRSzT",
+    "confirm_new_password": "4SQKYfIhJOKNNUBp"
 }
 
 fetch(url, {
@@ -461,6 +497,20 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "true",
     "token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "Passwords don't match"
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "Link expired"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/unauth/resetPassword</code></p>
@@ -502,7 +552,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comm_id":14,"rules_content":"eK0hg9UU3VvZkhqB","des_content":"TV057fU7S3g10a1k"}'
+    -d '{"community_id":4,"rules_content":"cmiROxHklwegPKJN","des_content":"MeBy8Cy8WtHKNxrT"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/editCommunity");
 
@@ -513,9 +563,9 @@ let headers = {
 }
 
 let body = {
-    "comm_id": 14,
-    "rules_content": "eK0hg9UU3VvZkhqB",
-    "des_content": "TV057fU7S3g10a1k"
+    "community_id": 4,
+    "rules_content": "cmiROxHklwegPKJN",
+    "des_content": "MeBy8Cy8WtHKNxrT"
 }
 
 fetch(url, {
@@ -538,6 +588,13 @@ fetch(url, {
     "success": "false",
     "error": "UnAuthorized"
 }</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "community doesn't exist"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>PATCH api/auth/editCommunity</code></p>
 <h4>Body Parameters</h4>
@@ -552,7 +609,7 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>comm_id</td>
+<td>community_id</td>
 <td>integer</td>
 <td>required</td>
 <td>The ID of the community the user want to edit its rules&amp; description.</td>
@@ -582,7 +639,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comm_name":"db9KNF4eYT0oFZ7d"}'
+    -d '{"community_name":"ZRbUC7OgeoneRB0a"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/createCommunity");
 
@@ -593,7 +650,7 @@ let headers = {
 }
 
 let body = {
-    "comm_name": "db9KNF4eYT0oFZ7d"
+    "community_name": "ZRbUC7OgeoneRB0a"
 }
 
 fetch(url, {
@@ -623,6 +680,13 @@ fetch(url, {
     "success": "false",
     "error": "you have to complete 30 days "
 }</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "this name already exists"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/createCommunity</code></p>
 <h4>Body Parameters</h4>
@@ -637,7 +701,7 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>comm_name</td>
+<td>community_name</td>
 <td>string</td>
 <td>required</td>
 <td>The Name of the community to be created.</td>
@@ -655,7 +719,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comm_id":14}'
+    -d '{"community_id":18}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/removeCommunity");
 
@@ -666,7 +730,7 @@ let headers = {
 }
 
 let body = {
-    "comm_id": 14
+    "community_id": 18
 }
 
 fetch(url, {
@@ -710,7 +774,7 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>comm_id</td>
+<td>community_id</td>
 <td>integer</td>
 <td>required</td>
 <td>The ID of the community to be removed.</td>
@@ -728,7 +792,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comm_id":10,"mod_username":"opwwAAInNBh3PFuv"}'
+    -d '{"community_id":7,"mod_username":"AnV17R1bjZE0v78v"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/addModerator");
 
@@ -739,8 +803,8 @@ let headers = {
 }
 
 let body = {
-    "comm_id": 10,
-    "mod_username": "opwwAAInNBh3PFuv"
+    "community_id": 7,
+    "mod_username": "AnV17R1bjZE0v78v"
 }
 
 fetch(url, {
@@ -798,7 +862,7 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>comm_id</td>
+<td>community_id</td>
 <td>integer</td>
 <td>required</td>
 <td>The ID of the community to add a moderator for.</td>
@@ -822,7 +886,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comm_id":4,"mod_username":"KDVBjF1JRQ0lSpsz"}'
+    -d '{"community_id":1,"mod_username":"aRoU71KkoDJciNQG"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/removeModerator");
 
@@ -833,8 +897,8 @@ let headers = {
 }
 
 let body = {
-    "comm_id": 4,
-    "mod_username": "KDVBjF1JRQ0lSpsz"
+    "community_id": 1,
+    "mod_username": "aRoU71KkoDJciNQG"
 }
 
 fetch(url, {
@@ -892,7 +956,7 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>comm_id</td>
+<td>community_id</td>
 <td>integer</td>
 <td>required</td>
 <td>The ID of the community to remove a moderator from.</td>
@@ -916,7 +980,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comm_id":6}'
+    -d '{"community_id":20}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/subscribeCommunity");
 
@@ -927,7 +991,7 @@ let headers = {
 }
 
 let body = {
-    "comm_id": 6
+    "community_id": 20
 }
 
 fetch(url, {
@@ -978,7 +1042,7 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>comm_id</td>
+<td>community_id</td>
 <td>integer</td>
 <td>required</td>
 <td>The ID of the community to be un/subscribed.</td>
@@ -996,7 +1060,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comm_id":19}'
+    -d '{"community_id":6}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/subscribeCommunity");
 
@@ -1007,7 +1071,7 @@ let headers = {
 }
 
 let body = {
-    "comm_id": 19
+    "community_id": 6
 }
 
 fetch(url, {
@@ -1058,7 +1122,7 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>comm_id</td>
+<td>community_id</td>
 <td>integer</td>
 <td>required</td>
 <td>The ID of the community to be un/subscribed.</td>
@@ -1073,7 +1137,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/viewUserCommunities" \
     -H "Content-Type: application/json" \
-    -d '{"username":"jaWBVVKd2HMpiADK"}'
+    -d '{"username":"3tVjNM6la8LxfGGd"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/viewUserCommunities");
 
@@ -1083,7 +1147,7 @@ let headers = {
 }
 
 let body = {
-    "username": "jaWBVVKd2HMpiADK"
+    "username": "3tVjNM6la8LxfGGd"
 }
 
 fetch(url, {
@@ -1110,11 +1174,11 @@ fetch(url, {
     ]
 }</code></pre>
 <blockquote>
-<p>Example response (204):</p>
+<p>Example response (403):</p>
 </blockquote>
 <pre><code class="language-json">{
-    "success": "true",
-    "error": "no communities to be shown"
+    "success": "false",
+    "error": "username doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/unauth/viewUserCommunities</code></p>
@@ -1145,7 +1209,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/communityRules" \
     -H "Content-Type: application/json" \
-    -d '{"comm_id":9}'
+    -d '{"community_id":2}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/communityRules");
 
@@ -1155,7 +1219,7 @@ let headers = {
 }
 
 let body = {
-    "comm_id": 9
+    "community_id": 2
 }
 
 fetch(url, {
@@ -1172,11 +1236,11 @@ fetch(url, {
     "success": "true"
 }</code></pre>
 <blockquote>
-<p>Example response (204):</p>
+<p>Example response (403):</p>
 </blockquote>
 <pre><code class="language-json">{
-    "success": "true",
-    "error": "no rules to be shown"
+    "success": "false",
+    "error": "community doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/unauth/communityRules</code></p>
@@ -1192,7 +1256,7 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>comm_id</td>
+<td>community_id</td>
 <td>integer</td>
 <td>required</td>
 <td>The ID of the community the user want to show its rules and  description.</td>
@@ -1211,7 +1275,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"DOaqGEpHV9dU1BdR"}'
+    -d '{"username":"ECCOZq7M086a5NA9"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/followers");
 
@@ -1222,7 +1286,7 @@ let headers = {
 }
 
 let body = {
-    "username": "DOaqGEpHV9dU1BdR"
+    "username": "ECCOZq7M086a5NA9"
 }
 
 fetch(url, {
@@ -1247,6 +1311,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/auth/followers</code></p>
@@ -1280,7 +1351,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"ZdExfnrrNb1whIUN"}'
+    -d '{"username":"P8BIN9QPDDe7z6T4"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/following");
 
@@ -1291,7 +1362,7 @@ let headers = {
 }
 
 let body = {
-    "username": "ZdExfnrrNb1whIUN"
+    "username": "P8BIN9QPDDe7z6T4"
 }
 
 fetch(url, {
@@ -1317,6 +1388,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/auth/following</code></p>
@@ -1350,7 +1428,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"ssqfNyusdtEx7IzV"}'
+    -d '{"username":"zutUhVI7uWgoQqwx"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/follow");
 
@@ -1361,7 +1439,7 @@ let headers = {
 }
 
 let body = {
-    "username": "ssqfNyusdtEx7IzV"
+    "username": "zutUhVI7uWgoQqwx"
 }
 
 fetch(url, {
@@ -1390,6 +1468,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "Already following"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/follow</code></p>
@@ -1423,7 +1508,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"4GiIsvKZNfc6cv1E"}'
+    -d '{"username":"aYME9NOhIHC38WZm"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/follow");
 
@@ -1434,7 +1519,7 @@ let headers = {
 }
 
 let body = {
-    "username": "4GiIsvKZNfc6cv1E"
+    "username": "aYME9NOhIHC38WZm"
 }
 
 fetch(url, {
@@ -1463,6 +1548,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "Already unfollowing"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>DELETE api/auth/follow</code></p>
@@ -1498,7 +1590,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":19}'
+    -d '{"link_id":10}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/saveLink");
 
@@ -1509,7 +1601,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 19
+    "link_id": 10
 }
 
 fetch(url, {
@@ -1531,6 +1623,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "this post, comment or reply doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/saveLink</code></p>
@@ -1564,7 +1663,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":7}'
+    -d '{"link_id":11}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/saveLink");
 
@@ -1575,7 +1674,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 7
+    "link_id": 11
 }
 
 fetch(url, {
@@ -1597,6 +1696,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "this post, comment or reply doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>DELETE api/auth/saveLink</code></p>
@@ -1630,7 +1736,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_content":"UMPDhQH42kigjfYu","parent_link_ID":2,"post_title":"WrygP4nXZDZemuw5","community_ID":9}'
+    -d '{"post_content":"dnI0JD2J0lCc4u6U","parent_link_id":2,"post_title":"eUYiFUVeEKYbzmtn","community_id":11}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/addLink");
 
@@ -1641,10 +1747,10 @@ let headers = {
 }
 
 let body = {
-    "post_content": "UMPDhQH42kigjfYu",
-    "parent_link_ID": 2,
-    "post_title": "WrygP4nXZDZemuw5",
-    "community_ID": 9
+    "post_content": "dnI0JD2J0lCc4u6U",
+    "parent_link_id": 2,
+    "post_title": "eUYiFUVeEKYbzmtn",
+    "community_id": 11
 }
 
 fetch(url, {
@@ -1667,6 +1773,34 @@ fetch(url, {
     "success": "false",
     "error": "UnAuthorized"
 }</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "post must have a title"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "post must have a content"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "parent doesn't exist"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "community doesn't exist"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/addLink</code></p>
 <h4>Body Parameters</h4>
@@ -1687,7 +1821,7 @@ fetch(url, {
 <td>the content written in the post</td>
 </tr>
 <tr>
-<td>parent_link_ID</td>
+<td>parent_link_id</td>
 <td>integer</td>
 <td>required</td>
 <td>the ID of the parent link, this parameter should be 'null' if the link is a post</td>
@@ -1696,10 +1830,10 @@ fetch(url, {
 <td>post_title</td>
 <td>string</td>
 <td>optional</td>
-<td>this parameter is required only for posts</td>
+<td>this parameter is not required only for posts</td>
 </tr>
 <tr>
-<td>community_ID</td>
+<td>community_id</td>
 <td>integer</td>
 <td>optional</td>
 <td>this parameter is required only if the link is inside a community</td>
@@ -1717,7 +1851,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":20}'
+    -d '{"post_id":19}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/pinPost");
 
@@ -1728,7 +1862,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 20
+    "post_id": 19
 }
 
 fetch(url, {
@@ -1751,6 +1885,13 @@ fetch(url, {
     "success": "false",
     "error": "UnAuthorized"
 }</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "post doesn't exist"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>PATCH api/auth/pinPost</code></p>
 <h4>Body Parameters</h4>
@@ -1768,7 +1909,7 @@ fetch(url, {
 <td>post_id</td>
 <td>integer</td>
 <td>required</td>
-<td>the id of the post that the user wants to pin</td>
+<td>the id of the post that the user wants to pin or unpin</td>
 </tr>
 </tbody>
 </table>
@@ -1783,7 +1924,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_ID":13}'
+    -d '{"link_id":19}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/removeLink");
 
@@ -1794,7 +1935,7 @@ let headers = {
 }
 
 let body = {
-    "link_ID": 13
+    "link_id": 19
 }
 
 fetch(url, {
@@ -1817,6 +1958,13 @@ fetch(url, {
     "success": "false",
     "error": "UnAuthorized"
 }</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "this post, comment or reply doesn't exist"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>DELETE api/auth/removeLink</code></p>
 <h4>Body Parameters</h4>
@@ -1831,7 +1979,7 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>link_ID</td>
+<td>link_id</td>
 <td>integer</td>
 <td>required</td>
 <td>the ID of the link</td>
@@ -1849,7 +1997,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":13}'
+    -d '{"post_id":11}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/hidePost");
 
@@ -1860,7 +2008,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 13
+    "post_id": 11
 }
 
 fetch(url, {
@@ -1889,6 +2037,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "already hidden"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "post doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/hidePost</code></p>
@@ -1922,7 +2077,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":1}'
+    -d '{"post_id":18}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/hidePost");
 
@@ -1933,7 +2088,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 1
+    "post_id": 18
 }
 
 fetch(url, {
@@ -1962,6 +2117,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "already unhidden"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "post doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>DELETE api/auth/hidePost</code></p>
@@ -1995,7 +2157,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":14}'
+    -d '{"post_id":11}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/editPost");
 
@@ -2006,7 +2168,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 14
+    "post_id": 11
 }
 
 fetch(url, {
@@ -2028,6 +2190,27 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "post doesn't exist"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "post must have a title"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "post must have a content"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>PATCH api/auth/editPost</code></p>
@@ -2061,7 +2244,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comment_id":10}'
+    -d '{"comment_id":5}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/editComment");
 
@@ -2072,7 +2255,7 @@ let headers = {
 }
 
 let body = {
-    "comment_id": 10
+    "comment_id": 5
 }
 
 fetch(url, {
@@ -2094,6 +2277,20 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "comment doesn't exist"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "comment must have a content"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>PATCH api/auth/editComment</code></p>
@@ -2127,7 +2324,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":19}'
+    -d '{"post_id":3}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/downVotePost");
 
@@ -2138,7 +2335,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 19
+    "post_id": 3
 }
 
 fetch(url, {
@@ -2160,6 +2357,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "post doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/downVotePost</code></p>
@@ -2193,7 +2397,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":2}'
+    -d '{"post_id":20}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/downVotePost");
 
@@ -2204,7 +2408,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 2
+    "post_id": 20
 }
 
 fetch(url, {
@@ -2226,6 +2430,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "post doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>DELETE api/auth/downVotePost</code></p>
@@ -2259,7 +2470,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comment_id":13}'
+    -d '{"comment_id":6}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/downVoteComment");
 
@@ -2270,7 +2481,7 @@ let headers = {
 }
 
 let body = {
-    "comment_id": 13
+    "comment_id": 6
 }
 
 fetch(url, {
@@ -2292,6 +2503,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "comment doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/downVoteComment</code></p>
@@ -2325,7 +2543,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comment_id":15}'
+    -d '{"comment_id":4}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/downVoteComment");
 
@@ -2336,7 +2554,7 @@ let headers = {
 }
 
 let body = {
-    "comment_id": 15
+    "comment_id": 4
 }
 
 fetch(url, {
@@ -2358,6 +2576,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "comment doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>DELETE api/auth/downVoteComment</code></p>
@@ -2391,7 +2616,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":10}'
+    -d '{"post_id":9}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/upVotePost");
 
@@ -2402,7 +2627,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 10
+    "post_id": 9
 }
 
 fetch(url, {
@@ -2424,6 +2649,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "post doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/upVotePost</code></p>
@@ -2457,7 +2689,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":16}'
+    -d '{"post_id":13}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/upVotePost");
 
@@ -2468,7 +2700,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 16
+    "post_id": 13
 }
 
 fetch(url, {
@@ -2490,6 +2722,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "post doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>DELETE api/auth/upVotePost</code></p>
@@ -2523,7 +2762,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comment_id":20}'
+    -d '{"comment_id":12}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/upVoteComment");
 
@@ -2534,7 +2773,7 @@ let headers = {
 }
 
 let body = {
-    "comment_id": 20
+    "comment_id": 12
 }
 
 fetch(url, {
@@ -2556,6 +2795,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "comment doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/upVoteComment</code></p>
@@ -2589,7 +2835,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comment_id":19}'
+    -d '{"comment_id":20}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/upVoteComment");
 
@@ -2600,7 +2846,7 @@ let headers = {
 }
 
 let body = {
-    "comment_id": 19
+    "comment_id": 20
 }
 
 fetch(url, {
@@ -2622,6 +2868,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "comment doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>DELETE api/auth/upVoteComment</code></p>
@@ -2655,7 +2908,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"HAHNif4bmNwIzO8h"}'
+    -d '{"username":"xtOavdELdyEHG8yR"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/viewComments");
 
@@ -2666,7 +2919,7 @@ let headers = {
 }
 
 let body = {
-    "username": "HAHNif4bmNwIzO8h"
+    "username": "xtOavdELdyEHG8yR"
 }
 
 fetch(url, {
@@ -2725,6 +2978,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/auth/viewComments</code></p>
@@ -2796,6 +3056,13 @@ fetch(url, {
     "success": "false",
     "error": "UnAuthorized"
 }</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "undefined type"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/auth/viewUpOrDownvotedPosts</code></p>
 <h4>Body Parameters</h4>
@@ -2828,7 +3095,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"pjaEjQLMmhxCuOxL"}'
+    -d '{"username":"eI4JtBiMaulJpbVW"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/viewOverview");
 
@@ -2839,7 +3106,7 @@ let headers = {
 }
 
 let body = {
-    "username": "pjaEjQLMmhxCuOxL"
+    "username": "eI4JtBiMaulJpbVW"
 }
 
 fetch(url, {
@@ -2865,6 +3132,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/auth/viewOverview</code></p>
@@ -2941,7 +3215,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"kMNmpzCrEToJVxgB"}'
+    -d '{"username":"QmUwOwkaWtZgJKJy"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/giveReward");
 
@@ -2952,7 +3226,7 @@ let headers = {
 }
 
 let body = {
-    "username": "kMNmpzCrEToJVxgB"
+    "username": "QmUwOwkaWtZgJKJy"
 }
 
 fetch(url, {
@@ -2963,9 +3237,29 @@ fetch(url, {
     .then(response =&gt; response.json())
     .then(json =&gt; console.log(json));</code></pre>
 <blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "true"
+}</code></pre>
+<blockquote>
 <p>Example response (401):</p>
 </blockquote>
 <pre><code class="language-json">{}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "Already given before"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username doesn't exist"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/giveReward</code></p>
 <h4>Body Parameters</h4>
@@ -2995,7 +3289,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/ViewPosts" \
     -H "Content-Type: application/json" \
-    -d '{"username":"YX8rWlN3COG5h9wp","community_id":9}'
+    -d '{"username":"SXhfvHVDjXvgjb7t","community_id":19}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/ViewPosts");
 
@@ -3005,8 +3299,8 @@ let headers = {
 }
 
 let body = {
-    "username": "YX8rWlN3COG5h9wp",
-    "community_id": 9
+    "username": "SXhfvHVDjXvgjb7t",
+    "community_id": 19
 }
 
 fetch(url, {
@@ -3025,6 +3319,20 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-json">{
     "error": "somethimg wrong!!!!"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username doesn't exist"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "community doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/unauth/ViewPosts</code></p>
@@ -3061,7 +3369,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/viewCommentsReplies" \
     -H "Content-Type: application/json" \
-    -d '{"id":11}'
+    -d '{"link_id":5}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/viewCommentsReplies");
 
@@ -3071,7 +3379,7 @@ let headers = {
 }
 
 let body = {
-    "id": 11
+    "link_id": 5
 }
 
 fetch(url, {
@@ -3084,45 +3392,19 @@ fetch(url, {
 <blockquote>
 <p>Example response (200):</p>
 </blockquote>
-<pre><code class="language-json">{
-    "comments": [
-        {
-            "comment_id": 1,
-            "body": "comment1",
-            "username": "ahmed",
-            "downvotes": 15,
-            "upvotes": 0,
-            "date": " 2 days ago ",
-            "comments_num": 0,
-            "saved": "true"
-        },
-        {
-            "comment_id": 2,
-            "body": "comment2",
-            "username": "ahmed",
-            "downvotes": 23,
-            "upvotes": 17,
-            "date": " 2 days ago ",
-            "comments_num": 0,
-            "saved": "false"
-        },
-        {
-            "comment_id": 3,
-            "body": "comment3",
-            "username": "ahmed",
-            "downvotes": 31,
-            "upvotes": 78,
-            "date": " 2 days ago ",
-            "comments_num": 0,
-            "saved": "true"
-        }
-    ]
-}</code></pre>
+<pre><code class="language-json">{}</code></pre>
 <blockquote>
 <p>Example response (404):</p>
 </blockquote>
 <pre><code class="language-json">{
     "error": "somethimg wrong!!!!"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "this post, comment or reply doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/unauth/viewCommentsReplies</code></p>
@@ -3138,7 +3420,7 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>id</td>
+<td>link_id</td>
 <td>integer</td>
 <td>required</td>
 <td>the id of the post or the id of the comment.</td>
@@ -3157,7 +3439,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"message_id":15}'
+    -d '{"message_id":1}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/viewUserMessage");
 
@@ -3168,7 +3450,7 @@ let headers = {
 }
 
 let body = {
-    "message_id": 15
+    "message_id": 1
 }
 
 fetch(url, {
@@ -3192,6 +3474,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "message doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/auth/viewUserMessage</code></p>
@@ -3278,7 +3567,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"state":14}'
+    -d '{"state":18}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/viewUserInboxMessages");
 
@@ -3289,7 +3578,7 @@ let headers = {
 }
 
 let body = {
-    "state": 14
+    "state": 18
 }
 
 fetch(url, {
@@ -3326,6 +3615,13 @@ fetch(url, {
     "success": "false",
     "error": "UnAuthorized"
 }</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "undefined state"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/auth/viewUserInboxMessages</code></p>
 <h4>Body Parameters</h4>
@@ -3358,7 +3654,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"rec_username":"YHz1XwDTOmlkSYpm","msg_content":"6ktGnWS6SSMVqrrE"}'
+    -d '{"rec_username":"B2c6zMGNxHP8BxfQ","msg_content":"QlEPFxbhLP55w3JX"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/sendMessage");
 
@@ -3369,8 +3665,8 @@ let headers = {
 }
 
 let body = {
-    "rec_username": "YHz1XwDTOmlkSYpm",
-    "msg_content": "6ktGnWS6SSMVqrrE"
+    "rec_username": "B2c6zMGNxHP8BxfQ",
+    "msg_content": "QlEPFxbhLP55w3JX"
 }
 
 fetch(url, {
@@ -3392,6 +3688,20 @@ fetch(url, {
 <pre><code class="language-json">{
     "success": "false",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username doesn't exist"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "message must have a content"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/sendMessage</code></p>
@@ -3474,7 +3784,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"7am3X0szDNZddJQk"}'
+    -d '{"username":"S2WueqifvlOOxT1E"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/blockingUsers");
 
@@ -3485,7 +3795,7 @@ let headers = {
 }
 
 let body = {
-    "username": "7am3X0szDNZddJQk"
+    "username": "S2WueqifvlOOxT1E"
 }
 
 fetch(url, {
@@ -3514,6 +3824,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "sucess": "true",
     "error": "Already blocked"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/blockingUsers</code></p>
@@ -3547,7 +3864,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"OHhSlfaMJtVJbUgB"}'
+    -d '{"username":"ZGt0RCI8fuVfncFU"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/blockingUsers");
 
@@ -3558,7 +3875,7 @@ let headers = {
 }
 
 let body = {
-    "username": "OHhSlfaMJtVJbUgB"
+    "username": "ZGt0RCI8fuVfncFU"
 }
 
 fetch(url, {
@@ -3587,6 +3904,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "sucess": "true",
     "error": "Already unblocked"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username doesn't exist"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>DELETE api/auth/blockingUsers</code></p>
@@ -3620,7 +3944,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"name":"qTqZ82wYXUPOs1G4"}'
+    -d '{"name":"zqHBcjAVRVflSqqn"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/updateDisplayName");
 
@@ -3631,7 +3955,7 @@ let headers = {
 }
 
 let body = {
-    "name": "qTqZ82wYXUPOs1G4"
+    "name": "zqHBcjAVRVflSqqn"
 }
 
 fetch(url, {
@@ -3653,6 +3977,13 @@ fetch(url, {
 <pre><code class="language-json">{
     "sucess": "true",
     "error": "UnAuthorized"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "user must have a name"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>PATCH api/auth/updateDisplayName</code></p>
@@ -3686,7 +4017,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"about":"DY4ignLajjHfygD8"}'
+    -d '{"about":"NwtdpqOeepClo4qK"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/updateAbout");
 
@@ -3697,7 +4028,7 @@ let headers = {
 }
 
 let body = {
-    "about": "DY4ignLajjHfygD8"
+    "about": "NwtdpqOeepClo4qK"
 }
 
 fetch(url, {
@@ -3750,7 +4081,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/search" \
     -H "Content-Type: application/json" \
-    -d '{"search_content":"pVKFiS0oxW2yQgfm"}'
+    -d '{"search_content":"gXRwMbHlwOwfAdsz"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/search");
 
@@ -3760,7 +4091,7 @@ let headers = {
 }
 
 let body = {
-    "search_content": "pVKFiS0oxW2yQgfm"
+    "search_content": "gXRwMbHlwOwfAdsz"
 }
 
 fetch(url, {
@@ -3774,6 +4105,13 @@ fetch(url, {
 <p>Example response (200):</p>
 </blockquote>
 <pre><code class="language-json">{}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "search content is empty"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/unauth/search</code></p>
 <h4>Body Parameters</h4>
@@ -3845,7 +4183,10 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/auth/viewPublicUserInfo" \
     -H "Accept: application/json" \
-    -H "Authorization: Bearer: {token}"</code></pre>
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"username":"dzrEczJ5qegy7GA3"}'
+</code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/viewPublicUserInfo");
 
 let headers = {
@@ -3854,9 +4195,14 @@ let headers = {
     "Content-Type": "application/json",
 }
 
+let body = {
+    "username": "dzrEczJ5qegy7GA3"
+}
+
 fetch(url, {
     method: "GET",
     headers: headers,
+    body: body
 })
     .then(response =&gt; response.json())
     .then(json =&gt; console.log(json));</code></pre>
@@ -3874,8 +4220,34 @@ fetch(url, {
 <p>Example response (401):</p>
 </blockquote>
 <pre><code class="language-json">{}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "username doesn't exist"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/auth/viewPublicUserInfo</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>username</td>
+<td>string</td>
+<td>required</td>
+<td>username to show his public info</td>
+</tr>
+</tbody>
+</table>
 <!-- END_04225283fb39b5b7bc7411b813cfe4bf -->
       </div>
       <div class="dark-box">

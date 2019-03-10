@@ -17,6 +17,11 @@ class SearchingController extends Controller
      *  "usersContent": ["johnsmith", "stevenkay"],
      *  "communityContent" ["Ahly", "BackEnd"]
      * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "search content is empty"
+     * }
      */
     public function search()
     {

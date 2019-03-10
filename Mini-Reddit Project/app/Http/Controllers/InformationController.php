@@ -33,6 +33,7 @@ class InformationController extends Controller
   	/**
      *
      * Show user's public information
+     * @bodyParam username string required username to show his public info
      * @authenticated
      * @response 200 {
      *  "success": "true",
@@ -45,6 +46,11 @@ class InformationController extends Controller
      * @response 401 {
      *  "success": "false"
      * 	"error": "UnAuthorized"
+     * }
+     * 
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "username doesn't exist"
      * }
      */
   	public function viewPublicUserInfo()
