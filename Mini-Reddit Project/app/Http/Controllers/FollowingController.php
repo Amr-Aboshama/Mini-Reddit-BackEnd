@@ -44,7 +44,7 @@ class FollowingController extends Controller
      * }
 	   */
 		public function viewUserFollowing()
-		{
+   		{
 				// ...
 		}
 
