@@ -87,48 +87,4 @@ class PrivacyController extends Controller
 		{
 		    // ...
 		}
-
-
-		/**
-		 * Update current user Displayed Name
-		 * @authenticated
-	   * @bodyParam name string required The new name of user to update.
-	   * @response 200 {
-	   * 	"success": "true"
-	   * }
-	   *
-     * @response 401 {
-	   * 	"sucess": "true",
-     * 	"error": "UnAuthorized"
-     * }
-     *
-     * @response 403 {
-     *  "success": "false",
-     * 	"error": "user must have a name"
-     * }
-	   */
-		public function updateDisplayName()
-		{
-		    // ...
-		}
-
-
-		/**
-		 * Update current user About
-		 * @authenticated
-	   * @bodyParam about string required the content of about to be updated to
-	   * @response 200 {
-	   * 	"success": "true"
-	   * }
-	   *
-     * @response 401 {
-	   * 	"sucess": "true",
-     * 	"error": "UnAuthorized"
-     * }
-     *
-	   */
-		public function updateAbout()
-		{
-				// ...
-		}
 }
