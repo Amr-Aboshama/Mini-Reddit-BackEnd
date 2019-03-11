@@ -325,8 +325,9 @@ class InteractingController extends Controller
 		/**
 		 * Viewing the posts of a specific user or a community or both when you are on the home page.
 		 *
-	 	 * @bodyParam username string if you visited another user profile this is his username.
-	 	 * @bodyParam community_id int if you want to show the posts of a specific community this is its id.
+		 * @bodyParam sort string Choosing sorting type (New / Popular) [Default Popular]
+	 	 * @bodyParam username string if you visited another user profile this is his username [Default null=>guest / my username=>user].
+	 	 * @bodyParam community_id int if you want to show the posts of a specific community this is its id [Default null].
 	   * @response 200 {
 	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
 	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true" } ,

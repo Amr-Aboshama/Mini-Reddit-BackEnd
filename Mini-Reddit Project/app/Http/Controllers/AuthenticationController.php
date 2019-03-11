@@ -13,7 +13,7 @@ class AuthenticationController extends Controller
 {
 		/**
 	   *
-	   * Login a user
+	   * Sign in a user
 	   * @bodyParam my_username string required the username of the current user.
 	   * @bodyParam password string required The password of the user.
 	   * @response 200 {
@@ -26,7 +26,7 @@ class AuthenticationController extends Controller
 	   * 	"error": "username and password don't matched"
 	   * }
 	   */
-		public function login()
+		public function signIn()
 		{
 				// ...
 		}
@@ -116,24 +116,21 @@ class AuthenticationController extends Controller
 				// ...
 		}
 
+
 		/**
-		
-		*log out
-		*@authenticated
-		*@response 200{
-		*   "success" :"true",
-		*    "error" :"false"	
-		*}
-			
-		* @response 401 {
-     	*  "success": "false",
-     	* 	"error": "UnAuthorized"
-     	* }
-
-
-		*/
-
-		public function logOut()
+		 *
+		 * Sign Out a user
+		 * @authenticated
+		 * @response 200{
+		 * 	"success" :"true"
+		 * }
+		 *
+		 * @response 401 {
+     *  "success": "false",
+     * 	"error": "User is not signed in"
+     * }
+		 */
+		public function signOut()
 		{
 			// ...
 		}

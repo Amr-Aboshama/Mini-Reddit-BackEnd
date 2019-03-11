@@ -25,61 +25,24 @@ Route::get('/unauth/search','SearchingController@search');
 Route::delete('/auth/delete/account', 'AccountSettingsController@deleteMyAccount');
 Route::patch('/auth/change/password', 'AccountSettingsController@changePassword');
 
-<<<<<<< HEAD
-Route::post('/viewPrivateUserInfo','InformationController@viewPrivateUserInfo');
-Route::post('/viewPublicUserInfo','InformationController@viewPublicUserInfo');
-
-
-Route::post('/followers', 'FollowingController@viewUserFollowers');
-Route::post('/following', 'FollowingController@viewUserFollowing');
-Route::post('/follow', 'FollowingController@followUser');//
-Route::delete('/follow', 'FollowingController@unfollowUser');//*
-
-
-Route::post('/viewAUserMessage','MessagesController@viewAUserMessage');
-Route::post('/viewUserSentMessages','MessagesController@viewUserSentMessages');
-Route::post('/viewUserInboxMessages','MessagesController@viewUserInboxMessages');
-Route::post('/sendMessage','MessagesController@sendMessage');
-=======
 
 
 Route::get('/auth/notification/check', 'NotificationController@checkNotification');
 Route::get('/auth/notification/push', 'NotificationController@pushNotification');
 
 
->>>>>>> 7a681776c4d7f93217f19ae2aa9a9e2de05350ec
 
 Route::get('/auth/viewPrivateUserInfo','InformationController@viewPrivateUserInfo');
 Route::get('/auth/viewPublicUserInfo','InformationController@viewPublicUserInfo');
 
 
 
-<<<<<<< HEAD
-Route::post('/blocked/users', 'PrivacyController@showBlockedUsers');
-Route::post('/blocking/users', 'PrivacyController@blockUser');//
-Route::delete('/blocking/users', 'PrivacyController@unblockUser');//*
-Route::patch('/update/display/name', 'PrivacyController@updateDisplayName');
-Route::patch('/update/about', 'PrivacyController@updateAbout');
-=======
 Route::get('/auth/followers', 'FollowingController@viewUserFollowers');
 Route::get('/auth/following', 'FollowingController@viewUserFollowing');
 Route::post('/auth/follow', 'FollowingController@followUser');//
 Route::delete('/auth/follow', 'FollowingController@unfollowUser');//*
->>>>>>> 7a681776c4d7f93217f19ae2aa9a9e2de05350ec
 
 
-<<<<<<< HEAD
-Route::post('/viewUserCommunities','CommunitiesController@viewUserCommunities');
-Route::get('/communityRules','CommunitiesController@viewCommunitiesRulesDesc');
-Route::patch('/editCommunity','CommunitiesController@editCommunity');
-Route::post('/createCommunity','CommunitiesController@createCommunity');
-Route::delete('/removeCommunity','CommunitiesController@removeCommunity');
-Route::post('/addModerator','CommunitiesController@addModretorForCommunity');
-Route::delete('/removeModerator','CommunitiesController@removeModretorFromCommunity');
-Route::post('/subscribeCommunity','CommunitiesController@subscribeCommunity'); //
-Route::delete('/subscribeCommunity','CommunitiesController@unsubscribeCommunity'); //*
-=======
->>>>>>> 7a681776c4d7f93217f19ae2aa9a9e2de05350ec
 
 Route::get('/auth/viewUserMessage','MessagesController@viewUserMessage');
 Route::get('/auth/viewUserSentMessages','MessagesController@viewUserSentMessages');
@@ -87,34 +50,9 @@ Route::get('/auth/viewUserInboxMessages','MessagesController@viewUserInboxMessag
 Route::post('/auth/sendMessage','MessagesController@sendMessage');
 
 
-<<<<<<< HEAD
-Route::post('/saveLink','InteractingController@saveLink'); //
-Route::delete('/saveLink','InteractingController@unsaveLink'); //*
-Route::post('/add/link', 'InteractingController@addNewLink');
-Route::patch('/pin/post', 'InteractingController@pinOrUnpinPost');
-Route::delete('/remove/link', 'InteractingController@removeLink');
-Route::post('/hidePost','InteractingController@hidePost'); //
-Route::delete('/hidePost','InteractingController@unhidePost');//*
-Route::post('/editAPost','InteractingController@editAPost');
-Route::post('/editAComment','InteractingController@editAComment');
-Route::post('/downVotePost','InteractingController@addDownvotePost');//
-Route::delete('/downVotePost','InteractingController@removeDownvotePost');//*
-Route::post('/downVoteComment','InteractingController@addDownvoteComment');//
-Route::delete('/downVoteComment','InteractingController@removeDownvoteComment');//*
-Route::post('/upVotePost','InteractingController@addUpvotePost');//
-Route::delete('/upVotePost','InteractingController@removeUpvotePost');//*
-Route::post('/upVoteComment','InteractingController@addUpvoteComment');//
-Route::delete('/upVoteComment','InteractingController@removeUpvoteComment');//*
-Route::get('/viewPosts','InteractingController@viewPosts');
-Route::get('/viewComments','InteractingController@viewComments');
-Route::get('/viewCommentsReplies' , 'InteractingController@ViewComments_RepliesOfPosts_Comments');
-Route::get('/viewUpOrDownvotedPosts', 'InteractingController@ViewUpVotedOrDownVotedPosts');
-Route::get('/viewOverview' , 'InteractingController@ViewOverview');
-Route::get('viewSavedLinks' , 'InteractingController@ViewSavedLinks');
-=======
->>>>>>> 7a681776c4d7f93217f19ae2aa9a9e2de05350ec
 
-Route::post('/unauth/login','AuthenticationController@login');
+Route::post('/unauth/signIn','AuthenticationController@login');
+Route::post('/auth/signOut', 'AuthenticationController@signOut');
 Route::post('/unauth/signUp','AuthenticationController@signUp');
 Route::post('/unauth/forgetPassword','AuthenticationController@forgetPassword');
 Route::post('/unauth/resetPassword','AuthenticationController@resetPassword');
