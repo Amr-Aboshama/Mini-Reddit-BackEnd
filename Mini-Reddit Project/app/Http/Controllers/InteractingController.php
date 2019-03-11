@@ -4,31 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-    /**
-    *@group all interacting actions (posts , comments and anything related )
-
-    */
+/**
+ * @group Interacting Actions
+ * posts , comments and anything related
+ */
 
 
 class InteractingController extends Controller
 {
-
-
 		/**
-		 *
+		 * Hide a post
 	   * @bodyParam post_id integer required the id of the post that the user wants to hide
-       * @authenticated
+     * @authenticated
 	   * @response 200 {
-       *  "success": "true"
-       * }
-       * @response 401 {
-       *  "success": "false",
-       *  "error": "UnAuthorized"
-       * }
-       *@response 403 {
-       * "success" : "false",
-       * "error" : "already hidden"
-       }
+     *  "success": "true"
+     * }
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "already hidden"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
+     * }
 	   */
 		public function hidePost()
 		{
@@ -37,20 +39,24 @@ class InteractingController extends Controller
 
 
 		/**
-		 *
+		 * Unhide a post
 	   * @bodyParam post_id integer required the id of the post that the user wants to hide
-       * @authenticated
+     * @authenticated
 	   * @response 200 {
-       *  "success": "true"
-       * }
-       * @response 401 {
-       *  "success": "false",
-       *  "error": "UnAuthorized"
-       * }
-       *@response 403 {
-       * "success" : "false",
-       * "error" : "already unhidden"
-       }
+     *  "success": "true"
+     * }
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "already unhidden"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
+     * }
 	   */
 		public function unhidePost()
 		{
@@ -60,6 +66,7 @@ class InteractingController extends Controller
 
 
     /**
+     * Edit a post
      * @bodyParam post_id integer required the id of the post that the user wants to edit
      * @bodyparam new_title string the new title of the post
      * @bodyparam new_content string the new content of the post
@@ -71,13 +78,26 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post must have a title"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post must have a content"
+     * }
      */
-    public function editAPost()
+    public function editPost()
 		{
     		// ...
     }
 
     /**
+     * Edit a comment
      * @bodyParam comment_id integer required the id of the comment that the user wants to edit
      * @bodyparam new_content string the new content of the comment
      * @authenticated
@@ -88,15 +108,24 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "comment doesn't exist"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "comment must have a content"
+     * }
      */
-		public function editAComment()
+		public function editComment()
 		{
     		// ...
-        }
+    }
 
 
     /**
-     * @bodyParam post_id integer required the id of the post that the user wants to pin
+     * Pin or unpin a post
+     * @bodyParam post_id integer required the id of the post that the user wants to pin or unpin
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -104,6 +133,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
      * }
      */
     public function pinOrUnpinPost()
@@ -113,6 +146,7 @@ class InteractingController extends Controller
 
 
     /**
+     * Add Downvote to a post
      * @bodyParam post_id integer required the id of the post that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -122,14 +156,19 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
+     * }
      */
     public function addDownvotePost()
-	{
+		{
     		// ...
     }
 
 
 		/**
+		 * Remove Downvote from a post
      * @bodyParam post_id integer required the id of the post that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -139,14 +178,19 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
+     * }
      */
     public function removeDownvotePost()
-	{
+		{
     		// ...
     }
 
 
     /**
+     * Add Downvote to a comment
      * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -155,6 +199,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "comment doesn't exist"
      * }
      */
     public function addDownvoteComment()
@@ -164,6 +212,7 @@ class InteractingController extends Controller
 
 
 		/**
+		 * Remove Downvote from a comment
      * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -172,6 +221,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "comment doesn't exist"
      * }
      */
     public function removeDownvoteComment()
@@ -181,6 +234,7 @@ class InteractingController extends Controller
 
 
     /**
+     * Add Upvote to a post
      * @bodyParam post_id integer required the id of the post that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -190,7 +244,10 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
-
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
+     * }
      */
     public function addUpvotePost()
 	{
@@ -199,6 +256,7 @@ class InteractingController extends Controller
 
 
 		/**
+		 * Remove Upvote from a post
      * @bodyParam post_id integer required the id of the post that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -208,14 +266,19 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post doesn't exist"
+     * }
      */
     public function removeUpvotePost()
-	{
+		{
     		// ...
     }
 
 
     /**
+     * Add Upvote to a comment
      * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -224,6 +287,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "comment doesn't exist"
      * }
      */
     public function addUpvoteComment()
@@ -233,6 +300,7 @@ class InteractingController extends Controller
 
 
 		/**
+		 * Remove Upvote from a comment
      * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -241,6 +309,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "comment doesn't exist"
      * }
      */
 
@@ -251,17 +323,27 @@ class InteractingController extends Controller
 
 
 		/**
-		 * viewing the posts of a specific user or a community or both when you are on the home page.
+		 * Viewing the posts of a specific user or a community or both when you are on the home page.
 		 *
 	 	 * @bodyParam username string if you visited another user profile this is his username.
 	 	 * @bodyParam community_id int if you want to show the posts of a specific community this is its id.
-	     * @response 200 {
-	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 } , { "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 } , { "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
+	   * @response 200 {
+	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true" } ,
+	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true" }]
 	 	 * }
 	 	 *
 	 	 * @response 404 {
-		 *	"message" :"somethimg wrong!!!!"
+		 *	"error" :"somethimg wrong!!!!"
 	 	 * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "username doesn't exist"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "community doesn't exist"
+     * }
 	 	 */
     public function ViewPosts()
     {
@@ -275,18 +357,22 @@ class InteractingController extends Controller
   	 * @bodyParam username string required if you visited another user profile this is his username.
   	 * @authenticated
   	 * @response 200 {
- 		 *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 2 , "body" : "comment2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 3 , "body" : "comment3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
+ 		 *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true"  } ,
+ 		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false"  } ,
+ 		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" }]
  		 * }
-
  		 *
  		 * @response 404 {
-		 *  "message" :"somethimg wrong!!!!"
+		 *  "error" :"somethimg wrong!!!!"
  		 * }
-
-         * @response 401 {
-         *  "success": "false",
-         *  "error": "UnAuthorized"
-         * }
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "username doesn't exist"
+     * }
      */
     public function ViewComments()
     {
@@ -295,39 +381,48 @@ class InteractingController extends Controller
 
 
     /**
-		 * viewing comments of a specific post or replies of a specific comment
-		 * @bodyParam id int required the id of the post or the id of the comment.
-
-		 * @response 200 {
- 		 *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 2 , "body" : "comment2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 3 , "body" : "comment3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
+		 * Viewing comments of a specific post or replies of a specific comment
+		 * @bodyParam link_id int required the id of the post or the id of the comment.
+  	 * @response 200 {
+ 		 *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true"  } ,
+ 		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false"  } ,
+ 		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" }]
  		 * }
+		 *
  		 * @response 404 {
-		 *	"message" :"somethimg wrong!!!!"
+		 *	"error" :"somethimg wrong!!!!"
  		 * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "this post, comment or reply doesn't exist"
+     * }
      */
-    public function ViewComments_RepliesOfPosts_Comments()
+    public function ViewCommentsAndRepliesOfPostsAndComments()
     {
 
     }
 
 
     /**
-		 * view the upvoted posts of the user or the downvoted ones
+		 * View the upvoted posts of the user or the downvoted ones
 		 * @bodyParam type int required it is one for the upvoted posts and zero for the downvoted ones.
-         * @authenticated
-        
-		 * @response 200 {
- 		 * 	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 } , { "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
+     * @authenticated
+	   * @response 200 {
+	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" }]
  		 * }
- 		 *
  		 * @response 404 {
-		 * 	"message" :"somethimg wrong!!!!"
+		 * 	"error" :"somethimg wrong!!!!"
  		 * }
-
-         * @response 401 {
-         *"success": "false",
-         *  "error": "UnAuthorized"
-         * }
+     * @response 401 {
+     * 	"success": "false",
+     *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "undefined type"
+     * }
      */
     public function ViewUpVotedOrDownVotedPosts( )
     {
@@ -335,41 +430,44 @@ class InteractingController extends Controller
     }
 
 
+
 		/**
-		 * view the overview of the user.
-         * @bodyParam username string required if you visited another user profile this is his username.
-         * @authenticated
-        
-
-         *@response 200 {
-             
-            * "posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 } , { "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }] ,
-
-            * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 2 , "body" : "comment2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "comment_id": 3 , "body" : "comment3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }] 
-
-         *}
-
-         *@response 404 {
-         * "message" : "something wrong!!!"
-         *}
-
-         * @response 401 {
-         *  "success": "false",
-         *  "error": "UnAuthorized"
-         * }
-
-        */
-
+		 * View the overview of the user [Posts, comments, and links].
+     * @bodyParam username string required if you visited another user profile this is his username.
+     * @authenticated
+ 		 * @response 200 {
+     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true" } ,
+	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true" }] ,
+	 	 *
+     * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true"  } ,
+ 		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false"  } ,
+ 		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" }]
+     * }
+     * @response 404 {
+     * "error" : "something wrong!!!"
+     * }
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "username doesn't exist"
+     * }
+     */
     public function ViewOverview()
     {
 
     }
 
+
     /**
+     * Add new Link
      * @bodyParam post_content string required the content written in the post
-     * @bodyParam parent_link_ID int required the ID of the parent link, this parameter should be 'null' if the link is a post
-     * @bodyParam post_title string this parameter is required only for posts
-     * @bodyParam community_ID int this parameter is required only if the link is inside a community
+     * @bodyParam parent_link_id int required the ID of the parent link, this parameter should be 'null' if the link is a post
+     * @bodyParam post_title string this parameter is not required only for posts
+     * @bodyParam community_id int this parameter is required only if the link is inside a community
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -378,8 +476,23 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "post must have a title"
+     * }
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "post must have a content"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "parent doesn't exist"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "community doesn't exist"
+     * }
      */
-
 	  public function addNewLink()
 	  {
 		    // ...
@@ -387,20 +500,26 @@ class InteractingController extends Controller
 
 
     /**
-		 * view the saved links by the user.
-         * @authenticated
-         
-		 * @response 200 {
- 		 *	 "links" :[ { "link_id": 1 , "body" : "post1" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "link_id": 2 , "body" : "post2" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0  } , { "link_id": 3 , "body" : "post3" ,"username": "ahmed" , "votes" : 15 , "date":" 2 days ago " , "comments_num" : 0 }]
- 		 * }
- 		 * @response 404 {
-		 *	 "message" :"somethimg wrong!!!!"
- 		 * }
 
-         * @response 401 {
-         *  "success": "false",
-         *  "error": "UnAuthorized"
-         *}
+		* View the saved Links by the user.
+     * @authenticated
+
+		 * @response 200 {
+     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "false" } ,
+	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" } ,
+	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" }] ,
+	 	 *
+     * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true"  } ,
+ 		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0  } ,
+ 		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0 }]
+     * }
+ 		 * @response 404 {
+		 *	 "error" :"somethimg wrong!!!!"
+ 		 * }
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     * }
      */
     public function ViewSavedLinks( )
     {
@@ -408,7 +527,8 @@ class InteractingController extends Controller
     }
 
     /**
-     * @bodyParam link_ID int required the ID of the link
+     * Remove post, comment or reply.
+     * @bodyParam link_id int required the ID of the link
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -416,6 +536,10 @@ class InteractingController extends Controller
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "this post, comment or reply doesn't exist"
      * }
      */
     public function removeLink()
@@ -425,7 +549,7 @@ class InteractingController extends Controller
 
     /**
      *
-     * This is used to save a post or a comment.
+     * Save Post, Comment or Reply.
      *
      * @bodyParam link_id int required The ID of the post/comment to be saved or unsaved.
      * @authenticated
@@ -436,6 +560,10 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "this post, comment or reply doesn't exist"
+     * }
      */
     public function saveLink()
     {
@@ -443,27 +571,54 @@ class InteractingController extends Controller
     }
 
 
-
-
-
-
     /**
      *
-     * This is used to unsave a post or a comment.
+     * Unsave Post, Comment or Reply
      *
      * @bodyParam link_id int required The ID of the post/comment to be saved or unsaved.
      * @authenticated
      * @response 200 {
      *  "success": "true"
      * }
-
      * @response 401 {
-     *  "success": "false"
+     *  "success": "false",
      *  "error": "UnAuthorized"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "this post, comment or reply doesn't exist"
      * }
      */
     public function unsaveLink()
     {
         // ...
     }
+
+		/**
+		 * Give Karma to a user.
+		 *
+		 * @authenticated
+		 * @bodyParam username string required Username to give to a reward.
+		 * @response 200 {
+		 * 	"success": "true"
+		 * }
+		 *
+     * @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     * }
+     *
+     * @response 403 {
+     * 	"success": "false",
+     * 	"error": "Already given before"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "username doesn't exist"
+     * }
+		 */
+		public function giveReward()
+		{
+				// ...
+		}
 }

@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-     /**
-      *@group Account settings   
-     */
-
-
-
+/**
+ * @group Account settings
+ */
 class AccountSettingsController extends Controller
 {
     /**
@@ -25,6 +22,10 @@ class AccountSettingsController extends Controller
      * 	"error": "UnAuthorized"
      * }
      *
+     * @response 403 {
+     * 	"success": "false",
+     * 	"error": "password isn't correct"
+     * }
      */
 		public function deleteMyAccount()
 		{
@@ -44,7 +45,12 @@ class AccountSettingsController extends Controller
      *
      * @response 404 {
      * 	"success": "false",
-     * 	"message": "wrong password or the new one did not match the confirmed message"
+     * 	"error": "new password doesn't match the confirmation"
+     * }
+     *
+     * @response 404 {
+     * 	"success": "false",
+     * 	"error": "wrong old passwords"
      * }
      *
      * @response 401 {

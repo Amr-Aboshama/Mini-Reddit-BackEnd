@@ -4,40 +4,39 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-    /**
-     *@group Public and Private information of the user
-
-    */
+/**
+ * @group User Information
+ */
 
 
 class InformationController extends Controller
 {
 
     /**
-     *
-     * Showing user's private information
+     * Show user's private information
      * @authenticated
      * @response 200 {
-     *  "success": "true"
+     *  "success": "true",
      *  "email": "john_bb@gmail"
      * }
      *
      * @response 401 {
-     *  "success": "false"
+     *  "success": "false",
      * 	"error": "UnAuthorized"
      * }
      */
     public function viewPrivateUserInfo()
     {
         // ...
-	}
+	  }
 
   	/**
      *
-     * Showing user's public information
+     * Show user's public information
+     * @bodyParam username string required username to show his public info
      * @authenticated
      * @response 200 {
-     *  "success": "true"
+     *  "success": "true",
      *  "username": "john",
      *  "karma":500,
      *  "cake_day":"March 8, 2019",
@@ -45,8 +44,13 @@ class InformationController extends Controller
      * }
      *
      * @response 401 {
-     *  "success": "false"
+     *  "success": "false",
      * 	"error": "UnAuthorized"
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "username doesn't exist"
      * }
      */
   	public function viewPublicUserInfo()

@@ -4,19 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-    /**
-     *@group Searching
-
-    */
+/**
+ *@group Searching
+ */
 
 class SearchingController extends Controller
 {
     /**
-     * This is used to search for a community or a user.
+     * Search for a community or a user
      * @bodyParam search_content string required The string the user searching for.
-     * @response 200{
+     * @response 200 {
      *  "usersContent": ["johnsmith", "stevenkay"],
-     *  "communityContent" ["Ahly", "BackEnd"]
+     *  "communityContent": ["Ahly", "BackEnd"]
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "search content is empty"
      * }
      */
     public function search()
