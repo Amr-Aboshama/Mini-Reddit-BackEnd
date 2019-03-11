@@ -630,7 +630,7 @@ class InteractingController extends Controller
 		 * @bodyParam uploaded_image file required Image to upload.
 		 *
 		 * @response 200 {
-		 * 	"success": "true"
+		 * 	"success": "true",
 		 * 	"path": "sotrage/app/avatar.jpg"
 		 * }
 		 *

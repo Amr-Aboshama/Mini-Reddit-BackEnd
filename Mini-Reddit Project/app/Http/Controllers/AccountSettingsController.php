@@ -113,7 +113,7 @@ class AccountSettingsController extends Controller
 		 * @bodyParam profile_image file required User's new profile image.
 		 *
 		 * @response 200 {
-		 * 	"success": "true"
+		 * 	"success": "true",
 		 * 	"path": "sotrage/app/avatar.jpg"
 		 * }
 		 *
