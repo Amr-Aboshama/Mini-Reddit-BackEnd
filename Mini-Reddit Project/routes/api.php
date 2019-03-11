@@ -24,7 +24,9 @@ Route::get('/unauth/search','SearchingController@search');
 
 Route::delete('/auth/delete/account', 'AccountSettingsController@deleteMyAccount');
 Route::patch('/auth/change/password', 'AccountSettingsController@changePassword');
-
+Route::patch('/auth/updateDisplayName', 'AccountSettingsController@updateDisplayName');
+Route::patch('/auth/updateAbout', 'AccountSettingsController@updateAbout');
+Route::patch('/auth/updateProfileImage', 'AccountSettingsController@updateProfileImage');
 
 
 Route::get('/auth/notification/check', 'NotificationController@checkNotification');
@@ -62,9 +64,6 @@ Route::post('/unauth/resetPassword','AuthenticationController@resetPassword');
 Route::get('/auth/blockedUsers', 'PrivacyController@showBlockedUsers');
 Route::post('/auth/blockingUsers', 'PrivacyController@blockUser');//
 Route::delete('/auth/blockingUsers', 'PrivacyController@unblockUser');//*
-Route::patch('/auth/updateDisplayName', 'PrivacyController@updateDisplayName');
-Route::patch('/auth/updateAbout', 'PrivacyController@updateAbout');
-
 
 
 Route::get('/unauth/viewUserCommunities','CommunitiesController@viewUserCommunities');
@@ -103,3 +102,4 @@ Route::get('/auth/viewUpOrDownvotedPosts', 'InteractingController@ViewUpVotedOrD
 Route::get('/auth/viewOverview' , 'InteractingController@ViewOverview');
 Route::get('/auth/viewSavedLinks' , 'InteractingController@ViewSavedLinks');
 Route::post('/auth/giveReward', 'InteractingController@giveReward');
+Route::post('/auth/uploadImage', 'InteractingController@uploadImage');
