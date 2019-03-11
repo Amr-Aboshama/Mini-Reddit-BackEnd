@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-	/**
-	 *@group all APIs concerned with following and unfollowing stuff are included
-	*/
+/**
+ * @group Following
+ */
 
 class FollowingController extends Controller
 {
@@ -22,6 +22,10 @@ class FollowingController extends Controller
      * @response 401 {
      *  "success": "false",
      * 	"error": "UnAuthorized"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "username doesn't exist"
      * }
      */
 		public function viewUserFollowers()
@@ -41,6 +45,10 @@ class FollowingController extends Controller
      * @response 401 {
      *  "success": "false",
      * 	"error": "UnAuthorized"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "username doesn't exist"
      * }
 	   */
 		public function viewUserFollowing()
@@ -65,6 +73,10 @@ class FollowingController extends Controller
      *  "success": "false",
      * 	"error": "Already following"
      * }
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "username doesn't exist"
+     * }
 		 */
 		public function followUser()
 		{
@@ -87,6 +99,10 @@ class FollowingController extends Controller
      * @response 403 {
      *  "success": "false",
      * 	"error": "Already unfollowing"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     * 	"error": "username doesn't exist"
      * }
 		 */
 		public function unfollowUser()
