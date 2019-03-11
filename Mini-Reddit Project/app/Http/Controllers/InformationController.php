@@ -44,10 +44,10 @@ class InformationController extends Controller
      * }
      *
      * @response 401 {
-     *  "success": "false"
+     *  "success": "false",
      * 	"error": "UnAuthorized"
      * }
-     * 
+     *
      * @response 403 {
      *  "success": "false",
      * 	"error": "username doesn't exist"

@@ -328,9 +328,9 @@ class InteractingController extends Controller
 	 	 * @bodyParam username string if you visited another user profile this is his username.
 	 	 * @bodyParam community_id int if you want to show the posts of a specific community this is its id.
 	   * @response 200 {
-	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden: "false" } ,
-	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden: "true" } ,
-	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden: "true" }]
+	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true" } ,
+	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true" }]
 	 	 * }
 	 	 *
 	 	 * @response 404 {
@@ -388,7 +388,7 @@ class InteractingController extends Controller
  		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false"  } ,
  		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" }]
  		 * }
-		 * }
+		 *
  		 * @response 404 {
 		 *	"error" :"somethimg wrong!!!!"
  		 * }
@@ -408,10 +408,10 @@ class InteractingController extends Controller
 		 * @bodyParam type int required it is one for the upvoted posts and zero for the downvoted ones.
      * @authenticated
 	   * @response 200 {
-	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden: "false" } ,
-	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden: "true" } ,
-	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden: "true" }]
- 		 *
+	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" }]
+ 		 * }
  		 * @response 404 {
 		 * 	"error" :"somethimg wrong!!!!"
  		 * }
@@ -436,9 +436,9 @@ class InteractingController extends Controller
      * @bodyParam username string required if you visited another user profile this is his username.
      * @authenticated
  		 * @response 200 {
-     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden: "false" } ,
-	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden: "true" } ,
-	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden: "true" }] ,
+     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true" } ,
+	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true" }] ,
 	 	 *
      * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true"  } ,
  		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false"  } ,
@@ -503,9 +503,9 @@ class InteractingController extends Controller
 		 * View the saved Links by the user.
      * @authenticated
 		 * @response 200 {
-     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "hidden: "false" } ,
-	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden: "true" } ,
-	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden: "true" }] ,
+     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "false" } ,
+	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" } ,
+	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" }] ,
 	 	 *
      * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true"  } ,
  		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0  } ,
@@ -602,7 +602,7 @@ class InteractingController extends Controller
 		 * }
 		 *
      * @response 401 {
-     *  "success": "false"
+     *  "success": "false",
      *  "error": "UnAuthorized"
      * }
      *
