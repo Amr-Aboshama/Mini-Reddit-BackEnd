@@ -51,7 +51,7 @@ Route::post('/auth/sendMessage','MessagesController@sendMessage');
 
 
 
-Route::post('/unauth/signIn','AuthenticationController@login');
+Route::post('/unauth/signIn','AuthenticationController@signIn');
 Route::post('/auth/signOut', 'AuthenticationController@signOut');
 Route::post('/unauth/signUp','AuthenticationController@signUp');
 Route::post('/unauth/forgetPassword','AuthenticationController@forgetPassword');
