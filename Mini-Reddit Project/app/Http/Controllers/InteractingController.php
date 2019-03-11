@@ -193,7 +193,7 @@ class InteractingController extends Controller
 
      */
     public function addUpvotePost()
-		{
+	{
     		// ...
     }
 
@@ -388,8 +388,6 @@ class InteractingController extends Controller
 
     /**
 		 * view the saved links by the user.
-		 * @bodyParam MyUserName string required The username of the account owner.
-		 * @bodyParam token
          * @authenticated
          
 		 * @response 200 {

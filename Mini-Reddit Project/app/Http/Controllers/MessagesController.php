@@ -13,12 +13,14 @@ use Illuminate\Http\Request;
 class MessagesController extends Controller
 {
     /**
+    
      * @bodyParam message_id integer required the id of  the message that the user wants to see
      * @response 200 {
      * 	"username2":"lolo",
      *  "user_photo":"photo3",
 	 *  "message_content":"hello world"
      * }
+
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
@@ -81,7 +83,7 @@ class MessagesController extends Controller
      *  "error": "UnAuthorized"
      * }
 	 */
-	
+
 	public function viewUserInboxMessages()
 	{
 		// ...
