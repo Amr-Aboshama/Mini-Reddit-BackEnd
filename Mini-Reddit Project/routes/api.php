@@ -27,6 +27,11 @@ Route::patch('/auth/change/password', 'AccountSettingsController@changePassword'
 
 
 
+Route::get('/auth/notification/check', 'NotificationController@checkNotification');
+Route::get('/auth/notification/push', 'NotificationController@pushNotification');
+
+
+
 Route::get('/auth/viewPrivateUserInfo','InformationController@viewPrivateUserInfo');
 Route::get('/auth/viewPublicUserInfo','InformationController@viewPublicUserInfo');
 
