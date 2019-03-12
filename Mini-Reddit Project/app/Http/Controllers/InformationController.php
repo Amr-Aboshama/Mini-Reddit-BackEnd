@@ -28,7 +28,7 @@ class InformationController extends Controller
     public function viewPrivateUserInfo()
     {
         // ...
-	  }
+	}
 
   	/**
      *
@@ -40,7 +40,9 @@ class InformationController extends Controller
      *  "username": "john",
      *  "karma":500,
      *  "cake_day":"March 8, 2019",
-     *  "about":"be or not to be"
+     *  "about":"be or not to be",
+     *  "photo_path" : "storage/app/avater.jpg"
+     *  
      * }
      *
      * @response 401 {
@@ -57,4 +59,23 @@ class InformationController extends Controller
     {
         // ...
   	}
+    
+    /**
+    * show the profile image
+    *@bodyParam username string required username to show his avatar
+    *@authenticated
+    *@response 200 {
+    *   "photo_path" : "storage/app/avatar.jpg"
+    *}
+    * @response 401 {
+    *  "success": "false",
+    *  "error": "UnAuthorized"
+    * }
+
+    */
+
+    public function GetAvatar()
+    {
+        //...
+    }
 }
