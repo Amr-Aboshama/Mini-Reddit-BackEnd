@@ -28,7 +28,7 @@ class InformationController extends Controller
     public function viewPrivateUserInfo()
     {
         // ...
-	}
+  	}
 
   	/**
      *
@@ -42,7 +42,7 @@ class InformationController extends Controller
      *  "cake_day":"March 8, 2019",
      *  "about":"be or not to be",
      *  "photo_path" : "storage/app/avater.jpg"
-     *  
+     *
      * }
      *
      * @response 401 {
@@ -59,7 +59,7 @@ class InformationController extends Controller
     {
         // ...
   	}
-    
+
     /**
     * show the profile image
     *@bodyParam username string required username to show his avatar

@@ -36,7 +36,7 @@ Route::get('/auth/notification/push', 'NotificationController@pushNotification')
 
 Route::get('/auth/viewPrivateUserInfo','InformationController@viewPrivateUserInfo');
 Route::get('/auth/viewPublicUserInfo','InformationController@viewPublicUserInfo');
-Rout::get('/auth/viewAvatar' , 'InformationController@GetAvatar');
+Route::get('/auth/viewAvatar' , 'InformationController@GetAvatar');
 
 
 
@@ -104,3 +104,4 @@ Route::get('/auth/viewOverview' , 'InteractingController@ViewOverview');
 Route::get('/auth/viewSavedLinks' , 'InteractingController@ViewSavedLinks');
 Route::post('/auth/giveReward', 'InteractingController@giveReward');
 Route::post('/auth/uploadImage', 'InteractingController@uploadImage');
+Route::get('/unauth/viewSinglePost' , 'InteractingController@viewSinglePost');

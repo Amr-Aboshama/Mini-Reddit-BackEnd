@@ -68,8 +68,9 @@ class InteractingController extends Controller
     /**
      * Edit a post
      * @bodyParam post_id integer required the id of the post that the user wants to edit
-     * @bodyparam new_title string the new title of the post
-     * @bodyparam new_content string the new content of the post
+     * @bodyParam new_title string the new title of the post
+     * @bodyParam new_content string the new content of the post
+		 * @bodyParam new_image string the directory of the new image if there is .
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -91,6 +92,8 @@ class InteractingController extends Controller
      * 	"error" : "post must have a content"
      * }
      */
+
+
     public function editPost()
 		{
     		// ...
@@ -99,7 +102,7 @@ class InteractingController extends Controller
     /**
      * Edit a comment
      * @bodyParam comment_id integer required the id of the comment that the user wants to edit
-     * @bodyparam new_content string the new content of the comment
+     * @bodyParam new_content string the new content of the comment
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -316,10 +319,10 @@ class InteractingController extends Controller
      * }
      */
 
-    public function removeUpvoteComment()
-		{
+     public function removeUpvoteComment()
+		 {
     		// ...
-    }
+     }
 
 
 		/**
@@ -328,11 +331,11 @@ class InteractingController extends Controller
 		 * @bodyParam sort string Choosing sorting type (New / Popular) [Default Popular]
 	 	 * @bodyParam username string if you visited another user profile this is his username [Default null=>guest / my username=>user].
 	 	 * @bodyParam community_id int if you want to show the posts of a specific community this is its id [Default null].
-	   * @response 200 {
-	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "photo_path" : "storage/app/avater.jpg", "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" , "upvoted" : "false" , "downvoted : true" } ,
-	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"} ,
-	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true" , "upvoted" : "false" , "downvoted" : "false" }]
-	 	 * }
+	   *@response 200 {
+		 * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false", "upvoted" : "true" , "downvoted" : "false" } ,
+		 *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true", "upvoted" : "true" , "downvoted" : "false" } ,
+		 *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true", "upvoted" : "true" , "downvoted" : "false" }]
+		 *}
 	 	 *
 	 	 * @response 404 {
 		 *	"error" :"somethimg wrong!!!!"
@@ -346,6 +349,7 @@ class InteractingController extends Controller
      * 	"error" : "community doesn't exist"
      * }
 	 	 */
+
     public function ViewPosts()
     {
 
@@ -358,11 +362,10 @@ class InteractingController extends Controller
   	 * @bodyParam username string required if you visited another user profile this is his username.
   	 * @authenticated
   	 * @response 200 {
- 		 *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
- 		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "photo_path" : "storage/app/avater.jpg" ,"downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
- 		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "false" , "downvoted" : "false"}]
+ 		 *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
+ 		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
+ 		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "false" , "downvoted" : "false"}]
  		 * }
- 		 *
  		 * @response 404 {
 		 *  "error" :"somethimg wrong!!!!"
  		 * }
@@ -385,9 +388,9 @@ class InteractingController extends Controller
 		 * Viewing comments of a specific post or replies of a specific comment
 		 * @bodyParam link_id int required the id of the post or the id of the comment.
   	 * @response 200 {
- 		 *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
- 		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed",  "photo_path" : "storage/app/avater.jpg","downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
- 		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "photo_path" : "storage/app/avater.jpg", "downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" }]
+ 		 *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
+ 		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed",  "author_photo_path" : "storage/app/avater.jpg","downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
+ 		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" }]
  		 * }
 		 *
  		 * @response 404 {
@@ -409,9 +412,9 @@ class InteractingController extends Controller
 		 * @bodyParam type int required it is one for the upvoted posts and zero for the downvoted ones.
      * @authenticated
 	   * @response 200 {
-	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed", "photo_path" : "storage/app/avater.jpg" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
-	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
-	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" ,  "photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" }]
+	 	 *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+	 	 *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" ,"author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+	 	 *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" ,  "author_photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" }]
  		 * }
  		 * @response 404 {
 		 * 	"error" :"somethimg wrong!!!!"
@@ -437,13 +440,13 @@ class InteractingController extends Controller
      * @bodyParam username string required if you visited another user profile this is his username.
      * @authenticated
  		 * @response 200 {
-     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" , "photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false", "upvoted" : "true" , "downvoted" : "false" } ,
-	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed" , "photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true", "upvoted" : "true" , "downvoted" : "false" } ,
-	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true", "upvoted" : "true" , "downvoted" : "false" }] ,
+     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false", "upvoted" : "true" , "downvoted" : "false" } ,
+	 	 *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true", "upvoted" : "true" , "downvoted" : "false" } ,
+	 	 *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true", "upvoted" : "true" , "downvoted" : "false" }] ,
 	 	 *
-     * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" ,  "photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
- 		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "photo_path" : "storage/app/avater.jpg" ,"downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
- 		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false"}]
+     * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" ,  "author_photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
+ 		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
+ 		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false"}]
      * }
      * @response 404 {
      * "error" : "something wrong!!!"
@@ -469,6 +472,7 @@ class InteractingController extends Controller
      * @bodyParam parent_link_id int required the ID of the parent link, this parameter should be 'null' if the link is a post
      * @bodyParam post_title string this parameter is not required only for posts
      * @bodyParam community_id int this parameter is required only if the link is inside a community
+		 * @bodyParam image_path string if a post contains an image.
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -506,13 +510,13 @@ class InteractingController extends Controller
      * @authenticated
 
 		 * @response 200 {
-     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"username": "ahmed" ,  "photo_path" : "storage/app/avater.jpg","downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "false" , "upvoted" : "true" , "downvoted" : "false"} ,
-	 	 *		{ "post_id": 2 , "body" : "post2" ,"username": "ahmed", "photo_path" : "storage/app/avater.jpg" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"} ,
-	 	 *		{ "post_id": 3 , "body" : "post3" ,"username": "ahmed" , "photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"}] ,
+     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" ,  "author_photo_path" : "storage/app/avater.jpg","downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "false" , "upvoted" : "true" , "downvoted" : "false"} ,
+	 	 *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"} ,
+	 	 *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"}] ,
 	 	 *
-     * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed", "photo_path" : "storage/app/avater.jpg" , "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0 , "upvoted" : "true" , "downvoted" : "false" } ,
- 		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "photo_path" : "storage/app/avater.jpg", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0 , "upvoted" : "true" , "downvoted" : "false" } ,
- 		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0  , "upvoted" : "true" , "downvoted" : "false"}]
+     * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0 , "upvoted" : "true" , "downvoted" : "false" } ,
+ 		 *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0 , "upvoted" : "true" , "downvoted" : "false" } ,
+ 		 *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0  , "upvoted" : "true" , "downvoted" : "false"}]
      * }
  		 * @response 404 {
 		 *	 "error" :"somethimg wrong!!!!"
@@ -652,5 +656,40 @@ class InteractingController extends Controller
 		public function uploadImage()
 		{
 			// code...
+		}
+
+		/**
+		 * Viewing a single post
+		 *
+	 	 *@bodyParam post_id int required the id of the post.
+	   *@response 200 {
+	 	 *	"post_id": 1 ,
+		 *  "body" : "post1" ,
+		 *  "image" : "storage/app/avater.jpg",
+		 *  "title":"title1",
+		 *	"username": "ahmed" ,
+		 * 	"photo_path" : "storage/app/avater.jpg",
+		 *	"downvotes" : 17,
+		 *	"upvotes" : 30 ,
+		 *	"date":" 2 days ago " ,
+		 *	"comments_num" : 0,
+		 *	"saved": "true",
+		 *  "hidden": "false" ,
+		 *	"upvoted" : "false" ,
+		 *	"downvoted" : "true"
+		 * }
+		 *
+	 	 * @response 404 {
+		 *	"error" :"somethimg wrong!!!!"
+	 	 * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "id doesn't exist"
+     * }
+	 	 */
+
+		public function viewSinglePost()
+		{
+			// code ...
 		}
 }
