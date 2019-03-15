@@ -96,9 +96,9 @@ class MessagesController extends Controller
 
 	 */
 
-	
-     
-  	 
+
+
+
   	public function viewUserInboxMessages()
   	{
   		// ...
