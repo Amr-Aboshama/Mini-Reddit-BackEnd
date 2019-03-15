@@ -36,7 +36,7 @@ Route::get('/auth/notification/push', 'NotificationController@pushNotification')
 
 Route::get('/auth/viewPrivateUserInfo','InformationController@viewPrivateUserInfo');
 Route::get('/auth/viewPublicUserInfo','InformationController@viewPublicUserInfo');
-Rout::get('/auth/viewAvatar' , 'InformationController@GetAvatar');
+Route::get('/auth/viewAvatar' , 'InformationController@GetAvatar');
 
 
 
