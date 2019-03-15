@@ -59,23 +59,4 @@ class InformationController extends Controller
     {
         // ...
   	}
-
-    /**
-    * show the profile image
-    *@bodyParam username string required username to show his avatar
-    *@authenticated
-    *@response 200 {
-    *   "photo_path" : "storage/app/avatar.jpg"
-    *}
-    * @response 401 {
-    *  "success": "false",
-    *  "error": "UnAuthorized"
-    * }
-
-    */
-
-    public function GetAvatar()
-    {
-        //...
-    }
 }
