@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,6 +28,7 @@ Route::patch('/auth/change/password', 'AccountSettingsController@changePassword'
 Route::patch('/auth/updateDisplayName', 'AccountSettingsController@updateDisplayName');
 Route::patch('/auth/updateAbout', 'AccountSettingsController@updateAbout');
 Route::patch('/auth/updateProfileImage', 'AccountSettingsController@updateProfileImage');
+Route::patch('/auth/updateCoverImage', 'AccountSettingsController@updateCoverImage');
 
 
 Route::get('/auth/notification/check', 'NotificationController@checkNotification');
@@ -102,6 +104,7 @@ Route::get('/unauth/viewCommentsReplies' , 'InteractingController@viewCommentsAn
 Route::get('/auth/viewUpOrDownvotedPosts', 'InteractingController@ViewUpVotedOrDownVotedPosts');
 Route::get('/auth/viewOverview' , 'InteractingController@ViewOverview');
 Route::get('/auth/viewSavedLinks' , 'InteractingController@ViewSavedLinks');
+Route::get('/auth/viewHiddenPosts' , 'InteractingController@ViewHiddenPosts');
 Route::post('/auth/giveReward', 'InteractingController@giveReward');
 Route::post('/auth/uploadImage', 'InteractingController@uploadImage');
 Route::get('/unauth/viewSinglePost' , 'InteractingController@viewSinglePost');

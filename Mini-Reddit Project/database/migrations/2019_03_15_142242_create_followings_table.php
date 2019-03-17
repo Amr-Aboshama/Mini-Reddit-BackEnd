@@ -20,9 +20,9 @@ class CreateFollowingsTable extends Migration
 
           //restrictions
 
-          $table->foreign('follower_user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
-          $table->foreign('followed_user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
-          $table->primary(['follower_user_name' ,'followed_user_name' ]);
+         $table->foreign('follower_user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
+         $table->foreign('followed_user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
+         $table->primary(['follower_user_name' ,'followed_user_name' ]);
 
         });
     }
