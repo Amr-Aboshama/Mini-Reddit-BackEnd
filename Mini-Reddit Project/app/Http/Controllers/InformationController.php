@@ -38,6 +38,7 @@ class InformationController extends Controller
      * @response 200 {
      *  "success": "true",
      *  "username": "john",
+     *  "name": "John Smith",
      *  "karma":500,
      *  "cake_day":"March 8, 2019",
      *  "about":"be or not to be",

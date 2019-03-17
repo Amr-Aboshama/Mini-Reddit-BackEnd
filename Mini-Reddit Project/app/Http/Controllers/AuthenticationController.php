@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 
 /**
@@ -11,6 +14,12 @@ use Illuminate\Http\Request;
 
 class AuthenticationController extends Controller
 {
+
+		public function __construct()
+		{
+        // $this->middleware('auth:api', ['only' => 'signOut']);
+		}
+
 		/**
 	   *
 	   * Sign in a user
@@ -26,9 +35,20 @@ class AuthenticationController extends Controller
 	   * 	"error": "username and password don't matched"
 	   * }
 	   */
-		public function signIn()
+		public function signIn(Request $request)
 		{
-				// ...
+				$credentials = ['user_name' => $request->my_username, 'password' => $request->password];
+
+				if(! $token = auth()->attempt($credentials)) {
+					return response()->json([
+						'success' => 'false',
+						'error' => 'username and password don\'t matched',
+					],404);
+				}
+				return response()->json([
+					'success' => 'true',
+					'token' => $token,
+				],200);
 		}
 
 		/**
@@ -127,11 +147,14 @@ class AuthenticationController extends Controller
 		 *
 		 * @response 401 {
      *  "success": "false",
-     * 	"error": "User is not signed in"
+     * 	"error": "User is UnAuthorized"
      * }
 		 */
 		public function signOut()
 		{
-			// ...
+				auth()->logout();
+				return response()->json([
+					'success' => 'true'
+				]);
 		}
 }
