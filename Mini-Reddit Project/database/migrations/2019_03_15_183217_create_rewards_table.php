@@ -22,7 +22,7 @@ class CreateRewardsTable extends Migration
 
           $table->foreign('user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
           $table->foreign('link_id')->references('link_id')->on('links')->onUpdate('cascade')->onDelete('cascade');
-          $table->primary(['link_id','user_name']);
+         $table->primary(['link_id','user_name']);
 
         });
     }

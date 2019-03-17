@@ -14,7 +14,8 @@
         "laravel/passport": "^7.2",
         "laravel/telescope": "^2.0",
         "laravel/tinker": "^1.0",
-        "mpociot/laravel-apidoc-generator": "^3.4"
+        "mpociot/laravel-apidoc-generator": "^3.4",
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -62,4 +63,6 @@
             "@php artisan key:generate --ansi"
         ]
     }
+
+
 }
