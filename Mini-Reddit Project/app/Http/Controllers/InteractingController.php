@@ -260,7 +260,7 @@ class InteractingController extends Controller
   	{
         //token should be parsed to get the user name
 
-				$user = User::where('user_name' , 'amr')->first(); //should be changed.....
+			  $user = auth()->user();
 
 				if(!$request->has('post_id'))
 				{
@@ -316,8 +316,8 @@ class InteractingController extends Controller
     public function removeUpvotePost(Request $request)
 		{
 		    //token should be parsed to get the user name
-				
-		  	$user = User::where('user_name' , 'amr')->first(); //should be changed.....
+
+		  	$user = auth()->user();
 
 				if(!$request->has('post_id'))
 				{
@@ -372,8 +372,7 @@ class InteractingController extends Controller
 
 		    //token should be parsed to get the user name
 
-			  $user = User::where('user_name' , 'amr')->first(); //should be changed.....
-
+				$user = auth()->user();
 			  if(!$request->has('comment_id'))
 			  {
 
@@ -427,9 +426,7 @@ class InteractingController extends Controller
      public function removeUpvoteComment(Request $request)
 		 {
 			   //token should be parsed to get the user name
-
-			   $user = User::where('user_name' , 'amr')->first(); //should be changed.....
-
+			   $user = auth()->user();
 			   if(!$request->has('comment_id'))
 			   {
 
