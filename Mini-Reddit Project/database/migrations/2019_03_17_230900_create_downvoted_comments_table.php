@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRewardsTable extends Migration
+class CreateDownvotedCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,7 @@ class CreateRewardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rewards', function (Blueprint $table) {
-
+        Schema::create('downvoted_comments', function (Blueprint $table) {
           $table->string( 'user_name' );
           $table->unsignedBigInteger('link_id');
 
@@ -22,8 +21,7 @@ class CreateRewardsTable extends Migration
 
           $table->foreign('user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
           $table->foreign('link_id')->references('link_id')->on('links')->onUpdate('cascade')->onDelete('cascade');
-         $table->primary(['link_id','user_name']);
-
+          $table->primary(['link_id','user_name']);
         });
     }
 
@@ -34,6 +32,6 @@ class CreateRewardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rewards');
+        Schema::dropIfExists('downvoted_comments');
     }
 }

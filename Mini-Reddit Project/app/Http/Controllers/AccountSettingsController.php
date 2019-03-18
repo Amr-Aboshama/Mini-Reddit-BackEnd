@@ -136,4 +136,35 @@ class AccountSettingsController extends Controller
 		{
 			// code...
 		}
+
+		/**
+		 * Update user profile cover
+		 * @authenticated
+		 * @bodyParam cover_image file required User's new cover image.
+		 *
+		 * @response 200 {
+		 * 	"success": "true",
+		 * 	"path": "sotrage/app/avatar.jpg"
+		 * }
+		 *
+		 * @response 401 {
+		 * 	"sucess": "false",
+		 * 	"error": "UnAuthorized"
+		 * }
+		 *
+		 * @response 401 {
+		 * 	"sucess": "false",
+		 * 	"error": "Unsupported media type"
+		 * }
+		 *
+		 * @response 400 {
+		 * 	"sucess": "false",
+		 * 	"error": "Cannot upload the image"
+		 * }
+		 */
+
+		public function updateCoverImage()
+		{
+			// code...
+		}
 }

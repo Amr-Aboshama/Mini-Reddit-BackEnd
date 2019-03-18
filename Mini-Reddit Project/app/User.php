@@ -6,10 +6,14 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
+    use  Notifiable;
+
+    public $incrementing = false; //so eloquent doesn't expect your primary key to be an autoincrement primary key.
+
 
     public $incrementing = false;
 
