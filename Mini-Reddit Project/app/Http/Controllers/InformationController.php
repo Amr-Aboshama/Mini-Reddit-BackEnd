@@ -43,6 +43,7 @@ class InformationController extends Controller
      *  "cake_day":"March 8, 2019",
      *  "about":"be or not to be",
      *  "photo_path" : "storage/app/avater.jpg"
+     *  "cover_path" : "storage/app/bannar.jpg"
      *
      * }
      *
