@@ -37,15 +37,9 @@ class AuthenticationController extends Controller
 	   */
 		public function signIn(Request $request)
 		{
-<<<<<<< HEAD
-
 
 				$credentials = ['user_name' => $request->my_username, 'password' => $request->password];
-				
-=======
-				$credentials = ['user_name' => $request->my_username, 'password' => $request->password];
 
->>>>>>> f5a5f723f281362e1474865475bc7c81b91ab155
 				if(! $token = auth()->attempt($credentials)) {
 					return response()->json([
 						'success' => 'false',
