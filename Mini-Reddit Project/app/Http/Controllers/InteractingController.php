@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Link;
+use App\UpvotedPost;
+use App\UpvotedComment;
 
 /**
  * @group Interacting Actions
@@ -254,9 +256,42 @@ class InteractingController extends Controller
      * 	"error" : "post doesn't exist"
      * }
      */
-    public function addUpvotePost()
+    public function addUpvotePost(Request $request)
   	{
-    		// ...
+        //token should be parsed to get the user name
+
+				$user = User::where('user_name' , 'amr')->first(); //should be changed.....
+
+				if(!$request->has('post_id'))
+				{
+
+					return response()->json([
+
+						"success" => "false",
+						"error" => "post_id is required"
+
+					],403);
+
+				}
+
+				$result = UpvotedPost::store($user->user_name , $request->post_id);
+
+				if($result)
+				{
+						return response()->json([
+							"success" => "true"
+						], 200 );
+				}
+				else
+				{
+					  return response()->json([
+						  "success" => "false",
+    		 		  "error" => "post doesn't exist or already upvoted"
+					  ], 403 );
+
+				}
+
+
     }
 
 
@@ -276,9 +311,43 @@ class InteractingController extends Controller
      * 	"error" : "post doesn't exist"
      * }
      */
-    public function removeUpvotePost()
+
+
+    public function removeUpvotePost(Request $request)
 		{
-    		// ...
+		    //token should be parsed to get the user name
+				
+		  	$user = User::where('user_name' , 'amr')->first(); //should be changed.....
+
+				if(!$request->has('post_id'))
+				{
+
+					return response()->json([
+
+						"success" => "false",
+						"error" => "post_id is required"
+
+					],403);
+
+				}
+
+			  $result = UpvotedPost::remove($user->user_name , $request->post_id);
+
+			  if($result)
+			  {
+					  return response()->json([
+						  "success" => "true"
+					  ], 200 );
+			  }
+		    else
+			  {
+				  	return response()->json([
+						  "success" => "false",
+						  "error" => "post isn't upvoted"
+					  ], 403 );
+
+			  }
+
     }
 
 
@@ -298,9 +367,43 @@ class InteractingController extends Controller
      * 	"error" : "comment doesn't exist"
      * }
      */
-    public function addUpvoteComment()
+    public function addUpvoteComment(Request $request)
   	{
-    		// ...
+
+		    //token should be parsed to get the user name
+
+			  $user = User::where('user_name' , 'amr')->first(); //should be changed.....
+
+			  if(!$request->has('comment_id'))
+			  {
+
+				  return response()->json([
+
+					  "success" => "false",
+					  "error" => "comment_id is required"
+
+				  ],403);
+
+			  }
+
+			  $result = UpvotedComment::store($user->user_name , $request->comment_id);
+
+			  if($result)
+			  {
+				  	return response()->json([
+					  	"success" => "true"
+					  ], 200 );
+			  }
+			  else
+			  {
+				   	return response()->json([
+						  "success" => "false",
+						  "error" => "Comment doesn't exist or already upvoted"
+					  ], 403 );
+
+			  }
+
+
     }
 
 
@@ -321,9 +424,41 @@ class InteractingController extends Controller
      * }
      */
 
-     public function removeUpvoteComment()
+     public function removeUpvoteComment(Request $request)
 		 {
-    		// ...
+			   //token should be parsed to get the user name
+
+			   $user = User::where('user_name' , 'amr')->first(); //should be changed.....
+
+			   if(!$request->has('comment_id'))
+			   {
+
+				   return response()->json([
+
+					   "success" => "false",
+					   "error" => "comment_id is required"
+
+				   ],403);
+
+			   }
+
+			   $result = UpvotedComment::remove($user->user_name , $request->comment_id);
+
+			   if($result)
+			   {
+				   	 return response()->json([
+						   "success" => "true"
+					   ], 200 );
+			   }
+			   else
+			   {
+					   return response()->json([
+						   "success" => "false",
+						   "error" => "Comment doesn't exist or already upvoted"
+					   ], 403 );
+
+			   }
+
      }
 
 
