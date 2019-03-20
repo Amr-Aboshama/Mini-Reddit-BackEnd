@@ -38,8 +38,7 @@ class AuthenticationController extends Controller
 		public function signIn(Request $request)
 		{
 
-		    $credentials = ['user_name' => $request->my_username, 'password' => $request->password];
-
+				$credentials = ['user_name' => $request->my_username, 'password' => $request->password];
 				if(! $token = auth()->attempt($credentials)) {
 					return response()->json([
 						'success' => 'false',
@@ -148,7 +147,7 @@ class AuthenticationController extends Controller
 		 *
 		 * @response 401 {
      *  "success": "false",
-     * 	"error": "User is UnAuthorized"
+     * 	"error": "UnAuthorized"
      * }
 		 */
 		public function signOut()
@@ -156,6 +155,6 @@ class AuthenticationController extends Controller
 				auth()->logout();
 				return response()->json([
 					'success' => 'true'
-				]);
+				],200);
 		}
 }

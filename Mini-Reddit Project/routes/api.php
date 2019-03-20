@@ -73,6 +73,7 @@ Route::middleware('auth:api')->group(function ()
   Route::get('/auth/viewSavedLinks' , 'InteractingController@ViewSavedLinks');
   Route::post('/auth/giveReward', 'InteractingController@giveReward');
   Route::post('/auth/uploadImage', 'InteractingController@uploadImage');
+  Route::get('/auth/getUsername', 'InformationController@getUsername');
 
 });
 
