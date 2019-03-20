@@ -174,7 +174,7 @@ class InteractingController extends Controller
      * 	"error" : "post doesn't exist"
      * }
      */
-    public function addDownvotePost(Request $request)
+    public function downvoteLink(Request $request)
 		{
     		//token should be parsed to get the user name
 
