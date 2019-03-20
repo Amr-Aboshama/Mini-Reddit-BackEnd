@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Subscribtion;
+use App\Community;
     /**
      * @group Communities
      * all community features are handled by the following APIs
@@ -29,9 +30,30 @@ class CommunitiesController extends Controller
      * 	"error": "username doesn't exist"
      * }
      */
-		public function viewUserCommunities()
+		public function viewUserCommunities(Request $request)
 		{
-			// ...
+
+            if(!$request->has('username'))
+                {
+                    return response()->json([
+                        "success" => "false",
+                        "error" => "username doesn't exist"
+                    ],403);
+                }
+            
+            $communities_subscribed=Subscribtion::subscribed_communities($request->username);
+            $subscribed_communities = array();
+            $i = 0;
+            foreach( $communities_subscribed as $community_sub )
+            {
+
+            $subscribed_communities[$i]=(object)[
+            'community_name' => $community_sub->name,
+            'community_logo'=> $community_sub->community_logo];
+            $i++;
+           }
+            return response()->json( (object)['communities'=>$subscribed_communities], 200);
+			
 		}
 
     /**

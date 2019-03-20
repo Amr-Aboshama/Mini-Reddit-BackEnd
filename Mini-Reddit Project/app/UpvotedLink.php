@@ -38,12 +38,10 @@ class UpvotedLink extends Model
         return $result;
     }
 
+
     public static function upvoted($link_id , $username)
     {
         $result = UpvotedLink::where('link_id' , $link_id)->where('user_name' , $username)->exists();
         return $result;
     }
-
-
-
 }

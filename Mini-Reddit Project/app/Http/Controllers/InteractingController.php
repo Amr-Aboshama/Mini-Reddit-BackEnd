@@ -160,7 +160,7 @@ class InteractingController extends Controller
 
     /**
      * Downvote Link
-     * @bodyParam post_id integer required the id of the post that the user wants to downvote
+     * @bodyParam link_id integer required the id of the post that the user wants to downvote
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -171,7 +171,7 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
+     * 	"error" : "Link doesn't exist"
      * }
      */
     public function DownvoteLink()
