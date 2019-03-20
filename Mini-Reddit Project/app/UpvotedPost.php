@@ -44,11 +44,4 @@ class UpvotedPost extends Model
         $result = UpvotedPost::where('link_id' , $link_id)->where('user_name' , $username)->exists();
         return $result;
     }
-
-    public static function find($user_name , $post_id)
-    {
-        $result = UpvotedPost::select('user_name','link_id')->where('user_name' , $user_name)->where('link_id' , $post_id)->get();
-        return $result;
-    }
-
 }

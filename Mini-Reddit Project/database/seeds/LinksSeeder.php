@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+
 class LinksSeeder extends Seeder
 {
     /**
@@ -86,4 +86,3 @@ class LinksSeeder extends Seeder
         ]);
     }
 }
-
