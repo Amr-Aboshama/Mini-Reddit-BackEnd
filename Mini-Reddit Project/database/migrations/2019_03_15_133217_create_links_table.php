@@ -19,12 +19,15 @@ class CreateLinksTable extends Migration
             $table->bigIncrements('link_id');
             $table->string('content');
             $table->string('content_image')->nullable(); //url of the image
+            $table->string('video_url')->nullable();
             $table->string('title')->nullable();
             $table->timestamp('link_date');
             $table->unsignedTinyInteger('pinned')->default(0);
             $table->string('author_user_name');     //owner of the post....
             $table->unsignedBigInteger('community_id')->nullable();     //if the post in community...
             $table->unsignedBigInteger('parent_id')->nullable();
+            $table->bigInteger('upvotes')->default(0);
+            $table->bigInteger('downvotes')->default(0);
 
             //restrictions
 

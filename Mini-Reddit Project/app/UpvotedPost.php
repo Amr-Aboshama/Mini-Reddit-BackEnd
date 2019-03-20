@@ -38,11 +38,13 @@ class UpvotedPost extends Model
         return $result;
     }
 
-    public static function find($user_name , $post_id)
+
+    public static function upvoted($link_id , $username)
     {
-        $result = UpvotedPost::select('user_name','link_id')->where('user_name' , $user_name)->where('link_id' , $post_id)->get();
+        $result = UpvotedPost::where('link_id' , $link_id)->where('user_name' , $username)->exists();
         return $result;
     }
+
 
 
 }
