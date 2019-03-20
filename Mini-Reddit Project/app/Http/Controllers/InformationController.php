@@ -60,5 +60,26 @@ class InformationController extends Controller
   	public function viewPublicUserInfo()
     {
         // ...
-  	}
+    }
+    
+     /**
+     * Show user's username
+     * @authenticated
+     * @response 200 {
+     *  "success": "true",
+     *  "username": "john"
+     * }
+     *
+     * @response 401 {
+     *  "success": "false",
+     * 	"error": "UnAuthorized"
+     * }
+     */
+    public function getUsername()
+    {
+        return response()->json([
+            'success'=>'true',
+            'username' => auth()->user()->user_name
+            ]);
+    }
 }
