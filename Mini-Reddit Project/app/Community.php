@@ -12,4 +12,10 @@ class Community extends Model
           return $result;
      }
 
+     public static function communityExist($community_id)
+    {
+        $result = Community::where('community_id' , $community_id)->exists();
+        return $result;
+    }
+
 }
