@@ -6,13 +6,13 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use App\User;
 use App\Link;
-use App\UpvotedPost;
-use App\DownvotedPost;
+use App\UpvotedLink;
+use App\DownvotedLink;
 use App\SavedPost;
 use App\HiddenPost;
-use App\UpvotedComment;
 use App\Community;
 use App\Subscribtion;
+use Validator;
 
 /**
  * @group Interacting Actions
@@ -159,7 +159,7 @@ class InteractingController extends Controller
 
 
     /**
-     * Add Downvote to a post
+     * Downvote Link
      * @bodyParam post_id integer required the id of the post that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -174,37 +174,14 @@ class InteractingController extends Controller
      * 	"error" : "post doesn't exist"
      * }
      */
-    public function addDownvotePost()
+    public function DownvoteLink()
 		{
     		// ...
     }
-
-
-		/**
-		 * Remove Downvote from a post
-     * @bodyParam post_id integer required the id of the post that the user wants to downvote
-     * @authenticated
-     * @response 200 {
-     *  "success": "true"
-     * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
-     * @response 403 {
-     * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
-     * }
-     */
-    public function removeDownvotePost()
-		{
-    		// ...
-    }
-
 
     /**
-     * Add Downvote to a comment
-     * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
+     * Upvote Link
+     * @bodyParam link_id integer required the id of the post that the user wants to downvote
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -215,254 +192,74 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "comment doesn't exist"
+     * 	"error" : "link_id doesn't exist"
      * }
-     */
-    public function addDownvoteComment()
-		{
-    		// ...
-    }
-
-
-		/**
-		 * Remove Downvote from a comment
-     * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
-     * @authenticated
-     * @response 200 {
-     *  "success": "true"
-     * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
-     * @response 403 {
+		 * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "comment doesn't exist"
+     * 	"error" : "link_id is required"
      * }
-     */
-    public function removeDownvoteComment()
-		{
-    		// ...
-    }
 
-
-    /**
-     * Add Upvote to a post
-     * @bodyParam post_id integer required the id of the post that the user wants to downvote
-     * @authenticated
-     * @response 200 {
-     *  "success": "true"
-     * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
-     * @response 403 {
-     * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
-     * }
      */
-    public function addUpvotePost(Request $request)
+
+    public function UpvoteLink(Request $request)
   	{
         //token should be parsed to get the user name
 
-			  $user = auth()->user();
+			  $username = auth()->user()->user_name;
 
-				if(!$request->has('post_id'))
+				$valid = Validator::make($request->all(),[
+					'link_id' => 'required'
+				]);
+
+				if($valid->fails())
 				{
 
 					return response()->json([
 
 						"success" => "false",
-						"error" => "post_id is required"
+						"error" => "link_id is required"
 
 					],403);
 
 				}
 
-				$result = UpvotedPost::store($user->user_name , $request->post_id);
-
-				if($result)
+				if(UpvotedLink::upvoted( $request->link_id , $username ))
 				{
-						return response()->json([
-							"success" => "true"
-						], 200 );
+				    	$result = UpvotedLink::remove($username , $request->link_id);
+
+							return response()->json([
+								"success" => "true"
+							],200);
+
 				}
-				else
+
+				//go and upvote.....
+
+				$result = UpvotedLink::store($username,$request->link_id);
+
+				if(!$result)
 				{
 					  return response()->json([
-						  "success" => "false",
-    		 		  "error" => "post doesn't exist or already upvoted"
-					  ], 403 );
 
+						  "success" => "false",
+						  "error" => "link_id doesn't exist!!"
+
+					  ],403);
 				}
 
+				//check if downvoted then undo ......
 
-    }
-
-
-		/**
-		 * Remove Upvote from a post
-     * @bodyParam post_id integer required the id of the post that the user wants to downvote
-     * @authenticated
-     * @response 200 {
-     *  "success": "true"
-     * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
-     * @response 403 {
-     * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
-     * }
-     */
-
-
-    public function removeUpvotePost(Request $request)
-		{
-		    //token should be parsed to get the user name
-
-		  	$user = auth()->user();
-
-				if(!$request->has('post_id'))
+				if(DownvotedLink::downvoted($request->link_id , $username))
 				{
-
-					return response()->json([
-
-						"success" => "false",
-						"error" => "post_id is required"
-
-					],403);
-
+				    	$result = DownvotedLink::remove($username , $request->link_id);
 				}
 
-			  $result = UpvotedPost::remove($user->user_name , $request->post_id);
-
-			  if($result)
-			  {
-					  return response()->json([
-						  "success" => "true"
-					  ], 200 );
-			  }
-		    else
-			  {
-				  	return response()->json([
-						  "success" => "false",
-						  "error" => "post isn't upvoted"
-					  ], 403 );
-
-			  }
-
-    }
-
-
-    /**
-     * Add Upvote to a comment
-     * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
-     * @authenticated
-     * @response 200 {
-     *  "success": "true"
-     * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
-     * @response 403 {
-     * 	"success" : "false",
-     * 	"error" : "comment doesn't exist"
-     * }
-     */
-    public function addUpvoteComment(Request $request)
-  	{
-
-		    //token should be parsed to get the user name
-
-				$user = auth()->user();
-			  if(!$request->has('comment_id'))
-			  {
-
-				  return response()->json([
-
-					  "success" => "false",
-					  "error" => "comment_id is required"
-
-				  ],403);
-
-			  }
-
-			  $result = UpvotedComment::store($user->user_name , $request->comment_id);
-
-			  if($result)
-			  {
-				  	return response()->json([
-					  	"success" => "true"
-					  ], 200 );
-			  }
-			  else
-			  {
-				   	return response()->json([
-						  "success" => "false",
-						  "error" => "Comment doesn't exist or already upvoted"
-					  ], 403 );
-
-			  }
+				return response()->json([
+					"success"=> "true"
+				],200);
 
 
     }
-
-
-		/**
-		 * Remove Upvote from a comment
-     * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
-     * @authenticated
-     * @response 200 {
-     *  "success": "true"
-     * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
-     * @response 403 {
-     * 	"success" : "false",
-     * 	"error" : "comment doesn't exist"
-     * }
-     */
-
-     public function removeUpvoteComment(Request $request)
-		 {
-			   //token should be parsed to get the user name
-			   $user = auth()->user();
-			   if(!$request->has('comment_id'))
-			   {
-
-				   return response()->json([
-
-					   "success" => "false",
-					   "error" => "comment_id is required"
-
-				   ],403);
-
-			   }
-
-			   $result = UpvotedComment::remove($user->user_name , $request->comment_id);
-
-			   if($result)
-			   {
-				   	 return response()->json([
-						   "success" => "true"
-					   ], 200 );
-			   }
-			   else
-			   {
-					   return response()->json([
-						   "success" => "false",
-						   "error" => "Comment doesn't exist or already upvoted"
-					   ], 403 );
-
-			   }
-
-     }
 
 
 		/**
@@ -503,7 +300,7 @@ class InteractingController extends Controller
 
 			   if($request->has('page_type'))
 			   {
-						 if($request->page_type) //home page
+						 if($request->page_type == 1) //home page
 					   {
 								 if(!$Auth)
 								 {
@@ -584,11 +381,11 @@ class InteractingController extends Controller
 					  ];
 
 
-					 	if($Auth && UpvotedPost::upvoted($post->link_id , auth()->user()->user_name) )
+					 	if($Auth && UpvotedLink::upvoted($post->link_id , auth()->user()->user_name) )
 						{
 								$renamed_posts[$i]->upvoted = 'true';
 						}
-						else if($Auth&&DownvotedPost::downvoted($post->link_id , auth()->user()->user_name) )
+						else if($Auth&&DownvotedLink::downvoted($post->link_id , auth()->user()->user_name) )
 						{
 							  $renamed_posts[$i]->upvoted = 'true';
 						}
