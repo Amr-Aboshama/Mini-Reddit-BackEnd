@@ -49,7 +49,7 @@ Route::middleware('auth:api')->group(function ()
   Route::post('/auth/addModerator','CommunitiesController@addModretorForCommunity');
   Route::delete('/auth/removeModerator','CommunitiesController@removeModretorFromCommunity');
   Route::post('/auth/subscribeCommunity','CommunitiesController@subscribeCommunity'); //
-  Route::delete('/auth/subscribeCommunity','CommunitiesController@unsubscribeCommunity'); //*
+  Route::delete('/auth/unSubscribeCommunity','CommunitiesController@unsubscribeCommunity'); //*
   Route::post('/auth/saveLink','InteractingController@saveLink'); //
   Route::delete('/auth/saveLink','InteractingController@unsaveLink'); //*
   Route::post('/auth/addLink', 'InteractingController@addNewLink');
