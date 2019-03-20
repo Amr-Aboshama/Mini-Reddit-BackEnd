@@ -192,8 +192,8 @@ class InteractingController extends Controller
 
         }
       //if i can't remove the upvoted of the post
-       $result = UpvotedPost::upvoted($user->user_name , $request->post_id);
-			  if($result)                    //check if the post is actually upvoted
+       $result = UpvotedPost::find($user->user_name , $request->post_id);
+			  if(count($result)!=0)                    //check if the post is actually upvoted
 			  {
           $result = UpvotedPost::remove($user->user_name , $request->post_id);
           if(!$result)                
@@ -205,9 +205,9 @@ class InteractingController extends Controller
           }
         }
         //downvoting the post
-        $result = DownvotedPost::downvoted($user->user_name , $request->post_id);
+        $result = DownvotedPost::find($user->user_name , $request->post_id);
         //if the link is acually downvoted
-        if($result)
+        if(count($result)!=0)
         {
           $result = DownvotedPost::remove($user->user_name , $request->post_id);
 
