@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-
 
 class SubsribeSeeder extends Seeder
 {
@@ -31,6 +29,5 @@ class SubsribeSeeder extends Seeder
             'user_name'=>'ahmed'
 
         ]);
-
     }
 }

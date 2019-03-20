@@ -45,10 +45,4 @@ class DownvotedPost extends Model
         return $result;
     }
 
-    public static function find($user_name , $post_id)
-    {
-        $result = DownvotedPost::select('user_name','link_id')->where('user_name' , $user_name)->where('link_id' , $post_id)->get();
-        return $result;
-    }
-
 }
