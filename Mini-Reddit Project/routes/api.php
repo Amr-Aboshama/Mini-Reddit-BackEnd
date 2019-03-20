@@ -60,9 +60,9 @@ Route::middleware('auth:api')->group(function ()
   Route::patch('/auth/editPost','InteractingController@editPost');
   Route::patch('/auth/editComment','InteractingController@editComment');
   Route::post('/auth/downVotePost','InteractingController@addDownvotePost');//
-  Route::delete('/auth/downVotePost','InteractingController@removeDownvotePost');//*
+  Route::delete('/auth/removeDownVotePost','InteractingController@removeDownvotePost');//*
   Route::post('/auth/downVoteComment','InteractingController@addDownvoteComment');//
-  Route::delete('/auth/downVoteComment','InteractingController@removeDownvoteComment');//*
+  Route::delete('/auth/removeDownVoteComment','InteractingController@removeDownvoteComment');//*
   Route::post('/auth/upVotePost','InteractingController@addUpvotePost');//
   Route::delete('/auth/upVotePost','InteractingController@removeUpvotePost');//*
   Route::post('/auth/upVoteComment','InteractingController@addUpvoteComment');//
