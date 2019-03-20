@@ -61,5 +61,10 @@ class Link extends Model
       return $result;
   }
 
+  public static function chechExisting($link_id)
+  {
+      $result = Link::where('link_id' , $link_id)->exists();
+      return $result;
+  }
 
 }
