@@ -59,7 +59,7 @@ Route::middleware('auth:api')->group(function ()
   Route::delete('/auth/hidePost','InteractingController@unhidePost');//*
   Route::patch('/auth/editPost','InteractingController@editPost');
   Route::patch('/auth/editComment','InteractingController@editComment');
-  Route::post('/auth/downVotePost','InteractingController@addDownvotePost');//
+  Route::post('/auth/downvoteLink','InteractingController@downvoteLink');//
   Route::delete('/auth/removeDownVotePost','InteractingController@removeDownvotePost');//*
   Route::post('/auth/downVoteComment','InteractingController@addDownvoteComment');//
   Route::delete('/auth/removeDownVoteComment','InteractingController@removeDownvoteComment');//*
