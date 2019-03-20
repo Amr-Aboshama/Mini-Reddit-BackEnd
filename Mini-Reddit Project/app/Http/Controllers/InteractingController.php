@@ -7,6 +7,8 @@ use App\User;
 use App\Link;
 use App\UpvotedPost;
 use App\UpvotedComment;
+use App\DownvotedPost;
+use App\DownvotedComment;
 
 /**
  * @group Interacting Actions
@@ -168,94 +170,69 @@ class InteractingController extends Controller
      * 	"error" : "post doesn't exist"
      * }
      */
-    public function addDownvotePost()
+    public function addDownvotePost(Request $request)
 		{
-    		// ...
+    		//token should be parsed to get the user name
+
+        $user = auth()->user();
+
+        if(!$request->has('post_id'))
+				{
+
+					return response()->json([
+
+						'success' => 'false',
+						'error' => 'post doesn\'t exist'
+
+					],403);
+
+        }
+      //if i can't remove the upvoted of the post
+       $result = UpvotedPost::find($user->user_name , $request->post_id);
+			  if(count($result)!=0)                    //check if the post is actually upvoted
+			  {
+          $result = UpvotedPost::remove($user->user_name , $request->post_id);
+          if(!$result)                
+          {
+					  return response()->json([
+						  'success' => 'false',
+						  'error' => 'post doesn\'t exist'
+					  ], 403 );
+          }
+        }
+        //downvoting the post
+        $result = DownvotedPost::find($user->user_name , $request->post_id);
+        //if the link is acually downvoted
+        if(count($result)!=0)
+        {
+          $result = DownvotedPost::remove($user->user_name , $request->post_id);
+
+          if($result)
+          {
+            return response()->json([
+              'success' => 'true'
+            ], 200 );
+          }
+        }
+        $result=DownvotedPost::store($user->user_name , $request->post_id);
+        if($result)
+        {
+          return response()->json([
+            'success' => 'true'
+          ], 200 );
+        }
+				else
+				{
+					  return response()->json([
+						  'success' => 'false',
+						'error' => 'post doesn\'t exist'
+					  ], 403 );
+
+				}
     }
 
 
-		/**
-		 * Remove Downvote from a post
-     * @bodyParam post_id integer required the id of the post that the user wants to downvote
-     * @authenticated
-     * @response 200 {
-     *  "success": "true"
-     * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
-     * @response 403 {
-     * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
-     * }
-     */
-    public function removeDownvotePost()
-		{
-    		// ...
-    }
-
-
-    /**
-     * Add Downvote to a comment
-     * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
-     * @authenticated
-     * @response 200 {
-     *  "success": "true"
-     * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
-     * @response 403 {
-     * 	"success" : "false",
-     * 	"error" : "comment doesn't exist"
-     * }
-     */
-    public function addDownvoteComment()
-		{
-    		// ...
-    }
-
-
-		/**
-		 * Remove Downvote from a comment
-     * @bodyParam comment_id integer required the id of the comment that the user wants to downvote
-     * @authenticated
-     * @response 200 {
-     *  "success": "true"
-     * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
-     * @response 403 {
-     * 	"success" : "false",
-     * 	"error" : "comment doesn't exist"
-     * }
-     */
-    public function removeDownvoteComment()
-		{
-    		// ...
-    }
-
-
-    /**
-     * Add Upvote to a post
-     * @bodyParam post_id integer required the id of the post that the user wants to downvote
-     * @authenticated
-     * @response 200 {
-     *  "success": "true"
-     * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
-     * @response 403 {
-     * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
-     * }
-     */
+		
     public function addUpvotePost(Request $request)
   	{
         //token should be parsed to get the user name
