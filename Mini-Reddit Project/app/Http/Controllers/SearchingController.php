@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\community;
 
 /**
  *@group Searching
@@ -23,8 +25,38 @@ class SearchingController extends Controller
      * 	"error": "search content is empty"
      * }
      */
-    public function search()
+    public function search(Request $request)
     {
-        //
+        
+        
+        if(!$request->has('search_content'))
+            {
+
+                return response()->json([
+
+                    "success" => "false",
+                    "error" => "search content is empty"
+
+                ],403);
+
+            }
+
+        $users_list = User::where('user_name', 'like', '%' . $request->search_content . '%')
+            ->select('user_name')
+            ->where('user_name', 'like', '%' . $request->search_content. '%')
+            ->pluck('user_name')->toArray();
+        
+         $community_list = community::where('name', 'like', '%' . $request->search_content . '%')
+             ->select('name')
+             ->where('name', 'like', '%' . $request->search_content . '%')
+             ->pluck('name')->toArray();   
+       
+        return response()->json([
+            
+            "usersContent" => $users_list,
+            "communityContent" => $community_list
+
+            ], 200 );  
+
     }
 }
