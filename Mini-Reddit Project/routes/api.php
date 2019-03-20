@@ -59,14 +59,8 @@ Route::middleware('auth:api')->group(function ()
   Route::delete('/auth/hidePost','InteractingController@unhidePost');//*
   Route::patch('/auth/editPost','InteractingController@editPost');
   Route::patch('/auth/editComment','InteractingController@editComment');
-  Route::post('/auth/downvoteLink','InteractingController@downvoteLink');//
-  Route::delete('/auth/removeDownVotePost','InteractingController@removeDownvotePost');//*
-  Route::post('/auth/downVoteComment','InteractingController@addDownvoteComment');//
-  Route::delete('/auth/removeDownVoteComment','InteractingController@removeDownvoteComment');//*
-  Route::post('/auth/upVotePost','InteractingController@addUpvotePost');//
-  Route::delete('/auth/upVotePost','InteractingController@removeUpvotePost');//*
-  Route::post('/auth/upVoteComment','InteractingController@addUpvoteComment');//
-  Route::delete('/auth/upVoteComment','InteractingController@removeUpvoteComment');//*
+  Route::post('/auth/upVoteLink','InteractingController@UpvoteLink');//
+  Route::post('/auth/downVoteLink','InteractingController@DownvoteLink');//*
   Route::get('/auth/viewComments','InteractingController@viewComments');
   Route::get('/auth/viewUpOrDownvotedPosts', 'InteractingController@ViewUpVotedOrDownVotedPosts');
   Route::get('/auth/viewOverview' , 'InteractingController@ViewOverview');
