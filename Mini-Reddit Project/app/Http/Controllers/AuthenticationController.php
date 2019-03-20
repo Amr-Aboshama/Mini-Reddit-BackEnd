@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
+use App\User;
+use Validator;
 
 /**
  * @group Authentication
@@ -14,12 +15,6 @@ use Illuminate\Http\Request;
 
 class AuthenticationController extends Controller
 {
-
-		public function __construct()
-		{
-        // $this->middleware('auth:api', ['only' => 'signOut']);
-		}
-
 		/**
 	   *
 	   * Sign in a user
@@ -34,17 +29,35 @@ class AuthenticationController extends Controller
 	   * 	"success": "false",
 	   * 	"error": "username and password don't matched"
 	   * }
+	   *
+	   * @response 422 {
+	   * 	"success": "false",
+	   * 	"error": "Invalid or some data missed"
+	   * }
 	   */
 		public function signIn(Request $request)
 		{
+				$valid = Validator::make($request->all(),[
+					'my_username' => 'required|min:4',
+					'password' => 'required|min:8'
+				]);
+
+				if($valid->fails()) {
+						return response()->json([
+							'success' => 'false',
+							'error' => 'Invalid or some data missed',
+						],422);
+				}
 
 				$credentials = ['user_name' => $request->my_username, 'password' => $request->password];
+
 				if(! $token = auth()->attempt($credentials)) {
 					return response()->json([
 						'success' => 'false',
 						'error' => 'username and password don\'t matched',
 					],404);
 				}
+
 				return response()->json([
 					'success' => 'true',
 					'token' => $token,
@@ -56,41 +69,45 @@ class AuthenticationController extends Controller
 	   * Signup a user
 	   * @bodyParam my_username string required the username of the current user.
 	   * @bodyParam password string required The password of the user.
-	   * @bodyParam confirm_password string required The confirm password of the user.
+	   * @bodyParam password_confirmation string required The confirm password of the user.
 	   * @bodyParam email string required The email of the user.
 	   * @response 200 {
 	   * 	"success": "true",
 	   * 	"token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
 	   * }
 	   *
-	   * @response 404 {
+	   * @response 422 {
 	   * 	"success": "false",
-	   * 	"error": "username and password don't match"
+	   * 	"error": "Invalid or some data missed"
 	   * }
 	   *
-	   * @response 403 {
-	   * 	"success": "false",
-	   * 	"error": "user is logged in already"
-	   * }
-	   *
-	   * @response 403 {
-	   * 	"success": "false",
-	   * 	"error": "email already exists"
-	   * }
-	   *
-	   * @response 403 {
-	   * 	"success": "false",
-	   * 	"error": "username already exists"
-	   * }
-	   *
-	   * @response 403 {
-	   * 	"success": "false",
-	   * 	"error": "passwords mismatch"
-	   * }
 	   */
-		public function signUp()
+		public function signUp(Request $request)
 		{
-				// ...
+				$valid = Validator::make($request->all(),[
+					'user_name' => 'required|unique:users|min:4',
+					'email' => 'required|email|unique:users',
+					'password' => 'required|confirmed|min:8'
+				]);
+
+				if($valid->fails()) {
+					return response()->json([
+						'success' => 'false',
+						'error' => 'Invalid or some data missed'
+					],403);
+				}
+
+				$user = User::create([
+					'user_name' => $request->user_name,
+					'email' => $request->email,
+					'password' => bcrypt($request->password),
+				]);
+
+				$token = auth()->login($user);
+				return response()->json([
+					'success' => 'true',
+					'token' => $token
+				],200);
 		}
 
 		/**
@@ -152,7 +169,7 @@ class AuthenticationController extends Controller
 		 */
 		public function signOut()
 		{
-				auth()->logout();
+				auth()->invalidate();
 				return response()->json([
 					'success' => 'true'
 				],200);
