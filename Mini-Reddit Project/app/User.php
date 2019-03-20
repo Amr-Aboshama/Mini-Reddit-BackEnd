@@ -63,4 +63,15 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+
+
+    public function createDummyUser($username, $password, $email)
+    {
+        return User::create([
+              'user_name' => $username,
+              'email' => $email,
+              'password' => bcrypt($password),
+          ]);
+    }
 }

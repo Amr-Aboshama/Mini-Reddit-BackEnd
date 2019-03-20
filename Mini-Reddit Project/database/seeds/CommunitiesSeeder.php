@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-
 
 class CommunitiesSeeder extends Seeder
 {
@@ -37,6 +35,5 @@ class CommunitiesSeeder extends Seeder
             'creation_date' => date('Y-m-d H:i:s')
 
         ]);
-
     }
 }
