@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 /**
  * @group User Information
@@ -27,7 +28,23 @@ class InformationController extends Controller
      */
     public function viewPrivateUserInfo()
     {
-        // ...
+        $user = auth()->user();
+
+        if(!$user)
+            {
+
+                return response()->json([
+
+                    "success" => "false",
+                    "error" => "UnAuthorized"
+                    ],401);
+
+            }
+
+        return response()->json([
+            'success'=>'true',
+            'email' => $user->email
+            ], 200);        
   	}
 
   	/**
@@ -57,9 +74,39 @@ class InformationController extends Controller
      * 	"error": "username doesn't exist"
      * }
      */
-  	public function viewPublicUserInfo()
+  	public function viewPublicUserInfo(Request $request)
     {
-        // ...
+        $user = auth()->user();
+         
+
+         
+        if( ! $request->username )
+            {
+
+                return response()->json([
+
+                    "success" => "false",
+                    "error" => "username doesn't exist"
+
+                ],403);
+
+            }
+        
+         $selected_user=User::where('user_name', '=', $request->username )->first();  
+        
+        return response()->json([
+
+            "success" => "true",
+            "username"=> $selected_user->user_name,
+            "name" => $selected_user->display_name,
+            "karma"=> $selected_user->karma,
+            "cake_day"=> $selected_user->cake_day,
+            "about"=> $selected_user->about,
+            "photo_path" => $selected_user->photo_url,
+            "cover_path" => $selected_user->cover_url
+
+            ],200);
+
     }
     
      /**
