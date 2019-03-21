@@ -14,7 +14,6 @@ class CreateCommunitiesTable extends Migration
     public function up()
     {
         Schema::create('communities', function (Blueprint $table) {
-
             $table->bigIncrements('community_id'); //primary key
             $table->string('name');
             $table->text('rules')->nullable();
@@ -22,19 +21,14 @@ class CreateCommunitiesTable extends Migration
             $table->dateTime('creation_date')->nullable();
             $table->string('community_logo')->nullable();
             //restrictions
-
-
-
-
         });
 
 
         //this bcuz community is created after links and i'd like to put a foreign key in links refering to community
 
         Schema::table('links', function (Blueprint $table) {
-          $table->foreign('community_id')->references('community_id')->on('communities');
+            $table->foreign('community_id')->references('community_id')->on('communities');
         });
-
     }
 
 

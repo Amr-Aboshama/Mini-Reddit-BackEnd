@@ -28,20 +28,20 @@ class FollowingController extends Controller
      * 	"error": "username doesn't exist"
      * }
      */
-		public function viewUserFollowers()
-		{
-				// ...
-		}
+    public function viewUserFollowers()
+    {
+        // ...
+    }
 
-		/**
-		 * View Who User is Following
-		 * @authenticated
+    /**
+     * View Who User is Following
+     * @authenticated
      * @bodyParam username string required Username to show his followering
-	   * @response 200 {
+       * @response 200 {
      *  "success": "true",
-	   * 	"follwingList": ["John Smith", "John Kay"]
-	   * }
-	   *
+       * 	"follwingList": ["John Smith", "John Kay"]
+       * }
+       *
      * @response 401 {
      *  "success": "false",
      * 	"error": "UnAuthorized"
@@ -50,20 +50,20 @@ class FollowingController extends Controller
      *  "success": "false",
      * 	"error": "username doesn't exist"
      * }
-	   */
-		public function viewUserFollowing()
-   		{
-				// ...
-		}
+       */
+    public function viewUserFollowing()
+    {
+        // ...
+    }
 
-		/**
-		 * Follow a user
-		 * @authenticated
-		 * @bodyParam username string required Username Want to follow.
-		 * @response 200 {
-		 * 	"success": "true"
-		 * }
-		 *
+    /**
+     * Follow a user
+     * @authenticated
+     * @bodyParam username string required Username Want to follow.
+     * @response 200 {
+     * 	"success": "true"
+     * }
+     *
      * @response 401 {
      *  "success": "false",
      * 	"error": "UnAuthorized"
@@ -77,20 +77,19 @@ class FollowingController extends Controller
      *  "success": "false",
      * 	"error": "username doesn't exist"
      * }
-		 */
-		public function followUser()
-		{
+     */
+    public function followUser()
+    {
+    }
 
-		}
-
-		/**
-		 * Unfollow a user
-		 * @authenticated
-		 * @bodyParam username string required Username Want to unfollow.
-		 * @response 200 {
-		 * 	"success": "true"
-		 * }
-		 *
+    /**
+     * Unfollow a user
+     * @authenticated
+     * @bodyParam username string required Username Want to unfollow.
+     * @response 200 {
+     * 	"success": "true"
+     * }
+     *
      * @response 401 {
      *  "success": "false",
      * 	"error": "UnAuthorized"
@@ -104,9 +103,8 @@ class FollowingController extends Controller
      *  "success": "false",
      * 	"error": "username doesn't exist"
      * }
-		 */
-		public function unfollowUser()
-		{
-
-		}
+     */
+    public function unfollowUser()
+    {
+    }
 }

@@ -14,16 +14,14 @@ class CreateSubscribtionsTable extends Migration
     public function up()
     {
         Schema::create('subscribtions', function (Blueprint $table) {
+            $table->string('username');
+            $table->unsignedBigInteger('community_id');
 
-          $table->string('username');
-          $table->unsignedBigInteger('community_id');
+            //restrictions
 
-          //restrictions
-
-          $table->foreign('username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
-          $table->foreign('community_id')->references('community_id')->on('communities')->onUpdate('cascade')->onDelete('cascade');
-          $table->primary(['username','community_id']);
-
+            $table->foreign('username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('community_id')->references('community_id')->on('communities')->onUpdate('cascade')->onDelete('cascade');
+            $table->primary(['username','community_id']);
         });
     }
 

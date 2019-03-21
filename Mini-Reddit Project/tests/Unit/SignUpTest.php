@@ -18,12 +18,12 @@ class SignUpTest extends TestCase
      */
     public function testInvalidSignUp()
     {
-       $this->MissedResponse(['username' => null, 'password' => null, 'email' => null, 'password_confirmation' => null]);
-       $this->MissedResponse(['username' => null, 'password' => '123456789', 'email' => 'a@a.com', 'password_confirmation' => '123456789']);
-       $this->MissedResponse(['username' => 'testo', 'password' => null, 'email' => 'a@a.com', 'password_confirmation' => '123456789']);
-       $this->MissedResponse(['username' => 'testo', 'password' => '123456789', 'email' => null, 'password_confirmation' => '123456789']);
-       $this->MissedResponse(['username' => 'tes', 'password' => '123456789', 'email' => 'a@a.com', 'password_confirmation' => '123456789']);
-       $this->MissedResponse(['username' => 'testo', 'password' => '123456789', 'email' => 'a@a.com', 'password_confirmation' => '23456789']);
+        $this->MissedResponse(['username' => null, 'password' => null, 'email' => null, 'password_confirmation' => null]);
+        $this->MissedResponse(['username' => null, 'password' => '123456789', 'email' => 'a@a.com', 'password_confirmation' => '123456789']);
+        $this->MissedResponse(['username' => 'testo', 'password' => null, 'email' => 'a@a.com', 'password_confirmation' => '123456789']);
+        $this->MissedResponse(['username' => 'testo', 'password' => '123456789', 'email' => null, 'password_confirmation' => '123456789']);
+        $this->MissedResponse(['username' => 'tes', 'password' => '123456789', 'email' => 'a@a.com', 'password_confirmation' => '123456789']);
+        $this->MissedResponse(['username' => 'testo', 'password' => '123456789', 'email' => 'a@a.com', 'password_confirmation' => '23456789']);
     }
 
     /**
@@ -32,7 +32,7 @@ class SignUpTest extends TestCase
     public function testValidSignUp()
     {
         $payload = ['username' => 'testo', 'password' => '123456789', 'email' => 'testo@test.com', 'password_confirmation' => '123456789'];
-        $this->json('POST','api/unauth/signUp',$payload)
+        $this->json('POST', 'api/unauth/signUp', $payload)
             ->assertStatus(200)
             ->assertJson([
               'success' => 'true'
@@ -40,7 +40,7 @@ class SignUpTest extends TestCase
             ->assertJsonStructure([
               'token'
             ]);
-       User::deleteUserByUsername('testo');
+        User::deleteUserByUsername('testo');
     }
 
     /**
@@ -49,7 +49,7 @@ class SignUpTest extends TestCase
      */
     public function MissedResponse($payload)
     {
-        $this->json('POST','api/unauth/signUp',$payload)
+        $this->json('POST', 'api/unauth/signUp', $payload)
             ->assertStatus(422)
             ->assertJson([
               'success' => 'false',
