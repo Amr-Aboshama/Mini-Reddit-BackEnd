@@ -13,19 +13,19 @@ class FollowingSeeder extends Seeder
     {
         DB::table('followings')->insert([
 
-          'follower_username'=>'amr',
+          'follower_username'=>'amro',
           'followed_username' =>'ahmed'
 
         ]);
         DB::table('followings')->insert([
 
-          'follower_username'=>'amr',
+          'follower_username'=>'amro',
           'followed_username' =>'menna'
 
         ]);
         DB::table('followings')->insert([
 
-          'follower_username'=>'amr',
+          'follower_username'=>'amro',
           'followed_username' =>'reham'
 
         ]);

@@ -51,7 +51,7 @@ class AuthenticationController extends Controller
 				}
 
 				$credentials = ['username' => $request->username, 'password' => $request->password];
-
+				
 				if(! $token = auth()->attempt($credentials)) {
 					return response()->json([
 						'success' => 'false',

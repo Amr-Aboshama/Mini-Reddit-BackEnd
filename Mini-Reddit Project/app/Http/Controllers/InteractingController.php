@@ -245,7 +245,7 @@ class InteractingController extends Controller
      * 	"error" : "The Link doesn't exist"
      * }
      *
-     * }
+     *
      */
     public function downvoteLink(Request $request)
 		{
