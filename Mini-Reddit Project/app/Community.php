@@ -26,12 +26,12 @@ class Community extends Model
              ->select('name')
              ->where('name', 'like', '%' . $comm_name . '%')
              ->pluck('name')->toArray();  
-
+    }
      public static function communityExist($community_id)
     {
         $result = Community::where('community_id' , $community_id)->exists();
         return $result;
 
     }
-
 }
+
