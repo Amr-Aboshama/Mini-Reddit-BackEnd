@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
 
 
-            $table->string('user_name');
+            $table->string('username');
             $table->string('display_name')->nullable();
             $table->timestamp('cake_date');
             $table->string('email');
@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             //restrictions
 
             $table->unique('email');
-            $table->primary('user_name');
+            $table->primary('username');
 
         });
     }
