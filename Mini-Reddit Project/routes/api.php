@@ -49,7 +49,7 @@ Route::middleware('auth:api')->group(function ()
   Route::post('/auth/addModerator','CommunitiesController@addModretorForCommunity');
   Route::delete('/auth/removeModerator','CommunitiesController@removeModretorFromCommunity');
   Route::post('/auth/subscribeCommunity','CommunitiesController@subscribeCommunity'); //
-  Route::delete('/auth/subscribeCommunity','CommunitiesController@unsubscribeCommunity'); //*
+  Route::delete('/auth/unSubscribeCommunity','CommunitiesController@unsubscribeCommunity'); //*
   Route::post('/auth/saveLink','InteractingController@saveLink'); //
   Route::delete('/auth/saveLink','InteractingController@unsaveLink'); //*
   Route::post('/auth/addLink', 'InteractingController@addNewLink');
@@ -59,8 +59,8 @@ Route::middleware('auth:api')->group(function ()
   Route::delete('/auth/hidePost','InteractingController@unhidePost');//*
   Route::patch('/auth/editPost','InteractingController@editPost');
   Route::patch('/auth/editComment','InteractingController@editComment');
-  Route::post('/auth/upVoteLink','InteractingController@UpvoteLink');//
-  Route::post('/auth/downVoteLink','InteractingController@DownvoteLink');//*
+  Route::post('/auth/upvoteLink','InteractingController@upvoteLink');//
+  Route::post('/auth/downvoteLink','InteractingController@downvoteLink');//*
   Route::get('/auth/viewComments','InteractingController@viewComments');
   Route::get('/auth/viewUpOrDownvotedPosts', 'InteractingController@ViewUpVotedOrDownVotedPosts');
   Route::get('/auth/viewOverview' , 'InteractingController@ViewOverview');

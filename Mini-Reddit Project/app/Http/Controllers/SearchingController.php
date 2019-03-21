@@ -41,16 +41,9 @@ class SearchingController extends Controller
 
             }
 
-        $users_list = User::where('user_name', 'like', '%' . $request->search_content . '%')
-            ->select('user_name')
-            ->where('user_name', 'like', '%' . $request->search_content. '%')
-            ->pluck('user_name')->toArray();
+        $users_list = User::getUsersByUsername($request->search_content);
+        $community_list= Community::getCommunitiesByName($request->search_content);
         
-         $community_list = community::where('name', 'like', '%' . $request->search_content . '%')
-             ->select('name')
-             ->where('name', 'like', '%' . $request->search_content . '%')
-             ->pluck('name')->toArray();   
-       
         return response()->json([
             
             "usersContent" => $users_list,
