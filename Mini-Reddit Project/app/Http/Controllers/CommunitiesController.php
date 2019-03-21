@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Subscribtion;
+use App\Community;
     /**
      * @group Communities
      * all community features are handled by the following APIs
@@ -29,9 +30,29 @@ class CommunitiesController extends Controller
      * 	"error": "username doesn't exist"
      * }
      */
-		public function viewUserCommunities()
+		public function viewUserCommunities(Request $request)
 		{
-			// ...
+
+            if(!$request->has('username'))
+                {
+                    return response()->json([
+                        "success" => "false",
+                        "error" => "username doesn't exist"
+                    ],403);
+                }
+            
+            $communities_subscribed=Subscribtion::subscribed_communities($request->username);
+            $subscribed_communities = array();
+            $i = 0;
+            foreach( $communities_subscribed as $community_sub )
+            {
+                $subscribed_communities[$i]=(object)[
+                    'community_name' => $community_sub->name,
+                    'community_logo'=> $community_sub->community_logo];
+                $i++;
+           }
+            return response()->json( (object)['communities'=>$subscribed_communities], 200);
+			
 		}
 
     /**
@@ -218,8 +239,41 @@ class CommunitiesController extends Controller
      *  "error": "user already is subscribed in that community"
      * }
 	   */
-    public function subscribeCommunity()
+    public function subscribeCommunity(Request $request)
     {
+        $user = auth()->user();
+        if(!$user)
+        {
+            return response()->json([
+                        "success" => "false",
+                        "error" => "UnAuthorized"
+                    ],401);
+        }
+        $existance=Community::communityExist($request->community_id);
+        if(!$existance)
+        {
+            return response()->json([
+                        "success" => "false",
+                        "error" => "community doesn't exist"
+                    ],403);
+        }
+        
+        $result=Subscribtion::subscribed($request->community_id , $user->user_name);
+        if($result)
+        {
+            return response()->json([
+                        "success" => "false",
+                        "error" => "user already is subscribed in that community"
+                    ],403);
+        }
+        $creation=Subscribtion::store($user->user_name , $request->community_id);
+        if($creation)
+        {
+            return response()->json([
+              'success' => 'true'
+            ], 200 );
+        }
+
 
     }
 
@@ -246,8 +300,40 @@ class CommunitiesController extends Controller
      *  "error": "user already is not subscribed in that community"
      * }
 	   */
-		public function unsubscribeCommunity()
+		public function unsubscribeCommunity(Request $request)
 		{
+            $user = auth()->user();
+            if(!$user)
+            {
+                return response()->json([
+                            "success" => "false",
+                            "error" => "UnAuthorized"
+                        ],401);
+            }
+            $existance=Community::communityExist($request->community_id);
+            if(!$existance)
+            {
+                return response()->json([
+                            "success" => "false",
+                            "error" => "community doesn't exist"
+                        ],403);
+            }
+            
+            $result=Subscribtion::subscribed($request->community_id , $user->user_name);
+            if(!$result)
+            {
+                return response()->json([
+                            "success" => "false",
+                            "error" => "user already is not subscribed in that community"
+                        ],403);
+            }
+            $deletion=Subscribtion::remove($user->user_name , $request->community_id);
+            if($deletion)
+            {
+                return response()->json([
+                  'success' => 'true'
+                ], 200 );
+            }
 
 		}
 }
