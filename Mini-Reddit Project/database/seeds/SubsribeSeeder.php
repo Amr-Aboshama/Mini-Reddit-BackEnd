@@ -14,19 +14,19 @@ class SubsribeSeeder extends Seeder
         DB::table('subscribtions')->insert([
 
             'community_id'=>1,
-            'user_name'=>'ahmed'
+            'username'=>'ahmed'
 
         ]);
         DB::table('subscribtions')->insert([
 
             'community_id'=>2,
-            'user_name'=>'amr'
+            'username'=>'amro'
 
         ]);
         DB::table('subscribtions')->insert([
 
             'community_id'=>3,
-            'user_name'=>'ahmed'
+            'username'=>'ahmed'
 
         ]);
     }

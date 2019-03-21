@@ -15,14 +15,14 @@ class CreateFollowingsTable extends Migration
     {
         Schema::create('followings', function (Blueprint $table) {
 
-          $table->string('follower_user_name');
-          $table->string('followed_user_name');
+          $table->string('follower_username');
+          $table->string('followed_username');
 
           //restrictions
 
-         $table->foreign('follower_user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
-         $table->foreign('followed_user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
-         $table->primary(['follower_user_name' ,'followed_user_name' ]);
+         $table->foreign('follower_username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
+         $table->foreign('followed_username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
+         $table->primary(['follower_username' ,'followed_username' ]);
 
         });
     }

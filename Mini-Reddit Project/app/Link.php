@@ -20,6 +20,7 @@ class Link extends Model
   {
       $upvotes = Link::where('link_id', $link_id)->get()->first()->upvotes;
       $upvotes--;
+      $upvotes = max(0 , $upvotes);
       Link::where('link_id', $link_id)->update(['upvotes' => $upvotes ]);
   }
   public static function incrementDownvotes($link_id)
@@ -32,6 +33,7 @@ class Link extends Model
   {
       $downvotes = Link::where('link_id', $link_id)->get()->first()->downvotes;
       $downvotes--;
+      $downvotes = max(0 , $downvotes);
       Link::where('link_id', $link_id)->update(['downvotes' => $downvotes ]);
   }
 
@@ -45,11 +47,11 @@ class Link extends Model
   {
 
     $posts = DB::select("SELECT * FROM links
-             where( parent_id is null and ( author_user_name
-             in (select followed_user_name from followings
-               where follower_user_name = '$username') or community_id
+             where( parent_id is null and ( author_username
+             in (select followed_username from followings
+               where follower_username = '$username') or community_id
                in(select community_id from subscribtions
-                 where user_name = '$username'))) ORDER BY link_date DESC " );
+                 where username = '$username'))) ORDER BY link_date DESC " );
 
     return $posts;
 

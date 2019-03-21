@@ -30,7 +30,6 @@ Route::middleware('auth:api')->group(function ()
   Route::get('/auth/notification/push', 'NotificationController@pushNotification');
   Route::get('/auth/viewPrivateUserInfo','InformationController@viewPrivateUserInfo');
   Route::get('/auth/viewPublicUserInfo','InformationController@viewPublicUserInfo');
-  Route::get('/auth/viewAvatar' , 'InformationController@GetAvatar');
   Route::get('/auth/followers', 'FollowingController@viewUserFollowers');
   Route::get('/auth/following', 'FollowingController@viewUserFollowing');
   Route::post('/auth/follow', 'FollowingController@followUser');//

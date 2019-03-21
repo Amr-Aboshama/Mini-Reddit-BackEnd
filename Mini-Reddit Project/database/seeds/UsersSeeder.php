@@ -3,6 +3,7 @@
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class UsersSeeder extends Seeder
 {
@@ -13,40 +14,40 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-      DB::table('users')->insert([
-        'user_name' => 'amr',
-        'display_name' => 'Amr',
-        'email' => 'amr@amr.com',
-        'password' => bcrypt('123456789'),
+      User::storeUser([
+        'username' => 'amro',
+        'display_name' => 'amro',
+        'email' => 'amro@amro.com',
+        'password' => '123456789',
       ]);
-      DB::table('users')->insert([
-        'user_name' => 'ahmed',
+      User::storeUser([
+        'username' => 'ahmed',
         'display_name' => 'essam',
         'email' => 'ahmed@ahmed.com',
-        'password' => bcrypt('123456789'),
+        'password' => '123456789',
       ]);
-      DB::table('users')->insert([
-        'user_name' => 'menna',
+      User::storeUser([
+        'username' => 'menna',
         'display_name' => 'menna',
         'email' => 'menna@menna.com',
-        'password' => bcrypt('123456789'),
+        'password' => '123456789',
       ]);
-      DB::table('users')->insert([
-        'user_name' => 'nour',
+      User::storeUser([
+        'username' => 'nour',
         'display_name' => 'nour',
         'email' => 'nour@nour.com',
-        'password' => bcrypt('123456789'),
+        'password' => '123456789',
       ]);
-      DB::table('users')->insert([
-        'user_name' => 'reham',
+      User::storeUser([
+        'username' => 'reham',
         'display_name' => 'reham',
         'email' => 'reham@reham.com',
-        'password' => bcrypt('123456789'),
+        'password' => '123456789',
       ]);
       for ($counter=0; $counter < 10; $counter++)
       {
-          DB::table('users')->insert([
-            'user_name' => Str::random(10),
+          User::storeUser([
+            'username' => Str::random(10),
             'display_name' => Str::random(10),
             'email' => Str::random(10).'@mail.com',
             'password' => bcrypt(Str::random(10)),
