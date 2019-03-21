@@ -15,14 +15,14 @@ class CreateHiddenPostsTable extends Migration
     {
         Schema::create('hidden_posts', function (Blueprint $table) {
 
-          $table->string( 'user_name' );
+          $table->string( 'username' );
           $table->unsignedBigInteger('link_id');
 
           //restrictions
 
-          $table->foreign('user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
+          $table->foreign('username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
           $table->foreign('link_id')->references('link_id')->on('links')->onUpdate('cascade')->onDelete('cascade');
-          $table->primary(['link_id','user_name']);
+          $table->primary(['link_id','username']);
 
 
         });

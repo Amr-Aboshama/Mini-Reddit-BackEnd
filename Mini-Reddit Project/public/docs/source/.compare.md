@@ -455,7 +455,7 @@ fetch(url, {
 ```bash
 curl -X POST "http://localhost/api/unauth/signIn" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"xOLfzOZFW2aTMLmA","password":"84jpqMQoajaw4BSL"}'
+    -d '{"username":"xOLfzOZFW2aTMLmA","password":"84jpqMQoajaw4BSL"}'
 
 ```
 
@@ -468,7 +468,7 @@ let headers = {
 }
 
 let body = {
-    "my_username": "xOLfzOZFW2aTMLmA",
+    "username": "xOLfzOZFW2aTMLmA",
     "password": "84jpqMQoajaw4BSL"
 }
 
@@ -505,7 +505,7 @@ fetch(url, {
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
+    username | string |  required  | the username of the current user.
     password | string |  required  | The password of the user.
 
 <!-- END_3326cf80694aff2cc124bc89a1f752c9 -->
@@ -518,7 +518,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X POST "http://localhost/api/unauth/signUp" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"imAwOYTLmtubG9zD","password":"l7pdvYuWVHlT8DZE","confirm_password":"oRi5s3cCuqKGyIK1","email":"vBVI1xFLDgmoO3r5"}'
+    -d '{"username":"imAwOYTLmtubG9zD","password":"l7pdvYuWVHlT8DZE","confirm_password":"oRi5s3cCuqKGyIK1","email":"vBVI1xFLDgmoO3r5"}'
 
 ```
 
@@ -531,7 +531,7 @@ let headers = {
 }
 
 let body = {
-    "my_username": "imAwOYTLmtubG9zD",
+    "username": "imAwOYTLmtubG9zD",
     "password": "l7pdvYuWVHlT8DZE",
     "confirm_password": "oRi5s3cCuqKGyIK1",
     "email": "vBVI1xFLDgmoO3r5"
@@ -602,7 +602,7 @@ fetch(url, {
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    my_username | string |  required  | the username of the current user.
+    username | string |  required  | the username of the current user.
     password | string |  required  | The password of the user.
     confirm_password | string |  required  | The confirm password of the user.
     email | string |  required  | The email of the user.

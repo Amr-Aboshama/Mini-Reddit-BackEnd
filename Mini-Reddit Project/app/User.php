@@ -21,7 +21,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'user_name', 'email', 'password',
+        'username', 'email', 'password',
     ];
 
     public $timestamps = false; //so that doesn't expext time columns
@@ -44,7 +44,7 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    protected $primaryKey = 'user_name';
+    protected $primaryKey = 'username';
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -78,25 +78,25 @@ class User extends Authenticatable implements JWTSubject
 
     public static function getUsersByUsername($username)
     {
-        return User::where('user_name', 'like', '%' . $username . '%')
-            ->select('user_name')
-            ->where('user_name', 'like', '%' . $username . '%')
-            ->pluck('user_name')->toArray();
+        return User::where('username', 'like', '%' . $username . '%')
+            ->select('username')
+            ->where('username', 'like', '%' . $username . '%')
+            ->pluck('username')->toArray();
     }
 
     public static function getUserWholeRecord($username)
     {
-        return User::where('user_name', '=', $username )->first();
+        return User::where('username', '=', $username )->first();
     }
 
     public static function deleteUserByUsername($username)
     {
-        return User::where('user_name', $username)->delete();
+        return User::where('username', $username)->delete();
     }
-    
+
     public static function userExist($username)
     {
-        $result = User::where('user_name' , $username)->exists();
+        $result = User::where('username' , $username)->exists();
         return $result;
 
     }

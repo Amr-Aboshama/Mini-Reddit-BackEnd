@@ -20,7 +20,7 @@ class AuthenticationController extends Controller
 		/**
 	   *
 	   * Sign in a user
-	   * @bodyParam user_name string required the username of the current user.
+	   * @bodyParam username string required the username of the current user.
 	   * @bodyParam password string required The password of the user.
 	   * @response 200 {
 	   * 	"success": "true",
@@ -40,7 +40,7 @@ class AuthenticationController extends Controller
 		public function signIn(Request $request)
 		{
 				$valid = Validator::make($request->all(),[
-					'user_name' => 'required|min:4',
+					'username' => 'required|min:4',
 					'password' => 'required|min:8'
 				]);
 				if($valid->fails()) {
@@ -50,7 +50,7 @@ class AuthenticationController extends Controller
 						],422);
 				}
 
-				$credentials = ['user_name' => $request->user_name, 'password' => $request->password];
+				$credentials = ['username' => $request->username, 'password' => $request->password];
 
 				if(! $token = auth()->attempt($credentials)) {
 					return response()->json([
@@ -68,7 +68,7 @@ class AuthenticationController extends Controller
 		/**
 	   *
 	   * Signup a user
-	   * @bodyParam user_name string required the username of the current user.
+	   * @bodyParam username string required the username of the current user.
 	   * @bodyParam password string required The password of the user.
 	   * @bodyParam password_confirmation string required The confirm password of the user.
 	   * @bodyParam email string required The email of the user.
@@ -87,7 +87,7 @@ class AuthenticationController extends Controller
 		{
 
 				$valid = Validator::make($request->all(),[
-					'user_name' => 'required|unique:users|min:4',
+					'username' => 'required|unique:users|min:4',
 					'email' => 'required|email|unique:users',
 					'password' => 'required|confirmed|min:8'
 				]);
@@ -100,7 +100,7 @@ class AuthenticationController extends Controller
 				}
 
 				$user = User::storeUser([
-					'user_name' => $request->user_name,
+					'username' => $request->username,
 					'email' => $request->email,
 					'password' => $request->password,
 				]);
