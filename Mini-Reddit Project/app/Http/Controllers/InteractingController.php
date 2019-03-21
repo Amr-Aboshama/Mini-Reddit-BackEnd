@@ -276,10 +276,6 @@ class InteractingController extends Controller
      * 	"success" : "false",
      * 	"error" : "Sth Wrong!!!"
      * }
-     * @response 403 {
-     * 	"success" : "false",
-     * 	"error" : "community doesn't exist"
-     * }
 	 	 */
 
     public function ViewPosts(Request $request)
