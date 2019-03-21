@@ -97,7 +97,7 @@ class InformationController extends Controller
         return response()->json([
 
             "success" => "true",
-            "username"=> $selected_user->user_name,
+            "username"=> $selected_user->username,
             "name" => $selected_user->display_name,
             "karma"=> $selected_user->karma,
             "cake_day"=> $selected_user->cake_day,
@@ -126,7 +126,7 @@ class InformationController extends Controller
     {
         return response()->json([
             'success'=>'true',
-            'username' => auth()->user()->user_name
+            'username' => auth()->user()->username
             ]);
     }
 }
