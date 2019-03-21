@@ -13,18 +13,16 @@ class User extends Authenticatable implements JWTSubject
     use  Notifiable;
 
     public $incrementing = false; //so eloquent doesn't expect your primary key to be an autoincrement primary key.
+    public $timestamps = false; // To cancel expectations of updated_at and created_at tables.
 
-    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'user_name', 'email', 'password',
+        'username', 'email', 'password',
     ];
-
-    public $timestamps = false; //so that doesn't expext time columns
 
     /**
      * The attributes that should be hidden for arrays.
@@ -44,7 +42,7 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    protected $primaryKey = 'user_name';
+    protected $primaryKey = 'username';
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -68,31 +66,35 @@ class User extends Authenticatable implements JWTSubject
 
 
 
-    public function createDummyUser($username, $password, $email)
+    public static function storeUser($user_data)
     {
-        return User::create([
-              'user_name' => $username,
-              'email' => $email,
-              'password' => bcrypt($password),
-          ]);
+      //$username, $password, $email, $display_name = null, $about = null, $photo_url = null, $cover_url = null
+
+      $user_data['password'] = bcrypt($user_data['password']);
+        return User::create($user_data);
     }
 
     public static function getUsersByUsername($username)
     {
-        return User::where('user_name', 'like', '%' . $username . '%')
-            ->select('user_name')
-            ->where('user_name', 'like', '%' . $username . '%')
-            ->pluck('user_name')->toArray(); 
+        return User::where('username', 'like', '%' . $username . '%')
+            ->select('username')
+            ->where('username', 'like', '%' . $username . '%')
+            ->pluck('username')->toArray();
     }
 
     public static function getUserWholeRecord($username)
     {
-        return User::where('user_name', '=', $username )->first(); 
+        return User::where('username', '=', $username )->first();
+    }
+
+    public static function deleteUserByUsername($username)
+    {
+        return User::where('username', $username)->delete();
     }
 
     public static function userExist($username)
     {
-        $result = User::where('user_name' , $username)->exists();
+        $result = User::where('username' , $username)->exists();
         return $result;
 
     }
