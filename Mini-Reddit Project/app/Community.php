@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Community extends Model
@@ -11,6 +11,7 @@ class Community extends Model
           $result = Community::where('community_id' , $community_id)->get()->first();
           return $result;
      }
+
 
      public function createDummyCommunity($communityname)
     {
@@ -25,6 +26,12 @@ class Community extends Model
              ->select('name')
              ->where('name', 'like', '%' . $comm_name . '%')
              ->pluck('name')->toArray();  
+
+     public static function communityExist($community_id)
+    {
+        $result = Community::where('community_id' , $community_id)->exists();
+        return $result;
+
     }
 
 }
