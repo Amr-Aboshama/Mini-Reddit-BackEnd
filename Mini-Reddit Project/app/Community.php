@@ -12,4 +12,19 @@ class Community extends Model
           return $result;
      }
 
+     public function createDummyCommunity($communityname)
+    {
+        return Community::create([
+              'community_name' => $communityname
+          ]);
+    }
+
+    public static function getCommunitiesByName($comm_name)
+    {
+      return community::where('name', 'like', '%' . $comm_name . '%')
+             ->select('name')
+             ->where('name', 'like', '%' . $comm_name . '%')
+             ->pluck('name')->toArray();  
+    }
+
 }
