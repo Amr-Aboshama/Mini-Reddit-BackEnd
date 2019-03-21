@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Subscribtion;
 use App\Community;
+use App\User;
     /**
      * @group Communities
      * all community features are handled by the following APIs
@@ -33,7 +34,8 @@ class CommunitiesController extends Controller
 		public function viewUserCommunities(Request $request)
 		{
 
-            if(!$request->has('username'))
+            $existance=User::userExist($request->username);
+            if(!$existance)
                 {
                     return response()->json([
                         "success" => "false",
@@ -51,7 +53,9 @@ class CommunitiesController extends Controller
                     'community_logo'=> $community_sub->community_logo];
                 $i++;
            }
-            return response()->json( (object)['communities'=>$subscribed_communities], 200);
+            return response()->json( ["success" => "true",
+                'communities'=>$subscribed_communities
+            ], 200);
 			
 		}
 
