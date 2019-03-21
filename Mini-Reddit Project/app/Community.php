@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Community extends Model
 {
+     protected $fillable = ['name'];
+     public $timestamps = false;
+     protected $primaryKey = 'community_id';
+
      public static function getCommunity($community_id)
      {
           $result = Community::where('community_id' , $community_id)->get()->first();
@@ -16,7 +20,7 @@ class Community extends Model
      public function createDummyCommunity($communityname)
     {
         return Community::create([
-              'community_name' => $communityname
+              'name' => $communityname
           ]);
     }
 

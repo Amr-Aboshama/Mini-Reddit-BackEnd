@@ -13,7 +13,7 @@ class User extends Authenticatable implements JWTSubject
     use  Notifiable;
 
     public $incrementing = false; //so eloquent doesn't expect your primary key to be an autoincrement primary key.
-
+    public $timestamps = false;
     
     /**
      * The attributes that are mass assignable.
