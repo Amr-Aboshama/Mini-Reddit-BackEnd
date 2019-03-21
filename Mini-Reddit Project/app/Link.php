@@ -20,6 +20,7 @@ class Link extends Model
   {
       $upvotes = Link::where('link_id', $link_id)->get()->first()->upvotes;
       $upvotes--;
+      $upvotes = max(0 , $upvotes);
       Link::where('link_id', $link_id)->update(['upvotes' => $upvotes ]);
   }
   public static function incrementDownvotes($link_id)
@@ -32,6 +33,7 @@ class Link extends Model
   {
       $downvotes = Link::where('link_id', $link_id)->get()->first()->downvotes;
       $downvotes--;
+      $downvotes = max(0 , $downvotes);
       Link::where('link_id', $link_id)->update(['downvotes' => $downvotes ]);
   }
 
