@@ -24,6 +24,8 @@ class User extends Authenticatable implements JWTSubject
         'user_name', 'email', 'password',
     ];
 
+    public $timestamps = false; //so that doesn't expext time columns
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -86,6 +88,13 @@ class User extends Authenticatable implements JWTSubject
     public static function getUserWholeRecord($username)
     {
         return User::where('user_name', '=', $username )->first(); 
+    }
+
+    public static function userExist($username)
+    {
+        $result = User::where('user_name' , $username)->exists();
+        return $result;
+
     }
 
 
