@@ -32,7 +32,7 @@ class SignInTest extends TestCase
 
         $payload = ['username' => 'testo' . 'x', 'password' => 'armne123456'];
 
-        $this->json('POST','api/unauth/signIn',$payload)
+        $this->json('POST', 'api/unauth/signIn', $payload)
             ->assertStatus(404)
             ->assertJson([
               'success' => 'false',
@@ -47,12 +47,11 @@ class SignInTest extends TestCase
      */
     public function testValidSignIn()
     {
-
         $user = User::storeUser(['username' => 'testo','password' => 'armne123456','email' => 'testo@test.com']);
 
         $payload = ['username' => 'testo', 'password' => 'armne123456'];
 
-        $this->json('POST','api/unauth/signIn',$payload)
+        $this->json('POST', 'api/unauth/signIn', $payload)
             ->assertStatus(200)
             ->assertJson([
               'success' => 'true'
@@ -60,7 +59,7 @@ class SignInTest extends TestCase
             ->assertJsonStructure([
               'token'
             ]);
-      $user->delete();
+        $user->delete();
     }
 
     /**
@@ -69,7 +68,7 @@ class SignInTest extends TestCase
      */
     public function MissedResponse($payload)
     {
-        $this->json('POST','api/unauth/signIn',$payload)
+        $this->json('POST', 'api/unauth/signIn', $payload)
             ->assertStatus(422)
             ->assertJson([
               'success' => 'false',

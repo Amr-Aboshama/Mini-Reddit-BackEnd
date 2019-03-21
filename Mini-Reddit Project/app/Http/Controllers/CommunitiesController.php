@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Subscribtion;
 use App\Community;
 use App\User;
-    /**
+
+/**
      * @group Communities
      * all community features are handled by the following APIs
     */
@@ -31,33 +32,29 @@ class CommunitiesController extends Controller
      * 	"error": "username doesn't exist"
      * }
      */
-		public function viewUserCommunities(Request $request)
-		{
-
-            $existance=User::userExist($request->username);
-            if(!$existance)
-                {
-                    return response()->json([
+    public function viewUserCommunities(Request $request)
+    {
+        $existance=User::userExist($request->username);
+        if (!$existance) {
+            return response()->json([
                         "success" => "false",
                         "error" => "username doesn't exist"
-                    ],403);
-                }
+                    ], 403);
+        }
             
-            $communities_subscribed=Subscribtion::subscribed_communities($request->username);
-            $subscribed_communities = array();
-            $i = 0;
-            foreach( $communities_subscribed as $community_sub )
-            {
-                $subscribed_communities[$i]=(object)[
+        $communities_subscribed=Subscribtion::subscribed_communities($request->username);
+        $subscribed_communities = array();
+        $i = 0;
+        foreach ($communities_subscribed as $community_sub) {
+            $subscribed_communities[$i]=(object)[
                     'community_name' => $community_sub->name,
                     'community_logo'=> $community_sub->community_logo];
-                $i++;
-           }
-            return response()->json( ["success" => "true",
+            $i++;
+        }
+        return response()->json(["success" => "true",
                 'communities'=>$subscribed_communities
             ], 200);
-			
-		}
+    }
 
     /**
      * View rules and description of a specific community
@@ -72,7 +69,7 @@ class CommunitiesController extends Controller
      */
     public function viewCommunitiesRulesDesc()
     {
-         //...
+        //...
     }
 
 
@@ -96,8 +93,7 @@ class CommunitiesController extends Controller
      */
     public function editCommunity()
     {
-
-		}
+    }
 
 
     /**
@@ -121,9 +117,8 @@ class CommunitiesController extends Controller
      *  "error": "this name already exists"
      * }
      */
-		public function createCommunity()
-		{
-
+    public function createCommunity()
+    {
     }
 
 
@@ -147,7 +142,6 @@ class CommunitiesController extends Controller
      */
     public function removeCommunity()
     {
-
     }
 
 
@@ -182,7 +176,6 @@ class CommunitiesController extends Controller
      */
     public function addModretorForCommunity()
     {
-
     }
 
 
@@ -217,17 +210,16 @@ class CommunitiesController extends Controller
      */
     public function removeModretorFromCommunity()
     {
-
     }
 
-		/**
-	   * Subscribe a community
-	   * @authenticated
-	   * @bodyParam community_id int required The ID of the community to be un/subscribed.
-	   * @response 200 {
-	   *  "success": "true"
-	   * }
-	   *
+    /**
+       * Subscribe a community
+       * @authenticated
+       * @bodyParam community_id int required The ID of the community to be un/subscribed.
+       * @response 200 {
+       *  "success": "true"
+       * }
+       *
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
@@ -242,53 +234,47 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "user already is subscribed in that community"
      * }
-	   */
+       */
     public function subscribeCommunity(Request $request)
     {
         $user = auth()->user();
-        if(!$user)
-        {
+        if (!$user) {
             return response()->json([
                         "success" => "false",
                         "error" => "UnAuthorized"
-                    ],401);
+                    ], 401);
         }
         $existance=Community::communityExist($request->community_id);
-        if(!$existance)
-        {
+        if (!$existance) {
             return response()->json([
                         "success" => "false",
                         "error" => "community doesn't exist"
-                    ],403);
+                    ], 403);
         }
         
-        $result=Subscribtion::subscribed($request->community_id , $user->username);
-        if($result)
-        {
+        $result=Subscribtion::subscribed($request->community_id, $user->username);
+        if ($result) {
             return response()->json([
                         "success" => "false",
                         "error" => "user already is subscribed in that community"
-                    ],403);
+                    ], 403);
         }
-        $creation=Subscribtion::store($user->username , $request->community_id);
-        if($creation)
-        {
+        $creation=Subscribtion::store($user->username, $request->community_id);
+        if ($creation) {
             return response()->json([
               'success' => 'true'
-            ], 200 );
+            ], 200);
         }
-
-
     }
 
-		/**
-	   * Unsubscribe a community
-	   * @authenticated
-	   * @bodyParam community_id int required The ID of the community to be un/subscribed.
-	   * @response 200 {
-	   *  "success": "true"
-	   * }
-	   *
+    /**
+       * Unsubscribe a community
+       * @authenticated
+       * @bodyParam community_id int required The ID of the community to be un/subscribed.
+       * @response 200 {
+       *  "success": "true"
+       * }
+       *
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
@@ -303,41 +289,36 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "user already is not subscribed in that community"
      * }
-	   */
-		public function unsubscribeCommunity(Request $request)
-		{
-            $user = auth()->user();
-            if(!$user)
-            {
-                return response()->json([
+       */
+    public function unsubscribeCommunity(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json([
                             "success" => "false",
                             "error" => "UnAuthorized"
-                        ],401);
-            }
-            $existance=Community::communityExist($request->community_id);
-            if(!$existance)
-            {
-                return response()->json([
+                        ], 401);
+        }
+        $existance=Community::communityExist($request->community_id);
+        if (!$existance) {
+            return response()->json([
                             "success" => "false",
                             "error" => "community doesn't exist"
-                        ],403);
-            }
+                        ], 403);
+        }
             
-            $result=Subscribtion::subscribed($request->community_id , $user->username);
-            if(!$result)
-            {
-                return response()->json([
+        $result=Subscribtion::subscribed($request->community_id, $user->username);
+        if (!$result) {
+            return response()->json([
                             "success" => "false",
                             "error" => "user already is not subscribed in that community"
-                        ],403);
-            }
-            $deletion=Subscribtion::remove($user->username , $request->community_id);
-            if($deletion)
-            {
-                return response()->json([
+                        ], 403);
+        }
+        $deletion=Subscribtion::remove($user->username, $request->community_id);
+        if ($deletion) {
+            return response()->json([
                   'success' => 'true'
-                ], 200 );
-            }
-
-		}
+                ], 200);
+        }
+    }
 }
