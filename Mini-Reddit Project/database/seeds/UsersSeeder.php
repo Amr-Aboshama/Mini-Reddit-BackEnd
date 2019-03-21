@@ -3,6 +3,7 @@
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class UsersSeeder extends Seeder
 {
@@ -13,39 +14,39 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-      DB::table('users')->insert([
-        'user_name' => 'amr',
+      User::storeUser([
+        'user_name' => 'amro',
         'display_name' => 'Amr',
         'email' => 'amr@amr.com',
-        'password' => bcrypt('123456789'),
+        'password' => '123456789',
       ]);
-      DB::table('users')->insert([
+      User::storeUser([
         'user_name' => 'ahmed',
         'display_name' => 'essam',
         'email' => 'ahmed@ahmed.com',
-        'password' => bcrypt('123456789'),
+        'password' => '123456789',
       ]);
-      DB::table('users')->insert([
+      User::storeUser([
         'user_name' => 'menna',
         'display_name' => 'menna',
         'email' => 'menna@menna.com',
-        'password' => bcrypt('123456789'),
+        'password' => '123456789',
       ]);
-      DB::table('users')->insert([
+      User::storeUser([
         'user_name' => 'nour',
         'display_name' => 'nour',
         'email' => 'nour@nour.com',
-        'password' => bcrypt('123456789'),
+        'password' => '123456789',
       ]);
-      DB::table('users')->insert([
+      User::storeUser([
         'user_name' => 'reham',
         'display_name' => 'reham',
         'email' => 'reham@reham.com',
-        'password' => bcrypt('123456789'),
+        'password' => '123456789',
       ]);
       for ($counter=0; $counter < 10; $counter++)
       {
-          DB::table('users')->insert([
+          User::storeUser([
             'user_name' => Str::random(10),
             'display_name' => Str::random(10),
             'email' => Str::random(10).'@mail.com',
