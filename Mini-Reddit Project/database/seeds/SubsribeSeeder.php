@@ -20,7 +20,7 @@ class SubsribeSeeder extends Seeder
         DB::table('subscribtions')->insert([
 
             'community_id'=>2,
-            'username'=>'amr'
+            'username'=>'amro'
 
         ]);
         DB::table('subscribtions')->insert([

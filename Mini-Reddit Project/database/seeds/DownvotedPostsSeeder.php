@@ -12,7 +12,7 @@ class DownvotedPostsSeeder extends Seeder
     public function run()
     {
         DB::table('downvoted_posts')->insert([
-            'username' => 'amr',
+            'username' => 'amro',
             'link_id' => 1
         ]);
         /*for ($counter=0; $counter < 12; $counter++)

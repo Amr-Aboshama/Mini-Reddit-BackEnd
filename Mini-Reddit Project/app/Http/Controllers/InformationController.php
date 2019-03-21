@@ -44,7 +44,7 @@ class InformationController extends Controller
         return response()->json([
             'success'=>'true',
             'email' => $user->email
-            ], 200);        
+            ], 200);
   	}
 
   	/**
@@ -59,7 +59,7 @@ class InformationController extends Controller
      *  "karma":500,
      *  "cake_day":"March 8, 2019",
      *  "about":"be or not to be",
-     *  "photo_path" : "storage/app/avater.jpg"
+     *  "photo_path" : "storage/app/avater.jpg",
      *  "cover_path" : "storage/app/bannar.jpg"
      *
      * }
@@ -77,9 +77,9 @@ class InformationController extends Controller
   	public function viewPublicUserInfo(Request $request)
     {
         $user = auth()->user();
-         
 
-         
+
+
         if( ! $request->username )
             {
 
@@ -91,9 +91,9 @@ class InformationController extends Controller
                 ],403);
 
             }
-        
-         $selected_user= User::getUserWholeRecord($request->username); 
-        
+
+         $selected_user= User::getUserWholeRecord($request->username);
+
         return response()->json([
 
             "success" => "true",
@@ -108,7 +108,7 @@ class InformationController extends Controller
             ],200);
 
     }
-    
+
      /**
      * Show user's username
      * @authenticated

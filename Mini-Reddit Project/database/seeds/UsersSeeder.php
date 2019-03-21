@@ -16,8 +16,8 @@ class UsersSeeder extends Seeder
     {
       User::storeUser([
         'username' => 'amro',
-        'display_name' => 'Amr',
-        'email' => 'amr@amr.com',
+        'display_name' => 'amro',
+        'email' => 'amro@amro.com',
         'password' => '123456789',
       ]);
       User::storeUser([
