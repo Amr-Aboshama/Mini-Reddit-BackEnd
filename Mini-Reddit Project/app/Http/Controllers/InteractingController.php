@@ -151,10 +151,73 @@ class InteractingController extends Controller
      * 	"success" : "false",
      * 	"error" : "post doesn't exist"
      * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post_id is required"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "Only posts can be pinned"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "There is something went wrong!"
+     * }
      */
-    public function pinOrUnpinPost()
+    public function pinOrUnpinPost(Request $request)
 		{
-				// ...
+				//token should be parsed to get the user name
+
+        $user = auth()->user();
+
+       if(!$request->has('post_id'))
+				{
+
+					return response()->json([
+
+						'success' => 'false',
+						'error' => 'post_id is required'
+
+					],403);
+
+        }
+        
+       $result=Link::checkExisting($request->post_id);
+       if(!$result)
+       {
+        return response()->json([
+          'success' => 'false',
+          'error' => 'The post doesn\'t exist'
+        ], 403 );
+       }
+       //if the id is for comment or reply "not a post"
+       $result=Link::getParent($request->post_id);
+       if($result)
+       {
+        return response()->json([
+          'success' => 'false',
+          'error' => 'Only posts can be pinned'
+        ], 403 );
+       }
+       else     // the id belongs to a post
+       {
+         $result=Link::togglePinStatus($request->post_id);
+         if($result)
+         {
+          return response()->json([
+            'success' => 'true'
+          ], 200 );
+         }
+         else
+         {
+          return response()->json([
+            'success' => 'false',
+            'error' => 'There is something went wrong!'
+          ], 403 );
+         }
+
+       }
+
     }
 
 
@@ -202,7 +265,7 @@ class InteractingController extends Controller
 
         }
         
-       $result=Link::chechExisting($request->link_id);
+       $result=Link::checkExisting($request->link_id);
        if(!$result)
        {
         return response()->json([
@@ -211,10 +274,10 @@ class InteractingController extends Controller
         ], 403 );
        }
       //if i can't remove the upvoted of the post
-       $result = UpvotedPost::upvoted($request->link_id,$user->user_name);
+       $result = UpvotedLink::upvoted($request->link_id,$user->user_name);
 			  if($result)                    //check if the post is actually upvoted
 			  {
-          $result = UpvotedPost::remove($user->user_name , $request->link_id);
+          $result = UpvotedLink::remove($user->user_name , $request->link_id);
           if(!$result)                
           {
 					  return response()->json([
@@ -222,16 +285,21 @@ class InteractingController extends Controller
 						  'error' => 'There is something went wrong!'
 					  ], 403 );
           }
+          else
+          {
+            Link::decrementUpvotes($request->link_id);
+          }
         }
         //downvoting the post
-        $result = DownvotedPost::downvoted($request->link_id,$user->user_name);
+        $result = DownvotedLink::downvoted($request->link_id,$user->user_name);
         //if the link is acually downvoted
         if($result)
         {
-          $result = DownvotedPost::remove($user->user_name , $request->link_id);
+          $result = DownvotedLink::remove($user->user_name , $request->link_id);
 
           if($result)
           {
+            Link::decrementDownvotes($request->link_id);
             return response()->json([
               'success' => 'true'
             ], 200 );
@@ -245,9 +313,10 @@ class InteractingController extends Controller
 
 				  }
         }
-        $result=DownvotedPost::store($user->user_name , $request->link_id);
+        $result=DownvotedLink::store($user->user_name , $request->link_id);
         if($result)
         {
+          Link::incrementDownvotes($request->link_id);
           return response()->json([
             'success' => 'true'
           ], 200 );
@@ -358,10 +427,6 @@ class InteractingController extends Controller
      * @response 403 {
      * 	"success" : "false",
      * 	"error" : "Sth Wrong!!!"
-     * }
-     * @response 403 {
-     * 	"success" : "false",
-     * 	"error" : "community doesn't exist"
      * }
 	 	 */
 
