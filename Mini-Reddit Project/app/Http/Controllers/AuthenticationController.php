@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
@@ -18,7 +20,7 @@ class AuthenticationController extends Controller
 		/**
 	   *
 	   * Sign in a user
-	   * @bodyParam my_username string required the username of the current user.
+	   * @bodyParam user_name string required the username of the current user.
 	   * @bodyParam password string required The password of the user.
 	   * @response 200 {
 	   * 	"success": "true",
@@ -38,10 +40,9 @@ class AuthenticationController extends Controller
 		public function signIn(Request $request)
 		{
 				$valid = Validator::make($request->all(),[
-					'my_username' => 'required|min:4',
+					'user_name' => 'required|min:4',
 					'password' => 'required|min:8'
 				]);
-
 				if($valid->fails()) {
 						return response()->json([
 							'success' => 'false',
@@ -49,7 +50,7 @@ class AuthenticationController extends Controller
 						],422);
 				}
 
-				$credentials = ['user_name' => $request->my_username, 'password' => $request->password];
+				$credentials = ['user_name' => $request->user_name, 'password' => $request->password];
 
 				if(! $token = auth()->attempt($credentials)) {
 					return response()->json([
@@ -67,7 +68,7 @@ class AuthenticationController extends Controller
 		/**
 	   *
 	   * Signup a user
-	   * @bodyParam my_username string required the username of the current user.
+	   * @bodyParam user_name string required the username of the current user.
 	   * @bodyParam password string required The password of the user.
 	   * @bodyParam password_confirmation string required The confirm password of the user.
 	   * @bodyParam email string required The email of the user.
@@ -84,6 +85,7 @@ class AuthenticationController extends Controller
 	   */
 		public function signUp(Request $request)
 		{
+
 				$valid = Validator::make($request->all(),[
 					'user_name' => 'required|unique:users|min:4',
 					'email' => 'required|email|unique:users',
@@ -94,13 +96,13 @@ class AuthenticationController extends Controller
 					return response()->json([
 						'success' => 'false',
 						'error' => 'Invalid or some data missed'
-					],403);
+					],422);
 				}
 
-				$user = User::create([
+				$user = User::storeUser([
 					'user_name' => $request->user_name,
 					'email' => $request->email,
-					'password' => bcrypt($request->password),
+					'password' => $request->password,
 				]);
 
 				$token = auth()->login($user);
@@ -169,7 +171,7 @@ class AuthenticationController extends Controller
 		 */
 		public function signOut()
 		{
-				auth()->invalidate();
+				auth()->logout();
 				return response()->json([
 					'success' => 'true'
 				],200);
