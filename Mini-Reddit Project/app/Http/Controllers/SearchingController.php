@@ -29,7 +29,7 @@ class SearchingController extends Controller
     {
         
         
-        if(!$request->has('search_content'))
+        if($request->search_content == '' || !$request->has('search_content'))
             {
 
                 return response()->json([
