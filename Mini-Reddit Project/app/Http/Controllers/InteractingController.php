@@ -159,7 +159,7 @@ class InteractingController extends Controller
 
 
     /**
-     * Downvote Link
+     * Add Downvote to a post
      * @bodyParam link_id integer required the id of the post that the user wants to downvote
      * @authenticated
      * @response 200 {
@@ -171,13 +171,96 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "Link doesn't exist"
+     * 	"error" : "There is something went wrong!"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "link_id is required"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "The Link doesn't exist"
+     * }
+     * 
      * }
      */
-    public function DownvoteLink()
+    public function downvoteLink(Request $request)
 		{
-    		// ...
+    		//token should be parsed to get the user name
+
+        $user = auth()->user();
+
+        if(!$request->has('link_id'))
+				{
+
+					return response()->json([
+
+						'success' => 'false',
+						'error' => 'link_id is required'
+
+					],403);
+
+        }
+        
+       $result=Link::chechExisting($request->link_id);
+       if(!$result)
+       {
+        return response()->json([
+          'success' => 'false',
+          'error' => 'The Link doesn\'t exist'
+        ], 403 );
+       }
+      //if i can't remove the upvoted of the post
+       $result = UpvotedPost::upvoted($request->link_id,$user->user_name);
+			  if($result)                    //check if the post is actually upvoted
+			  {
+          $result = UpvotedPost::remove($user->user_name , $request->link_id);
+          if(!$result)                
+          {
+					  return response()->json([
+						  'success' => 'false',
+						  'error' => 'There is something went wrong!'
+					  ], 403 );
+          }
+        }
+        //downvoting the post
+        $result = DownvotedPost::downvoted($request->link_id,$user->user_name);
+        //if the link is acually downvoted
+        if($result)
+        {
+          $result = DownvotedPost::remove($user->user_name , $request->link_id);
+
+          if($result)
+          {
+            return response()->json([
+              'success' => 'true'
+            ], 200 );
+          }
+          else
+				  {
+					  return response()->json([
+						  'success' => 'false',
+						  'error' => 'There is something went wrong!'
+					  ], 403 );
+
+				  }
+        }
+        $result=DownvotedPost::store($user->user_name , $request->link_id);
+        if($result)
+        {
+          return response()->json([
+            'success' => 'true'
+          ], 200 );
+        }
+				else
+				{
+					return response()->json([
+						'success' => 'false',
+						'error' => 'There is something went wrong!'
+					], 403 );
+        }
     }
+
 
     /**
      * Upvote Link
@@ -201,7 +284,7 @@ class InteractingController extends Controller
 
      */
 
-    public function UpvoteLink(Request $request)
+    public function upvoteLink(Request $request)
   	{
         //token should be parsed to get the user name
 
