@@ -41,7 +41,7 @@ class DownvotedLink extends Model
 
     public static function downvoted($link_id,$username)
     {
-        $result = downvotedLink::where('link_id' , $link_id)->where('user_name' , $username)->exists();
+        $result = DownvotedLink::where('link_id' , $link_id)->where('user_name' , $username)->exists();
         return $result;
     }
 
