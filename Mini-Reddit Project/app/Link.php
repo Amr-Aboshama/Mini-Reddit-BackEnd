@@ -37,7 +37,7 @@ class Link extends Model
 
   public static function scopegetPosts($query)
   {
-      return $query;
+      return $query->where('parent_id' , null);
   }
 
 
@@ -45,11 +45,11 @@ class Link extends Model
   {
 
     $posts = DB::select("SELECT * FROM links
-             where ( author_user_name
+             where( parent_id is null and ( author_user_name
              in (select followed_user_name from followings
                where follower_user_name = '$username') or community_id
                in(select community_id from subscribtions
-                 where user_name = '$username')) ORDER BY link_date DESC " );
+                 where user_name = '$username'))) ORDER BY link_date DESC " );
 
     return $posts;
 
