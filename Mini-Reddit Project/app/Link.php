@@ -61,57 +61,10 @@ class Link extends Model
       return $result;
   }
 
-  public static function checkExisting($link_id)
+  public static function chechExisting($link_id)
   {
       $result = Link::where('link_id' , $link_id)->exists();
       return $result;
   }
 
-  public static function checkPinStatus($link_id)
-  {
-      //if the post wasn't found
-      if(!Link::checkExisting($link_id))
-      {
-          return -1;
-      }
-      //is the post was found
-      $result=DB::select("SELECT pinned FROM links where link_id='$link_id';");
-      return $result[0]->pinned;
-  }
-
-  public static function getParent($link_id)
-  {
-      //if the post wasn't found
-      if(!Link::checkExisting($link_id))
-      {
-          return -1;
-      }
-      //is the post was found
-      $result=DB::select("SELECT parent_id FROM links where link_id='$link_id';");
-      return $result[0]->parent_id;
-  }
-
-  public static function togglePinStatus($link_id)
-  {
-     $pin=Link::checkPinStatus($link_id);
-     if($pin==-1)
-     {
-         return false;
-     }
-      if(!$pin)
-      {
-       
-            $result=DB::update("UPDATE links SET pinned=1 where link_id='$link_id';");
-            return $result;
-    
-      }
-      else if($pin)
-      {
-        
-            $result=DB::update("UPDATE links SET pinned=0 where link_id='$link_id';");
-            return $result;
-    
-      }
-      return false;
-  }
 }
