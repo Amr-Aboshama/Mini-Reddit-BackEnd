@@ -92,7 +92,7 @@ class InformationController extends Controller
 
             }
         
-         $selected_user=User::where('user_name', '=', $request->username )->first();  
+         $selected_user= User::getUserWholeRecord($request->username); 
         
         return response()->json([
 

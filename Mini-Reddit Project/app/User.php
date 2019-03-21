@@ -74,4 +74,19 @@ class User extends Authenticatable implements JWTSubject
               'password' => bcrypt($password),
           ]);
     }
+
+    public static function getUsersByUsername($username)
+    {
+        return User::where('user_name', 'like', '%' . $username . '%')
+            ->select('user_name')
+            ->where('user_name', 'like', '%' . $username . '%')
+            ->pluck('user_name')->toArray(); 
+    }
+
+    public static function getUserWholeRecord($username)
+    {
+        return User::where('user_name', '=', $username )->first(); 
+    }
+
+
 }
