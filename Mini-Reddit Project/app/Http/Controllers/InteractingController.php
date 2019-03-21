@@ -181,7 +181,7 @@ class InteractingController extends Controller
      * 	"success" : "false",
      * 	"error" : "The Link doesn't exist"
      * }
-     * 
+     *
      * }
      */
     public function downvoteLink(Request $request)
@@ -201,7 +201,7 @@ class InteractingController extends Controller
 					],403);
 
         }
-        
+
        $result=Link::chechExisting($request->link_id);
        if(!$result)
        {
@@ -215,7 +215,7 @@ class InteractingController extends Controller
 			  if($result)                    //check if the post is actually upvoted
 			  {
           $result = UpvotedPost::remove($user->user_name , $request->link_id);
-          if(!$result)                
+          if(!$result)
           {
 					  return response()->json([
 						  'success' => 'false',
@@ -309,6 +309,7 @@ class InteractingController extends Controller
 				if(UpvotedLink::upvoted( $request->link_id , $username ))
 				{
 				    	$result = UpvotedLink::remove($username , $request->link_id);
+							Link::decrementUpvotes($request->link_id);
 
 							return response()->json([
 								"success" => "true"
@@ -330,10 +331,13 @@ class InteractingController extends Controller
 					  ],403);
 				}
 
+				Link::incrementUpvotes($request->link_id);
+
 				//check if downvoted then undo ......
 
 				if(DownvotedLink::downvoted($request->link_id , $username))
 				{
+					    Link::decrementDownvotes($request->link_id);
 				    	$result = DownvotedLink::remove($username , $request->link_id);
 				}
 

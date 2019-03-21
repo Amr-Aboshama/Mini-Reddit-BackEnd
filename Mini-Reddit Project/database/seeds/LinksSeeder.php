@@ -84,5 +84,51 @@ class LinksSeeder extends Seeder
           'author_user_name' => 'reham'
 
         ]);
+
+        //comments
+
+        DB::table('links')->insert([
+
+          'content'=>'comment on post 1',
+          'title' => 'post1',
+          'link_date' => date('Y-m-d H:i:s'),
+          'author_user_name' => 'reham',
+          'parent_id' => 1
+
+        ]);
+
+        DB::table('links')->insert([
+
+          'content'=>'comment on post1',
+          'title' => 'post1',
+          'link_date' => date('Y-m-d H:i:s'),
+          'author_user_name' => 'ahmed',
+          'parent_id' => 1
+
+
+        ]);
+
+
+        DB::table('links')->insert([
+
+          'content'=>'comment on post2',
+          'title' => 'post1',
+          'link_date' => date('Y-m-d H:i:s'),
+          'author_user_name' => 'amr',
+          'parent_id' => 2
+
+
+        ]);
+
+        DB::table('links')->insert([
+
+          'content'=>'comment on post4',
+          'title' => 'post1',
+          'link_date' => date('Y-m-d H:i:s'),
+          'author_user_name' => 'menna',
+          'parent_id' => 4
+
+
+        ]);
     }
 }
