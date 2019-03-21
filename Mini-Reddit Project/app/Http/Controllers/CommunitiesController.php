@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Subscribtion;
 use App\Community;
+use App\User;
     /**
      * @group Communities
      * all community features are handled by the following APIs
@@ -33,7 +34,8 @@ class CommunitiesController extends Controller
 		public function viewUserCommunities(Request $request)
 		{
 
-            if(!$request->has('username'))
+            $existance=User::userExist($request->username);
+            if(!$existance)
                 {
                     return response()->json([
                         "success" => "false",
@@ -51,7 +53,9 @@ class CommunitiesController extends Controller
                     'community_logo'=> $community_sub->community_logo];
                 $i++;
            }
-            return response()->json( (object)['communities'=>$subscribed_communities], 200);
+            return response()->json( ["success" => "true",
+                'communities'=>$subscribed_communities
+            ], 200);
 			
 		}
 
@@ -258,7 +262,7 @@ class CommunitiesController extends Controller
                     ],403);
         }
         
-        $result=Subscribtion::subscribed($request->community_id , $user->user_name);
+        $result=Subscribtion::subscribed($request->community_id , $user->username);
         if($result)
         {
             return response()->json([
@@ -266,7 +270,7 @@ class CommunitiesController extends Controller
                         "error" => "user already is subscribed in that community"
                     ],403);
         }
-        $creation=Subscribtion::store($user->user_name , $request->community_id);
+        $creation=Subscribtion::store($user->username , $request->community_id);
         if($creation)
         {
             return response()->json([
@@ -319,7 +323,7 @@ class CommunitiesController extends Controller
                         ],403);
             }
             
-            $result=Subscribtion::subscribed($request->community_id , $user->user_name);
+            $result=Subscribtion::subscribed($request->community_id , $user->username);
             if(!$result)
             {
                 return response()->json([
@@ -327,7 +331,7 @@ class CommunitiesController extends Controller
                             "error" => "user already is not subscribed in that community"
                         ],403);
             }
-            $deletion=Subscribtion::remove($user->user_name , $request->community_id);
+            $deletion=Subscribtion::remove($user->username , $request->community_id);
             if($deletion)
             {
                 return response()->json([
