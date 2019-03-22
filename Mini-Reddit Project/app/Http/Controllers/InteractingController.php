@@ -13,6 +13,7 @@ use App\SavedPost;
 use App\HiddenPost;
 use App\Community;
 use App\Subscribtion;
+use App\ModerateCommunity;
 use Validator;
 
 /**
@@ -150,7 +151,7 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
+     * 	"error" : "The post doesn't exist"
      * }
      * @response 403 {
      * 	"success" : "false",
@@ -163,6 +164,14 @@ class InteractingController extends Controller
      * @response 403 {
      * 	"success" : "false",
      * 	"error" : "There is something went wrong!"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "The user can pin only his own posts!"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "Only moderators can pin posts in the community!"
      * }
      */
     public function pinOrUnpinPost(Request $request)
@@ -179,7 +188,7 @@ class InteractingController extends Controller
 
                     ], 403);
         }
-
+        //if the post is not existing
         $result=Link::checkExisting($request->post_id);
         if (!$result) {
             return response()->json([
@@ -189,12 +198,71 @@ class InteractingController extends Controller
         }
         //if the id is for comment or reply "not a post"
         $result=Link::getParent($request->post_id);
-        if ($result) {
+        if ($result) 
+        {
             return response()->json([
           'success' => 'false',
           'error' => 'Only posts can be pinned'
-        ], 403);
-        } else {     // the id belongs to a post
+            ], 403);
+        }   
+        else   // the id belongs to a post
+        {     
+            $current_user=auth()->user()->username;
+            $community_id=Link::getCommunity($request->post_id);
+            if(!$community_id)   //the post isn't in community
+            {
+                if($current_user==Link::getAuthor($request->post_id))
+                {
+                    $result=Link::togglePinStatus($request->post_id);
+                     if ($result) {
+                      return response()->json([
+                      'success' => 'true'
+                     ], 200);
+                    }
+                    else 
+                    {
+                         return response()->json([
+                         'success' => 'false',
+                         'error' => 'There is something went wrong!'
+                        ], 403);
+                    }
+                 }
+                 else 
+                 {
+                    return response()->json([
+                     'success' => 'false',
+                     'error' => 'The user can pin only his own posts!'
+                     ], 403);
+                 }
+            }
+            else       // the post is in acommunity
+            {
+                if(ModerateCommunity::checkExisting($community_id,$current_user))
+                {
+                    $result=Link::togglePinStatus($request->post_id);
+                     if ($result) {
+                      return response()->json([
+                      'success' => 'true'
+                     ], 200);
+                    }
+                    else 
+                    {
+                         return response()->json([
+                         'success' => 'false',
+                         'error' => 'There is something went wrong!'
+                        ], 403);
+                    }
+                }
+                else
+                {
+                    return response()->json([
+                        'success' => 'false',
+                        'error' => 'Only moderators can pin posts in the community!'
+                        ], 403);
+                }
+            }
+        }
+            
             $result=Link::togglePinStatus($request->post_id);
             if ($result) {
                 return response()->json([
@@ -205,8 +273,7 @@ class InteractingController extends Controller
             'success' => 'false',
             'error' => 'There is something went wrong!'
           ], 403);
-            }
-        }
+            }        
     }
 
 
