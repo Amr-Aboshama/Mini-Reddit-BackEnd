@@ -74,9 +74,8 @@ class InformationController extends Controller
     public function viewPublicUserInfo(Request $request)
     {
         $user = auth()->user();
-         
 
-         
+
         if (! $request->username  || ! User::userExist($request->username)) {
             return response()->json([
 
@@ -85,9 +84,9 @@ class InformationController extends Controller
 
                 ], 403);
         }
-        
+
         $selected_user= User::getUserWholeRecord($request->username);
-        
+
         return response()->json([
 
             "success" => "true",
@@ -101,7 +100,7 @@ class InformationController extends Controller
 
             ], 200);
     }
-    
+
     /**
     * Show user's username
     * @authenticated

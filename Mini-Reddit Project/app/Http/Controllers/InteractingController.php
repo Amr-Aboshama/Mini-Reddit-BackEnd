@@ -461,7 +461,7 @@ class InteractingController extends Controller
      *}
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "Sth Wrong!!!"
+     * 	"error" : "Something Wrong!!!"
      * }
       */
 
@@ -484,7 +484,7 @@ class InteractingController extends Controller
                     return response()->json([
 
                                              "success" => "false",
-                                             "error" => "Sth wrong!!"
+                                             "error" => "Something wrong!!"
 
                                              ], 401);
                 } else {
@@ -503,7 +503,7 @@ class InteractingController extends Controller
                 return response()->json([
 
                                  "success" => "false",
-                                 "error" => "Sth wrong!!"
+                                 "error" => "Something wrong!!"
 
                                  ], 401);
             } else {
@@ -517,7 +517,7 @@ class InteractingController extends Controller
         foreach ($posts as $post) {
             $renamed_posts[$i]=(object)[
 
-                           'post_id' => $post->link_id,
+               'post_id' => $post->link_id,
                'body'=> $post->content,
                'video_url'=> $post->video_url,
                'image'=> $post->content_image,
@@ -534,7 +534,9 @@ class InteractingController extends Controller
                'saved'=> "false",
                'hidden'=> "false",
                'upvoted'=> "false",
-               'downvoted'=> "false"
+               'downvoted'=> "false",
+							 'pinned'=> $post->pinned
+
 
                       ];
 
