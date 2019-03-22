@@ -15,14 +15,14 @@ class CreateBlockingsTable extends Migration
     {
         Schema::create('blockings', function (Blueprint $table) {
 
-          $table->string('blocker_user_name');
-          $table->string('blocked_user_name');
+          $table->string('blocker_username');
+          $table->string('blocked_username');
 
           //restrictions
 
-          $table->foreign('blocker_user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
-          $table->foreign('blocked_user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
-          $table->primary(['blocker_user_name' ,'blocked_user_name' ]);
+          $table->foreign('blocker_username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
+          $table->foreign('blocked_username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
+          $table->primary(['blocker_username' ,'blocked_username' ]);
         });
     }
 

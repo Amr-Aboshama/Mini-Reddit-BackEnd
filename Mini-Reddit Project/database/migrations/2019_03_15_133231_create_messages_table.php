@@ -18,13 +18,13 @@ class CreateMessagesTable extends Migration
           $table->bigIncrements('message_id');   //primary key
           $table->string('content');
           $table->dateTime('message_date');
-          $table->string('sender_user_name');
-          $table->string('receiver_user_name');
+          $table->string('sender_username');
+          $table->string('receiver_username');
 
           // restrictions
 
-          $table->foreign('sender_user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
-          $table->foreign('receiver_user_name')->references('user_name')->on('users')->onUpdate('cascade')->onDelete('cascade');
+          $table->foreign('sender_username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
+          $table->foreign('receiver_username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
 
 
 
