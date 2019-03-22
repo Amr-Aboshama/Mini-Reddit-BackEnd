@@ -30,24 +30,21 @@ class InformationController extends Controller
     {
         $user = auth()->user();
 
-        if(!$user)
-            {
-
-                return response()->json([
+        if (!$user) {
+            return response()->json([
 
                     "success" => "false",
                     "error" => "UnAuthorized"
-                    ],401);
-
-            }
+                    ], 401);
+        }
 
         return response()->json([
             'success'=>'true',
             'email' => $user->email
             ], 200);
-  	}
+    }
 
-  	/**
+    /**
      *
      * Show user's public information
      * @bodyParam username string required username to show his public info
@@ -59,7 +56,7 @@ class InformationController extends Controller
      *  "karma":500,
      *  "cake_day":"March 8, 2019",
      *  "about":"be or not to be",
-     *  "photo_path" : "storage/app/avater.jpg"
+     *  "photo_path" : "storage/app/avater.jpg",
      *  "cover_path" : "storage/app/bannar.jpg"
      *
      * }
@@ -74,25 +71,21 @@ class InformationController extends Controller
      * 	"error": "username doesn't exist"
      * }
      */
-  	public function viewPublicUserInfo(Request $request)
+    public function viewPublicUserInfo(Request $request)
     {
         $user = auth()->user();
 
 
-
-        if( ! $request->username )
-            {
-
-                return response()->json([
+        if (! $request->username  || ! User::userExist($request->username)) {
+            return response()->json([
 
                     "success" => "false",
                     "error" => "username doesn't exist"
 
-                ],403);
+                ], 403);
+        }
 
-            }
-
-         $selected_user= User::getUserWholeRecord($request->username);
+        $selected_user= User::getUserWholeRecord($request->username);
 
         return response()->json([
 
@@ -105,23 +98,22 @@ class InformationController extends Controller
             "photo_path" => $selected_user->photo_url,
             "cover_path" => $selected_user->cover_url
 
-            ],200);
-
+            ], 200);
     }
 
-     /**
-     * Show user's username
-     * @authenticated
-     * @response 200 {
-     *  "success": "true",
-     *  "username": "john"
-     * }
-     *
-     * @response 401 {
-     *  "success": "false",
-     * 	"error": "UnAuthorized"
-     * }
-     */
+    /**
+    * Show user's username
+    * @authenticated
+    * @response 200 {
+    *  "success": "true",
+    *  "username": "john"
+    * }
+    *
+    * @response 401 {
+    *  "success": "false",
+    * 	"error": "UnAuthorized"
+    * }
+    */
     public function getUsername()
     {
         return response()->json([

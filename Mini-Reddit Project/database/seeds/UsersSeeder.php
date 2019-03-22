@@ -14,44 +14,43 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-      User::storeUser([
+        User::storeUser([
         'username' => 'amro',
-        'display_name' => 'Amr',
-        'email' => 'amr@amr.com',
+        'display_name' => 'amro',
+        'email' => 'amro@amro.com',
         'password' => '123456789',
       ]);
-      User::storeUser([
+        User::storeUser([
         'username' => 'ahmed',
         'display_name' => 'essam',
         'email' => 'ahmed@ahmed.com',
         'password' => '123456789',
       ]);
-      User::storeUser([
+        User::storeUser([
         'username' => 'menna',
         'display_name' => 'menna',
         'email' => 'menna@menna.com',
         'password' => '123456789',
       ]);
-      User::storeUser([
+        User::storeUser([
         'username' => 'nour',
         'display_name' => 'nour',
         'email' => 'nour@nour.com',
         'password' => '123456789',
       ]);
-      User::storeUser([
+        User::storeUser([
         'username' => 'reham',
         'display_name' => 'reham',
         'email' => 'reham@reham.com',
         'password' => '123456789',
       ]);
-      for ($counter=0; $counter < 10; $counter++)
-      {
-          User::storeUser([
+        for ($counter=0; $counter < 10; $counter++) {
+            User::storeUser([
             'username' => Str::random(10),
             'display_name' => Str::random(10),
             'email' => Str::random(10).'@mail.com',
             'password' => bcrypt(Str::random(10)),
           ]);
-      }
+        }
     }
 }

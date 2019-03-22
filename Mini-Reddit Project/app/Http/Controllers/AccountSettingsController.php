@@ -27,14 +27,14 @@ class AccountSettingsController extends Controller
      * 	"error": "password isn't correct"
      * }
      */
-		public function deleteMyAccount()
-		{
-		    // ...
-		}
+    public function deleteMyAccount()
+    {
+        // ...
+    }
 
 
-		/**
-		 * Change current user password
+    /**
+     * Change current user password
      * @bodyParam password string required the current password of the current user
      * @bodyParam new_password string required the new password of the current user
      * @bodyParam confirm_new_password string required the new password of the current user
@@ -58,22 +58,22 @@ class AccountSettingsController extends Controller
      * 	"error": "UnAuthorized"
      * }
      */
-		public function changePassword()
-		{
-		    // ...
-		}
+    public function changePassword()
+    {
+        // ...
+    }
 
 
-		/**
-		 * Update current user Displayed Name
-		 * @authenticated
-	   * @bodyParam name string required The new name of user to update.
-	   * @response 200 {
-	   * 	"success": "true"
-	   * }
-	   *
+    /**
+     * Update current user Displayed Name
+     * @authenticated
+       * @bodyParam name string required The new name of user to update.
+       * @response 200 {
+       * 	"success": "true"
+       * }
+       *
      * @response 401 {
-	   * 	"sucess": "true",
+       * 	"sucess": "true",
      * 	"error": "UnAuthorized"
      * }
      *
@@ -81,90 +81,90 @@ class AccountSettingsController extends Controller
      *  "success": "false",
      * 	"error": "user must have a name"
      * }
-	   */
-		public function updateDisplayName()
-		{
-		    // ...
-		}
+       */
+    public function updateDisplayName()
+    {
+        // ...
+    }
 
 
-		/**
-		 * Update current user About
-		 * @authenticated
-	   * @bodyParam about string required the content of about to be updated to
-	   * @response 200 {
-	   * 	"success": "true"
-	   * }
-	   *
+    /**
+     * Update current user About
+     * @authenticated
+       * @bodyParam about string required the content of about to be updated to
+       * @response 200 {
+       * 	"success": "true"
+       * }
+       *
      * @response 401 {
-	   * 	"sucess": "true",
+       * 	"sucess": "true",
      * 	"error": "UnAuthorized"
      * }
      *
-	   */
-		public function updateAbout()
-		{
-				// ...
-		}
+       */
+    public function updateAbout()
+    {
+        // ...
+    }
 
-		/**
-		 * Update user profile image
-		 * @authenticated
-		 * @bodyParam profile_image file required User's new profile image.
-		 *
-		 * @response 200 {
-		 * 	"success": "true",
-		 * 	"path": "sotrage/app/avatar.jpg"
-		 * }
-		 *
-		 * @response 401 {
-		 * 	"sucess": "false",
-		 * 	"error": "UnAuthorized"
-		 * }
-		 *
-		 * @response 401 {
-		 * 	"sucess": "false",
-		 * 	"error": "Unsupported media type"
-		 * }
-		 *
-		 * @response 400 {
-		 * 	"sucess": "false",
-		 * 	"error": "Cannot upload the image"
-		 * }
-		 */
-		public function updateProfileImage()
-		{
-			// code...
-		}
+    /**
+     * Update user profile image
+     * @authenticated
+     * @bodyParam profile_image file required User's new profile image.
+     *
+     * @response 200 {
+     * 	"success": "true",
+     * 	"path": "sotrage/app/avatar.jpg"
+     * }
+     *
+     * @response 401 {
+     * 	"sucess": "false",
+     * 	"error": "UnAuthorized"
+     * }
+     *
+     * @response 401 {
+     * 	"sucess": "false",
+     * 	"error": "Unsupported media type"
+     * }
+     *
+     * @response 400 {
+     * 	"sucess": "false",
+     * 	"error": "Cannot upload the image"
+     * }
+     */
+    public function updateProfileImage()
+    {
+        // code...
+    }
 
-		/**
-		 * Update user profile cover
-		 * @authenticated
-		 * @bodyParam cover_image file required User's new cover image.
-		 *
-		 * @response 200 {
-		 * 	"success": "true",
-		 * 	"path": "sotrage/app/avatar.jpg"
-		 * }
-		 *
-		 * @response 401 {
-		 * 	"sucess": "false",
-		 * 	"error": "UnAuthorized"
-		 * }
-		 *
-		 * @response 401 {
-		 * 	"sucess": "false",
-		 * 	"error": "Unsupported media type"
-		 * }
-		 *
-		 * @response 400 {
-		 * 	"sucess": "false",
-		 * 	"error": "Cannot upload the image"
-		 * }
-		 */
+    /**
+     * Update user profile cover
+     * @authenticated
+     * @bodyParam cover_image file required User's new cover image.
+     *
+     * @response 200 {
+     * 	"success": "true",
+     * 	"path": "sotrage/app/avatar.jpg"
+     * }
+     *
+     * @response 401 {
+     * 	"sucess": "false",
+     * 	"error": "UnAuthorized"
+     * }
+     *
+     * @response 401 {
+     * 	"sucess": "false",
+     * 	"error": "Unsupported media type"
+     * }
+     *
+     * @response 400 {
+     * 	"sucess": "false",
+     * 	"error": "Cannot upload the image"
+     * }
+     */
 
-		public function updateCoverImage()
-		{
-			// code...
-		}
+    public function updateCoverImage()
+    {
+        // code...
+    }
 }

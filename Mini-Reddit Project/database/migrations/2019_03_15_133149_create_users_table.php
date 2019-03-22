@@ -14,8 +14,6 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-
-
             $table->string('username');
             $table->string('display_name')->nullable();
             $table->timestamp('cake_date');
@@ -30,7 +28,6 @@ class CreateUsersTable extends Migration
 
             $table->unique('email');
             $table->primary('username');
-
         });
     }
 
