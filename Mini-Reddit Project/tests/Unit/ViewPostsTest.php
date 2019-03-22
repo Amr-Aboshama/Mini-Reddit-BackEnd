@@ -67,7 +67,7 @@ class ViewPostsTest extends TestCase
 
      //check that posts are sorted by date
 
-     public function CheckNew($posts)
+     public function checkNew($posts)
      {
           $date = "5000-03-22 19:05:53";
           foreach($posts as $post)
@@ -85,7 +85,7 @@ class ViewPostsTest extends TestCase
 
      //check that the posts already belong to a community ...
 
-     public function CheckCommunityPosts($posts , $community_id)
+     public function checkCommunityPosts($posts , $community_id)
      {
           foreach($posts as $post)
           {
@@ -98,7 +98,7 @@ class ViewPostsTest extends TestCase
           return 1;
      }
 
-     public function CheckHome($posts , $username)
+     public function checkHome($posts , $username)
      {
           foreach($posts as $post)
           {
@@ -123,12 +123,12 @@ class ViewPostsTest extends TestCase
          //home page
          $response1 = $this->json('GET','api/unauth/ViewPosts' , ['page_type' => 1] )->assertStatus(401)->assertJson([
            "success" => "false",
-           "error" => "Sth wrong!!"
+           "error" => "Something wrong!!"
          ]);
          //no parameters are sent
          $response1 = $this->json('GET','api/unauth/ViewPosts' , [] )->assertStatus(401)->assertJson([
            "success" => "false",
-           "error" => "Sth wrong!!"
+           "error" => "Something wrong!!"
          ]);
 
 
@@ -140,7 +140,7 @@ class ViewPostsTest extends TestCase
          //check that they are already posts not comments or replies
          $this->assertTrue($this->checkPosts($posts) == 1);
          //check that the are sorted by date
-         $this->assertTrue($this->CheckNew($posts) == 1);
+         $this->assertTrue($this->checkNew($posts) == 1);
 
          //posts of user "amr"
 
@@ -151,7 +151,7 @@ class ViewPostsTest extends TestCase
          //check that they are already posts not comments or replies
          $this->assertTrue($this->checkPosts($posts) == 1);
          //check that the are sorted by date
-         $this->assertTrue($this->CheckNew($posts) == 1);
+         $this->assertTrue($this->checkNew($posts) == 1);
 
          //posts of user "nour"
 
@@ -162,7 +162,7 @@ class ViewPostsTest extends TestCase
          //check that they are already posts not comments or replies
          $this->assertTrue($this->checkPosts($posts) == 1);
          //check that the are sorted by date
-         $this->assertTrue($this->CheckNew($posts) == 1);
+         $this->assertTrue($this->checkNew($posts) == 1);
 
          //posts of user "menna"
 
@@ -173,7 +173,7 @@ class ViewPostsTest extends TestCase
          //check that they are already posts not comments or replies
          $this->assertTrue($this->checkPosts($posts) == 1);
          //check that the are sorted by date
-         $this->assertTrue($this->CheckNew($posts) == 1);
+         $this->assertTrue($this->checkNew($posts) == 1);
 
          //posts of user "reham"
 
@@ -184,7 +184,7 @@ class ViewPostsTest extends TestCase
          //check that they are already posts not comments or replies
          $this->assertTrue($this->checkPosts($posts) == 1);
          //check that the are sorted by date
-         $this->assertTrue($this->CheckNew($posts) == 1);
+         $this->assertTrue($this->checkNew($posts) == 1);
 
          //posts of community 1
 
@@ -193,9 +193,9 @@ class ViewPostsTest extends TestCase
          //check that they are already posts not comments or replies
          $this->assertTrue($this->checkPosts($posts) == 1);
          //check that the are sorted by date
-         $this->assertTrue($this->CheckNew($posts) == 1);
+         $this->assertTrue($this->checkNew($posts) == 1);
          //check that they already belong to that community
-         $this->assertTrue($this->CheckCommunityPosts($posts , 1) == 1);
+         $this->assertTrue($this->checkCommunityPosts($posts , 1) == 1);
 
          //posts of community 2
 
@@ -204,9 +204,9 @@ class ViewPostsTest extends TestCase
          //check that they are already posts not comments or replies
          $this->assertTrue($this->checkPosts($posts) == 1);
          //check that the are sorted by date
-         $this->assertTrue($this->CheckNew($posts) == 1);
+         $this->assertTrue($this->checkNew($posts) == 1);
          //check that they already belong to that community
-         $this->assertTrue($this->CheckCommunityPosts($posts , 2) == 1);
+         $this->assertTrue($this->checkCommunityPosts($posts , 2) == 1);
 
 
 
@@ -238,7 +238,7 @@ class ViewPostsTest extends TestCase
         //homepage
         $response1 = $this->json( 'GET','api/unauth/ViewPosts' ,['page_type' => 1] ,$headers);
         $posts = $response1->json('posts');
-        $this->assertTrue($this->CheckHome($posts ,auth()->user()->username) == 1);
+        $this->assertTrue($this->checkHome($posts ,auth()->user()->username) == 1);
 
         //logingout
 
@@ -264,14 +264,14 @@ class ViewPostsTest extends TestCase
          $response1 = $this->json( 'GET','api/unauth/ViewPosts' ,[] ,$headers);
          $posts = $response1->json('posts');
          $this->assertTrue($this->checkPostOfUser($posts,auth()->user()->username) == 1);
-         $this->assertTrue($this->CheckNew($posts) == 1);
+         $this->assertTrue($this->checkNew($posts) == 1);
 
          //homepage
 
          $response1 = $this->json( 'GET','api/unauth/ViewPosts' ,['page_type' => 1] ,$headers);
          $posts = $response1->json('posts');
-         $this->assertTrue($this->CheckHome($posts ,auth()->user()->username) == 1);
-         $this->assertTrue($this->CheckNew($posts) == 1);
+         $this->assertTrue($this->checkHome($posts ,auth()->user()->username) == 1);
+         $this->assertTrue($this->checkNew($posts) == 1);
 
          //logingout
 
