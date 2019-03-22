@@ -16,7 +16,7 @@ class LinksSeeder extends Seeder
           'content'=>'amr post1',
           'title' => 'post1',
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'amr'
+          'author_username' => 'amro'
 
         ]);
         DB::table('links')->insert([
@@ -25,7 +25,7 @@ class LinksSeeder extends Seeder
           'title' => 'post2',
           'community_id' => 1,
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'amr'
+          'author_username' => 'amro'
 
         ]);
         DB::table('links')->insert([
@@ -33,7 +33,7 @@ class LinksSeeder extends Seeder
           'content'=>'amr post3',
           'title' => 'post3',
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'amr'
+          'author_username' => 'amro'
 
         ]);
         DB::table('links')->insert([
@@ -41,7 +41,7 @@ class LinksSeeder extends Seeder
           'content'=>'ahmed post1',
           'title' => 'post1',
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'ahmed'
+          'author_username' => 'ahmed'
 
         ]);
         DB::table('links')->insert([
@@ -49,7 +49,7 @@ class LinksSeeder extends Seeder
           'content'=>'ahmed post2',
           'title' => 'post2',
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'ahmed'
+          'author_username' => 'ahmed'
 
         ]);
         DB::table('links')->insert([
@@ -57,7 +57,7 @@ class LinksSeeder extends Seeder
           'content'=>'ahmed post3',
           'title' => 'post3',
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'ahmed'
+          'author_username' => 'ahmed'
 
         ]);
         DB::table('links')->insert([
@@ -65,7 +65,7 @@ class LinksSeeder extends Seeder
           'content'=>'menna post1',
           'title' => 'post1',
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'menna'
+          'author_username' => 'menna'
 
         ]);
         DB::table('links')->insert([
@@ -73,7 +73,7 @@ class LinksSeeder extends Seeder
           'content'=>'nour post1',
           'title' => 'post1',
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'nour'
+          'author_username' => 'nour'
 
         ]);
         DB::table('links')->insert([
@@ -81,7 +81,7 @@ class LinksSeeder extends Seeder
           'content'=>'reham post1',
           'title' => 'post1',
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'reham'
+          'author_username' => 'reham'
 
         ]);
 
@@ -92,7 +92,7 @@ class LinksSeeder extends Seeder
           'content'=>'comment on post 1',
           'title' => 'post1',
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'reham',
+          'author_username' => 'reham',
           'parent_id' => 1
 
         ]);
@@ -102,7 +102,7 @@ class LinksSeeder extends Seeder
           'content'=>'comment on post1',
           'title' => 'post1',
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'ahmed',
+          'author_username' => 'ahmed',
           'parent_id' => 1
 
 
@@ -114,7 +114,7 @@ class LinksSeeder extends Seeder
           'content'=>'comment on post2',
           'title' => 'post1',
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'amr',
+          'author_username' => 'amro',
           'parent_id' => 2
 
 
@@ -125,7 +125,7 @@ class LinksSeeder extends Seeder
           'content'=>'comment on post4',
           'title' => 'post1',
           'link_date' => date('Y-m-d H:i:s'),
-          'author_user_name' => 'menna',
+          'author_username' => 'menna',
           'parent_id' => 4
 
 

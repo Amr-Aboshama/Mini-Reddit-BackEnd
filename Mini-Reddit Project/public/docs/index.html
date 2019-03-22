@@ -484,7 +484,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X POST "http://localhost/api/unauth/signIn" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"xOLfzOZFW2aTMLmA","password":"84jpqMQoajaw4BSL"}'
+    -d '{"username":"xOLfzOZFW2aTMLmA","password":"84jpqMQoajaw4BSL"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/signIn");
 
@@ -494,7 +494,7 @@ let headers = {
 }
 
 let body = {
-    "my_username": "xOLfzOZFW2aTMLmA",
+    "username": "xOLfzOZFW2aTMLmA",
     "password": "84jpqMQoajaw4BSL"
 }
 
@@ -533,7 +533,7 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>my_username</td>
+<td>username</td>
 <td>string</td>
 <td>required</td>
 <td>the username of the current user.</td>
@@ -554,7 +554,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X POST "http://localhost/api/unauth/signUp" \
     -H "Content-Type: application/json" \
-    -d '{"my_username":"imAwOYTLmtubG9zD","password":"l7pdvYuWVHlT8DZE","confirm_password":"oRi5s3cCuqKGyIK1","email":"vBVI1xFLDgmoO3r5"}'
+    -d '{"username":"imAwOYTLmtubG9zD","password":"l7pdvYuWVHlT8DZE","confirm_password":"oRi5s3cCuqKGyIK1","email":"vBVI1xFLDgmoO3r5"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/signUp");
 
@@ -564,7 +564,7 @@ let headers = {
 }
 
 let body = {
-    "my_username": "imAwOYTLmtubG9zD",
+    "username": "imAwOYTLmtubG9zD",
     "password": "l7pdvYuWVHlT8DZE",
     "confirm_password": "oRi5s3cCuqKGyIK1",
     "email": "vBVI1xFLDgmoO3r5"
@@ -633,7 +633,7 @@ fetch(url, {
 </thead>
 <tbody>
 <tr>
-<td>my_username</td>
+<td>username</td>
 <td>string</td>
 <td>required</td>
 <td>the username of the current user.</td>

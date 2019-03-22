@@ -250,7 +250,6 @@ class InteractingController extends Controller
     public function downvoteLink(Request $request)
 		{
     		//token should be parsed to get the user name
-
         $user = auth()->user();
 
         if(!$request->has('link_id'))
@@ -274,10 +273,10 @@ class InteractingController extends Controller
         ], 403 );
        }
       //if i can't remove the upvoted of the post
-       $result = UpvotedLink::upvoted($request->link_id,$user->user_name);
+       $result = UpvotedLink::upvoted($request->link_id,$user->username);
 			  if($result)                    //check if the post is actually upvoted
 			  {
-          $result = UpvotedLink::remove($user->user_name , $request->link_id);
+          $result = UpvotedLink::remove($user->username , $request->link_id);
           if(!$result)
           {
 					  return response()->json([
@@ -291,11 +290,11 @@ class InteractingController extends Controller
           }
         }
         //downvoting the post
-        $result = DownvotedLink::downvoted($request->link_id,$user->user_name);
+        $result = DownvotedLink::downvoted($request->link_id,$user->username);
         //if the link is acually downvoted
         if($result)
         {
-          $result = DownvotedLink::remove($user->user_name , $request->link_id);
+          $result = DownvotedLink::remove($user->username , $request->link_id);
 
           if($result)
           {
@@ -313,7 +312,7 @@ class InteractingController extends Controller
 
 				  }
         }
-        $result=DownvotedLink::store($user->user_name , $request->link_id);
+        $result=DownvotedLink::store($user->username , $request->link_id);
         if($result)
         {
           Link::incrementDownvotes($request->link_id);
@@ -357,7 +356,7 @@ class InteractingController extends Controller
   	{
         //token should be parsed to get the user name
 
-			  $username = auth()->user()->user_name;
+			  $username = auth()->user()->username;
 
 				$valid = Validator::make($request->all(),[
 					'link_id' => 'required'
@@ -438,7 +437,6 @@ class InteractingController extends Controller
     {
 
 			// firt see if the user is authoriazed or unauthorized.....
-
 		     $Auth=1;
 				 $posts = [];
 			   try
@@ -466,7 +464,7 @@ class InteractingController extends Controller
 								 else
 								 {
 										//posts by followers and communities
-										$posts = Link::homePosts( auth()->user()->user_name );
+										$posts = Link::homePosts( auth()->user()->username );
 								 }
 					   }
 					   else //popular posts
@@ -478,7 +476,7 @@ class InteractingController extends Controller
 				 }
 				 else if($request->has('username')) //return posts of this user
 				 {
-						 $posts = Link::getPosts()->where('author_user_name',$request->username)->orderBy('link_date' , 'DESC')->get();
+						 $posts = Link::getPosts()->where('author_username',$request->username)->orderBy('link_date' , 'DESC')->get();
 				 }
 				 else if($request->has('community_id')) //return posts of community
 				 {
@@ -497,8 +495,7 @@ class InteractingController extends Controller
 					   }
 						 else
 						 {
-
-						     $posts =Link::getPosts()->where('author_user_name' , auth()->user()->user_name)->orderBy('link_date','DESC')->get();
+						     $posts =Link::getPosts()->where('author_username' , auth()->user()->username)->orderBy('link_date','DESC')->get();
 						 }
 
 				 }
@@ -516,11 +513,11 @@ class InteractingController extends Controller
                'video_url'=> $post->video_url,
                'image'=> $post->content_image,
                'title'=> $post->title,
-               'username'=> $post->author_user_name,
+               'username'=> $post->author_username,
                'community'=> "none",
 						   'community_id'=>$post->community_id ,
                'subscribed'=> "false",
-               'author_photo_path'=> User::where('user_name' , $post->author_user_name)->get()->first()->photo_url,
+               'author_photo_path'=> User::where('username' , $post->author_username)->get()->first()->photo_url,
                'downvotes'=> $post->downvotes,
                'upvotes'=> $post->upvotes,
                'date'=> $post->link_date,
@@ -528,35 +525,39 @@ class InteractingController extends Controller
                'saved'=> "false",
                'hidden'=> "false",
                'upvoted'=> "false",
-               'downvoted'=> "false"
+               'downvoted'=> "false",
+							 'pinned'=> $post->pinned
+
 
 					  ];
 
 
-					 	if($Auth && UpvotedLink::upvoted($post->link_id , auth()->user()->user_name) )
+					 	if($Auth && UpvotedLink::upvoted($post->link_id , auth()->user()->username) )
 						{
 								$renamed_posts[$i]->upvoted = 'true';
 						}
-						else if($Auth&&DownvotedLink::downvoted($post->link_id , auth()->user()->user_name) )
+						else if($Auth&&DownvotedLink::downvoted($post->link_id , auth()->user()->username) )
 						{
 							  $renamed_posts[$i]->upvoted = 'true';
 						}
 
-						if($Auth&&SavedPost::isSaved($post->link_id , auth()->user()->user_name) )
+						if($Auth&&SavedPost::isSaved($post->link_id , auth()->user()->username) )
 						{
 						    $renamed_posts[$i]->aved = "true";
 						}
 
-						if($Auth&&HiddenPost::hidden($post->link_id , auth()->user()->user_name) )
+						if($Auth&&HiddenPost::hidden($post->link_id , auth()->user()->username) )
 						{
 						    $renamed_posts[$i]->saved = "true";
 						}
+
+
 
 						if(!is_null($post->community_id))
 						{
 								$community = Community::getCommunity($post->community_id);
 								$renamed_posts[$i]->community = $community->name;
-								if($Auth&&Subscribtion::subscribed($post->community_id , auth()->user()->user_name))
+								if($Auth&&Subscribtion::subscribed($post->community_id , auth()->user()->username))
 								{
 									  $renamed_posts[$i]->subscribed = "true";
 								}
