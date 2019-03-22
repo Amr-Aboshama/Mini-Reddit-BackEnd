@@ -14,8 +14,6 @@ class CreateLinksTable extends Migration
     public function up()
     {
         Schema::create('links', function (Blueprint $table) {
-
-
             $table->bigIncrements('link_id');
             $table->string('content');
             $table->string('content_image')->nullable(); //url of the image
@@ -33,11 +31,6 @@ class CreateLinksTable extends Migration
 
             $table->foreign('author_username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('parent_id')->references('link_id')->on('links')->onUpdate('cascade')->onDelete('cascade');
-
-
-
-
-
         });
     }
 

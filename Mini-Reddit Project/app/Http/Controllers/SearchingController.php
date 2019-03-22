@@ -27,19 +27,14 @@ class SearchingController extends Controller
      */
     public function search(Request $request)
     {
-        
-        
-        if(!$request->has('search_content'))
-            {
-
-                return response()->json([
+        if ($request->search_content == '' || !$request->has('search_content')) {
+            return response()->json([
 
                     "success" => "false",
                     "error" => "search content is empty"
 
-                ],403);
-
-            }
+                ], 403);
+        }
 
         $users_list = User::getUsersByUsername($request->search_content);
         $community_list= Community::getCommunitiesByName($request->search_content);
@@ -49,7 +44,6 @@ class SearchingController extends Controller
             "usersContent" => $users_list,
             "communityContent" => $community_list
 
-            ], 200 );  
-
+            ], 200);
     }
 }

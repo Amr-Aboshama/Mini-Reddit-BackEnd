@@ -14,14 +14,14 @@ class CreateUpvotedLinksTable extends Migration
     public function up()
     {
         Schema::create('upvoted_links', function (Blueprint $table) {
-          $table->string( 'username' );
-          $table->unsignedBigInteger('link_id');
+            $table->string('username');
+            $table->unsignedBigInteger('link_id');
 
-          //restrictions
+            //restrictions
 
-          $table->foreign('username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
-          $table->foreign('link_id')->references('link_id')->on('links')->onUpdate('cascade')->onDelete('cascade');
-          $table->primary(['link_id','username']);
+            $table->foreign('username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('link_id')->references('link_id')->on('links')->onUpdate('cascade')->onDelete('cascade');
+            $table->primary(['link_id','username']);
         });
     }
 

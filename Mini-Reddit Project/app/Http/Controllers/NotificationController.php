@@ -25,7 +25,7 @@ class NotificationController extends Controller
      */
     public function checkNotification()
     {
-      // code...
+        // code...
     }
 
 
@@ -47,6 +47,6 @@ class NotificationController extends Controller
      */
     public function pushNotification()
     {
-      // code...
+        // code...
     }
 }

@@ -62,8 +62,11 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
+        "final-test": [
+          "vendor\\bin\\phpunit --filter unit --colors=always --testdox-html public\\UnitTest\\index.html || start public\\UnitTest\\index.html"
+        ],
         "test": [
-          "vendor\\bin\\phpunit"
+          "vendor\\bin\\phpunit --filter unit --colors=always"
         ]
     }
 
