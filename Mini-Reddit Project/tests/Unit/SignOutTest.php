@@ -9,7 +9,7 @@ use App\User;
 
 class SignOutTest extends TestCase
 {
-    /*
+    /**
      * Test for invalid signout
      * -> Not authenticated
      */

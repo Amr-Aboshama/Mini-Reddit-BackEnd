@@ -43,7 +43,7 @@ class AuthenticationController extends Controller
                     'username' => 'required|min:4',
                     'password' => 'required|min:8'
                 ]);
-                
+
         if ($valid->fails()) {
             return response()->json([
                             'success' => 'false',
