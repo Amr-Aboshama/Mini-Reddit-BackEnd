@@ -3494,7 +3494,7 @@ fetch(url, {
 ```json
 {
     "success": "false",
-    "error": "Sth Wrong!!!"
+    "error": "Something Wrong!!!"
 }
 ```
 

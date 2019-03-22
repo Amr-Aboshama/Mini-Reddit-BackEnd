@@ -14,7 +14,7 @@ class UpvotedLinkTest extends TestCase
      * @return void
      */
 
-    public function testExample()
+    public function testAuthorizedUpvote()
     {
 
       //signning In
@@ -49,14 +49,15 @@ class UpvotedLinkTest extends TestCase
       $logout = $this->json('POST' , 'api/auth/signOut')->withHeaders([
          'Authorization' => "Bearer $token"
        ]);
-
-      $response = $this->withHeaders([
-          'Authorization' => ''
-        ])->json('POST', 'api/auth/upvoteLink', ['link_id' => 1 ])->assertStatus(401)->assertJson([
-          'success' => 'false',
-          "error" => "User is UnAuthorized"
-        ]);
-
     }
 
+    public function testUnAuthorizedUpvote()
+    {
+        $response = $this->withHeaders([
+            'Authorization' => ''
+          ])->json('POST', 'api/auth/upvoteLink', ['link_id' => 1 ])->assertStatus(401)->assertJson([
+            'success' => 'false',
+            "error" => "UnAuthorized"
+          ]);
+    }
 }

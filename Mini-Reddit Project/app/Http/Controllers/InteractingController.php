@@ -394,7 +394,7 @@ class InteractingController extends Controller
      *}
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "Sth Wrong!!!"
+     * 	"error" : "Something Wrong!!!"
      * }
       */
 
@@ -417,7 +417,7 @@ class InteractingController extends Controller
                     return response()->json([
 
                                              "success" => "false",
-                                             "error" => "Sth wrong!!"
+                                             "error" => "Something wrong!!"
 
                                              ], 401);
                 } else {
@@ -436,7 +436,7 @@ class InteractingController extends Controller
                 return response()->json([
 
                                  "success" => "false",
-                                 "error" => "Sth wrong!!"
+                                 "error" => "Something wrong!!"
 
                                  ], 401);
             } else {
