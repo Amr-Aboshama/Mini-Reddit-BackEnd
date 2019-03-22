@@ -262,18 +262,7 @@ class InteractingController extends Controller
                 }
             }
         }
-            
-            $result=Link::togglePinStatus($request->post_id);
-            if ($result) {
-                return response()->json([
-            'success' => 'true'
-          ], 200);
-            } else {
-                return response()->json([
-            'success' => 'false',
-            'error' => 'There is something went wrong!'
-          ], 403);
-            }        
+                  
     }
 
 
