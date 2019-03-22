@@ -19,8 +19,8 @@ class Subscribtion extends Model
 
     public static function subscribed_communities($username)
     {
-        $subscribed_communities=DB::select(" select name , community_logo 
-    	                              from communities , subscribtions 
+        $subscribed_communities=DB::select(" select name , community_logo
+    	                              from communities , subscribtions
     	                              where (( communities.community_id=subscribtions.community_id ) and (username='$username'))");
         return $subscribed_communities;
     }

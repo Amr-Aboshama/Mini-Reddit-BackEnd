@@ -41,7 +41,7 @@ class CommunitiesController extends Controller
                         "error" => "username doesn't exist"
                     ], 403);
         }
-            
+
         $communities_subscribed=Subscribtion::subscribed_communities($request->username);
         $subscribed_communities = array();
         $i = 0;
@@ -251,7 +251,7 @@ class CommunitiesController extends Controller
                         "error" => "community doesn't exist"
                     ], 403);
         }
-        
+
         $result=Subscribtion::subscribed($request->community_id, $user->username);
         if ($result) {
             return response()->json([
@@ -306,7 +306,7 @@ class CommunitiesController extends Controller
                             "error" => "community doesn't exist"
                         ], 403);
         }
-            
+
         $result=Subscribtion::subscribed($request->community_id, $user->username);
         if (!$result) {
             return response()->json([
