@@ -18,7 +18,7 @@ class Community extends Model
     }
 
 
-    public function createDummyCommunity($communityname)
+    public static function createDummyCommunity($communityname)
     {
         return Community::create([
               'name' => $communityname
@@ -32,6 +32,7 @@ class Community extends Model
              ->where('name', 'like', '%' . $comm_name . '%')
              ->pluck('community_id')->toArray();
     }
+
     public static function communityExist($community_id)
     {
         $result = Community::where('community_id', $community_id)->exists();

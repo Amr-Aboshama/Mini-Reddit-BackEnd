@@ -9,6 +9,7 @@ class Subscribtion extends Model
 {
     protected $fillable = ['username', 'community_id'];
     public $timestamps = false; //so that doesn't expext time columns
+    protected $primaryKey = 'subscribtion_id';
 
 
     public static function subscribed($community_id, $username)
@@ -19,10 +20,10 @@ class Subscribtion extends Model
 
     public static function subscribed_communities($username)
     {
-        $subscribed_communities=DB::select(" select name , community_logo
-    	                              from communities , subscribtions
-    	                              where (( communities.community_id=subscribtions.community_id ) and (username='$username'))");
-        return $subscribed_communities;
+        $subscribed_communities=DB::select(" select community_id
+        	                              from subscribtions
+        	                              where (username='$username')");
+       return $subscribed_communities;
     }
 
 
@@ -42,5 +43,11 @@ class Subscribtion extends Model
     {
         $result = Subscribtion::where('username', $username)->where('community_id', $community_id)->delete();
         return $result;
+    }
+
+
+    public static function createDummySubscribtion($community_id,$username)
+    {
+        return Subscribtion::create(['username' => $username , 'community_id' => $community_id ]);
     }
 }

@@ -67,7 +67,7 @@ class DownvoteLinkTest extends TestCase
     }
 
 
-    //this function is to test downvoting an non-existing post/comment or reply 
+    //this function is to test downvoting an non-existing post/comment or reply
     public function testDownvotNonExistingLink()
     {
         $user = User::storeUser([
@@ -162,7 +162,7 @@ class DownvoteLinkTest extends TestCase
  
          $token = auth()->login($user);
          $headers = [$token];
- 
+
          $this->json('POST','api/auth/downvoteLink',[],$headers)
            ->assertStatus(403)
            ->assertJson([

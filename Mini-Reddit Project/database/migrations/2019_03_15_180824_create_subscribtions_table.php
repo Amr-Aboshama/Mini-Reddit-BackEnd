@@ -16,12 +16,13 @@ class CreateSubscribtionsTable extends Migration
         Schema::create('subscribtions', function (Blueprint $table) {
             $table->string('username');
             $table->unsignedBigInteger('community_id');
+            $table->bigIncrements('subscribtion_id'); //primary key
 
             //restrictions
 
             $table->foreign('username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('community_id')->references('community_id')->on('communities')->onUpdate('cascade')->onDelete('cascade');
-            $table->primary(['username','community_id']);
+            $table->unique(['username','community_id']);
         });
     }
 

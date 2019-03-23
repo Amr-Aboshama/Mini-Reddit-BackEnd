@@ -41,17 +41,10 @@ class CommunitiesController extends Controller
         }
 
         $communities_subscribed=Subscribtion::subscribed_communities($request->username);
-        $subscribed_communities = array();
-        $i = 0;
-        foreach ($communities_subscribed as $community_sub) {
-            $subscribed_communities[$i]=(object)[
-                    'community_name' => $community_sub->name,
-                    'community_logo'=> $community_sub->community_logo];
-            $i++;
-        }
-        return response()->json(["success" => "true",
-                'communities'=>$subscribed_communities
-            ], 200);
+
+        return response()->json( ["success" => "true",
+            'communities'=>$communities_subscribed
+        ], 200);
     }
 
     /**
@@ -247,12 +240,7 @@ class CommunitiesController extends Controller
     public function subscribeCommunity(Request $request)
     {
         $user = auth()->user();
-        if (!$user) {
-            return response()->json([
-                        "success" => "false",
-                        "error" => "UnAuthorized"
-                    ], 401);
-        }
+
         $existance=Community::communityExist($request->community_id);
         if (!$existance) {
             return response()->json([
@@ -302,12 +290,7 @@ class CommunitiesController extends Controller
     public function unsubscribeCommunity(Request $request)
     {
         $user = auth()->user();
-        if (!$user) {
-            return response()->json([
-                            "success" => "false",
-                            "error" => "UnAuthorized"
-                        ], 401);
-        }
+
         $existance=Community::communityExist($request->community_id);
         if (!$existance) {
             return response()->json([
