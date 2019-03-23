@@ -18,8 +18,9 @@ class CreateCommunitiesTable extends Migration
             $table->string('name');
             $table->text('rules')->nullable();
             $table->text('description')->nullable();
-            $table->dateTime('creation_date')->nullable();
+            $table->timestamp('creation_date');
             $table->string('community_logo')->nullable();
+            $table->string('community_banner')->nullable();
             //restrictions
         });
 

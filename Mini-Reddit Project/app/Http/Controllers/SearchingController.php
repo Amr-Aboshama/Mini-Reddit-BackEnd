@@ -16,8 +16,8 @@ class SearchingController extends Controller
      * Search for a community or a user
      * @bodyParam search_content string required The string the user searching for.
      * @response 200 {
-     *  "usersContent": ["johnsmith", "stevenkay"],
-     *  "communityContent": ["Ahly", "BackEnd"]
+     *  "usernames": ["johnsmith", "stevenkay"],
+     *  "community_IDs": [1, 5]
      * }
      *
      * @response 403 {
@@ -38,11 +38,11 @@ class SearchingController extends Controller
 
         $users_list = User::getUsersByUsername($request->search_content);
         $community_list= Community::getCommunitiesByName($request->search_content);
-        
+
         return response()->json([
-            
-            "usersContent" => $users_list,
-            "communityContent" => $community_list
+
+            "usernames" => $users_list,
+            "community_IDs" => $community_list
 
             ], 200);
     }

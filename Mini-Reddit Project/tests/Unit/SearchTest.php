@@ -9,13 +9,12 @@ use App\User;
 
 class SearchTest extends TestCase
 {
-    /** 
+    /**
      * test for the unpresence of the word (search_content) in the request
      * or for empty search content
      */
     public function testSearchWithNoContent()
     {
-
 
         $this->json('GET','api/unauth/search', ['search_content'=>null])
             ->assertStatus(403)
@@ -29,11 +28,11 @@ class SearchTest extends TestCase
             ->assertJson([
               "success" => "false",
               "error" => "search content is empty"
-            ]);    
+            ]);
     }
 
 
-    /** 
+    /**
      * test for valid search content
      */
     public function testSearchWithContent()
@@ -46,15 +45,15 @@ class SearchTest extends TestCase
           ]);
 
         $community = new \App\community;
-        $community = $community->createDummyCommunity('testo2'); 
+        $community = $community->createDummyCommunity('testo2');
 
-        $payload = ['search_content'=>'testo2']; 
+        $payload = ['search_content'=>'testo2'];
 
         $this->json('GET','api/unauth/search', ['search_content'=>'testo'])
             ->assertStatus(200)
             ->assertJson([
-              "usersContent" => ["testo2"],
-              "communityContent" => ["testo2"]
+              "usernames" => ["testo2"],
+              "community_IDs" => [$community->community_id]
             ]);
 
 
@@ -63,5 +62,5 @@ class SearchTest extends TestCase
 
     }
 
-    
+
 }

@@ -48,7 +48,6 @@ class InformationController extends Controller
      *
      * Show user's public information
      * @bodyParam username string required username to show his public info
-     * @authenticated
      * @response 200 {
      *  "success": "true",
      *  "username": "john",
@@ -61,11 +60,6 @@ class InformationController extends Controller
      *
      * }
      *
-     * @response 401 {
-     *  "success": "false",
-     * 	"error": "UnAuthorized"
-     * }
-     *
      * @response 403 {
      *  "success": "false",
      * 	"error": "username doesn't exist"
@@ -73,8 +67,6 @@ class InformationController extends Controller
      */
     public function viewPublicUserInfo(Request $request)
     {
-        $user = auth()->user();
-
 
         if (! $request->username  || ! User::userExist($request->username)) {
             return response()->json([

@@ -198,15 +198,15 @@ class InteractingController extends Controller
         }
         //if the id is for comment or reply "not a post"
         $result=Link::getParent($request->post_id);
-        if ($result) 
+        if ($result)
         {
             return response()->json([
           'success' => 'false',
           'error' => 'Only posts can be pinned'
             ], 403);
-        }   
+        }
         else   // the id belongs to a post
-        {     
+        {
             $current_user=auth()->user()->username;
             $community_id=Link::getCommunity($request->post_id);
             if(!$community_id)   //the post isn't in community
@@ -219,7 +219,7 @@ class InteractingController extends Controller
                       'success' => 'true'
                      ], 200);
                     }
-                    else 
+                    else
                     {
                          return response()->json([
                          'success' => 'false',
@@ -227,7 +227,7 @@ class InteractingController extends Controller
                         ], 403);
                     }
                  }
-                 else 
+                 else
                  {
                     return response()->json([
                      'success' => 'false',
@@ -245,7 +245,7 @@ class InteractingController extends Controller
                       'success' => 'true'
                      ], 200);
                     }
-                    else 
+                    else
                     {
                          return response()->json([
                          'success' => 'false',
@@ -262,7 +262,7 @@ class InteractingController extends Controller
                 }
             }
         }
-               
+
     }
 
 
@@ -444,9 +444,9 @@ class InteractingController extends Controller
       * @bodyParam username string if you visited another user profile this is his username [Default null=>guest / my username=>user].
       * @bodyParam community_id int if you want to show the posts of a specific community this is its id [Default null].
        *@response 200 {
-     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"video_url" : "https://www.youtube.com","image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "laravel" , "subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false", "upvoted" : "true" , "downvoted" : "false", "pinned" : 1 } ,
-     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none" ,"subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true", "upvoted" : "true" , "downvoted" : "false", "pinned" : 0 } ,
-     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true", "upvoted" : "true" , "downvoted" : "false", "pinned" : 1 }]
+     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"video_url" : "https://www.youtube.com","image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "laravel", "community_id": 1 , "subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false", "upvoted" : "true" , "downvoted" : "false", "pinned" : 1 } ,
+     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "community_id": null, "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true", "upvoted" : "true" , "downvoted" : "false", "pinned" : 0 } ,
+     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "community_id": null, "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true", "upvoted" : "true" , "downvoted" : "false", "pinned" : 1 }]
      *}
      * @response 403 {
      * 	"success" : "false",

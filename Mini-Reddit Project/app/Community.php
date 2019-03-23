@@ -28,9 +28,9 @@ class Community extends Model
     public static function getCommunitiesByName($comm_name)
     {
         return community::where('name', 'like', '%' . $comm_name . '%')
-             ->select('name')
+             ->select('name','community_id')
              ->where('name', 'like', '%' . $comm_name . '%')
-             ->pluck('name')->toArray();
+             ->pluck('community_id')->toArray();
     }
     public static function communityExist($community_id)
     {
