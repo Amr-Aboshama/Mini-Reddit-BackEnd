@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Link extends Model
 {
+    protected $fillable = ['content', 'content_image','video_url','title','author_username','community_id','parent_id'];
     public $timestamps = false; //so that doesn't expext time columns
 
 
@@ -104,5 +105,38 @@ class Link extends Model
             return $result;
         }
         return false;
+    }
+
+    public static function getCommunity($link_id)
+    {
+        //if the post wasn't found
+        if (!Link::checkExisting($link_id)) {
+            return -1;
+        }
+        //is the post was found
+        $result=DB::select("SELECT community_id FROM links where link_id='$link_id';");
+        return $result[0]->community_id;
+    }
+
+    public static function getAuthor($link_id)
+    {
+        //if the post wasn't found
+        if (!Link::checkExisting($link_id)) {
+            return -1;
+        }
+        //is the post was found
+        $result=DB::select("SELECT author_username FROM links where link_id='$link_id';");
+        return $result[0]->author_username;
+    }
+
+    public static function storeLink($link_data)
+    {
+        return  Link::create($link_data);
+    }
+
+    public static function removeLink($link_id)
+    {
+        $result = Link::where('link_id', $link_id)->delete();
+        return $result;
     }
 }
