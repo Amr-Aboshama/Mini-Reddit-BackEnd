@@ -14,6 +14,7 @@ class SubscribeCommunityTest extends TestCase
 
     public function testNoneExistanceOfCommunity()
     {
+      
         $user = User::storeUser(['username' => 'test99', 'password' => 'armne123456', 'email' => 'test99@test.com']);
 
         $token=auth()->login($user);
