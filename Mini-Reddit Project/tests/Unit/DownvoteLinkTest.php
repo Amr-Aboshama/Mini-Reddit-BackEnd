@@ -159,7 +159,7 @@ class DownvoteLinkTest extends TestCase
              'email' => 'lily@l.com',
              'password' => '123456789',
          ]);
- 
+
          $token = auth()->login($user);
          $headers = [$token];
 

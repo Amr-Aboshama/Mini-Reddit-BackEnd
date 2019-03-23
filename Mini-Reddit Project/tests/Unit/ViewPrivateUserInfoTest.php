@@ -60,8 +60,8 @@ class ViewPrivateUserInfoTest extends TestCase
 
         $this->json('GET', 'api/auth/viewPrivateUserInfo', [], [])
             ->assertStatus(401)
-            ->assertJson($returnedjson);    
-        
+            ->assertJson($returnedjson);
+
         $this->json('GET', 'api/auth/viewPrivateUserInfo', [])
             ->assertStatus(401)
             ->assertJson($returnedjson);
@@ -69,5 +69,5 @@ class ViewPrivateUserInfoTest extends TestCase
         $user->delete();
     }
 
-    
+
 }
