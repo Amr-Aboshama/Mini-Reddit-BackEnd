@@ -477,7 +477,7 @@ class InteractingController extends Controller
 
                                              ], 401);
                 } else {
-                    //posts by followers and communities
+                    //posts by followers and communities excluding posts of blocked users
                     $posts = Link::homePosts(auth()->user()->username);
                 }
             } else { //popular posts

@@ -13,22 +13,22 @@ class BlockingSeeder extends Seeder
     {
       DB::table('blockings')->insert([
 
-        'follower_username'=>'ahmed',
-        'followed_username' =>'amro'
+        'blocker_username'=>'ahmed',
+        'blocked_username' =>'amro'
 
       ]);
 
       DB::table('blockings')->insert([
 
-        'follower_username'=>'amro',
-        'followed_username' =>'reham'
+        'blocker_username'=>'amro',
+        'blocked_username' =>'reham'
 
       ]);
 
       DB::table('blockings')->insert([
 
-        'follower_username'=>'menna',
-        'followed_username' =>'nour'
+        'blocker_username'=>'menna',
+        'blocked_username' =>'nour'
 
       ]);
     }
