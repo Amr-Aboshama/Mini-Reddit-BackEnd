@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         ,CommunitiesSeeder::class
         ,FollowingSeeder::class
         ,LinksSeeder::class
-        ,SubsribeSeeder::class]);
+        ,SubsribeSeeder::class]
+        ,BlockingSeeder::class
+      );
     }
 }

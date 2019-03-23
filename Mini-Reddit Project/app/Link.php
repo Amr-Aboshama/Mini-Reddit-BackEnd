@@ -52,7 +52,17 @@ class Link extends Model
              in (select followed_username from followings
                where follower_username = '$username') or community_id
                in(select community_id from subscribtions
-                 where username = '$username'))) ORDER BY link_date DESC ");
+                 where username = '$username')) and (
+                   ( author_username not in (
+                     select blocker_username from blockings where(
+                       blocked_username = '$username'
+                     )
+                   ) ) OR (
+                     author_username not in (
+                       select blocked_username from blockings where blocker_username = '$username'
+                     )
+                   )
+                 ) ) ORDER BY link_date DESC ");
 
         return $posts;
     }
