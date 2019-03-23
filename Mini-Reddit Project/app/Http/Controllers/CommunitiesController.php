@@ -20,11 +20,9 @@ class CommunitiesController extends Controller
      * @response 200{
      *   "success" : "true",
      *   "communities" : [{
-     *   "community_name":"Arduino",
-     *   "community_logo":"logo1"
+     *   "community_id": 5
      *   }, {
-     *   "community_name":"machine",
-     *   "community_logo":"logo2"
+     *   "community_id": 10
      *   }]
      * }
      * @response 403 {
@@ -57,17 +55,24 @@ class CommunitiesController extends Controller
     }
 
     /**
-     * View rules and description of a specific community
-     * @bodyParam community_id int required The ID of the community the user want to show its rules and  description.
+     * View information of a specific community
+     * @bodyParam community_id id required The ID of the community the user want to show its rules and  description.
      * @response 200{
-     *    "success":"true"
+     *    "success": "true",
+     *    "name": "Potterheads",
+     *    "rules": "You shouldn't post a harmful posts",
+     *    "desription": "This Community is for Potterheads",
+     *    "num_subscribes": 30,
+     *    "banner": "storage/app/banner.jpg",
+     *    "logo": "storage/app/logo.jpg"
      * }
+     *
      * @response 403 {
      * 	"success": "false",
      * 	"error": "community doesn't exist"
      * }
      */
-    public function viewCommunitiesRulesDesc()
+    public function viewCommunityInformation()
     {
         //...
     }
@@ -79,6 +84,9 @@ class CommunitiesController extends Controller
      * @bodyParam community_id int required The ID of the community the user want to edit its rules& description.
      * @bodyParam rules_content string required The edited rules of the community.
      * @bodyParam des_content string required The edited discription of the community.
+     * @bodyParam banner string required The banner of the community.
+     * @bodyParam logo string required The logo of the community.
+     *
      * @response 200 {
      *  "success": "true"
      * }
@@ -101,7 +109,8 @@ class CommunitiesController extends Controller
      * @authenticated
      * @bodyParam community_name string required The Name of the community to be created.
      * @response 200 {
-     *  "success": "true"
+     *  "success": "true",
+     *  "community_id": 5
      * }
      * @response 204 {
      *  "success": "false",
@@ -149,7 +158,7 @@ class CommunitiesController extends Controller
      * Add a moderator to a community
      * @authenticated
      * @bodyParam community_id int required The ID of the community to add a moderator for.
-     * @bodyParam mod_username string required The username of the moderator to be set for the community.
+     * @bodyParam moderator_username string required The username of the moderator to be set for the community.
      * @response 200 {
      *  "success": "true"
      * }
@@ -183,7 +192,7 @@ class CommunitiesController extends Controller
      * Remove a moderator from a community
      * @authenticated
      * @bodyParam community_id int required The ID of the community to remove a moderator from.
-     * @bodyParam mod_username string required The username of the moderator to be removed from the community.
+     * @bodyParam moderator_username string required The username of the moderator to be removed from the community.
      * @response 200 {
      *  "success": "true"
      * }

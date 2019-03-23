@@ -27,7 +27,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/auth/notification/check', 'NotificationController@checkNotification');
     Route::get('/auth/notification/push', 'NotificationController@pushNotification');
     Route::get('/auth/viewPrivateUserInfo', 'InformationController@viewPrivateUserInfo');
-    Route::get('/auth/viewPublicUserInfo', 'InformationController@viewPublicUserInfo');
     Route::get('/auth/followers', 'FollowingController@viewUserFollowers');
     Route::get('/auth/following', 'FollowingController@viewUserFollowing');
     Route::post('/auth/follow', 'FollowingController@followUser');//
@@ -67,13 +66,15 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/auth/getUsername', 'InformationController@getUsername');
 });
 
+
+Route::get('/unauth/viewPublicUserInfo', 'InformationController@viewPublicUserInfo');
 Route::get('/unauth/search', 'SearchingController@search');
 Route::post('/unauth/signIn', 'AuthenticationController@signIn');
 Route::post('/unauth/signUp', 'AuthenticationController@signUp');
 Route::post('/unauth/forgetPassword', 'AuthenticationController@forgetPassword');
 Route::post('/unauth/resetPassword', 'AuthenticationController@resetPassword');
 Route::get('/unauth/viewUserCommunities', 'CommunitiesController@viewUserCommunities');
-Route::get('/unauth/communityRules', 'CommunitiesController@viewCommunitiesRulesDesc');
+Route::get('/unauth/communityInformation', 'CommunitiesController@viewCommunityInformation');
 Route::get('/unauth/ViewPosts', 'InteractingController@viewPosts');
 Route::get('/unauth/viewCommentsReplies', 'InteractingController@viewCommentsAndRepliesOfPostsAndComments');
 Route::get('/unauth/viewSinglePost', 'InteractingController@viewSinglePost');
