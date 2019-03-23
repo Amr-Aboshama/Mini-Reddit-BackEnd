@@ -7,6 +7,8 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Link;
 use App\Following;
+use App\Blocking;
+
 use App\Subscribtion;
 
 class ViewPostsTest extends TestCase
@@ -115,7 +117,7 @@ class ViewPostsTest extends TestCase
      {
          foreach($posts as $post)
          {
-              if(Blocking::blockedOrBlocker($post['author_username'] , $username))
+              if(Blocking::blockedOrBlocker($post['username'] , $username))
               {
                    return 0;
               }
@@ -299,10 +301,12 @@ class ViewPostsTest extends TestCase
 
          //trying to view posts of blocked users
 
-         $this->json('GET' , 'api/unauth/ViewPosts' , ['username' => 'ahmed'])->assertStatus(403)->assertJson([
+
+         $this->json('GET' , 'api/unauth/ViewPosts' , ['username' => 'ahmed'] , $headers)->assertStatus(403)->assertJson([
            "success" => "false",
            "error" => "Something wrong!!"
          ]);
+
 
          //posts of community 1
 

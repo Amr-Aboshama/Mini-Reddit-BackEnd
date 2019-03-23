@@ -12,6 +12,7 @@ use App\DownvotedLink;
 use App\SavedPost;
 use App\HiddenPost;
 use App\Community;
+use App\Blocking;
 use App\Subscribtion;
 use App\ModerateCommunity;
 use Validator;
