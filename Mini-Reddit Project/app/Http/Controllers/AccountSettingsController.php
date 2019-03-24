@@ -67,13 +67,13 @@ class AccountSettingsController extends Controller
     /**
      * Update current user Displayed Name
      * @authenticated
-       * @bodyParam name string required The new name of user to update.
-       * @response 200 {
-       * 	"success": "true"
-       * }
-       *
+     * @bodyParam name string required The new name of user to update.
+     * @response 200 {
+     * 	"success": "true"
+     * }
+     *
      * @response 401 {
-       * 	"sucess": "true",
+     * 	"sucess": "true",
      * 	"error": "UnAuthorized"
      * }
      *
@@ -81,7 +81,7 @@ class AccountSettingsController extends Controller
      *  "success": "false",
      * 	"error": "user must have a name"
      * }
-       */
+     */
     public function updateDisplayName()
     {
         // ...
@@ -91,17 +91,17 @@ class AccountSettingsController extends Controller
     /**
      * Update current user About
      * @authenticated
-       * @bodyParam about string required the content of about to be updated to
-       * @response 200 {
-       * 	"success": "true"
-       * }
-       *
+     * @bodyParam about string required the content of about to be updated to
+     * @response 200 {
+     * 	"success": "true"
+     * }
+     *
      * @response 401 {
-       * 	"sucess": "true",
+     * 	"sucess": "true",
      * 	"error": "UnAuthorized"
      * }
      *
-       */
+     */
     public function updateAbout()
     {
         // ...

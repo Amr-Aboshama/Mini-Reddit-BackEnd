@@ -20,7 +20,7 @@ class ViewPrivateUserInfoTest extends TestCase
             'username' => 'testo2',
             'email' => 'testo2@test.com',
             'password' => 'armne123456',
-          ]);
+        ]);
 
         $token = auth()->login($user);
         $headers = [$token];
@@ -28,8 +28,8 @@ class ViewPrivateUserInfoTest extends TestCase
         $this->json('GET', 'api/auth/viewPrivateUserInfo', [], $headers)
             ->assertStatus(200)
             ->assertJson([
-              "success" => "true",
-              "email" => "testo2@test.com"
+                "success" => "true",
+                "email" => "testo2@test.com"
             ]);
 
         $user->delete();
@@ -43,9 +43,9 @@ class ViewPrivateUserInfoTest extends TestCase
     {
         $user = new \App\User;
         $user = $user->storeUser([
-           'username' => 'testo',
-           'email' => 'testo@test.com',
-           'password' => '123456789'
+            'username' => 'testo',
+            'email' => 'testo@test.com',
+            'password' => '123456789'
         ]);
 
         $token = auth()->login($user);
@@ -54,7 +54,7 @@ class ViewPrivateUserInfoTest extends TestCase
 
         $returnedjson = ['success' => 'false', 'error' => 'UnAuthorized'];
 
-        $this->json('GET', 'api/auth/viewPrivateUserInfo', [],  $headers)
+        $this->json('GET', 'api/auth/viewPrivateUserInfo', [], $headers)
             ->assertStatus(401)
             ->assertJson($returnedjson);
 
@@ -68,6 +68,4 @@ class ViewPrivateUserInfoTest extends TestCase
 
         $user->delete();
     }
-
-
 }

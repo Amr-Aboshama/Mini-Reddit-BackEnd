@@ -22,11 +22,11 @@ class GetUsernameTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('GET','api/auth/getUsername',[],$headers)
+        $this->json('GET', 'api/auth/getUsername', [], $headers)
           ->assertStatus(200)
           ->assertJson([
-            'success'=>'true',
-            'username' => $user->username
+              'success' => 'true',
+              'username' => $user->username
           ]);
         $user->delete();
     }
@@ -44,11 +44,11 @@ class GetUsernameTest extends TestCase
         $headers = [$token];
         auth()->logout($user);
 
-        $this->json('GET','api/auth/getUsername',[],$headers)
+        $this->json('GET', 'api/auth/getUsername', [], $headers)
           ->assertStatus(401)
           ->assertJson([
-            'success'=>'false',
-            'error'=>'UnAuthorized'
+              'success' => 'false',
+              'error' => 'UnAuthorized'
           ]);
         $user->delete();
     }

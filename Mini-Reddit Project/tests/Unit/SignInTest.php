@@ -35,8 +35,8 @@ class SignInTest extends TestCase
         $this->json('POST', 'api/unauth/signIn', $payload)
             ->assertStatus(404)
             ->assertJson([
-              'success' => 'false',
-              'error' => 'username and password don\'t matched'
+                'success' => 'false',
+                'error' => 'username and password don\'t matched'
             ]);
 
         $user->delete();
@@ -54,10 +54,10 @@ class SignInTest extends TestCase
         $this->json('POST', 'api/unauth/signIn', $payload)
             ->assertStatus(200)
             ->assertJson([
-              'success' => 'true'
+                'success' => 'true'
             ])
             ->assertJsonStructure([
-              'token'
+                'token'
             ]);
         $user->delete();
     }
@@ -71,8 +71,8 @@ class SignInTest extends TestCase
         $this->json('POST', 'api/unauth/signIn', $payload)
             ->assertStatus(422)
             ->assertJson([
-              'success' => 'false',
-              'error' => 'Invalid or some data missed'
+                'success' => 'false',
+                'error' => 'Invalid or some data missed'
             ]);
     }
 }
