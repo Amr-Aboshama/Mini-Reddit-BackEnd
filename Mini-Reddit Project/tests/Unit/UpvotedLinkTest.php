@@ -23,8 +23,7 @@ class UpvotedLinkTest extends TestCase
       $signin = $this->json('POST' , 'api/unauth/signIn' , ['username' => 'ahmed' , 'password' => '123456789' ]);
       $token = $signin->json('token');
 
-
-     $response = $this->withHeaders([
+      $response = $this->withHeaders([
       'Authorization' => "Bearer $token"
     ])->json('POST', 'api/auth/upvoteLink', ['link_id' => 1 ])->assertStatus(200)->assertJson([
       'success' => 'true',

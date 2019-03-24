@@ -57,7 +57,7 @@ class Link extends Model
                      select blocker_username from blockings where(
                        blocked_username = '$username'
                      )
-                   ) ) OR (
+                   ) ) and (
                      author_username not in (
                        select blocked_username from blockings where blocker_username = '$username'
                      )
@@ -65,6 +65,34 @@ class Link extends Model
                  ) ) ORDER BY link_date DESC ");
 
         return $posts;
+    }
+
+    public static function popularPosts($username = null )
+    {
+         if(is_null($username))
+         {
+              $posts = DB::select("SELECT * from links where parent_id is null order by upvotes DESC");
+              return $posts;
+         }
+         else {
+              $posts = DB::select("SELECT * from links where (parent_id is null and author_username not in(
+                select blocker_username from blockings where blocked_username = '$username'
+              ) and author_username not in (
+                select blocked_username from blockings where blocker_username = '$username'
+              ) ) order by upvotes DESC");
+
+              return $posts;
+         }
+    }
+
+    public static function postsOfcommunity($community_id , $username)
+    {
+         $posts = DB::select("SELECT * from links where( parent_id is null and community_id = '$community_id' and author_username not in(
+           select blocker_username from blockings where blocked_username = '$username'
+         ) and author_username not in(
+           select blocked_username from blockings where blocker_username = '$username'
+         ) ) order by link_date DESC ");
+         return $posts;
     }
 
     public static function commentsNum($post_id)

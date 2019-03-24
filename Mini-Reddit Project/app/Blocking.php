@@ -27,4 +27,10 @@ class Blocking extends Model
         'blocked_username' => $blocked_username
       ]);
   }
+     public static function blockedOrBlocker($username1 , $username2)
+     {
+          $result1 = Blocking::where('blocker_username', $username1)->where('blocked_username', $username2)->exists();
+          $result2 = Blocking::where('blocker_username', $username2)->where('blocked_username', $username1)->exists();
+          return $result1||$result2;
+     }
 }

@@ -40,7 +40,7 @@ class PinPostsTest extends TestCase
         $user->delete();
     }
 
-    //this function is to test Pinning an non-existing post 
+    //this function is to test Pinning an non-existing post
     public function testPinNonExistingLink()
     {
         $user = User::storeUser([
@@ -78,10 +78,10 @@ class PinPostsTest extends TestCase
              'email' => 'lily@l.com',
              'password' => '123456789',
          ]);
- 
+
          $token = auth()->login($user);
          $headers = [$token];
- 
+
          $this->json('PATCH','api/auth/pinPost',[],$headers)
            ->assertStatus(403)
            ->assertJson([
@@ -91,7 +91,7 @@ class PinPostsTest extends TestCase
          $user->delete();
      }
 
-     //this function is to test pinning an existing comment or reply 
+     //this function is to test pinning an existing comment or reply
      public function testPinCommentOrReply()
      {
         $user = User::storeUser([
@@ -143,7 +143,7 @@ class PinPostsTest extends TestCase
         $user->delete();
      }
 
-     //this function is to pin an existing post by a user who don't own the post 
+     //this function is to pin an existing post by a user who don't own the post
      public function testPinPostWithNonOwnerUser()
      {
         $user = User::storeUser([

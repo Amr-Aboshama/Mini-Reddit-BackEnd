@@ -7,6 +7,8 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Link;
 use App\Following;
+use App\Blocking;
+
 use App\Subscribtion;
 
 class ViewPostsTest extends TestCase
@@ -109,6 +111,19 @@ class ViewPostsTest extends TestCase
           }
 
           return 1;
+     }
+
+     public function checkBlocking($posts , $username)
+     {
+         foreach($posts as $post)
+         {
+              if(Blocking::blockedOrBlocker($post['username'] , $username))
+              {
+                   return 0;
+              }
+         }
+
+         return 1;
      }
 
 
@@ -230,15 +245,23 @@ class ViewPostsTest extends TestCase
         $posts = $response1->json('posts');
         //testing that posts are sorted by upvotes
         $this->assertTrue($this->checkPopular($posts) == 1);
+        $this->assertTrue($this->checkBlocking($posts , 'ahmed') == 1);
+
 
         //no parameters are sent check that they are his posts
         $response1 = $this->json( 'GET','api/unauth/ViewPosts' ,[] ,$headers);
         $posts = $response1->json('posts');
         $this->assertTrue($this->checkPostOfUser($posts,auth()->user()->username) == 1);
+        $this->assertTrue($this->checkNew($posts) == 1);
+
         //homepage
         $response1 = $this->json( 'GET','api/unauth/ViewPosts' ,['page_type' => 1] ,$headers);
         $posts = $response1->json('posts');
         $this->assertTrue($this->checkHome($posts ,auth()->user()->username) == 1);
+        $this->assertTrue($this->checkNew($posts) == 1);
+        $this->assertTrue($this->checkBlocking($posts , 'ahmed') == 1);
+
+
 
         //logingout
 
@@ -259,6 +282,8 @@ class ViewPostsTest extends TestCase
          $posts = $response1->json('posts');
          //testing that posts are sorted by upvotes
          $this->assertTrue($this->checkPopular($posts) == 1);
+         $this->assertTrue($this->checkBlocking($posts , 'amro') == 1);
+
 
          //no parameters are sent check that they are his posts
          $response1 = $this->json( 'GET','api/unauth/ViewPosts' ,[] ,$headers);
@@ -272,6 +297,25 @@ class ViewPostsTest extends TestCase
          $posts = $response1->json('posts');
          $this->assertTrue($this->checkHome($posts ,auth()->user()->username) == 1);
          $this->assertTrue($this->checkNew($posts) == 1);
+         $this->assertTrue($this->checkBlocking($posts , 'amro') == 1);
+
+         //trying to view posts of blocked users
+
+
+         $this->json('GET' , 'api/unauth/ViewPosts' , ['username' => 'ahmed'] , $headers)->assertStatus(403)->assertJson([
+           "success" => "false",
+           "error" => "Something wrong!!"
+         ]);
+
+
+         //posts of community 1
+
+         $response1 = $this->json( 'GET','api/unauth/ViewPosts' ,['community_id'=>1] ,$headers);
+         $posts = $response1->json('posts');
+         $this->assertTrue($this->checkCommunityPosts($posts , 1) == 1);
+         $this->assertTrue($this->checkNew($posts) == 1);
+         $this->assertTrue($this->checkBlocking($posts , 'amro') == 1);
+
 
          //logingout
 
