@@ -9,7 +9,7 @@ use App\User;
 
 class GetUsernameTest extends TestCase
 {
-   
+
     //this function is to test getting the username of an authorized user
     public function testGetUsernameOfAuthorizedUser()
     {

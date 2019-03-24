@@ -12,6 +12,7 @@ use App\DownvotedLink;
 use App\SavedPost;
 use App\HiddenPost;
 use App\Community;
+use App\Blocking;
 use App\Subscribtion;
 use App\ModerateCommunity;
 use Validator;
@@ -480,13 +481,40 @@ class InteractingController extends Controller
                     //posts by followers and communities excluding posts of blocked users
                     $posts = Link::homePosts(auth()->user()->username);
                 }
-            } else { //popular posts
-                $posts = Link::getPosts()->orderBy('upvotes', 'DESC')->get();
+            } else { //popular posts handling blockings
+                if(!$Auth)
+                {
+                    $posts = Link::popularPosts();
+                } else {
+                    $posts = Link::popularPosts(auth()->user()->username);
+                }
+
             }
         } elseif ($request->has('username')) { //return posts of this user
-            $posts = Link::getPosts()->where('author_username', $request->username)->orderBy('link_date', 'DESC')->get();
-        } elseif ($request->has('community_id')) { //return posts of community
-            $posts = Link::getPosts()->where('community_id', $request->community_id)->orderBy('link_date', 'DESC')->get();
+            if(!$Auth)
+            {
+                $posts = Link::getPosts()->where('author_username', $request->username)->orderBy('link_date', 'DESC')->get();
+            } else {
+
+                if(Blocking::blockedOrBlocker($request->username , auth()->user()->username))
+                {
+                    return response()->json([
+
+                                             "success" => "false",
+                                             "error" => "Something wrong!!"
+
+                    ],403);
+                }
+
+                $posts = Link::getPosts()->where('author_username', $request->username)->orderBy('link_date', 'DESC')->get();
+            }
+        } elseif ($request->has('community_id')) { //return posts of community excluding blocked posts
+            if(!$Auth)
+            {
+                $posts = Link::getPosts()->where('community_id', $request->community_id)->orderBy('link_date', 'DESC')->get();
+            } else {
+                $posts = Link::postsOfcommunity($request->community_id , auth()->user()->username);
+            }
         } else {
             if (!$Auth) {
                 return response()->json([
