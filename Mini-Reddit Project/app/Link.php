@@ -123,22 +123,21 @@ class Link extends Model
      *
      * @return  Array    array of objects(posts)
      */
-    public static function popularPosts($username = null )
+    public static function popularPosts($username = null)
     {
-         if(is_null($username))
-         {
-              $posts = DB::select("SELECT * from links where parent_id is null order by upvotes DESC");
-              return $posts;
-         }
-         else {
-              $posts = DB::select("SELECT * from links where (parent_id is null and author_username not in(
+        if (is_null($username)) {
+            $posts = DB::select("SELECT * from links where parent_id is null order by upvotes DESC");
+
+            return $posts;
+        } else {
+            $posts = DB::select("SELECT * from links where (parent_id is null and author_username not in(
                 select blocker_username from blockings where blocked_username = '$username'
               ) and author_username not in (
                 select blocked_username from blockings where blocker_username = '$username'
               ) ) order by upvotes DESC");
 
-              return $posts;
-         }
+            return $posts;
+        }
     }
 
 
@@ -152,14 +151,15 @@ class Link extends Model
      * community posts
      * @return array list of the required posts
      */
-    public static function postsOfcommunity($community_id , $username)
+    public static function postsOfcommunity($community_id, $username)
     {
-         $posts = DB::select("SELECT * from links where( parent_id is null and community_id = '$community_id' and author_username not in(
+        $posts = DB::select("SELECT * from links where( parent_id is null and community_id = '$community_id' and author_username not in(
            select blocker_username from blockings where blocked_username = '$username'
          ) and author_username not in(
            select blocked_username from blockings where blocker_username = '$username'
          ) ) order by link_date DESC ");
-         return $posts;
+
+        return $posts;
     }
 
 
@@ -173,6 +173,7 @@ class Link extends Model
     public static function commentsNum($post_id)
     {
         $result = Link::where('parent_id', $post_id)->count();
+
         return $result;
     }
 
@@ -187,6 +188,7 @@ class Link extends Model
     public static function checkExisting($link_id)
     {
         $result = Link::where('link_id', $link_id)->exists();
+
         return $result;
     }
 
@@ -205,7 +207,8 @@ class Link extends Model
             return -1;
         }
         //is the post was found
-        $result=DB::select("SELECT pinned FROM links where link_id='$link_id';");
+        $result = DB::select("SELECT pinned FROM links where link_id='$link_id';");
+
         return $result[0]->pinned;
     }
 
@@ -225,7 +228,8 @@ class Link extends Model
             return -1;
         }
         //is the post was found
-        $result=DB::select("SELECT parent_id FROM links where link_id='$link_id';");
+        $result = DB::select("SELECT parent_id FROM links where link_id='$link_id';");
+
         return $result[0]->parent_id;
     }
 
@@ -240,17 +244,20 @@ class Link extends Model
      */
     public static function togglePinStatus($link_id)
     {
-        $pin=Link::checkPinStatus($link_id);
-        if ($pin==-1) {
+        $pin = Link::checkPinStatus($link_id);
+        if ($pin == -1) {
             return false;
         }
         if (!$pin) {
-            $result=DB::update("UPDATE links SET pinned=1 where link_id='$link_id';");
+            $result = DB::update("UPDATE links SET pinned=1 where link_id='$link_id';");
+
             return $result;
         } elseif ($pin) {
-            $result=DB::update("UPDATE links SET pinned=0 where link_id='$link_id';");
+            $result = DB::update("UPDATE links SET pinned=0 where link_id='$link_id';");
+
             return $result;
         }
+
         return false;
     }
 
@@ -269,7 +276,8 @@ class Link extends Model
             return -1;
         }
         //is the post was found
-        $result=DB::select("SELECT community_id FROM links where link_id='$link_id';");
+        $result = DB::select("SELECT community_id FROM links where link_id='$link_id';");
+
         return $result[0]->community_id;
     }
 
@@ -289,7 +297,8 @@ class Link extends Model
             return -1;
         }
         //is the post was found
-        $result=DB::select("SELECT author_username FROM links where link_id='$link_id';");
+        $result = DB::select("SELECT author_username FROM links where link_id='$link_id';");
+
         return $result[0]->author_username;
     }
 
@@ -317,6 +326,7 @@ class Link extends Model
     public static function removeLink($link_id)
     {
         $result = Link::where('link_id', $link_id)->delete();
+
         return $result;
     }
 }

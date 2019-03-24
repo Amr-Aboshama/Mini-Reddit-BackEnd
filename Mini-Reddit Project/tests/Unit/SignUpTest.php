@@ -35,10 +35,10 @@ class SignUpTest extends TestCase
         $this->json('POST', 'api/unauth/signUp', $payload)
             ->assertStatus(200)
             ->assertJson([
-              'success' => 'true'
+                'success' => 'true'
             ])
             ->assertJsonStructure([
-              'token'
+                'token'
             ]);
         User::deleteUserByUsername('testo');
     }
@@ -52,8 +52,8 @@ class SignUpTest extends TestCase
         $this->json('POST', 'api/unauth/signUp', $payload)
             ->assertStatus(422)
             ->assertJson([
-              'success' => 'false',
-              'error' => 'Invalid or some data missed'
-              ]);
+                'success' => 'false',
+                'error' => 'Invalid or some data missed'
+            ]);
     }
 }

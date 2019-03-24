@@ -21,6 +21,7 @@ class UpvotedLink extends Model
     {
         try {
             UpvotedLink::create(['username' => $username , 'link_id' => $link_id ]);
+
             return true;
         } catch (\Exception $e) {
             return false;
@@ -40,6 +41,7 @@ class UpvotedLink extends Model
     public static function remove($username, $link_id)
     {
         $result = UpvotedLink::where('username', $username)->where('link_id', $link_id)->delete();
+
         return $result;
     }
 
@@ -55,6 +57,7 @@ class UpvotedLink extends Model
     public static function upvoted($link_id, $username)
     {
         $result = UpvotedLink::where('link_id', $link_id)->where('username', $username)->exists();
+
         return $result;
     }
 }

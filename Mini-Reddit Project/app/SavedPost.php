@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class SavedPost extends Model
 {
-	/**
-     * function to check if a specific link is saved by a user or not 
+    /**
+     * function to check if a specific link is saved by a user or not
      *
-     * @param   int  $link_id 
+     * @param   int  $link_id
      *
      * @param   string  $username
      *
@@ -18,6 +18,7 @@ class SavedPost extends Model
     public static function isSaved($link_id, $username)
     {
         $result = SavedPost::where('link_id', $link_id)->where('username', $username)->exists();
+
         return $result;
     }
 }

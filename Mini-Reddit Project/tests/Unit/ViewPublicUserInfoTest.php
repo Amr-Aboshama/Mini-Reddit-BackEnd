@@ -9,7 +9,7 @@ use App\User;
 
 class ViewPublicUserInfoTest extends TestCase
 {
-     /**
+    /**
      * Test for a valid action to return user public info
      * $headers1 => Holds the token to authenticate $user1
      * $headers2 => Holds the token to authenticate $user2
@@ -20,9 +20,9 @@ class ViewPublicUserInfoTest extends TestCase
             'username' => 'testo1',
             'email' => 'testo1@test.com',
             'password' => 'armne123456',
-          ]);
+        ]);
 
-        $this->json('GET', 'api/unauth/viewPublicUserInfo', ['username'=>'testo1'])
+        $this->json('GET', 'api/unauth/viewPublicUserInfo', ['username' => 'testo1'])
             ->assertStatus(200)
             ->assertJson($this->validReturn("testo1"));
 
@@ -38,17 +38,16 @@ class ViewPublicUserInfoTest extends TestCase
         $this->json('GET', 'api/unauth/viewPublicUserInfo', [])
             ->assertStatus(403)
             ->assertJson([
-              'success' => 'false',
-              "error" => "username doesn't exist"
+                'success' => 'false',
+                "error" => "username doesn't exist"
             ]);
 
-        $this->json('GET', 'api/unauth/viewPublicUserInfo', ['username'=>'nonexistinguser'])
+        $this->json('GET', 'api/unauth/viewPublicUserInfo', ['username' => 'nonexistinguser'])
             ->assertStatus(403)
             ->assertJson([
-              'success' => 'false',
-              "error" => "username doesn't exist"
+                'success' => 'false',
+                "error" => "username doesn't exist"
             ]);
-
     }
 
     /**
@@ -60,13 +59,12 @@ class ViewPublicUserInfoTest extends TestCase
         return [
             "success" => "true",
             "username" => $username,
-         	"name" => null,
-    	    "karma" => "0",
-      		"cake_day" => null,
-       		"about"=> null,
-       		"photo_path" => null,
-       		"cover_path" => null
-            ];
+            "name" => null,
+            "karma" => "0",
+            "cake_day" => null,
+            "about" => null,
+            "photo_path" => null,
+            "cover_path" => null
+        ];
     }
-
 }

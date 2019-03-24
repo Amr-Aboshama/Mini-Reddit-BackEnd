@@ -13,32 +13,32 @@ class FollowingSeeder extends Seeder
     {
         DB::table('followings')->insert([
 
-          'follower_username'=>'amro',
-          'followed_username' =>'ahmed'
+            'follower_username' => 'amro',
+            'followed_username' => 'ahmed'
 
         ]);
         DB::table('followings')->insert([
 
-          'follower_username'=>'amro',
-          'followed_username' =>'menna'
+            'follower_username' => 'amro',
+            'followed_username' => 'menna'
 
         ]);
         DB::table('followings')->insert([
 
-          'follower_username'=>'amro',
-          'followed_username' =>'reham'
+            'follower_username' => 'amro',
+            'followed_username' => 'reham'
 
         ]);
         DB::table('followings')->insert([
 
-          'follower_username'=>'ahmed',
-          'followed_username' =>'menna'
+            'follower_username' => 'ahmed',
+            'followed_username' => 'menna'
 
         ]);
         DB::table('followings')->insert([
 
-          'follower_username'=>'menna',
-          'followed_username' =>'ahmed'
+            'follower_username' => 'menna',
+            'followed_username' => 'ahmed'
 
         ]);
     }

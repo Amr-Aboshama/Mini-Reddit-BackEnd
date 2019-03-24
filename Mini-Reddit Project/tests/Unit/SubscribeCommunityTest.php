@@ -11,17 +11,15 @@ use App\Subscribtion;
 
 class SubscribeCommunityTest extends TestCase
 {
-
     public function testNoneExistanceOfCommunity()
     {
-      
         $user = User::storeUser(['username' => 'test99', 'password' => 'armne123456', 'email' => 'test99@test.com']);
 
-        $token=auth()->login($user);
-        $headers=[$token];
+        $token = auth()->login($user);
+        $headers = [$token];
 
         $payload = ['community_id' => 'lllll'];
-        $this->json('POST','api/auth/subscribeCommunity',$payload,$headers)
+        $this->json('POST', 'api/auth/subscribeCommunity', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -34,10 +32,10 @@ class SubscribeCommunityTest extends TestCase
 
     public function testUnAuthorizationOfUser()
     {
-    	$community1 = Community::createDummyCommunity('testkokowawa');
+        $community1 = Community::createDummyCommunity('testkokowawa');
 
-    	$payload = ['community_id' => $community1->community_id];
-        $this->json('POST','api/auth/subscribeCommunity',$payload,[])
+        $payload = ['community_id' => $community1->community_id];
+        $this->json('POST', 'api/auth/subscribeCommunity', $payload, [])
             ->assertStatus(401)
             ->assertJson([
                 "success" => "false",
@@ -48,17 +46,17 @@ class SubscribeCommunityTest extends TestCase
     }
 
 
-	public function testSuccessfulSubscribtion()
-	{
+    public function testSuccessfulSubscribtion()
+    {
         $user = User::storeUser(['username' => 'test99', 'password' => 'armne123456', 'email' => 'test99@test.com']);
 
         $community1 = Community::createDummyCommunity('testkokowawa');
 
-        $token=auth()->login($user);
-        $headers=[$token];
+        $token = auth()->login($user);
+        $headers = [$token];
 
         $payload = ['community_id' => $community1->community_id];
-        $this->json('POST','api/auth/subscribeCommunity',$payload,$headers)
+        $this->json('POST', 'api/auth/subscribeCommunity', $payload, $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true"
@@ -67,21 +65,21 @@ class SubscribeCommunityTest extends TestCase
         auth()->logout();
         $user->delete();
         $community1->delete();
-	}
+    }
 
-	public function testAlreadySubscribed()
-	{
+    public function testAlreadySubscribed()
+    {
         $user = User::storeUser(['username' => 'test99', 'password' => 'armne123456', 'email' => 'test99@test.com']);
 
         $community1 = Community::createDummyCommunity('testkokowawa');
 
-        $token=auth()->login($user);
-        $headers=[$token];
+        $token = auth()->login($user);
+        $headers = [$token];
 
-        $subscribtion1= Subscribtion::createDummySubscribtion($community1->community_id,'test99');
+        $subscribtion1 = Subscribtion::createDummySubscribtion($community1->community_id, 'test99');
 
         $payload = ['community_id' => $community1->community_id];
-        $this->json('POST','api/auth/subscribeCommunity',$payload,$headers)
+        $this->json('POST', 'api/auth/subscribeCommunity', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -91,9 +89,5 @@ class SubscribeCommunityTest extends TestCase
         auth()->logout();
         $user->delete();
         $community1->delete();
-	}
-
-
-
-
+    }
 }
