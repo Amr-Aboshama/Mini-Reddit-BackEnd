@@ -37,11 +37,11 @@ class FollowingController extends Controller
      * View Who User is Following
      * @authenticated
      * @bodyParam username string required Username to show his followering
-       * @response 200 {
+     * @response 200 {
      *  "success": "true",
-       * 	"follwingList": ["John Smith", "John Kay"]
-       * }
-       *
+     * 	"follwingList": ["John Smith", "John Kay"]
+     * }
+     *
      * @response 401 {
      *  "success": "false",
      * 	"error": "UnAuthorized"
@@ -50,7 +50,7 @@ class FollowingController extends Controller
      *  "success": "false",
      * 	"error": "username doesn't exist"
      * }
-       */
+     */
     public function viewUserFollowing()
     {
         // ...

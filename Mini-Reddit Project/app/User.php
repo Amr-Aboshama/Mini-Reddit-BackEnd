@@ -79,6 +79,7 @@ class User extends Authenticatable implements JWTSubject
     public static function storeUser($user_data)
     {
         $user_data['password'] = bcrypt($user_data['password']);
+
         return User::create($user_data);
     }
 
@@ -124,6 +125,7 @@ class User extends Authenticatable implements JWTSubject
     public static function userExist($username)
     {
         $result = User::where('username', $username)->exists();
+
         return $result;
     }
 
@@ -131,7 +133,7 @@ class User extends Authenticatable implements JWTSubject
      * return all the users except the blocked users and the users be blocked
      * @param  string $currentuser the username of the user  who searches for
      * the other users
-     * @param  string $username the subname of the users who the current user 
+     * @param  string $username the subname of the users who the current user
      * wants to search for them
      * @return array  the list of users who the current user searching for
      */
@@ -140,9 +142,8 @@ class User extends Authenticatable implements JWTSubject
         return User::where('username', 'like', '%' . $username . '%')
             ->select('username')
             ->where('username', 'like', '%' . $username . '%')
-            ->whereNotIn('username', Blocking::getUsersBlockedByUsername ($currentuser))
-            ->whereNotIn('username', Blocking::getUsersWhoBlockedUsername ($currentuser))
+            ->whereNotIn('username', Blocking::getUsersBlockedByUsername($currentuser))
+            ->whereNotIn('username', Blocking::getUsersWhoBlockedUsername($currentuser))
             ->pluck('username')->toArray();
-
     }
 }

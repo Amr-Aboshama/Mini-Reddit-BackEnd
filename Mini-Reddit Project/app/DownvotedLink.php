@@ -21,6 +21,7 @@ class DownvotedLink extends Model
     {
         try {
             DownvotedLink::create(['username' => $username , 'link_id' => $post_id ]);
+
             return true;
         } catch (\Exception $e) {
             return false;
@@ -40,6 +41,7 @@ class DownvotedLink extends Model
     public static function remove($username, $post_id)
     {
         $result = DownvotedLink::where('username', $username)->where('link_id', $post_id)->delete();
+
         return $result;
     }
 
@@ -55,6 +57,7 @@ class DownvotedLink extends Model
     public static function downvoted($link_id, $username)
     {
         $result = DownvotedLink::where('link_id', $link_id)->where('username', $username)->exists();
+
         return $result;
     }
 }

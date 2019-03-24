@@ -27,9 +27,9 @@ class InteractingController extends Controller
 {
     /**
      * Hide a post
-       * @bodyParam post_id integer required the id of the post that the user wants to hide
+     * @bodyParam post_id integer required the id of the post that the user wants to hide
      * @authenticated
-       * @response 200 {
+     * @response 200 {
      *  "success": "true"
      * }
      * @response 401 {
@@ -44,7 +44,7 @@ class InteractingController extends Controller
      * 	"success" : "false",
      * 	"error" : "post doesn't exist"
      * }
-       */
+     */
     public function hidePost()
     {
         // ...
@@ -53,9 +53,9 @@ class InteractingController extends Controller
 
     /**
      * Unhide a post
-       * @bodyParam post_id integer required the id of the post that the user wants to hide
+     * @bodyParam post_id integer required the id of the post that the user wants to hide
      * @authenticated
-       * @response 200 {
+     * @response 200 {
      *  "success": "true"
      * }
      * @response 401 {
@@ -70,7 +70,7 @@ class InteractingController extends Controller
      * 	"success" : "false",
      * 	"error" : "post doesn't exist"
      * }
-       */
+     */
     public function unhidePost()
     {
         // ...
@@ -83,7 +83,7 @@ class InteractingController extends Controller
      * @bodyParam post_id integer required the id of the post that the user wants to edit
      * @bodyParam new_title string the new title of the post
      * @bodyParam new_content string the new content of the post
-         * @bodyParam new_image string the directory of the new image if there is .
+     * @bodyParam new_image string the directory of the new image if there is .
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -184,86 +184,69 @@ class InteractingController extends Controller
         if (!$request->has('post_id')) {
             return response()->json([
 
-                        'success' => 'false',
-                        'error' => 'post_id is required'
+                'success' => 'false',
+                'error' => 'post_id is required'
 
-                    ], 403);
-        }
-        //if the post is not existing
-        $result=Link::checkExisting($request->post_id);
-        if (!$result) {
-            return response()->json([
-          'success' => 'false',
-          'error' => 'The post doesn\'t exist'
-        ], 403);
-        }
-        //if the id is for comment or reply "not a post"
-        $result=Link::getParent($request->post_id);
-        if ($result)
-        {
-            return response()->json([
-          'success' => 'false',
-          'error' => 'Only posts can be pinned'
             ], 403);
         }
-        else   // the id belongs to a post
-        {
-            $current_user=auth()->user()->username;
-            $community_id=Link::getCommunity($request->post_id);
-            if(!$community_id)   //the post isn't in community
-            {
-                if($current_user==Link::getAuthor($request->post_id))
-                {
-                    $result=Link::togglePinStatus($request->post_id);
-                     if ($result) {
-                      return response()->json([
-                      'success' => 'true'
-                     ], 200);
-                    }
-                    else
-                    {
-                         return response()->json([
-                         'success' => 'false',
-                         'error' => 'There is something went wrong!'
+        //if the post is not existing
+        $result = Link::checkExisting($request->post_id);
+        if (!$result) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'The post doesn\'t exist'
+            ], 403);
+        }
+        //if the id is for comment or reply "not a post"
+        $result = Link::getParent($request->post_id);
+        if ($result) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Only posts can be pinned'
+            ], 403);
+        } else {   // the id belongs to a post
+            $current_user = auth()->user()->username;
+            $community_id = Link::getCommunity($request->post_id);
+            if (!$community_id) {   //the post isn't in community
+                if ($current_user == Link::getAuthor($request->post_id)) {
+                    $result = Link::togglePinStatus($request->post_id);
+                    if ($result) {
+                        return response()->json([
+                            'success' => 'true'
+                        ], 200);
+                    } else {
+                        return response()->json([
+                            'success' => 'false',
+                            'error' => 'There is something went wrong!'
                         ], 403);
                     }
-                 }
-                 else
-                 {
+                } else {
                     return response()->json([
-                     'success' => 'false',
-                     'error' => 'The user can pin only his own posts!'
-                     ], 403);
-                 }
-            }
-            else       // the post is in acommunity
-            {
-                if(ModerateCommunity::checkExisting($community_id,$current_user))
-                {
-                    $result=Link::togglePinStatus($request->post_id);
-                     if ($result) {
-                      return response()->json([
-                      'success' => 'true'
-                     ], 200);
-                    }
-                    else
-                    {
-                         return response()->json([
-                         'success' => 'false',
-                         'error' => 'There is something went wrong!'
+                        'success' => 'false',
+                        'error' => 'The user can pin only his own posts!'
+                    ], 403);
+                }
+            } else {       // the post is in acommunity
+                if (ModerateCommunity::checkExisting($community_id, $current_user)) {
+                    $result = Link::togglePinStatus($request->post_id);
+                    if ($result) {
+                        return response()->json([
+                            'success' => 'true'
+                        ], 200);
+                    } else {
+                        return response()->json([
+                            'success' => 'false',
+                            'error' => 'There is something went wrong!'
                         ], 403);
                     }
-                }
-                else
-                {
+                } else {
                     return response()->json([
                         'success' => 'false',
                         'error' => 'Only moderators can pin posts in the community!'
-                        ], 403);
+                    ], 403);
                 }
             }
         }
-
     }
 
 
@@ -302,18 +285,18 @@ class InteractingController extends Controller
         if (!$request->has('link_id')) {
             return response()->json([
 
-                        'success' => 'false',
-                        'error' => 'link_id is required'
+                'success' => 'false',
+                'error' => 'link_id is required'
 
-                    ], 403);
+            ], 403);
         }
 
-        $result=Link::checkExisting($request->link_id);
+        $result = Link::checkExisting($request->link_id);
         if (!$result) {
             return response()->json([
-          'success' => 'false',
-          'error' => 'The Link doesn\'t exist'
-        ], 403);
+                'success' => 'false',
+                'error' => 'The Link doesn\'t exist'
+            ], 403);
         }
         //if i can't remove the upvoted of the post
         $result = UpvotedLink::upvoted($request->link_id, $user->username);
@@ -321,9 +304,9 @@ class InteractingController extends Controller
             $result = UpvotedLink::remove($user->username, $request->link_id);
             if (!$result) {
                 return response()->json([
-                          'success' => 'false',
-                          'error' => 'There is something went wrong!'
-                      ], 403);
+                    'success' => 'false',
+                    'error' => 'There is something went wrong!'
+                ], 403);
             } else {
                 Link::decrementUpvotes($request->link_id);
             }
@@ -336,27 +319,29 @@ class InteractingController extends Controller
 
             if ($result) {
                 Link::decrementDownvotes($request->link_id);
+
                 return response()->json([
-              'success' => 'true'
-            ], 200);
+                    'success' => 'true'
+                ], 200);
             } else {
                 return response()->json([
-                          'success' => 'false',
-                          'error' => 'There is something went wrong!'
-                      ], 403);
+                    'success' => 'false',
+                    'error' => 'There is something went wrong!'
+                ], 403);
             }
         }
-        $result=DownvotedLink::store($user->username, $request->link_id);
+        $result = DownvotedLink::store($user->username, $request->link_id);
         if ($result) {
             Link::incrementDownvotes($request->link_id);
+
             return response()->json([
-            'success' => 'true'
-          ], 200);
+                'success' => 'true'
+            ], 200);
         } else {
             return response()->json([
-                        'success' => 'false',
-                        'error' => 'There is something went wrong!'
-                    ], 403);
+                'success' => 'false',
+                'error' => 'There is something went wrong!'
+            ], 403);
         }
     }
 
@@ -376,11 +361,11 @@ class InteractingController extends Controller
      * 	"success" : "false",
      * 	"error" : "link_id doesn't exist"
      * }
-         * @response 403 {
+     * @response 403 {
      * 	"success" : "false",
      * 	"error" : "link_id is required"
      * }
-
+     *
      */
 
     public function upvoteLink(Request $request)
@@ -390,16 +375,16 @@ class InteractingController extends Controller
         $username = auth()->user()->username;
 
         $valid = Validator::make($request->all(), [
-                    'link_id' => 'required'
-                ]);
+            'link_id' => 'required'
+        ]);
 
         if ($valid->fails()) {
             return response()->json([
 
-                        "success" => "false",
-                        "error" => "link_id is required"
+                "success" => "false",
+                "error" => "link_id is required"
 
-                    ], 403);
+            ], 403);
         }
 
         if (UpvotedLink::upvoted($request->link_id, $username)) {
@@ -407,8 +392,8 @@ class InteractingController extends Controller
             Link::decrementUpvotes($request->link_id);
 
             return response()->json([
-                                "success" => "true"
-                            ], 200);
+                "success" => "true"
+            ], 200);
         }
 
         //go and upvote.....
@@ -418,10 +403,10 @@ class InteractingController extends Controller
         if (!$result) {
             return response()->json([
 
-                          "success" => "false",
-                          "error" => "link_id doesn't exist!!"
+                "success" => "false",
+                "error" => "link_id doesn't exist!!"
 
-                      ], 403);
+            ], 403);
         }
 
         Link::incrementUpvotes($request->link_id);
@@ -434,17 +419,17 @@ class InteractingController extends Controller
         }
 
         return response()->json([
-                    "success"=> "true"
-                ], 200);
+            "success" => "true"
+        ], 200);
     }
 
 
     /**
      * Viewing the posts of a specific user or a community or both when you are on the home page or the popular page.
      * @bodyParam page_type int home or popular (1 for home , -1 for popular)
-      * @bodyParam username string if you visited another user profile this is his username [Default null=>guest / my username=>user].
-      * @bodyParam community_id int if you want to show the posts of a specific community this is its id [Default null].
-       *@response 200 {
+     * @bodyParam username string if you visited another user profile this is his username [Default null=>guest / my username=>user].
+     * @bodyParam community_id int if you want to show the posts of a specific community this is its id [Default null].
+     *@response 200 {
      * "posts" :[ { "post_id": 1 , "body" : "post1" ,"video_url" : "https://www.youtube.com","image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "laravel", "community_id": 1 , "subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false", "upvoted" : "true" , "downvoted" : "false", "pinned" : 1 } ,
      *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "community_id": null, "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true", "upvoted" : "true" , "downvoted" : "false", "pinned" : 0 } ,
      *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "community_id": null, "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true", "upvoted" : "true" , "downvoted" : "false", "pinned" : 1 }]
@@ -453,14 +438,14 @@ class InteractingController extends Controller
      * 	"success" : "false",
      * 	"error" : "Something Wrong!!!"
      * }
-      */
+     */
 
     public function ViewPosts(Request $request)
     {
 
             // firt see if the user is authoriazed or unauthorized.....
 
-        $Auth=1;
+        $Auth = 1;
         $posts = [];
         try {
             $tokenFetch = JWTAuth::parseToken()->authenticate();
@@ -473,58 +458,52 @@ class InteractingController extends Controller
                 if (!$Auth) {
                     return response()->json([
 
-                                             "success" => "false",
-                                             "error" => "Something wrong!!"
+                        "success" => "false",
+                        "error" => "Something wrong!!"
 
-                                             ], 401);
+                    ], 401);
                 } else {
                     //posts by followers and communities excluding posts of blocked users
                     $posts = Link::homePosts(auth()->user()->username);
                 }
             } else { //popular posts handling blockings
-                if(!$Auth)
-                {
+                if (!$Auth) {
                     $posts = Link::popularPosts();
                 } else {
                     $posts = Link::popularPosts(auth()->user()->username);
                 }
-
             }
         } elseif ($request->has('username')) { //return posts of this user
-            if(!$Auth)
-            {
+            if (!$Auth) {
                 $posts = Link::getPosts()->where('author_username', $request->username)->orderBy('link_date', 'DESC')->get();
             } else {
-
-                if(Blocking::blockedOrBlocker($request->username , auth()->user()->username))
-                {
+                if (Blocking::blockedOrBlocker($request->username, auth()->user()->username)) {
                     return response()->json([
 
-                                             "success" => "false",
-                                             "error" => "Something wrong!!"
+                        "success" => "false",
+                        "error" => "Something wrong!!"
 
-                    ],403);
+                    ], 403);
                 }
 
                 $posts = Link::getPosts()->where('author_username', $request->username)->orderBy('link_date', 'DESC')->get();
             }
         } elseif ($request->has('community_id')) { //return posts of community excluding blocked posts
-            if(!$Auth)
-            {
+            if (!$Auth) {
                 $posts = Link::getPosts()->where('community_id', $request->community_id)->orderBy('link_date', 'DESC')->get();
             } else {
-                $posts = Link::postsOfcommunity($request->community_id , auth()->user()->username);
+                $posts = Link::postsOfcommunity($request->community_id, auth()->user()->username);
             }
         } else {
             if (!$Auth) {
                 return response()->json([
 
-                                 "success" => "false",
-                                 "error" => "Something wrong!!"
+                    "success" => "false",
+                    "error" => "Something wrong!!"
 
-                                 ], 401);
+                ], 401);
             } else {
-                $posts =Link::getPosts()->where('author_username', auth()->user()->username)->orderBy('link_date', 'DESC')->get();
+                $posts = Link::getPosts()->where('author_username', auth()->user()->username)->orderBy('link_date', 'DESC')->get();
             }
         }
 
@@ -532,50 +511,50 @@ class InteractingController extends Controller
 
         $i = 0;
         foreach ($posts as $post) {
-            $renamed_posts[$i]=(object)[
+            $renamed_posts[$i] = (object)[
 
-               'post_id' => $post->link_id,
-               'body'=> $post->content,
-               'video_url'=> $post->video_url,
-               'image'=> $post->content_image,
-               'title'=> $post->title,
-               'username'=> $post->author_username,
-               'community'=> "none",
-                           'community_id'=>$post->community_id ,
-               'subscribed'=> "false",
-               'author_photo_path'=> User::where('username', $post->author_username)->get()->first()->photo_url,
-               'downvotes'=> $post->downvotes,
-               'upvotes'=> $post->upvotes,
-               'date'=> $post->link_date,
-               'comments_num'=> $post->comments_num = Link::commentsNum($post->link_id),
-               'saved'=> "false",
-               'hidden'=> "false",
-               'upvoted'=> "false",
-               'downvoted'=> "false",
-							 'pinned'=> $post->pinned
+                'post_id' => $post->link_id,
+                'body' => $post->content,
+                'video_url' => $post->video_url,
+                'image' => $post->content_image,
+                'title' => $post->title,
+                'username' => $post->author_username,
+                'community' => "none",
+                'community_id' => $post->community_id ,
+                'subscribed' => "false",
+                'author_photo_path' => User::where('username', $post->author_username)->get()->first()->photo_url,
+                'downvotes' => $post->downvotes,
+                'upvotes' => $post->upvotes,
+                'date' => $post->link_date,
+                'comments_num' => $post->comments_num = Link::commentsNum($post->link_id),
+                'saved' => "false",
+                'hidden' => "false",
+                'upvoted' => "false",
+                'downvoted' => "false",
+                'pinned' => $post->pinned
 
 
-                      ];
+            ];
 
 
             if ($Auth && UpvotedLink::upvoted($post->link_id, auth()->user()->username)) {
                 $renamed_posts[$i]->upvoted = 'true';
-            } elseif ($Auth&&DownvotedLink::downvoted($post->link_id, auth()->user()->username)) {
+            } elseif ($Auth && DownvotedLink::downvoted($post->link_id, auth()->user()->username)) {
                 $renamed_posts[$i]->upvoted = 'true';
             }
 
-            if ($Auth&&SavedPost::isSaved($post->link_id, auth()->user()->username)) {
+            if ($Auth && SavedPost::isSaved($post->link_id, auth()->user()->username)) {
                 $renamed_posts[$i]->aved = "true";
             }
 
-            if ($Auth&&HiddenPost::hidden($post->link_id, auth()->user()->username)) {
+            if ($Auth && HiddenPost::hidden($post->link_id, auth()->user()->username)) {
                 $renamed_posts[$i]->saved = "true";
             }
 
             if (!is_null($post->community_id)) {
                 $community = Community::getCommunity($post->community_id);
                 $renamed_posts[$i]->community = $community->name;
-                if ($Auth&&Subscribtion::subscribed($post->community_id, auth()->user()->username)) {
+                if ($Auth && Subscribtion::subscribed($post->community_id, auth()->user()->username)) {
                     $renamed_posts[$i]->subscribed = "true";
                 }
             }
@@ -583,7 +562,7 @@ class InteractingController extends Controller
             $i++;
         }
 
-        return response()->json((object)['posts'=>$renamed_posts], 200);
+        return response()->json((object)['posts' => $renamed_posts], 200);
     }
 
 
@@ -603,13 +582,13 @@ class InteractingController extends Controller
      * @bodyParam username string required if you visited another user profile this is his username.
      * @authenticated
      * @response 200 {
-         *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
-         *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
-         *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "false" , "downvoted" : "false"}]
-         * }
-         * @response 404 {
-         *  "error" :"somethimg wrong!!!!"
-         * }
+     *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "false" , "downvoted" : "false"}]
+     * }
+     * @response 404 {
+     *  "error" :"somethimg wrong!!!!"
+     * }
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
@@ -626,17 +605,17 @@ class InteractingController extends Controller
 
 
     /**
-         * Viewing comments of a specific post or replies of a specific comment
-         * @bodyParam link_id int required the id of the post or the id of the comment.
+     * Viewing comments of a specific post or replies of a specific comment
+     * @bodyParam link_id int required the id of the post or the id of the comment.
      * @response 200 {
-         *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
-         *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed",  "author_photo_path" : "storage/app/avater.jpg","downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
-         *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" }]
-         * }
-         *
-         * @response 404 {
-         *	"error" :"somethimg wrong!!!!"
-         * }
+     *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed",  "author_photo_path" : "storage/app/avater.jpg","downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" }]
+     * }
+     *
+     * @response 404 {
+     *	"error" :"somethimg wrong!!!!"
+     * }
      * @response 403 {
      * 	"success" : "false",
      * 	"error" : "this post, comment or reply doesn't exist"
@@ -648,17 +627,17 @@ class InteractingController extends Controller
 
 
     /**
-         * View the upvoted posts of the user or the downvoted ones
-         * @bodyParam type int required it is one for the upvoted posts and zero for the downvoted ones.
+     * View the upvoted posts of the user or the downvoted ones
+     * @bodyParam type int required it is one for the upvoted posts and zero for the downvoted ones.
      * @authenticated
-       * @response 200 {
-          *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed","community" : "none" ,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
-          *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","subscribed" : "false","author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
-          *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "laravel" ,"subscribed" : "true" ,"author_photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" }]
-         * }
-         * @response 404 {
-         * 	"error" :"somethimg wrong!!!!"
-         * }
+     * @response 200 {
+     *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed","community" : "none" ,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","subscribed" : "false","author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "laravel" ,"subscribed" : "true" ,"author_photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" }]
+     * }
+     * @response 404 {
+     * 	"error" :"somethimg wrong!!!!"
+     * }
      * @response 401 {
      * 	"success": "false",
      *  "error": "UnAuthorized"
@@ -680,9 +659,9 @@ class InteractingController extends Controller
      * @authenticated
      * @response 200 {
      * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "none","subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false", "upvoted" : "true" , "downvoted" : "false" } ,
-      *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "none","subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true", "upvoted" : "true" , "downvoted" : "false" } ,
-      *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "laravel","subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true", "upvoted" : "true" , "downvoted" : "false" }] ,
-      *
+     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "none","subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true", "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "laravel","subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true", "upvoted" : "true" , "downvoted" : "false" }] ,
+     *
      * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" ,  "author_photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
      *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
      *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false"}]
@@ -710,8 +689,8 @@ class InteractingController extends Controller
      * @bodyParam parent_link_id int required the ID of the parent link, this parameter should be 'null' if the link is a post
      * @bodyParam post_title string this parameter is not required only for posts
      * @bodyParam community_id int this parameter is required only if the link is inside a community
-         * @bodyParam image_path string if a post contains an image.
-         * @bodyParam video_url string  if a post contains a video.
+     * @bodyParam image_path string if a post contains an image.
+     * @bodyParam video_url string  if a post contains a video.
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -744,22 +723,22 @@ class InteractingController extends Controller
 
 
     /**
-
-         * View the saved Links by the user.
+     *
+     * View the saved Links by the user.
      * @authenticated
-
-         * @response 200 {
+     *
+     * @response 200 {
      * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" , "community" : "none","subscribed" : "false" ,"author_photo_path" : "storage/app/avater.jpg","downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "false" , "upvoted" : "true" , "downvoted" : "false"} ,
-          *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed", "community" : "laravel","subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"} ,
-          *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"}] ,
-          *
+     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed", "community" : "laravel","subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"} ,
+     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"}] ,
+     *
      * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0 , "upvoted" : "true" , "downvoted" : "false" } ,
-         *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0 , "upvoted" : "true" , "downvoted" : "false" } ,
-         *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0  , "upvoted" : "true" , "downvoted" : "false"}]
+     *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0 , "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0  , "upvoted" : "true" , "downvoted" : "false"}]
      * }
-         * @response 404 {
-         *	 "error" :"somethimg wrong!!!!"
-         * }
+     * @response 404 {
+     *	 "error" :"somethimg wrong!!!!"
+     * }
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
@@ -922,9 +901,9 @@ class InteractingController extends Controller
     /**
      * Viewing a single post
      *
-      *@bodyParam post_id int required the id of the post.
-       *@response 200 {
-      *	"post_id": 1 ,
+     *@bodyParam post_id int required the id of the post.
+     *@response 200 {
+     *	"post_id": 1 ,
      *  "body" : "post1" ,
      *  "image" : "storage/app/avater.jpg",
      *  "title":"title1",
@@ -941,14 +920,14 @@ class InteractingController extends Controller
      *	"downvoted" : "true"
      * }
      *
-      * @response 404 {
+     * @response 404 {
      *	"error" :"somethimg wrong!!!!"
-      * }
+     * }
      * @response 403 {
      * 	"success" : "false",
      * 	"error" : "id doesn't exist"
      * }
-      */
+     */
 
     public function viewSinglePost()
     {

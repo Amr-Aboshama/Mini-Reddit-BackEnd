@@ -17,10 +17,10 @@ class SignOutTest extends TestCase
     {
         $user = new \App\User;
         $user = $user->storeUser([
-          'username' => 'testo',
-          'email' => 'testo@test.com',
-          'password' => '123456789',
-          'password_confirmation' => '123456789'
+            'username' => 'testo',
+            'email' => 'testo@test.com',
+            'password' => '123456789',
+            'password_confirmation' => '123456789'
         ]);
 
         $token = auth()->login($user);
@@ -38,10 +38,10 @@ class SignOutTest extends TestCase
     public function testValidSignOut()
     {
         $user = User::storeUser([
-              'username' => 'testo2',
-              'email' => 'testo2@test.com',
-              'password' => 'armne123456',
-          ]);
+            'username' => 'testo2',
+            'email' => 'testo2@test.com',
+            'password' => 'armne123456',
+        ]);
 
         $token = auth()->login($user);
 
@@ -50,7 +50,7 @@ class SignOutTest extends TestCase
         $this->json('POST', 'api/auth/signOut', [], $headers)
             ->assertStatus(200)
             ->assertJson([
-              'success' => 'true'
+                'success' => 'true'
             ]);
 
         $user->delete();
@@ -65,8 +65,8 @@ class SignOutTest extends TestCase
         $this->json('POST', 'api/auth/signOut', [], $headers)
             ->assertStatus(401)
             ->assertJson([
-              'success' => 'false',
-              'error' => 'UnAuthorized'
+                'success' => 'false',
+                'error' => 'UnAuthorized'
             ]);
     }
 }
