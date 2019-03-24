@@ -20,43 +20,43 @@ class UpvotedLinkTest extends TestCase
       //signning In
 
 
-      $signin = $this->json('POST' , 'api/unauth/signIn' , ['username' => 'ahmed' , 'password' => '123456789' ]);
-      $token = $signin->json('token');
+        $signin = $this->json('POST', 'api/unauth/signIn', ['username' => 'ahmed' , 'password' => '123456789' ]);
+        $token = $signin->json('token');
 
-      $response = $this->withHeaders([
-      'Authorization' => "Bearer $token"
-    ])->json('POST', 'api/auth/upvoteLink', ['link_id' => 1 ])->assertStatus(200)->assertJson([
-      'success' => 'true',
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer $token"
+        ])->json('POST', 'api/auth/upvoteLink', ['link_id' => 1 ])->assertStatus(200)->assertJson([
+            'success' => 'true',
         ]);
 
-      $response = $this->withHeaders([
-         'Authorization' => "Bearer $token"
-       ])->json('POST', 'api/auth/upvoteLink', [])->assertStatus(403)->assertJson([
-         'success' => 'false',
-         'error' => 'link_id is required'
-         ]);
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer $token"
+        ])->json('POST', 'api/auth/upvoteLink', [])->assertStatus(403)->assertJson([
+            'success' => 'false',
+            'error' => 'link_id is required'
+        ]);
 
-      $response = $this->withHeaders([
-          'Authorization' => "Bearer $token"
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer $token"
         ])->json('POST', 'api/auth/upvoteLink', ['link_id' => 77])->assertStatus(403)->assertJson([
-          'success' => 'false',
-          'error' => "link_id doesn't exist!!"
-          ]);
+            'success' => 'false',
+            'error' => "link_id doesn't exist!!"
+        ]);
 
-      //logingout
+        //logingout
 
-      $logout = $this->json('POST' , 'api/auth/signOut')->withHeaders([
-         'Authorization' => "Bearer $token"
-       ]);
+        $logout = $this->json('POST', 'api/auth/signOut')->withHeaders([
+            'Authorization' => "Bearer $token"
+        ]);
     }
 
     public function testUnAuthorizedUpvote()
     {
         $response = $this->withHeaders([
             'Authorization' => ''
-          ])->json('POST', 'api/auth/upvoteLink', ['link_id' => 1 ])->assertStatus(401)->assertJson([
+        ])->json('POST', 'api/auth/upvoteLink', ['link_id' => 1 ])->assertStatus(401)->assertJson([
             'success' => 'false',
             "error" => "UnAuthorized"
-          ]);
+        ]);
     }
 }

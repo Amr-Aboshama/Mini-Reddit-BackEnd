@@ -13,26 +13,22 @@ class CommunitiesSeeder extends Seeder
     {
         DB::table('communities')->insert([
 
-            'name'=>'laravel',
-            // 'creation_date' => date('Y-m-d H:i:s')
+            'name' => 'laravel',
 
         ]);
         DB::table('communities')->insert([
 
-            'name'=>'m3l4',
-            // 'creation_date' => date('Y-m-d H:i:s')
+            'name' => 'm3l4',
 
         ]);
         DB::table('communities')->insert([
 
-            'name'=>'gogo',
-            // 'creation_date' => date('Y-m-d H:i:s')
+            'name' => 'gogo',
 
         ]);
         DB::table('communities')->insert([
 
-            'name'=>'wawoooo',
-            // 'creation_date' => date('Y-m-d H:i:s')
+            'name' => 'wawoooo',
 
         ]);
     }

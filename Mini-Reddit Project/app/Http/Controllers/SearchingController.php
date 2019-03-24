@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use App\User;
 use App\community;
@@ -30,20 +32,34 @@ class SearchingController extends Controller
         if ($request->search_content == '' || !$request->has('search_content')) {
             return response()->json([
 
-                    "success" => "false",
-                    "error" => "search content is empty"
+                "success" => "false",
+                "error" => "search content is empty"
 
-                ], 403);
+            ], 403);
         }
 
-        $users_list = User::getUsersByUsername($request->search_content);
-        $community_list= Community::getCommunitiesByName($request->search_content);
+        $Auth = 1;
+        $posts = [];
+        try {
+            $tokenFetch = JWTAuth::parseToken()->authenticate();
+        } catch (JWTException $e) {
+            $Auth = 0;
+        }
+
+        if ($Auth) {
+            $user = auth()->user();
+            $users_list = User::getUsersByUsernameExceptblockedOrBlockedBy($user->username, $request->search_content);
+        } else {
+            $users_list = User::getUsersByUsername($request->search_content);
+        }
+
+        $community_list = Community::getCommunitiesByName($request->search_content);
 
         return response()->json([
 
             "usernames" => $users_list,
             "community_IDs" => $community_list
 
-            ], 200);
+        ], 200);
     }
 }

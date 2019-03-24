@@ -11,25 +11,25 @@ class BlockingSeeder extends Seeder
      */
     public function run()
     {
-      DB::table('blockings')->insert([
+        DB::table('blockings')->insert([
 
-        'blocker_username'=>'ahmed',
-        'blocked_username' =>'amro'
+            'blocker_username' => 'ahmed',
+            'blocked_username' => 'amro'
 
-      ]);
+        ]);
 
-      DB::table('blockings')->insert([
+        DB::table('blockings')->insert([
 
-        'blocker_username'=>'amro',
-        'blocked_username' =>'reham'
+            'blocker_username' => 'amro',
+            'blocked_username' => 'reham'
 
-      ]);
+        ]);
 
-      DB::table('blockings')->insert([
+        DB::table('blockings')->insert([
 
-        'blocker_username'=>'menna',
-        'blocked_username' =>'nour'
+            'blocker_username' => 'menna',
+            'blocked_username' => 'nour'
 
-      ]);
+        ]);
     }
 }
