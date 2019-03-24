@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use App\Blocking;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -98,5 +99,16 @@ class User extends Authenticatable implements JWTSubject
     {
         $result = User::where('username', $username)->exists();
         return $result;
+    }
+
+    public static function getUsersByUsernameExceptblockedOrBlockedBy($currentuser, $username)
+    {
+        return User::where('username', 'like', '%' . $username . '%')
+            ->select('username')
+            ->where('username', 'like', '%' . $username . '%')
+            ->whereNotIn('username', Blocking::getUsersBlockedByUsername ($currentuser))
+            ->whereNotIn('username', Blocking::getUsersWhoBlockedUsername ($currentuser))
+            ->pluck('username')->toArray();
+
     }
 }
