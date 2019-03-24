@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
 use App\User;
 
 class ViewPublicUserInfoTest extends TestCase
@@ -17,35 +16,17 @@ class ViewPublicUserInfoTest extends TestCase
      */
     public function testValidReturnOfUserPublicInfo()
     {
-        $user1 = User::storeUser([
+        $user = User::storeUser([
             'username' => 'testo1',
             'email' => 'testo1@test.com',
             'password' => 'armne123456',
           ]);
 
-        $user2 = User::storeUser([
-            'username' => 'testo2',
-            'email' => 'testo2@test.com',
-            'password' => 'armne123456',
-          ]);
-
-        $token1 = auth()->login($user1);
-        $headers1 = [$token1];
-
-        $token2 = auth()->login($user2);
-        $headers2 = [$token2];
-
-        $this->json('GET', 'api/auth/viewPublicUserInfo', ['username'=>'testo2'], $headers1)
-            ->assertStatus(200)
-            ->assertJson($this->validReturn("testo2"));
-
-        $this->json('GET', 'api/auth/viewPublicUserInfo', ['username'=>'testo1'], $headers1)
+        $this->json('GET', 'api/unauth/viewPublicUserInfo', ['username'=>'testo1'])
             ->assertStatus(200)
             ->assertJson($this->validReturn("testo1"));
 
-
-        $user1->delete();
-        $user2->delete();
+        $user->delete();
     }
 
     /**
@@ -54,58 +35,20 @@ class ViewPublicUserInfoTest extends TestCase
      */
     public function testNonexistingUserPublicInfo()
     {
-        $user = new \App\User;
-        $user = $user->storeUser([
-          'username' => 'testo',
-          'email' => 'testo@test.com',
-          'password' => '123456789'
-        ]);
-
-        $token = auth()->login($user);
-        $headers = [$token];
-
-        $this->json('GET', 'api/auth/viewPublicUserInfo', [], $headers)
+        $this->json('GET', 'api/unauth/viewPublicUserInfo', [])
             ->assertStatus(403)
             ->assertJson([
               'success' => 'false',
               "error" => "username doesn't exist"
             ]);
 
-        $this->json('GET', 'api/auth/viewPublicUserInfo', ['username'=>'nonexistinguser'], $headers)
+        $this->json('GET', 'api/unauth/viewPublicUserInfo', ['username'=>'nonexistinguser'])
             ->assertStatus(403)
             ->assertJson([
               'success' => 'false',
               "error" => "username doesn't exist"
             ]);
 
-        $user->delete();
-    }
-
-    /**
-     * Test for an unvalid action to return user public info (user is not authorized to view the info)
-     * $headers => Holds the token to authenticate
-     */
-    public function testUnauthorizedToViewUserPublicInfo()
-    {
-        $user = new \App\User;
-        $user = $user->storeUser([
-          'username' => 'testo',
-          'email' => 'testo@test.com',
-          'password' => '123456789'
-        ]);
-
-        $token = auth()->login($user);
-        $headers = [$token];
-        auth()->logout();
-
-        $this->json('GET', 'api/auth/viewPublicUserInfo', ['username'=>'testo'], $headers)
-            ->assertStatus(401)
-            ->assertJson([
-              'success' => 'false',
-              "error" => "UnAuthorized"
-            ]);
-
-        $user->delete();
     }
 
     /**
