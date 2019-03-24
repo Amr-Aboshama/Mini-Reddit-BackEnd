@@ -39,6 +39,7 @@ class Link extends Model
         Link::where('link_id', $link_id)->update(['downvotes' => $downvotes ]);
     }
 
+  
     public static function scopegetPosts($query)
     {
         return $query->where('parent_id', null);
