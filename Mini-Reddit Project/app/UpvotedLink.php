@@ -9,7 +9,7 @@ class UpvotedLink extends Model
     protected $fillable = ['username', 'link_id'];
     public $timestamps = false; //so that doesn't expext time columns
 
-    //function to store an upvoted post given the username and post_id
+
 
     public static function store($username, $link_id)
     {
