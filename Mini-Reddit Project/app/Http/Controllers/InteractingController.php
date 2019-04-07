@@ -226,7 +226,7 @@ class InteractingController extends Controller
                         'error' => 'The user can pin only his own posts!'
                     ], 403);
                 }
-            } else {       // the post is in acommunity
+            } else {       // the post is in a community
                 if (ModerateCommunity::checkExisting($community_id, $current_user)) {
                     $result = Link::togglePinStatus($request->post_id);
                     if ($result) {
@@ -785,12 +785,87 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      *  "success": "false",
-     *  "error": "this post, comment or reply doesn't exist"
+     *  "error": "link_id is required"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "The link doesn't exist"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "There is something went wrong!"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "Only the moderator of the community or the author of the link can remove it."
      * }
      */
-    public function removeLink()
+    public function removeLink(Request $request)
     {
-        // ...
+        //token should be parsed to get the user name
+
+        $user = auth()->user();
+
+        if (!$request->has('link_id')) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'link_id is required'
+
+            ], 403);
+        }
+        //if the post is not existing
+        $result = Link::checkExisting($request->link_id);
+        if (!$result) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'The link doesn\'t exist'
+            ], 403);
+        }
+
+        $current_user = auth()->user()->username;
+        $community_id = Link::getCommunity($request->link_id);
+        if (!$community_id) {     //the post isn't in community
+          if ($current_user == Link::getAuthor($request->link_id)){
+                $result=Link::removeLink($request->link_id);
+                if($result){
+                    return response()->json([
+                        'success' => 'true'
+                 ], 200);
+                } else {
+                    return response()->json([
+                        'success' => 'false',
+                        'error' => 'There is something went wrong!'
+                    ], 403);
+                }
+            } else {
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'Only the moderator of the community or the author of the link can remove it.'
+                ], 403);
+            }
+        } else {  // the post is in acommunity
+            if ((ModerateCommunity::checkExisting($community_id, $current_user))||
+            ($current_user == Link::getAuthor($request->link_id))) {
+                $result=Link::removeLink($request->link_id);
+                if($result){
+                    return response()->json([
+                        'success' => 'true'
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'success' => 'false',
+                        'error' => 'There is something went wrong!'
+                    ], 403);
+                }
+            } else {
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'Only the moderator of the community or the author of the link can remove it.'
+                ], 403);
+            }
+        }
+
     }
 
     /**
