@@ -27,7 +27,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/auth/followers', 'FollowingController@viewUserFollowers');
     Route::get('/auth/following', 'FollowingController@viewUserFollowing');
     Route::post('/auth/follow', 'FollowingController@followUser');//
-    Route::delete('/auth/follow', 'FollowingController@unfollowUser');//*
+    Route::delete('/auth/unfollow', 'FollowingController@unfollowUser');//*
     Route::get('/auth/viewUserMessage', 'MessagesController@viewUserMessage');
     Route::get('/auth/viewUserSentMessages', 'MessagesController@viewUserSentMessages');
     Route::get('/auth/viewUserInboxMessages', 'MessagesController@viewUserInboxMessages');
@@ -47,9 +47,9 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/auth/saveLink', 'InteractingController@unsaveLink'); //*
     Route::post('/auth/addLink', 'InteractingController@addNewLink');
     Route::patch('/auth/pinPost', 'InteractingController@pinOrUnpinPost');
-    Route::delete('/auth/removeLink', 'InteractingController@removeLink');
+    Route::delete('/auth/removeLink', 'InteractingController@removeLink');//
     Route::post('/auth/hidePost', 'InteractingController@hidePost'); //
-    Route::delete('/auth/hidePost', 'InteractingController@unhidePost');//*
+    Route::delete('/auth/unhidePost', 'InteractingController@unhidePost');//
     Route::patch('/auth/editPost', 'InteractingController@editPost');
     Route::patch('/auth/editComment', 'InteractingController@editComment');
     Route::post('/auth/upvoteLink', 'InteractingController@upvoteLink');//
