@@ -329,4 +329,16 @@ class Link extends Model
 
         return $result;
     }
+
+    public static function upvotedPostsByUser($username)
+    {
+         $posts = DB::Select("SELECT * from links where parent_id is null and link_id in (select U.link_id from upvoted_links as U where U.username = '$username' ) ");
+         return $posts;
+    }
+
+    public static function downvotedPostsByUser($username)
+    {
+         $posts = DB::Select("SELECT * from links where parent_id is null and link_id in (select D.link_id from downvoted_links as D where D.username = '$username' ) ");
+         return $posts;
+    }
 }
