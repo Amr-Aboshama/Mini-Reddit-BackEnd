@@ -42,12 +42,71 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
+     * 	"error" : "The post doesn't exist"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "Only posts can be hidden"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "There is something went wrong!"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post_id is required"
      * }
      */
-    public function hidePost()
+    public function hidePost(Request $request)
     {
-        // ...
+        //token should be parsed to get the user name
+
+        $user = auth()->user();
+
+        if (!$request->has('post_id')) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'post_id is required'
+
+            ], 403);
+        }
+        //if the post is not existing
+        $result = Link::checkExisting($request->post_id);
+        if (!$result) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'The post doesn\'t exist'
+            ], 403);
+        }
+        //if the id is for comment or reply "not a post"
+        $result = Link::getParent($request->post_id);
+        if ($result) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Only posts can be hidden'
+            ], 403);
+        } else {   // the id belongs to a post
+            $result=HiddenPost::hidden($request->post_id, $user->username);
+            if($result){
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'already hidden'
+                ],403);
+            } else {
+                $result=HiddenPost::hidePost($request->post_id, $user->username);
+                if($result){
+                    return response()->json([
+                        'success' => 'true'
+                    ],200);
+                } else {
+                    return response()->json([
+                        'success' => 'false',
+                        'error' =>'There is something went wrong!'
+                    ],403);
+                }
+            }
+        }
     }
 
 
@@ -64,16 +123,64 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "already unhidden"
+     * 	"error" : "Only posts can be unhidden!"
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
+     * 	"error" : "post_id is required"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "Only hidden posts can be unhidden!"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "There is something went wrong!"
      * }
      */
-    public function unhidePost()
+    public function unhidePost(Request $request)
     {
-        // ...
+        //token should be parsed to get the user name
+
+        $user = auth()->user();
+
+        if (!$request->has('post_id')) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'post_id is required'
+
+            ], 403);
+        }
+        //if the post is not hidden
+        $result = HiddenPost::hidden($request->post_id, $user->username);
+        if (!$result) {  //if the post is not hidden
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Only hidden posts can be unhidden!'
+            ], 403);
+        } else {   //if the post is hidden
+            //if the id is for comment or reply "not a post"
+            $result = Link::getParent($request->post_id);
+            if ($result) {
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'Only posts can be unhidden!'
+                ], 403);
+            } else {
+                $result=HiddenPost::unhidePost($request->post_id, $user->username);
+                if($result){  //if the post undidden successfully
+                    return response()->json([
+                        'success' => 'true'
+                    ],200);
+                } else {
+                    return response()->json([
+                        'success' => 'false',
+                        'error' => 'There is something went wrong!'
+                    ],403);
+                }
+            }
+        }
     }
 
 
@@ -954,17 +1061,17 @@ class InteractingController extends Controller
      * }
      *
      * @response 401 {
-     * 	"sucess": "false",
+     * 	"success": "false",
      * 	"error": "UnAuthorized"
      * }
      *
      * @response 401 {
-     * 	"sucess": "false",
+     * 	"success": "false",
      * 	"error": "Unsupported media type"
      * }
      *
      * @response 400 {
-     * 	"sucess": "false",
+     * 	"success": "false",
      * 	"error": "Cannot upload the image"
      * }
      */
