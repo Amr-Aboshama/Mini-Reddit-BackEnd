@@ -370,6 +370,7 @@ class InteractingController extends Controller
 
     public function upvoteLink(Request $request)
     {
+
         //token should be parsed to get the user name
 
         $username = auth()->user()->username;
@@ -511,16 +512,16 @@ class InteractingController extends Controller
 
         $i = 0;
         foreach ($posts as $post) {
-            $renamed_posts[$i] = (object)[
+            $renamed_posts[$i] =(object)[
 
                 'post_id' => $post->link_id,
                 'body' => $post->content,
-                'video_url' => $post->video_url,
-                'image' => $post->content_image,
+                'video_url' => $post->video_url != null ? $post->video_url : -1 ,
+                'image' => $post->content_image != null ? $post->content_image : -1,
                 'title' => $post->title,
                 'username' => $post->author_username,
                 'community' => "none",
-                'community_id' => $post->community_id ,
+                'community_id' => $post->community_id != null ? $post->community_id : -1 ,
                 'subscribed' => "false",
                 'author_photo_path' => User::where('username', $post->author_username)->get()->first()->photo_url,
                 'downvotes' => $post->downvotes,
@@ -562,7 +563,7 @@ class InteractingController extends Controller
             $i++;
         }
 
-        return response()->json((object)['posts' => $renamed_posts], 200);
+        return response()->json(['posts' => $renamed_posts], 200);
     }
 
 
@@ -579,12 +580,17 @@ class InteractingController extends Controller
     /**
      *
      * Viewing comments of a user on posts he/she has interacted with.
-     * @bodyParam username string required if you visited another user profile this is his username.
-     * @authenticated
+     * @bodyParam username string required username of the user you wanna see his/her comments on posts.
      * @response 200 {
-     *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "false" , "downvoted" : "false"}]
+     *  "0":{"post":{"post_id" : 1 ,"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 },"comments" :[
+     *      {"comment_id":55 ,"body":"comment1 on post1" , "date" : "2 days ago"},{"comment_id":59 ,"body":"comment2 on post1" , "date" : "3 days ago"}
+     *  ] } ,
+     *  "1":{"post":{"post_id" : 7 ,"body":"post2" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 } , "comments":[
+     *     {"comment_id":40 ,"body":"comment1 on post2" , "date" : "2 days ago"},{"comment_id":89 ,"body":"comment2 on post2" , "date" : "3 days ago"},{"comment_id":79 ,"body":"comment3 on post2" , "date" : "3 days ago"}
+     *  ]},
+     *  "2":{"post":{"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 },"commments" : [
+     *     {"comment_id":80 ,"body":"comment1 on post3" , "date" : "2 days ago"}
+     *  ]}
      * }
      * @response 404 {
      *  "error" :"somethimg wrong!!!!"
@@ -601,6 +607,7 @@ class InteractingController extends Controller
 
     public function ViewComments()
     {
+
     }
 
 
@@ -631,9 +638,9 @@ class InteractingController extends Controller
      * @bodyParam type int required it is one for the upvoted posts and zero for the downvoted ones.
      * @authenticated
      * @response 200 {
-     *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed","community" : "none" ,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
-     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","subscribed" : "false","author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
-     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "laravel" ,"subscribed" : "true" ,"author_photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" }]
+     *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed","community" : "none" , "community_id" : -1 ,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","community_id" : -1,"subscribed" : "false","author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "laravel" ,"community_id" : 1,"subscribed" : "true" ,"author_photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" }]
      * }
      * @response 404 {
      * 	"error" :"somethimg wrong!!!!"
@@ -647,8 +654,83 @@ class InteractingController extends Controller
      * 	"error" : "undefined type"
      * }
      */
-    public function ViewUpVotedOrDownVotedPosts()
+    public function ViewUpVotedOrDownVotedPosts(Request $request)
     {
+        $valid = Validator::make($request->all() , ['type' => 'required']);
+        if($valid->Fails())
+        {
+             return response()->json([
+
+               'success' => 'false',
+               'error' => 'type is required'
+
+             ],403);
+        }
+
+        if($request->type != 1 && $request->type != 0 )
+        {
+             return response()->json([
+
+               'success' => 'false',
+               'error' => 'type is undefined it must be one for upvoted posts and 0 for downvoted ones'
+
+             ],403);
+        }
+
+        $username = auth()->user()->username;
+        $posts;
+        if($request->type)
+        {
+            $posts = Link::upvotedPostsByUser($username);
+        } else {
+            $posts = Link::downvotedPostsByUser($username);
+        }
+
+        $renamed_posts = array();
+
+        $i = 0;
+        foreach ($posts as $post) {
+            $renamed_posts[$i] =(object) [
+
+                'post_id' => $post->link_id,
+                'body' => $post->content,
+                'video_url' => $post->video_url != null ? $post->video_url : -1 ,
+                'image' => $post->content_image != null ? $post->content_image : -1,
+                'title' => $post->title,
+                'username' => $post->author_username,
+                'community' => "none",
+                'community_id' => $post->community_id != null ? $post->community_id : -1 ,
+                'subscribed' => "false",
+                'author_photo_path' => User::where('username', $post->author_username)->get()->first()->photo_url,
+                'downvotes' => $post->downvotes,
+                'upvotes' => $post->upvotes,
+                'date' => $post->link_date,
+                'comments_num' => $post->comments_num = Link::commentsNum($post->link_id),
+                'saved' => "false",
+                'hidden' => "false",
+            ];
+
+            if (SavedPost::isSaved($post->link_id, $username)) {
+                $renamed_posts[$i]->aved = "true";
+            }
+
+            if (HiddenPost::hidden($post->link_id, $username)) {
+                $renamed_posts[$i]->saved = "true";
+            }
+
+            if (!is_null($post->community_id)) {
+                $community = Community::getCommunity($post->community_id);
+                $renamed_posts[$i]->community = $community->name;
+                if (Subscribtion::subscribed($post->community_id, $username)) {
+                    $renamed_posts[$i]->subscribed = "true";
+                }
+            }
+
+            $i++;
+        }
+
+        return response()->json(['posts' => $renamed_posts],200);
+
     }
 
 

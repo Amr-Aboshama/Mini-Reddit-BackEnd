@@ -54,7 +54,6 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('/auth/editComment', 'InteractingController@editComment');
     Route::post('/auth/upvoteLink', 'InteractingController@upvoteLink');//
     Route::post('/auth/downvoteLink', 'InteractingController@downvoteLink');//*
-    Route::get('/auth/viewComments', 'InteractingController@viewComments');
     Route::get('/auth/viewUpOrDownvotedPosts', 'InteractingController@ViewUpVotedOrDownVotedPosts');
     Route::get('/auth/viewOverview', 'InteractingController@ViewOverview');
     Route::get('/auth/viewSavedLinks', 'InteractingController@ViewSavedLinks');
@@ -73,5 +72,6 @@ Route::post('/unauth/resetPassword', 'AuthenticationController@resetPassword');
 Route::get('/unauth/viewUserCommunities', 'CommunitiesController@viewUserCommunities');
 Route::get('/unauth/communityInformation', 'CommunitiesController@viewCommunityInformation');
 Route::get('/unauth/ViewPosts', 'InteractingController@viewPosts');
+Route::get('/unauth/viewComments', 'InteractingController@viewComments');
 Route::get('/unauth/viewCommentsReplies', 'InteractingController@viewCommentsAndRepliesOfPostsAndComments');
 Route::get('/unauth/viewSinglePost', 'InteractingController@viewSinglePost');
