@@ -86,4 +86,12 @@ class Community extends Model
       return $result;
     }
 
+    public static function editCommunity($community_id,$rules_content,$destination_content,$banner,$logo)
+    {
+      $result = Community::where('community_id', $community_id)
+      ->update(['rules' => $rules_content,'description'=>$destination_content,'community_banner'=>$banner,'community_logo'=>$logo]);
+      return $result;
+    }
+
+
 }
