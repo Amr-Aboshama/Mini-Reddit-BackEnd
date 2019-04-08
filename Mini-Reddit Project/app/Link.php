@@ -323,6 +323,7 @@ class Link extends Model
      *
      * @return  boolean            returns true if the deletion succeeded and false if it failed
      */
+
     public static function removeLink($link_id)
     {
         $result = Link::where('link_id', $link_id)->delete();
@@ -330,7 +331,104 @@ class Link extends Model
         return $result;
     }
 
+    /**
+     * it returns the posts that are upvoted by a user.
+     * @param  string  $username username of the user you want to get his/her uovoted posts .
+     * @return array           it returns an array of object each object is an upvoted post by the user.
+     */
+
+    public static function upvotedPostsByUser($username)
+    {
+         $posts = DB::Select("SELECT * from links where parent_id is null and link_id in (select U.link_id from upvoted_links as U where U.username = '$username' ) ");
+         return $posts;
+    }
+
+    /**
+     * it returns the posts that are downvoted by a user.
+     * @param  string $username username of the user you want to get his/her downvoted posts .
+     * @return array          it returns an array of object each object is a downvoted post by the user.
+     */
+
+    public static function downvotedPostsByUser($username)
+    {
+         $posts = DB::Select("SELECT * from links where parent_id is null and link_id in (select D.link_id from downvoted_links as D where D.username = '$username' ) ");
+         return $posts;
+    }
+
+    /**
+     * this function returns all the posts which the user commented on or replied on comments of these posts.
+     * @param  string $username username of the user
+     * @return array           array of object, each object is a post that the user commented on or replied on a comment belongs to that post
+     */
+
+    public static function postsUserCommentedOn($username)
+    {
+        $posts = DB::Select("SELECT content as body , title , link_id as post_id , community_id
+           FROM links
+           where parent_id is null
+           and link_id in (Select l.post_id from links as l where l.author_username = '$username')" );
+
+        return $posts;
+    }
+
+    /**
+     * this function returns all the comments done by a specific user on a specific post
+     * @param  int $link_id  the id of the post of which you wanna get the user's comments .
+     * @param  string $username the username of the user you would like to get his/her comments on the given post.
+     * @return array           array of objects, each object is a comment of the user on the given post
+     */
+
+    public static function commentsOfPostsByUser($link_id , $username)
+    {
+        $links = DB::Select("SELECT link_id as comment_id , content as body , link_date from links where author_username = '$username' and post_id = '$link_id' order by link_date DESC ");
+        return $links;
+    }
+
+    /**
+     * this function returns all the saved comments by a specific user on a specific post.
+     * @param  int $link_id  the id of the post of which you wanna get the saved comments by the user.
+     * @param  string $username the username of the user you would like to get the comments saved by him/her of this post.
+     * @return array           array of objects, each object is a comment of the given post saved by the user.
+     */
+
+    public static function savedCommentsOfPostByUser($link_id,$username)
+    {
+        $links = DB::Select("SELECT author_username , link_id as comment_id , content as body , link_date from links where post_id = '$link_id' and link_id in (
+          select s.link_id from saved_links as s where s.username = '$username'
+        ) order by link_date DESC ");
+        return $links;
+    }
+
+    /**
+     * this function returns the saved posts by the given user or the posts that have comments or replies saved by that user
+     * @param  string $username the username of the user
+     * @return array           array of objects, each object is a post saved by the user or have comments or replies saved by that user.
+     */
+
+    public static function savedPostsOrPostsHaveSavedComments($username)
+    {
+        $links = DB::Select("SELECT * from links where parent_id is null and
+          ( link_id in (select s.link_id from saved_links as s where s.username = '$username') or link_id in (
+            select l.post_id from links as l where l.link_id in (select ss.link_id from saved_links as ss where ss.username = '$username')
+          )) order by link_date DESC  ");
+
+        return $links;
+    }
+
+    /**
+     * this function checks if the given post has comments or replies which are saved by the given user or not.
+     * @param  int  $link_id  the id of the post
+     * @param  string  $username the username of the user
+     * @return boolean           true if the post has comments or replies saved by the given user,false if not.
+     */
+
+    public static function isPostHasSavedCommentsByUser($link_id , $username)
+    {
+        $links = DB::Select("SELECT exists(select * from links where post_id = '$link_id' and link_id in (
+          select s.link_id from saved_links as s where s.username = '$username'
+        ) ) as result " );
+
+        return $links[0]->result;
+    }
+
 }
-
-
-

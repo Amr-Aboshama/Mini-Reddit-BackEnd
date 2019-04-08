@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Subscribtion;
 use App\Community;
 use App\User;
+use App\ModerateCommunity;
+
 
 /**
  * @group Communities
@@ -105,7 +107,7 @@ class CommunitiesController extends Controller
      *  "success": "true",
      *  "community_id": 5
      * }
-     * @response 204 {
+     * @response 403 {
      *  "success": "false",
      *  "error" : "some of the needed contents are missed"
      * }
@@ -119,8 +121,55 @@ class CommunitiesController extends Controller
      *  "error": "this name already exists"
      * }
      */
-    public function createCommunity()
+    public function createCommunity(Request $request)
     {
+        $user = auth()->user();
+
+        $current_date_time = now();
+        $user_cake_date=$user->cake_date;
+        $diff_in_days = $current_date_time->diffInDays($user_cake_date);
+        if($diff_in_days<30)
+        {
+            return response()->json([
+                "success" => "false",
+                "error"=>"you have to complete 30 days "
+            ], 401);
+        }
+
+        if (!$request->has('community_name')|| $request->community_name=="") {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => "some of the needed contents are missed"
+
+            ], 403);
+        }
+
+        $community_name_existance=Community::communityNameExist($request->community_name);
+        if($community_name_existance)
+        {
+            return response()->json([
+                "success" => "false",
+                "error"=>"this name already exists"
+            ], 403);
+        }
+
+        $new_community=Community::createDummyCommunity($request->community_name);
+        if($new_community)
+        {
+            $new_moderator=ModerateCommunity::store($new_community->community_id, $user->username);
+            if($new_moderator)
+            {
+              return response()->json([
+                  "success" => "true",
+                  "community_id"=>$new_community->community_id
+              ], 200);
+            }
+            else
+            {
+              Community::removeCommunity($new_community->community_id);
+            }
+        }
     }
 
 

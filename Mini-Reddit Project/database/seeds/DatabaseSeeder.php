@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ,LinksSeeder::class
             ,SubsribeSeeder::class
             ,BlockingSeeder::class
+            ,SavedLinksSeeder::class
         ]);
     }
 }

@@ -33,9 +33,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/auth/viewUserInboxMessages', 'MessagesController@viewUserInboxMessages');
     Route::post('/auth/sendMessage', 'MessagesController@sendMessage');
     Route::post('/auth/signOut', 'AuthenticationController@signOut');
-    Route::get('/auth/blockedUsers', 'PrivacyController@showBlockedUsers');
-    Route::post('/auth/blockingUsers', 'PrivacyController@blockUser');//
-    Route::delete('/auth/blockingUsers', 'PrivacyController@unblockUser');//*
+    Route::get('/auth/blockedUsers', 'PrivacyController@viewBlockedUsers');
+    Route::post('/auth/blockUser', 'PrivacyController@blockUser');//
+    Route::delete('/auth/unblockUser', 'PrivacyController@unblockUser');//*
     Route::patch('/auth/editCommunity', 'CommunitiesController@editCommunity');
     Route::post('/auth/createCommunity', 'CommunitiesController@createCommunity');
     Route::delete('/auth/removeCommunity', 'CommunitiesController@removeCommunity');
@@ -54,7 +54,6 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('/auth/editComment', 'InteractingController@editComment');
     Route::post('/auth/upvoteLink', 'InteractingController@upvoteLink');//
     Route::post('/auth/downvoteLink', 'InteractingController@downvoteLink');//*
-    Route::get('/auth/viewComments', 'InteractingController@viewComments');
     Route::get('/auth/viewUpOrDownvotedPosts', 'InteractingController@ViewUpVotedOrDownVotedPosts');
     Route::get('/auth/viewOverview', 'InteractingController@ViewOverview');
     Route::get('/auth/viewSavedLinks', 'InteractingController@ViewSavedLinks');
@@ -73,5 +72,6 @@ Route::post('/unauth/resetPassword', 'AuthenticationController@resetPassword');
 Route::get('/unauth/viewUserCommunities', 'CommunitiesController@viewUserCommunities');
 Route::get('/unauth/communityInformation', 'CommunitiesController@viewCommunityInformation');
 Route::get('/unauth/ViewPosts', 'InteractingController@viewPosts');
+Route::get('/unauth/viewComments', 'InteractingController@viewComments');
 Route::get('/unauth/viewCommentsReplies', 'InteractingController@viewCommentsAndRepliesOfPostsAndComments');
 Route::get('/unauth/viewSinglePost', 'InteractingController@viewSinglePost');

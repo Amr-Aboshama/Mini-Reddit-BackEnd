@@ -9,7 +9,7 @@ use App\User;
 use App\Link;
 use App\UpvotedLink;
 use App\DownvotedLink;
-use App\SavedPost;
+use App\SavedLink;
 use App\HiddenPost;
 use App\Community;
 use App\Blocking;
@@ -477,6 +477,7 @@ class InteractingController extends Controller
 
     public function upvoteLink(Request $request)
     {
+
         //token should be parsed to get the user name
 
         $username = auth()->user()->username;
@@ -618,16 +619,16 @@ class InteractingController extends Controller
 
         $i = 0;
         foreach ($posts as $post) {
-            $renamed_posts[$i] = (object)[
+            $renamed_posts[$i] =(object)[
 
                 'post_id' => $post->link_id,
                 'body' => $post->content,
-                'video_url' => $post->video_url,
-                'image' => $post->content_image,
+                'video_url' => $post->video_url != null ? $post->video_url : -1 ,
+                'image' => $post->content_image != null ? $post->content_image : -1,
                 'title' => $post->title,
                 'username' => $post->author_username,
                 'community' => "none",
-                'community_id' => $post->community_id ,
+                'community_id' => $post->community_id != null ? $post->community_id : -1 ,
                 'subscribed' => "false",
                 'author_photo_path' => User::where('username', $post->author_username)->get()->first()->photo_url,
                 'downvotes' => $post->downvotes,
@@ -647,15 +648,15 @@ class InteractingController extends Controller
             if ($Auth && UpvotedLink::upvoted($post->link_id, auth()->user()->username)) {
                 $renamed_posts[$i]->upvoted = 'true';
             } elseif ($Auth && DownvotedLink::downvoted($post->link_id, auth()->user()->username)) {
-                $renamed_posts[$i]->upvoted = 'true';
+                $renamed_posts[$i]->downvoted = 'true';
             }
 
-            if ($Auth && SavedPost::isSaved($post->link_id, auth()->user()->username)) {
-                $renamed_posts[$i]->aved = "true";
+            if ($Auth && SavedLink::isSaved($post->link_id, auth()->user()->username)) {
+                $renamed_posts[$i]->saved = "true";
             }
 
             if ($Auth && HiddenPost::hidden($post->link_id, auth()->user()->username)) {
-                $renamed_posts[$i]->saved = "true";
+                $renamed_posts[$i]->hidden = "true";
             }
 
             if (!is_null($post->community_id)) {
@@ -669,7 +670,7 @@ class InteractingController extends Controller
             $i++;
         }
 
-        return response()->json((object)['posts' => $renamed_posts], 200);
+        return response()->json(['posts' => $renamed_posts], 200);
     }
 
 
@@ -686,15 +687,17 @@ class InteractingController extends Controller
     /**
      *
      * Viewing comments of a user on posts he/she has interacted with.
-     * @bodyParam username string required if you visited another user profile this is his username.
-     * @authenticated
+     * @bodyParam username string required username of the user you wanna see his/her comments on posts.
      * @response 200 {
-     *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "false" , "downvoted" : "false"}]
-     * }
-     * @response 404 {
-     *  "error" :"somethimg wrong!!!!"
+     *  "0":{"post":{"post_id" : 1 ,"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 },"comments" :[
+     *      {"comment_id":55 ,"body":"comment1 on post1" , "date" : "2 days ago"},{"comment_id":59 ,"body":"comment2 on post1" , "date" : "3 days ago"}
+     *  ] } ,
+     *  "1":{"post":{"post_id" : 7 ,"body":"post2" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 } , "comments":[
+     *     {"comment_id":40 ,"body":"comment1 on post2" , "date" : "2 days ago"},{"comment_id":89 ,"body":"comment2 on post2" , "date" : "3 days ago"},{"comment_id":79 ,"body":"comment3 on post2" , "date" : "3 days ago"}
+     *  ]},
+     *  "2":{"post":{"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 },"commments" : [
+     *     {"comment_id":80 ,"body":"comment1 on post3" , "date" : "2 days ago"}
+     *  ]}
      * }
      * @response 401 {
      *  "success": "false",
@@ -702,12 +705,42 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "username doesn't exist"
+     * 	"error" : "username is required"
      * }
      */
 
-    public function ViewComments()
+    public function ViewComments(Request $request)
     {
+        $valid = Validator::make($request->all() , ['username'=>'required']);
+        if($valid->Fails())
+        {
+             return response()->json([
+                	"success" => "false",
+                	"error" => "username is required"
+             ],403);
+        }
+
+        $Commentedposts = Link::postsUserCommentedOn($request->username);
+        $posts_comments = array();
+        $i = 0;
+        foreach($Commentedposts as $post)
+        {
+             $post->community_id = $post->community_id != null ? $post->community_id : -1;
+             $post->community = "none";
+             if($post->community_id != -1)
+             {
+                 $post->community = Community::getCommunity($post->community_id)->name;
+             }
+
+             $posts_comments[$i]['post'] = $post;
+             $posts_comments[$i]['comments'] = Link ::commentsOfPostsByUser($post->post_id ,$request->username );
+
+             $i++;
+        }
+
+        return response()->json($posts_comments,200);
+
+
     }
 
 
@@ -738,9 +771,9 @@ class InteractingController extends Controller
      * @bodyParam type int required it is one for the upvoted posts and zero for the downvoted ones.
      * @authenticated
      * @response 200 {
-     *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed","community" : "none" ,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
-     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","subscribed" : "false","author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
-     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "laravel" ,"subscribed" : "true" ,"author_photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" }]
+     *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed","community" : "none" , "community_id" : -1 ,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","community_id" : -1,"subscribed" : "false","author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "laravel" ,"community_id" : 1,"subscribed" : "true" ,"author_photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" }]
      * }
      * @response 404 {
      * 	"error" :"somethimg wrong!!!!"
@@ -754,8 +787,83 @@ class InteractingController extends Controller
      * 	"error" : "undefined type"
      * }
      */
-    public function ViewUpVotedOrDownVotedPosts()
+    public function ViewUpVotedOrDownVotedPosts(Request $request)
     {
+        $valid = Validator::make($request->all() , ['type' => 'required']);
+        if($valid->Fails())
+        {
+             return response()->json([
+
+               'success' => 'false',
+               'error' => 'type is required'
+
+             ],403);
+        }
+
+        if($request->type != 1 && $request->type != 0 )
+        {
+             return response()->json([
+
+               'success' => 'false',
+               'error' => 'type is undefined it must be one for upvoted posts and 0 for downvoted ones'
+
+             ],403);
+        }
+
+        $username = auth()->user()->username;
+        $posts;
+        if($request->type)
+        {
+            $posts = Link::upvotedPostsByUser($username);
+        } else {
+            $posts = Link::downvotedPostsByUser($username);
+        }
+
+        $renamed_posts = array();
+
+        $i = 0;
+        foreach ($posts as $post) {
+            $renamed_posts[$i] =(object) [
+
+                'post_id' => $post->link_id,
+                'body' => $post->content,
+                'video_url' => $post->video_url != null ? $post->video_url : -1 ,
+                'image' => $post->content_image != null ? $post->content_image : -1,
+                'title' => $post->title,
+                'username' => $post->author_username,
+                'community' => "none",
+                'community_id' => $post->community_id != null ? $post->community_id : -1 ,
+                'subscribed' => "false",
+                'author_photo_path' => User::where('username', $post->author_username)->get()->first()->photo_url,
+                'downvotes' => $post->downvotes,
+                'upvotes' => $post->upvotes,
+                'date' => $post->link_date,
+                'comments_num' => $post->comments_num = Link::commentsNum($post->link_id),
+                'saved' => "false",
+                'hidden' => "false",
+            ];
+
+            if (SavedLink::isSaved($post->link_id, $username)) {
+                $renamed_posts[$i]->saved = "true";
+            }
+
+            if (HiddenPost::hidden($post->link_id, $username)) {
+                $renamed_posts[$i]->hidden = "true";
+            }
+
+            if (!is_null($post->community_id)) {
+                $community = Community::getCommunity($post->community_id);
+                $renamed_posts[$i]->community = $community->name;
+                if (Subscribtion::subscribed($post->community_id, $username)) {
+                    $renamed_posts[$i]->subscribed = "true";
+                }
+            }
+
+            $i++;
+        }
+
+        return response()->json(['posts' => $renamed_posts],200);
+
     }
 
 
@@ -835,24 +943,151 @@ class InteractingController extends Controller
      * @authenticated
      *
      * @response 200 {
-     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" , "community" : "none","subscribed" : "false" ,"author_photo_path" : "storage/app/avater.jpg","downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "false" , "upvoted" : "true" , "downvoted" : "false"} ,
-     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed", "community" : "laravel","subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"} ,
-     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"}] ,
+     * "0":{
+     *  "type": "comment",
+     *  "post": {
+     *      "title": "post1",
+     *      "body": "amro post1",
+     *      "community_id": -1,
+     *      "author_username": "amro"
+     *  },
+     *  "comments": [
+     *      {
+     *          "comment_id": 15,
+     *          "author_username": "ahmed",
+     *          "body": "reply on comment2 on post1",
+     *          "link_date": "2019-04-08 00:07:00"
+     *      }
+     *    ]
+     *},
+     *"1":{
+     *    "body": "amro post2",
+     *    "title": "post2",
+     *    "upvotes": 0,
+     *    "downvotes": 0,
+     *    "post_id": 2,
+     *    "community_id": 1,
+     *    "community": "laravel",
+     *    "subscribed": "true",
+     *    "upvoted": "false",
+     *    "downvoted": "false",
+     *    "post_image": "app.storage.koko.jpg",
+     *    "video_url": "app.storage.videomp4",
+     *    "comments_num": 1,
+     *    "hidden": "false",
+     *    "type": "post"
+     *},
+     *"2":{
+     *    "body": "ahmed post1",
+     *    "title": "post1",
+     *    "upvotes": 0,
+     *    "downvotes": 0,
+     *    "post_id": 4,
+     *    "community_id": -1,
+     *    "community": "none",
+     *    "subscribed": "false",
+     *    "upvoted": "false",
+     *    "downvoted": "false",
+     *    "post_image": -1,
+     *    "video_url": -1,
+     *    "comments_num": 1,
+     *    "hidden": "false",
+     *    "type": "post"
+     *},
+     *"3":{
+     * "post": {
+     *      "title": "post1",
+     *        "body": "ahmed post1",
+     *        "community_id": -1,
+     *        "author_username": "ahmed"
+     *    },
+     *        "comments": [
+     *        {
+     *            "comment_id": 13,
+     *            "body": "comment on post4",
+     *            "author_username": "amro",
+     *            "link_date": "2019-04-08 00:07:00"
+     *        },
+     *        {
      *
-     * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0 , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0 , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0  , "upvoted" : "true" , "downvoted" : "false"}]
-     * }
-     * @response 404 {
-     *	 "error" :"somethimg wrong!!!!"
-     * }
+     *            "comment_id": 22,
+     *            "author_username": "menna",
+     *            "body": "comment on post4",
+     *            "link_date": "2019-04-08 00:07:00"
+     *        }
+     *    ]
+     *}
+     *}
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
      */
-    public function ViewSavedLinks()
+    public function ViewSavedLinks(Request $request)
     {
+         $username = auth()->user()->username;
+         $links = Link::savedPostsOrPostsHaveSavedComments($username);
+         $links_comments = array();
+         $i = 0;
+         foreach($links as $link)
+         {
+             if(!SavedLink::isSaved($link->link_id , $username))
+             {
+                  $links_comments[$i]['type'] = 'comment';
+                  $links_comments[$i]['post']['title']=$link->title;
+                  $links_comments[$i]['post']['body']=$link->content;
+                  $links_comments[$i]['post']['community_id']=$link->community_id != null ? $link->community_id : -1;
+                  $links_comments[$i]['post']['author_username']=$link->author_username;
+                  $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id ,$username);
+             } else {
+                  $links_comments[$i]['body'] = $link->content;
+                  $links_comments[$i]['title'] = $link->title;
+                  $links_comments[$i]['upvotes'] = $link->upvotes;
+                  $links_comments[$i]['downvotes'] = $link->downvotes;
+                  $links_comments[$i]['post_id'] = $link->link_id;
+                  $links_comments[$i]['community_id'] = $link->community_id != null ? $link->community_id :-1 ;
+                  $links_comments[$i]['community'] = 'none';
+                  $links_comments[$i]['subscribed'] = 'false';
+                  $links_comments[$i]['upvoted'] = 'false';
+                  $links_comments[$i]['downvoted'] = 'false';
+                  $links_comments[$i]['comments_num'] = Link::commentsNum($link->link_id);
+                  $links_comments[$i]['hidden'] = 'false';
+                  $links_comments[$i]['post_image'] = $link->content_image != null ? $post->content_image : -1;
+                  $links_comments[$i]['video_url'] = $link->video_url != null ? $post->video_url : -1  ;
+                  if (HiddenPost::hidden($link->link_id, $username)) {
+                      $links_comments[$i]['hidden'] = 'true';
+                  }
+                  if (UpvotedLink::upvoted($link->link_id, $username)) {
+                      $links_comments[$i]['upvoted'] = 'true';
+                  } elseif (DownvotedLink::downvoted($link->link_id, $username)) {
+                      $links_comments[$i]['downvoted'] = 'true';
+                  }
+                  if($links_comments[$i]['community_id'] != -1)
+                  {
+                       $community = Community::getCommunity($link->community_id);
+                       $links_comments[$i]['community'] = $community->name;
+                       if (Subscribtion::subscribed($links_comments[$i]['community_id'], $username)) {
+                            $links_comments[$i]['subscribed'] = "true";
+                       }
+                  }
+
+                  $links_comments[$i]['type'] = 'post';
+                  if(Link::isPostHasSavedCommentsByUser($link->link_id , $username))
+                  {
+                       $i++;
+                       $links_comments[$i]['post']['title']=$link->title;
+                       $links_comments[$i]['post']['body']=$link->content;
+                       $links_comments[$i]['post']['community_id']=$link->community_id != null ? $link->community_id : -1;
+                       $links_comments[$i]['post']['author_username']=$link->author_username;
+                       $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id ,$username);
+                  }
+
+             }
+             $i++;
+         }
+
+         return response()->json($links_comments,200);
+
     }
 
 
