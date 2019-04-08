@@ -20,7 +20,7 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('/auth/change/password', 'AccountSettingsController@changePassword');
     Route::patch('/auth/updateDisplayName', 'AccountSettingsController@updateDisplayName');
     Route::patch('/auth/updateAbout', 'AccountSettingsController@updateAbout');
-    Route::patch('/auth/updateProfileImage', 'AccountSettingsController@updateProfileImage');
+    Route::post('/auth/updateProfileImage', 'AccountSettingsController@updateProfileImage');
     Route::get('/auth/notification/check', 'NotificationController@checkNotification');
     Route::get('/auth/notification/push', 'NotificationController@pushNotification');
     Route::get('/auth/viewPrivateUserInfo', 'InformationController@viewPrivateUserInfo');
