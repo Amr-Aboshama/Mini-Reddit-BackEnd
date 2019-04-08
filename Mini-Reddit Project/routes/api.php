@@ -33,9 +33,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/auth/viewUserInboxMessages', 'MessagesController@viewUserInboxMessages');
     Route::post('/auth/sendMessage', 'MessagesController@sendMessage');
     Route::post('/auth/signOut', 'AuthenticationController@signOut');
-    Route::get('/auth/blockedUsers', 'PrivacyController@showBlockedUsers');
-    Route::post('/auth/blockingUsers', 'PrivacyController@blockUser');//
-    Route::delete('/auth/blockingUsers', 'PrivacyController@unblockUser');//*
+    Route::get('/auth/blockedUsers', 'PrivacyController@viewBlockedUsers');
+    Route::post('/auth/blockUser', 'PrivacyController@blockUser');//
+    Route::delete('/auth/unblockUser', 'PrivacyController@unblockUser');//*
     Route::patch('/auth/editCommunity', 'CommunitiesController@editCommunity');
     Route::post('/auth/createCommunity', 'CommunitiesController@createCommunity');
     Route::delete('/auth/removeCommunity', 'CommunitiesController@removeCommunity');
