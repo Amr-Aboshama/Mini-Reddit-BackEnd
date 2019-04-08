@@ -24,6 +24,7 @@ class CreateLinksTable extends Migration
             $table->string('author_username');     //owner of the post....
             $table->unsignedBigInteger('community_id')->nullable();     //if the post in community...
             $table->unsignedBigInteger('parent_id')->nullable();
+            $table->unsignedBigInteger('post_id')->nullable();
             $table->bigInteger('upvotes')->default(0);
             $table->bigInteger('downvotes')->default(0);
 
@@ -31,6 +32,8 @@ class CreateLinksTable extends Migration
 
             $table->foreign('author_username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('parent_id')->references('link_id')->on('links')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('post_id')->references('link_id')->on('links')->onUpdate('cascade')->onDelete('cascade');
+
         });
     }
 

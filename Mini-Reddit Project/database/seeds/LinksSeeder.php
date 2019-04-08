@@ -90,20 +90,20 @@ class LinksSeeder extends Seeder
         DB::table('links')->insert([
 
             'content' => 'comment on post 1',
-            'title' => 'post1',
             'link_date' => date('Y-m-d H:i:s'),
             'author_username' => 'reham',
-            'parent_id' => 1
+            'parent_id' => 1,
+            'post_id' => 1
 
         ]);
 
         DB::table('links')->insert([
 
             'content' => 'comment on post1',
-            'title' => 'post1',
             'link_date' => date('Y-m-d H:i:s'),
             'author_username' => 'ahmed',
-            'parent_id' => 1
+            'parent_id' => 1,
+            'post_id' => 1
 
 
         ]);
@@ -112,10 +112,10 @@ class LinksSeeder extends Seeder
         DB::table('links')->insert([
 
             'content' => 'comment on post2',
-            'title' => 'post1',
             'link_date' => date('Y-m-d H:i:s'),
             'author_username' => 'amro',
-            'parent_id' => 2
+            'parent_id' => 2,
+            'post_id' => 2
 
 
         ]);
@@ -123,10 +123,32 @@ class LinksSeeder extends Seeder
         DB::table('links')->insert([
 
             'content' => 'comment on post4',
-            'title' => 'post1',
             'link_date' => date('Y-m-d H:i:s'),
             'author_username' => 'menna',
-            'parent_id' => 4
+            'parent_id' => 4,
+            'post_id' => 4
+
+
+        ]);
+
+        DB::table('links')->insert([
+
+            'content' => 'reply on comment1 on post4',
+            'link_date' => date('Y-m-d H:i:s'),
+            'author_username' => 'menna',
+            'parent_id' => 13,
+            'post_id' => 4
+
+
+        ]);
+
+        DB::table('links')->insert([
+
+            'content' => 'reply on comment2 on post1',
+            'link_date' => date('Y-m-d H:i:s'),
+            'author_username' => 'menna',
+            'parent_id' =>11 ,
+            'post_id' => 1
 
 
         ]);
