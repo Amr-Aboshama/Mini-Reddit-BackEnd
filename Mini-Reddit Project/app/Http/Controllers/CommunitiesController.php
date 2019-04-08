@@ -89,13 +89,43 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "this user is not a moderator"
+     * }
      * @response 403 {
      * 	"success": "false",
      * 	"error": "community doesn't exist"
      * }
      */
-    public function editCommunity()
+    public function editCommunity(Request $request)
     {
+        $user = auth()->user();
+
+        $existance = Community::communityExist($request->community_id);
+        if (!$existance) {
+            return response()->json([
+                "success" => "false",
+                "error" => "community doesn't exist"
+            ], 403);
+        }
+
+        $user_moderation=ModerateCommunity::checkExisting($request->community_id, $user->username);
+        if(!$user_moderation)
+        {
+            return response()->json([
+                "success" => "false",
+                "error" => "this user is not a moderator"
+            ], 403);
+        }
+        $edited=Community::editCommunity($request->community_id,$request->rules_content,$request->des_content,$request->banner,$request->logo);
+        if($edited)
+        {
+            return response()->json([
+                "success" => "true"
+            ], 200);
+        }
     }
 
 
@@ -190,9 +220,42 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "community doesn't exist"
      * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "this user is not a moderator"
+     * }
+     *
      */
-    public function removeCommunity()
+    public function removeCommunity(Request $request)
     {
+      $user = auth()->user();
+
+      $existance = Community::communityExist($request->community_id);
+      if (!$existance) {
+          return response()->json([
+              "success" => "false",
+              "error" => "community doesn't exist"
+          ], 403);
+      }
+
+      $user_moderation=ModerateCommunity::checkExisting($request->community_id, $user->username);
+      if(!$user_moderation)
+      {
+          return response()->json([
+              "success" => "false",
+              "error" => "this user is not a moderator"
+          ], 403);
+      }
+
+
+      $removal=Community::removeCommunity($request->community_id);
+      if($removal)
+      {
+          return response()->json([
+              "success" => "true",
+          ], 200);
+      }
+
     }
 
 
