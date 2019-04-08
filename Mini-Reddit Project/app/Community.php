@@ -61,4 +61,37 @@ class Community extends Model
 
         return $result;
     }
+    /**
+     * check if the name of this community exist in the database
+     * @param  string $community_name the name that we want to check its
+     * existance
+     * @return boolean true or false according to the existance of the community
+     * name
+     */
+    public static function communityNameExist($community_name)
+    {
+        $result = Community::where('name', $community_name)->exists();
+
+        return $result;
+    }
+
+    /**
+     * remove an existing community giving its id
+     * @param  int $community_id the id of the community
+     * @return boolean true or false according to the deletion of the community
+     */
+    public static function removeCommunity($community_id)
+    {
+      $result = Community::where('community_id', $community_id)->delete();
+      return $result;
+    }
+
+    public static function editCommunity($community_id,$rules_content,$destination_content,$banner,$logo)
+    {
+      $result = Community::where('community_id', $community_id)
+      ->update(['rules' => $rules_content,'description'=>$destination_content,'community_banner'=>$banner,'community_logo'=>$logo]);
+      return $result;
+    }
+
+
 }
