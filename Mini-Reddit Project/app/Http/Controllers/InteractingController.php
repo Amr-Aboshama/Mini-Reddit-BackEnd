@@ -736,7 +736,7 @@ class InteractingController extends Controller
                 'hidden' => "false",
             ];
 
-            if (SavedPost::isSaved($post->link_id, $username)) {
+            if (SavedLink::isSaved($post->link_id, $username)) {
                 $renamed_posts[$i]->saved = "true";
             }
 
