@@ -9,7 +9,7 @@ use App\User;
 use App\Link;
 use App\UpvotedLink;
 use App\DownvotedLink;
-use App\SavedPost;
+use App\SavedLink;
 use App\HiddenPost;
 use App\Community;
 use App\Blocking;
@@ -42,12 +42,71 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
+     * 	"error" : "The post doesn't exist"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "Only posts can be hidden"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "There is something went wrong!"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post_id is required"
      * }
      */
-    public function hidePost()
+    public function hidePost(Request $request)
     {
-        // ...
+        //token should be parsed to get the user name
+
+        $user = auth()->user();
+
+        if (!$request->has('post_id')) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'post_id is required'
+
+            ], 403);
+        }
+        //if the post is not existing
+        $result = Link::checkExisting($request->post_id);
+        if (!$result) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'The post doesn\'t exist'
+            ], 403);
+        }
+        //if the id is for comment or reply "not a post"
+        $result = Link::getParent($request->post_id);
+        if ($result) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Only posts can be hidden'
+            ], 403);
+        } else {   // the id belongs to a post
+            $result=HiddenPost::hidden($request->post_id, $user->username);
+            if($result){
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'already hidden'
+                ],403);
+            } else {
+                $result=HiddenPost::hidePost($request->post_id, $user->username);
+                if($result){
+                    return response()->json([
+                        'success' => 'true'
+                    ],200);
+                } else {
+                    return response()->json([
+                        'success' => 'false',
+                        'error' =>'There is something went wrong!'
+                    ],403);
+                }
+            }
+        }
     }
 
 
@@ -64,16 +123,64 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "already unhidden"
+     * 	"error" : "Only posts can be unhidden!"
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
+     * 	"error" : "post_id is required"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "Only hidden posts can be unhidden!"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "There is something went wrong!"
      * }
      */
-    public function unhidePost()
+    public function unhidePost(Request $request)
     {
-        // ...
+        //token should be parsed to get the user name
+
+        $user = auth()->user();
+
+        if (!$request->has('post_id')) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'post_id is required'
+
+            ], 403);
+        }
+        //if the post is not hidden
+        $result = HiddenPost::hidden($request->post_id, $user->username);
+        if (!$result) {  //if the post is not hidden
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Only hidden posts can be unhidden!'
+            ], 403);
+        } else {   //if the post is hidden
+            //if the id is for comment or reply "not a post"
+            $result = Link::getParent($request->post_id);
+            if ($result) {
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'Only posts can be unhidden!'
+                ], 403);
+            } else {
+                $result=HiddenPost::unhidePost($request->post_id, $user->username);
+                if($result){  //if the post undidden successfully
+                    return response()->json([
+                        'success' => 'true'
+                    ],200);
+                } else {
+                    return response()->json([
+                        'success' => 'false',
+                        'error' => 'There is something went wrong!'
+                    ],403);
+                }
+            }
+        }
     }
 
 
@@ -541,15 +648,15 @@ class InteractingController extends Controller
             if ($Auth && UpvotedLink::upvoted($post->link_id, auth()->user()->username)) {
                 $renamed_posts[$i]->upvoted = 'true';
             } elseif ($Auth && DownvotedLink::downvoted($post->link_id, auth()->user()->username)) {
-                $renamed_posts[$i]->upvoted = 'true';
+                $renamed_posts[$i]->downvoted = 'true';
             }
 
-            if ($Auth && SavedPost::isSaved($post->link_id, auth()->user()->username)) {
-                $renamed_posts[$i]->aved = "true";
+            if ($Auth && SavedLink::isSaved($post->link_id, auth()->user()->username)) {
+                $renamed_posts[$i]->saved = "true";
             }
 
             if ($Auth && HiddenPost::hidden($post->link_id, auth()->user()->username)) {
-                $renamed_posts[$i]->saved = "true";
+                $renamed_posts[$i]->hidden = "true";
             }
 
             if (!is_null($post->community_id)) {
@@ -592,21 +699,47 @@ class InteractingController extends Controller
      *     {"comment_id":80 ,"body":"comment1 on post3" , "date" : "2 days ago"}
      *  ]}
      * }
-     * @response 404 {
-     *  "error" :"somethimg wrong!!!!"
-     * }
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "username doesn't exist"
+     * 	"error" : "username is required"
      * }
      */
 
-    public function ViewComments()
+    public function ViewComments(Request $request)
     {
+        $valid = Validator::make($request->all() , ['username'=>'required']);
+        if($valid->Fails())
+        {
+             return response()->json([
+                	"success" => "false",
+                	"error" => "username is required"
+             ],403);
+        }
+
+        $Commentedposts = Link::postsUserCommentedOn($request->username);
+        $posts_comments = array();
+        $i = 0;
+        foreach($Commentedposts as $post)
+        {
+             $post->community_id = $post->community_id != null ? $post->community_id : -1;
+             $post->community = "none";
+             if($post->community_id != -1)
+             {
+                 $post->community = Community::getCommunity($post->community_id)->name;
+             }
+
+             $posts_comments[$i]['post'] = $post;
+             $posts_comments[$i]['comments'] = Link ::commentsOfPostsByUser($post->post_id ,$request->username );
+
+             $i++;
+        }
+
+        return response()->json($posts_comments,200);
+
 
     }
 
@@ -710,12 +843,12 @@ class InteractingController extends Controller
                 'hidden' => "false",
             ];
 
-            if (SavedPost::isSaved($post->link_id, $username)) {
-                $renamed_posts[$i]->aved = "true";
+            if (SavedLink::isSaved($post->link_id, $username)) {
+                $renamed_posts[$i]->saved = "true";
             }
 
             if (HiddenPost::hidden($post->link_id, $username)) {
-                $renamed_posts[$i]->saved = "true";
+                $renamed_posts[$i]->hidden = "true";
             }
 
             if (!is_null($post->community_id)) {
@@ -810,24 +943,151 @@ class InteractingController extends Controller
      * @authenticated
      *
      * @response 200 {
-     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" , "community" : "none","subscribed" : "false" ,"author_photo_path" : "storage/app/avater.jpg","downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "false" , "upvoted" : "true" , "downvoted" : "false"} ,
-     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed", "community" : "laravel","subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"} ,
-     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "hidden": "true" , "upvoted" : "true" , "downvoted" : "false"}] ,
+     * "0":{
+     *  "type": "comment",
+     *  "post": {
+     *      "title": "post1",
+     *      "body": "amro post1",
+     *      "community_id": -1,
+     *      "author_username": "amro"
+     *  },
+     *  "comments": [
+     *      {
+     *          "comment_id": 15,
+     *          "author_username": "ahmed",
+     *          "body": "reply on comment2 on post1",
+     *          "link_date": "2019-04-08 00:07:00"
+     *      }
+     *    ]
+     *},
+     *"1":{
+     *    "body": "amro post2",
+     *    "title": "post2",
+     *    "upvotes": 0,
+     *    "downvotes": 0,
+     *    "post_id": 2,
+     *    "community_id": 1,
+     *    "community": "laravel",
+     *    "subscribed": "true",
+     *    "upvoted": "false",
+     *    "downvoted": "false",
+     *    "post_image": "app.storage.koko.jpg",
+     *    "video_url": "app.storage.videomp4",
+     *    "comments_num": 1,
+     *    "hidden": "false",
+     *    "type": "post"
+     *},
+     *"2":{
+     *    "body": "ahmed post1",
+     *    "title": "post1",
+     *    "upvotes": 0,
+     *    "downvotes": 0,
+     *    "post_id": 4,
+     *    "community_id": -1,
+     *    "community": "none",
+     *    "subscribed": "false",
+     *    "upvoted": "false",
+     *    "downvoted": "false",
+     *    "post_image": -1,
+     *    "video_url": -1,
+     *    "comments_num": 1,
+     *    "hidden": "false",
+     *    "type": "post"
+     *},
+     *"3":{
+     * "post": {
+     *      "title": "post1",
+     *        "body": "ahmed post1",
+     *        "community_id": -1,
+     *        "author_username": "ahmed"
+     *    },
+     *        "comments": [
+     *        {
+     *            "comment_id": 13,
+     *            "body": "comment on post4",
+     *            "author_username": "amro",
+     *            "link_date": "2019-04-08 00:07:00"
+     *        },
+     *        {
      *
-     * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0 , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0 , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0  , "upvoted" : "true" , "downvoted" : "false"}]
-     * }
-     * @response 404 {
-     *	 "error" :"somethimg wrong!!!!"
-     * }
+     *            "comment_id": 22,
+     *            "author_username": "menna",
+     *            "body": "comment on post4",
+     *            "link_date": "2019-04-08 00:07:00"
+     *        }
+     *    ]
+     *}
+     *}
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
      */
-    public function ViewSavedLinks()
+    public function ViewSavedLinks(Request $request)
     {
+         $username = auth()->user()->username;
+         $links = Link::savedPostsOrPostsHaveSavedComments($username);
+         $links_comments = array();
+         $i = 0;
+         foreach($links as $link)
+         {
+             if(!SavedLink::isSaved($link->link_id , $username))
+             {
+                  $links_comments[$i]['type'] = 'comment';
+                  $links_comments[$i]['post']['title']=$link->title;
+                  $links_comments[$i]['post']['body']=$link->content;
+                  $links_comments[$i]['post']['community_id']=$link->community_id != null ? $link->community_id : -1;
+                  $links_comments[$i]['post']['author_username']=$link->author_username;
+                  $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id ,$username);
+             } else {
+                  $links_comments[$i]['body'] = $link->content;
+                  $links_comments[$i]['title'] = $link->title;
+                  $links_comments[$i]['upvotes'] = $link->upvotes;
+                  $links_comments[$i]['downvotes'] = $link->downvotes;
+                  $links_comments[$i]['post_id'] = $link->link_id;
+                  $links_comments[$i]['community_id'] = $link->community_id != null ? $link->community_id :-1 ;
+                  $links_comments[$i]['community'] = 'none';
+                  $links_comments[$i]['subscribed'] = 'false';
+                  $links_comments[$i]['upvoted'] = 'false';
+                  $links_comments[$i]['downvoted'] = 'false';
+                  $links_comments[$i]['comments_num'] = Link::commentsNum($link->link_id);
+                  $links_comments[$i]['hidden'] = 'false';
+                  $links_comments[$i]['post_image'] = $link->content_image != null ? $post->content_image : -1;
+                  $links_comments[$i]['video_url'] = $link->video_url != null ? $post->video_url : -1  ;
+                  if (HiddenPost::hidden($link->link_id, $username)) {
+                      $links_comments[$i]['hidden'] = 'true';
+                  }
+                  if (UpvotedLink::upvoted($link->link_id, $username)) {
+                      $links_comments[$i]['upvoted'] = 'true';
+                  } elseif (DownvotedLink::downvoted($link->link_id, $username)) {
+                      $links_comments[$i]['downvoted'] = 'true';
+                  }
+                  if($links_comments[$i]['community_id'] != -1)
+                  {
+                       $community = Community::getCommunity($link->community_id);
+                       $links_comments[$i]['community'] = $community->name;
+                       if (Subscribtion::subscribed($links_comments[$i]['community_id'], $username)) {
+                            $links_comments[$i]['subscribed'] = "true";
+                       }
+                  }
+
+                  $links_comments[$i]['type'] = 'post';
+                  if(Link::isPostHasSavedCommentsByUser($link->link_id , $username))
+                  {
+                       $i++;
+                       $links_comments[$i]['post']['title']=$link->title;
+                       $links_comments[$i]['post']['body']=$link->content;
+                       $links_comments[$i]['post']['community_id']=$link->community_id != null ? $link->community_id : -1;
+                       $links_comments[$i]['post']['author_username']=$link->author_username;
+                       $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id ,$username);
+                  }
+
+             }
+             $i++;
+         }
+
+         return response()->json($links_comments,200);
+
     }
 
 
@@ -1036,17 +1296,17 @@ class InteractingController extends Controller
      * }
      *
      * @response 401 {
-     * 	"sucess": "false",
+     * 	"success": "false",
      * 	"error": "UnAuthorized"
      * }
      *
      * @response 401 {
-     * 	"sucess": "false",
+     * 	"success": "false",
      * 	"error": "Unsupported media type"
      * }
      *
      * @response 400 {
-     * 	"sucess": "false",
+     * 	"success": "false",
      * 	"error": "Cannot upload the image"
      * }
      */

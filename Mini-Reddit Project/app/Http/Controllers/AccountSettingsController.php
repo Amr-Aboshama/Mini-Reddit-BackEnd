@@ -124,6 +124,7 @@ class AccountSettingsController extends Controller
      * }
      *
      * @response 401 {
+
      * 	"sucess": "false",
      * 	"error": "UnAuthorized"
      * }
@@ -186,7 +187,7 @@ class AccountSettingsController extends Controller
      * }
      *
      * @response 401 {
-     * 	"sucess": "true",
+     * 	"success": "true",
      * 	"error": "UnAuthorized"
      * }
      *
@@ -244,17 +245,17 @@ class AccountSettingsController extends Controller
      * }
      *
      * @response 401 {
-     * 	"sucess": "false",
+     * 	"success": "false",
      * 	"error": "UnAuthorized"
      * }
      *
      * @response 401 {
-     * 	"sucess": "false",
+     * 	"success": "false",
      * 	"error": "Unsupported media type"
      * }
      *
      * @response 400 {
-     * 	"sucess": "false",
+     * 	"success": "false",
      * 	"error": "Cannot upload the image"
      * }
      */
@@ -318,17 +319,17 @@ class AccountSettingsController extends Controller
      * }
      *
      * @response 401 {
-     * 	"sucess": "false",
+     * 	"success": "false",
      * 	"error": "UnAuthorized"
      * }
      *
      * @response 401 {
-     * 	"sucess": "false",
+     * 	"success": "false",
      * 	"error": "Unsupported media type"
      * }
      *
      * @response 400 {
-     * 	"sucess": "false",
+     * 	"success": "false",
      * 	"error": "Cannot upload the image"
      * }
      */
