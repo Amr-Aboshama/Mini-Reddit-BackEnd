@@ -36,7 +36,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/auth/blockedUsers', 'PrivacyController@viewBlockedUsers');
     Route::post('/auth/blockUser', 'PrivacyController@blockUser');//
     Route::delete('/auth/unblockUser', 'PrivacyController@unblockUser');//*
-    Route::patch('/auth/editCommunity', 'CommunitiesController@editCommunity');
+    Route::post('/auth/editCommunity', 'CommunitiesController@editCommunity');
     Route::post('/auth/createCommunity', 'CommunitiesController@createCommunity');
     Route::delete('/auth/removeCommunity', 'CommunitiesController@removeCommunity');
     Route::post('/auth/addModerator', 'CommunitiesController@addModretorForCommunity');

@@ -7,6 +7,7 @@ use App\Subscribtion;
 use App\Community;
 use App\User;
 use App\ModerateCommunity;
+use Validator;
 
 
 /**
@@ -79,8 +80,8 @@ class CommunitiesController extends Controller
      * @bodyParam community_id int required The ID of the community the user want to edit its rules& description.
      * @bodyParam rules_content string required The edited rules of the community.
      * @bodyParam des_content string required The edited discription of the community.
-     * @bodyParam banner string required The banner of the community.
-     * @bodyParam logo string required The logo of the community.
+     * @bodyParam banner file required The banner of the community.
+     * @bodyParam logo file required The logo of the community.
      *
      * @response 200 {
      *  "success": "true"
@@ -97,6 +98,14 @@ class CommunitiesController extends Controller
      * @response 403 {
      * 	"success": "false",
      * 	"error": "community doesn't exist"
+     * }
+     * @response 401 {
+     * 	"success": "false",
+     * 	"error": "unvalid logo"
+     * }
+     * @response 401 {
+     * 	"success": "false",
+     * 	"error": "unvalid banner"
      * }
      */
     public function editCommunity(Request $request)
@@ -119,7 +128,38 @@ class CommunitiesController extends Controller
                 "error" => "this user is not a moderator"
             ], 403);
         }
-        $edited=Community::editCommunity($request->community_id,$request->rules_content,$request->des_content,$request->banner,$request->logo);
+        $valid= Validator::make($request->all(), [
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3072'
+        ]);
+
+        if ($valid->fails()){
+
+            return response()->json([
+                'success' => 'false',
+                'error' => 'unvalid logo',
+            ], 401);
+        }
+        $valid= Validator::make($request->all(), [
+            'banner' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3072'
+        ]);
+
+        if ($valid->fails()){
+
+            return response()->json([
+                'success' => 'false',
+                'error' => 'unvalid banner',
+            ], 401);
+        }
+
+        $new_name_logo = $request->community_id.'logo'.time().'.'.request()->logo->getClientOriginalExtension();
+
+        $request->logo->storeAs('avatars',$new_name_logo );
+
+        $new_name_banner = $request->community_id.'banner'.time().'.'.request()->banner->getClientOriginalExtension();
+
+        $request->banner->storeAs('avatars',$new_name_banner );
+
+        $edited=Community::editCommunity($request->community_id,$request->rules_content,$request->des_content,$new_name_banner,$new_name_logo);
         if($edited)
         {
             return response()->json([
