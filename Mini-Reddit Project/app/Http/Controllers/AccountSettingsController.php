@@ -254,10 +254,6 @@ class AccountSettingsController extends Controller
      * 	"error": "Unsupported media type"
      * }
      *
-     * @response 400 {
-     * 	"success": "false",
-     * 	"error": "Cannot upload the image"
-     * }
      */
     public function updateProfileImage(Request $request)
     {
