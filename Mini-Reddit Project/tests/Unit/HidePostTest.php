@@ -55,7 +55,7 @@ class HidePostTest extends TestCase
             'title' => 'test title',
             'author_username' => 'amro'
         ]);
-        HiddenPost::hidePost($post->id,$user->username);
+        HiddenPost::hidePost($post->id, $user->username);
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['post_id' => $post->id];
@@ -172,8 +172,7 @@ class HidePostTest extends TestCase
               'success' => 'false',
               'error' => 'The post doesn\'t exist'
           ]);
-          $user->delete();
+        $user->delete();
         Link::removeLink($post->id);
     }
-
 }

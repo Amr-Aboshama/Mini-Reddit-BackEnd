@@ -28,6 +28,14 @@
         </style>
     </head>
     <body>
+        <h2 id="Tests\Unit\BlockUserTest">Unit\BlockUser</h2>
+        <ul>
+            <li style="color: #555753;">✓ Un authorized user</li>
+            <li style="color: #555753;">✓ Non existing user</li>
+            <li style="color: #555753;">✓ Blocking user that blocked by</li>
+            <li style="color: #555753;">✓ Already blocked user</li>
+            <li style="color: #555753;">✓ Successful blocking</li>
+        </ul>
         <h2 id="Tests\Unit\DownvoteLinkTest">Unit\DownvoteLink</h2>
         <ul>
             <li style="color: #555753;">✓ Downvote upvoted post</li>
@@ -37,10 +45,28 @@
             <li style="color: #555753;">✓ Undownvote downvoted link</li>
             <li style="color: #555753;">✓ Downvot link without link i d</li>
         </ul>
+        <h2 id="Tests\Unit\FollowUserTest">Unit\FollowUser</h2>
+        <ul>
+            <li style="color: #555753;">✓ Un authorized user</li>
+            <li style="color: #555753;">✓ Non existing user</li>
+            <li style="color: #555753;">✓ View followers with blocked</li>
+            <li style="color: #555753;">✓ View followers with blocking</li>
+            <li style="color: #555753;">✓ Already following user</li>
+            <li style="color: #555753;">✓ Successful following</li>
+        </ul>
         <h2 id="Tests\Unit\GetUsernameTest">Unit\GetUsername</h2>
         <ul>
             <li style="color: #555753;">✓ Get username of authorized user</li>
             <li style="color: #555753;">✓ Get username of unauthorized user</li>
+        </ul>
+        <h2 id="Tests\Unit\HidePostTest">Unit\HidePost</h2>
+        <ul>
+            <li style="color: #555753;">✓ Hide post by unauthorized user</li>
+            <li style="color: #555753;">✓ Hide hidden post</li>
+            <li style="color: #555753;">✓ Hide comment</li>
+            <li style="color: #555753;">✓ Hide post without post i d</li>
+            <li style="color: #555753;">✓ Hide post</li>
+            <li style="color: #555753;">✓ Hide non existing post</li>
         </ul>
         <h2 id="Tests\Unit\PinPostsTest">Unit\PinPosts</h2>
         <ul>
@@ -52,6 +78,17 @@
             <li style="color: #555753;">✓ Pin post with non owner user</li>
             <li style="color: #555753;">✓ Pin post in community by moderator</li>
             <li style="color: #555753;">✓ Pin post in community by non moderator</li>
+        </ul>
+        <h2 id="Tests\Unit\RemoveLinkTest">Unit\RemoveLink</h2>
+        <ul>
+            <li style="color: #555753;">✓ Remove link with unauthorized user</li>
+            <li style="color: #555753;">✓ Remove link without link i d</li>
+            <li style="color: #555753;">✓ Remove non existing link</li>
+            <li style="color: #555753;">✓ Remove link using non author user</li>
+            <li style="color: #555753;">✓ Remove link out community</li>
+            <li style="color: #555753;">✓ Remove link in community by moderator</li>
+            <li style="color: #555753;">✓ Remove link in community by author</li>
+            <li style="color: #555753;">✓ Remov link in community by non authour nor moderator</li>
         </ul>
         <h2 id="Tests\Unit\SearchTest">Unit\Search</h2>
         <ul>
@@ -82,6 +119,31 @@
             <li style="color: #555753;">✓ Successful subscribtion</li>
             <li style="color: #555753;">✓ Already subscribed</li>
         </ul>
+        <h2 id="Tests\Unit\UnblockUserTest">Unit\UnblockUser</h2>
+        <ul>
+            <li style="color: #555753;">✓ Un authorized user</li>
+            <li style="color: #555753;">✓ Non existing user</li>
+            <li style="color: #555753;">✓ Unblocking user that blocked by</li>
+            <li style="color: #555753;">✓ Already unblocked user</li>
+            <li style="color: #555753;">✓ Successful unblocking</li>
+        </ul>
+        <h2 id="Tests\Unit\UnfollowUserTest">Unit\UnfollowUser</h2>
+        <ul>
+            <li style="color: #555753;">✓ Un authorized user</li>
+            <li style="color: #555753;">✓ Non existing user</li>
+            <li style="color: #555753;">✓ Unfollow with blocked</li>
+            <li style="color: #555753;">✓ Unfollow with blocking</li>
+            <li style="color: #555753;">✓ Already unfollowing user</li>
+            <li style="color: #555753;">✓ Successful following</li>
+        </ul>
+        <h2 id="Tests\Unit\UnhidePostTest">Unit\UnhidePost</h2>
+        <ul>
+            <li style="color: #555753;">✓ Unhide post by unauthorized user</li>
+            <li style="color: #555753;">✓ Unhide post without post i d</li>
+            <li style="color: #555753;">✓ Unhide comment</li>
+            <li style="color: #555753;">✓ Unhide unhidden post</li>
+            <li style="color: #555753;">✓ Unhide post</li>
+        </ul>
         <h2 id="Tests\Unit\UnsubscribeCommunityTest">Unit\UnsubscribeCommunity</h2>
         <ul>
             <li style="color: #555753;">✓ None existance of community</li>
@@ -93,6 +155,11 @@
         <ul>
             <li style="color: #555753;">✓ Authorized upvote</li>
             <li style="color: #555753;">✓ Un authorized upvote</li>
+        </ul>
+        <h2 id="Tests\Unit\ShowBlockedUsersTest">Unit\ShowBlockedUsers</h2>
+        <ul>
+            <li style="color: #555753;">✓ Un authorized user</li>
+            <li style="color: #555753;">✓ Successful view</li>
         </ul>
         <h2 id="Tests\Unit\ViewPostsTest">Unit\ViewPosts</h2>
         <ul>
@@ -113,6 +180,22 @@
         <ul>
             <li style="color: #555753;">✓ None existance of user</li>
             <li style="color: #555753;">✓ Retrieving communities</li>
+        </ul>
+        <h2 id="Tests\Unit\ViewUserFollowersTest">Unit\ViewUserFollowers</h2>
+        <ul>
+            <li style="color: #555753;">✓ Un authorized user</li>
+            <li style="color: #555753;">✓ Non existing user</li>
+            <li style="color: #555753;">✓ Follow with blocked</li>
+            <li style="color: #555753;">✓ Follow with blocking</li>
+            <li style="color: #555753;">✓ Successful view</li>
+        </ul>
+        <h2 id="Tests\Unit\ViewUserFollowingTest">Unit\ViewUserFollowing</h2>
+        <ul>
+            <li style="color: #555753;">✓ Un authorized user</li>
+            <li style="color: #555753;">✓ Non existing user</li>
+            <li style="color: #555753;">✓ View following with blocked</li>
+            <li style="color: #555753;">✓ View following with blocking</li>
+            <li style="color: #555753;">✓ Successful view</li>
         </ul>
     </body>
 </html>
