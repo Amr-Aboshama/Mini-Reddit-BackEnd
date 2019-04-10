@@ -227,9 +227,9 @@ class RemoveLinkTest extends TestCase
         $this->json('DELETE', 'api/auth/removeLink', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
-            'success' => 'false',
-            'error' => 'Only the moderator of the community or the author of the link can remove it.'
-        ]);
+              'success' => 'false',
+              'error' => 'Only the moderator of the community or the author of the link can remove it.'
+          ]);
         $user->delete();
         Link::removeLink($link->id);
     }

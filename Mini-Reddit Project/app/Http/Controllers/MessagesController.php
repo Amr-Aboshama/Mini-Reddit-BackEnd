@@ -17,6 +17,7 @@ class MessagesController extends Controller
      * @authenticated
      * @bodyParam message_id integer required the id of  the message that the user wants to see
      * @response 200 {
+     *  "success": "true",
      * 	"username2":"lolo",
      *  "user_photo":"photo3",
      *  "message_content":"hello world"

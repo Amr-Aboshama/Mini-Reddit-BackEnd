@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\User;
 use Validator;
 
-
 /**
  * @group Account settings
  */
@@ -73,40 +72,28 @@ class AccountSettingsController extends Controller
                 "success" => "false",
                 "error" => "UnAuthorized"
             ], 401);
-        }
-        
-        else if ($request->password == '' || !$request->has('password') ||
+        } elseif ($request->password == '' || !$request->has('password') ||
             ! User::checkIfPasswordRight($user->username, $request->password)) {
+            return response()->json([
 
-                return response()->json([
+                "success" => "false",
+                "error" => "wrong old passwords"
 
-                    "success" => "false",
-                    "error" => "wrong old passwords"
-
-                ], 404);
-        }
-
-        else if ( strcmp($request->new_password, $request->confirm_new_password) ||
+            ], 404);
+        } elseif (strcmp($request->new_password, $request->confirm_new_password) ||
             $request->new_password == '' || !$request->has('new_password') ||
             $request->confirm_new_password == '' || !$request->has('confirm_new_password')) {
+            return response()->json([
 
-                return response()->json([
+                "success" => "false",
+                "error" => "new password doesn't match the confirmation"
 
-                    "success" => "false",
-                    "error" => "new password doesn't match the confirmation"
-
-                ], 404);
-
+            ], 404);
+        } elseif (user::changeUserPassword($user->username, $request->new_password)) {
+            return response()->json([
+                'success' => 'true'
+            ], 200);
         }
-
-       else if (user::changeUserPassword($user->username, $request->new_password)){
-           return response()->json([
-                    'success' => 'true'
-                ], 200);  
-        }
-
-            
-
     }
 
 
@@ -119,13 +106,13 @@ class AccountSettingsController extends Controller
      * }
      *
      * @response 400 {
-     *  "sucess": "false",
+     *  "success": "false",
      *  "error": "you are trying to update with the old value"
      * }
      *
      * @response 401 {
-
-     * 	"sucess": "false",
+     *
+     * 	"success": "false",
      * 	"error": "UnAuthorized"
      * }
      *
@@ -155,21 +142,18 @@ class AccountSettingsController extends Controller
             ], 403);
         }
 
-        if ( User::updateDisplayNameFunction($user->username, $request->name) ) {
-
+        if (User::updateDisplayNameFunction($user->username, $request->name)) {
             return response()->json([
                 'success' => 'true'
             ], 200);
         } else {
-
             return response()->json([
 
                 "success" => "false",
                 "error" => "you are trying to update with the old value"
 
             ], 400);
-
-        }    
+        }
     }
 
 
@@ -182,12 +166,12 @@ class AccountSettingsController extends Controller
      * }
      *
      * @response 400 {
-     *  "sucess": "false",
+     *  "success": "false",
      *  "error": "you are trying to update with the old value"
      * }
      *
      * @response 401 {
-     * 	"success": "true",
+     * 	"success": "false",
      * 	"error": "UnAuthorized"
      * }
      *
@@ -218,20 +202,17 @@ class AccountSettingsController extends Controller
         }
 
         if (User::updateAboutFunction($user->username, $request->about)) {
-
             return response()->json([
                 'success' => 'true'
             ], 200);
         } else {
-
             return response()->json([
 
                 "success" => "false",
                 "error" => "you are trying to update with the old value"
 
             ], 400);
-
-        }    
+        }
     }
 
     /**
@@ -257,19 +238,15 @@ class AccountSettingsController extends Controller
      */
     public function updateProfileImage(Request $request)
     {
-
-
-        $valid= Validator::make($request->all(), [
+        $valid = Validator::make($request->all(), [
             'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3072'
-        ]); 
+        ]);
 
-        if ($valid->fails()){
-
+        if ($valid->fails()) {
             return response()->json([
                 'success' => 'false',
                 'error' => 'Unsupported media type',
             ], 401);
-
         }
 
         $user = Auth()->user();
@@ -282,26 +259,23 @@ class AccountSettingsController extends Controller
             ], 401);
         }
 
-       
+
         $avatarName = $user->id.'_avatar'.time().'.'.request()->profile_image->getClientOriginalExtension();
 
-        $request->profile_image->storeAs('avatars',$avatarName);
+        $request->profile_image->storeAs('avatars', $avatarName);
 
         $user->photo_url = $avatarName;
         $user->save();
-   
 
-        $response= response()->json([
+
+        $response = response()->json([
             'success' => 'true',
-            'path' => ('storage/'.'app/'.'avatars/'.$avatarName) 
+            'path' => ('storage/'.'app/'.'avatars/'.$avatarName)
         ], 200);
 
-        
+
 
         return $response;
-
-
-       
     }
 
     /**

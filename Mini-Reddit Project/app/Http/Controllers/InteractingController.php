@@ -87,23 +87,23 @@ class InteractingController extends Controller
                 'error' => 'Only posts can be hidden'
             ], 403);
         } else {   // the id belongs to a post
-            $result=HiddenPost::hidden($request->post_id, $user->username);
-            if($result){
+            $result = HiddenPost::hidden($request->post_id, $user->username);
+            if ($result) {
                 return response()->json([
                     'success' => 'false',
                     'error' => 'already hidden'
-                ],403);
+                ], 403);
             } else {
-                $result=HiddenPost::hidePost($request->post_id, $user->username);
-                if($result){
+                $result = HiddenPost::hidePost($request->post_id, $user->username);
+                if ($result) {
                     return response()->json([
                         'success' => 'true'
-                    ],200);
+                    ], 200);
                 } else {
                     return response()->json([
                         'success' => 'false',
-                        'error' =>'There is something went wrong!'
-                    ],403);
+                        'error' => 'There is something went wrong!'
+                    ], 403);
                 }
             }
         }
@@ -168,16 +168,16 @@ class InteractingController extends Controller
                     'error' => 'Only posts can be unhidden!'
                 ], 403);
             } else {
-                $result=HiddenPost::unhidePost($request->post_id, $user->username);
-                if($result){  //if the post undidden successfully
+                $result = HiddenPost::unhidePost($request->post_id, $user->username);
+                if ($result) {  //if the post undidden successfully
                     return response()->json([
                         'success' => 'true'
-                    ],200);
+                    ], 200);
                 } else {
                     return response()->json([
                         'success' => 'false',
                         'error' => 'There is something went wrong!'
-                    ],403);
+                    ], 403);
                 }
             }
         }
@@ -619,7 +619,7 @@ class InteractingController extends Controller
 
         $i = 0;
         foreach ($posts as $post) {
-            $renamed_posts[$i] =(object)[
+            $renamed_posts[$i] = (object)[
 
                 'post_id' => $post->link_id,
                 'body' => $post->content,
@@ -711,36 +711,31 @@ class InteractingController extends Controller
 
     public function ViewComments(Request $request)
     {
-        $valid = Validator::make($request->all() , ['username'=>'required']);
-        if($valid->Fails())
-        {
-             return response()->json([
-                	"success" => "false",
-                	"error" => "username is required"
-             ],403);
+        $valid = Validator::make($request->all(), ['username' => 'required']);
+        if ($valid->Fails()) {
+            return response()->json([
+                "success" => "false",
+                "error" => "username is required"
+            ], 403);
         }
 
         $Commentedposts = Link::postsUserCommentedOn($request->username);
         $posts_comments = array();
         $i = 0;
-        foreach($Commentedposts as $post)
-        {
-             $post->community_id = $post->community_id != null ? $post->community_id : -1;
-             $post->community = "none";
-             if($post->community_id != -1)
-             {
-                 $post->community = Community::getCommunity($post->community_id)->name;
-             }
+        foreach ($Commentedposts as $post) {
+            $post->community_id = $post->community_id != null ? $post->community_id : -1;
+            $post->community = "none";
+            if ($post->community_id != -1) {
+                $post->community = Community::getCommunity($post->community_id)->name;
+            }
 
-             $posts_comments[$i]['post'] = $post;
-             $posts_comments[$i]['comments'] = Link ::commentsOfPostsByUser($post->post_id ,$request->username );
+            $posts_comments[$i]['post'] = $post;
+            $posts_comments[$i]['comments'] = Link ::commentsOfPostsByUser($post->post_id, $request->username);
 
-             $i++;
+            $i++;
         }
 
-        return response()->json($posts_comments,200);
-
-
+        return response()->json($posts_comments, 200);
     }
 
 
@@ -789,31 +784,28 @@ class InteractingController extends Controller
      */
     public function ViewUpVotedOrDownVotedPosts(Request $request)
     {
-        $valid = Validator::make($request->all() , ['type' => 'required']);
-        if($valid->Fails())
-        {
-             return response()->json([
+        $valid = Validator::make($request->all(), ['type' => 'required']);
+        if ($valid->Fails()) {
+            return response()->json([
 
-               'success' => 'false',
-               'error' => 'type is required'
+                'success' => 'false',
+                'error' => 'type is required'
 
-             ],403);
+            ], 403);
         }
 
-        if($request->type != 1 && $request->type != 0 )
-        {
-             return response()->json([
+        if ($request->type != 1 && $request->type != 0) {
+            return response()->json([
 
-               'success' => 'false',
-               'error' => 'type is undefined it must be one for upvoted posts and 0 for downvoted ones'
+                'success' => 'false',
+                'error' => 'type is undefined it must be one for upvoted posts and 0 for downvoted ones'
 
-             ],403);
+            ], 403);
         }
 
         $username = auth()->user()->username;
         $posts;
-        if($request->type)
-        {
+        if ($request->type) {
             $posts = Link::upvotedPostsByUser($username);
         } else {
             $posts = Link::downvotedPostsByUser($username);
@@ -823,7 +815,7 @@ class InteractingController extends Controller
 
         $i = 0;
         foreach ($posts as $post) {
-            $renamed_posts[$i] =(object) [
+            $renamed_posts[$i] = (object) [
 
                 'post_id' => $post->link_id,
                 'body' => $post->content,
@@ -862,8 +854,7 @@ class InteractingController extends Controller
             $i++;
         }
 
-        return response()->json(['posts' => $renamed_posts],200);
-
+        return response()->json(['posts' => $renamed_posts], 200);
     }
 
 
@@ -1025,69 +1016,63 @@ class InteractingController extends Controller
      */
     public function ViewSavedLinks(Request $request)
     {
-         $username = auth()->user()->username;
-         $links = Link::savedPostsOrPostsHaveSavedComments($username);
-         $links_comments = array();
-         $i = 0;
-         foreach($links as $link)
-         {
-             if(!SavedLink::isSaved($link->link_id , $username))
-             {
-                  $links_comments[$i]['type'] = 'comment';
-                  $links_comments[$i]['post']['title']=$link->title;
-                  $links_comments[$i]['post']['body']=$link->content;
-                  $links_comments[$i]['post']['community_id']=$link->community_id != null ? $link->community_id : -1;
-                  $links_comments[$i]['post']['author_username']=$link->author_username;
-                  $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id ,$username);
-             } else {
-                  $links_comments[$i]['body'] = $link->content;
-                  $links_comments[$i]['title'] = $link->title;
-                  $links_comments[$i]['upvotes'] = $link->upvotes;
-                  $links_comments[$i]['downvotes'] = $link->downvotes;
-                  $links_comments[$i]['post_id'] = $link->link_id;
-                  $links_comments[$i]['community_id'] = $link->community_id != null ? $link->community_id :-1 ;
-                  $links_comments[$i]['community'] = 'none';
-                  $links_comments[$i]['subscribed'] = 'false';
-                  $links_comments[$i]['upvoted'] = 'false';
-                  $links_comments[$i]['downvoted'] = 'false';
-                  $links_comments[$i]['comments_num'] = Link::commentsNum($link->link_id);
-                  $links_comments[$i]['hidden'] = 'false';
-                  $links_comments[$i]['post_image'] = $link->content_image != null ? $post->content_image : -1;
-                  $links_comments[$i]['video_url'] = $link->video_url != null ? $post->video_url : -1  ;
-                  if (HiddenPost::hidden($link->link_id, $username)) {
-                      $links_comments[$i]['hidden'] = 'true';
-                  }
-                  if (UpvotedLink::upvoted($link->link_id, $username)) {
-                      $links_comments[$i]['upvoted'] = 'true';
-                  } elseif (DownvotedLink::downvoted($link->link_id, $username)) {
-                      $links_comments[$i]['downvoted'] = 'true';
-                  }
-                  if($links_comments[$i]['community_id'] != -1)
-                  {
-                       $community = Community::getCommunity($link->community_id);
-                       $links_comments[$i]['community'] = $community->name;
-                       if (Subscribtion::subscribed($links_comments[$i]['community_id'], $username)) {
-                            $links_comments[$i]['subscribed'] = "true";
-                       }
-                  }
+        $username = auth()->user()->username;
+        $links = Link::savedPostsOrPostsHaveSavedComments($username);
+        $links_comments = array();
+        $i = 0;
+        foreach ($links as $link) {
+            if (!SavedLink::isSaved($link->link_id, $username)) {
+                $links_comments[$i]['type'] = 'comment';
+                $links_comments[$i]['post']['title'] = $link->title;
+                $links_comments[$i]['post']['body'] = $link->content;
+                $links_comments[$i]['post']['community_id'] = $link->community_id != null ? $link->community_id : -1;
+                $links_comments[$i]['post']['author_username'] = $link->author_username;
+                $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id, $username);
+            } else {
+                $links_comments[$i]['body'] = $link->content;
+                $links_comments[$i]['title'] = $link->title;
+                $links_comments[$i]['upvotes'] = $link->upvotes;
+                $links_comments[$i]['downvotes'] = $link->downvotes;
+                $links_comments[$i]['post_id'] = $link->link_id;
+                $links_comments[$i]['community_id'] = $link->community_id != null ? $link->community_id :-1 ;
+                $links_comments[$i]['community'] = 'none';
+                $links_comments[$i]['subscribed'] = 'false';
+                $links_comments[$i]['upvoted'] = 'false';
+                $links_comments[$i]['downvoted'] = 'false';
+                $links_comments[$i]['comments_num'] = Link::commentsNum($link->link_id);
+                $links_comments[$i]['hidden'] = 'false';
+                $links_comments[$i]['post_image'] = $link->content_image != null ? $post->content_image : -1;
+                $links_comments[$i]['video_url'] = $link->video_url != null ? $post->video_url : -1  ;
+                if (HiddenPost::hidden($link->link_id, $username)) {
+                    $links_comments[$i]['hidden'] = 'true';
+                }
+                if (UpvotedLink::upvoted($link->link_id, $username)) {
+                    $links_comments[$i]['upvoted'] = 'true';
+                } elseif (DownvotedLink::downvoted($link->link_id, $username)) {
+                    $links_comments[$i]['downvoted'] = 'true';
+                }
+                if ($links_comments[$i]['community_id'] != -1) {
+                    $community = Community::getCommunity($link->community_id);
+                    $links_comments[$i]['community'] = $community->name;
+                    if (Subscribtion::subscribed($links_comments[$i]['community_id'], $username)) {
+                        $links_comments[$i]['subscribed'] = "true";
+                    }
+                }
 
-                  $links_comments[$i]['type'] = 'post';
-                  if(Link::isPostHasSavedCommentsByUser($link->link_id , $username))
-                  {
-                       $i++;
-                       $links_comments[$i]['post']['title']=$link->title;
-                       $links_comments[$i]['post']['body']=$link->content;
-                       $links_comments[$i]['post']['community_id']=$link->community_id != null ? $link->community_id : -1;
-                       $links_comments[$i]['post']['author_username']=$link->author_username;
-                       $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id ,$username);
-                  }
+                $links_comments[$i]['type'] = 'post';
+                if (Link::isPostHasSavedCommentsByUser($link->link_id, $username)) {
+                    $i++;
+                    $links_comments[$i]['post']['title'] = $link->title;
+                    $links_comments[$i]['post']['body'] = $link->content;
+                    $links_comments[$i]['post']['community_id'] = $link->community_id != null ? $link->community_id : -1;
+                    $links_comments[$i]['post']['author_username'] = $link->author_username;
+                    $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id, $username);
+                }
+            }
+            $i++;
+        }
 
-             }
-             $i++;
-         }
-
-         return response()->json($links_comments,200);
-
+        return response()->json($links_comments, 200);
     }
 
 
@@ -1168,12 +1153,12 @@ class InteractingController extends Controller
         $current_user = auth()->user()->username;
         $community_id = Link::getCommunity($request->link_id);
         if (!$community_id) {     //the post isn't in community
-          if ($current_user == Link::getAuthor($request->link_id)){
-                $result=Link::removeLink($request->link_id);
-                if($result){
+            if ($current_user == Link::getAuthor($request->link_id)) {
+                $result = Link::removeLink($request->link_id);
+                if ($result) {
                     return response()->json([
                         'success' => 'true'
-                 ], 200);
+                    ], 200);
                 } else {
                     return response()->json([
                         'success' => 'false',
@@ -1187,10 +1172,10 @@ class InteractingController extends Controller
                 ], 403);
             }
         } else {  // the post is in acommunity
-            if ((ModerateCommunity::checkExisting($community_id, $current_user))||
+            if ((ModerateCommunity::checkExisting($community_id, $current_user)) ||
             ($current_user == Link::getAuthor($request->link_id))) {
-                $result=Link::removeLink($request->link_id);
-                if($result){
+                $result = Link::removeLink($request->link_id);
+                if ($result) {
                     return response()->json([
                         'success' => 'true'
                     ], 200);
@@ -1207,7 +1192,6 @@ class InteractingController extends Controller
                 ], 403);
             }
         }
-
     }
 
     /**

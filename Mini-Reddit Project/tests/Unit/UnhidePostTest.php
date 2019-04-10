@@ -84,7 +84,7 @@ class UnhidePostTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['post_id' => $comment->id];
-        HiddenPost::hidePost($comment->id,$user->username);
+        HiddenPost::hidePost($comment->id, $user->username);
         $this->json('DELETE', 'api/auth/unhidePost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([

@@ -9,7 +9,6 @@ use App\User;
 use App\ModerateCommunity;
 use Validator;
 
-
 /**
  * @group Communities
  * all community features are handled by the following APIs
@@ -120,31 +119,28 @@ class CommunitiesController extends Controller
             ], 403);
         }
 
-        $user_moderation=ModerateCommunity::checkExisting($request->community_id, $user->username);
-        if(!$user_moderation)
-        {
+        $user_moderation = ModerateCommunity::checkExisting($request->community_id, $user->username);
+        if (!$user_moderation) {
             return response()->json([
                 "success" => "false",
                 "error" => "this user is not a moderator"
             ], 403);
         }
-        $valid= Validator::make($request->all(), [
+        $valid = Validator::make($request->all(), [
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3072'
         ]);
 
-        if ($valid->fails()){
-
+        if ($valid->fails()) {
             return response()->json([
                 'success' => 'false',
                 'error' => 'unvalid logo',
             ], 401);
         }
-        $valid= Validator::make($request->all(), [
+        $valid = Validator::make($request->all(), [
             'banner' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3072'
         ]);
 
-        if ($valid->fails()){
-
+        if ($valid->fails()) {
             return response()->json([
                 'success' => 'false',
                 'error' => 'unvalid banner',
@@ -153,15 +149,14 @@ class CommunitiesController extends Controller
 
         $new_name_logo = $request->community_id.'logo'.time().'.'.request()->logo->getClientOriginalExtension();
 
-        $request->logo->storeAs('avatars',$new_name_logo );
+        $request->logo->storeAs('avatars', $new_name_logo);
 
         $new_name_banner = $request->community_id.'banner'.time().'.'.request()->banner->getClientOriginalExtension();
 
-        $request->banner->storeAs('avatars',$new_name_banner );
+        $request->banner->storeAs('avatars', $new_name_banner);
 
-        $edited=Community::editCommunity($request->community_id,$request->rules_content,$request->des_content,$new_name_banner,$new_name_logo);
-        if($edited)
-        {
+        $edited = Community::editCommunity($request->community_id, $request->rules_content, $request->des_content, $new_name_banner, $new_name_logo);
+        if ($edited) {
             return response()->json([
                 "success" => "true"
             ], 200);
@@ -196,17 +191,16 @@ class CommunitiesController extends Controller
         $user = auth()->user();
 
         $current_date_time = now();
-        $user_cake_date=$user->cake_date;
+        $user_cake_date = $user->cake_date;
         $diff_in_days = $current_date_time->diffInDays($user_cake_date);
-        if($diff_in_days<30)
-        {
+        if ($diff_in_days < 30) {
             return response()->json([
                 "success" => "false",
-                "error"=>"you have to complete 30 days "
+                "error" => "you have to complete 30 days "
             ], 401);
         }
 
-        if (!$request->has('community_name')|| $request->community_name=="") {
+        if (!$request->has('community_name') || $request->community_name == "") {
             return response()->json([
 
                 'success' => 'false',
@@ -215,29 +209,24 @@ class CommunitiesController extends Controller
             ], 403);
         }
 
-        $community_name_existance=Community::communityNameExist($request->community_name);
-        if($community_name_existance)
-        {
+        $community_name_existance = Community::communityNameExist($request->community_name);
+        if ($community_name_existance) {
             return response()->json([
                 "success" => "false",
-                "error"=>"this name already exists"
+                "error" => "this name already exists"
             ], 403);
         }
 
-        $new_community=Community::createDummyCommunity($request->community_name);
-        if($new_community)
-        {
-            $new_moderator=ModerateCommunity::store($new_community->community_id, $user->username);
-            if($new_moderator)
-            {
-              return response()->json([
-                  "success" => "true",
-                  "community_id"=>$new_community->community_id
-              ], 200);
-            }
-            else
-            {
-              Community::removeCommunity($new_community->community_id);
+        $new_community = Community::createDummyCommunity($request->community_name);
+        if ($new_community) {
+            $new_moderator = ModerateCommunity::store($new_community->community_id, $user->username);
+            if ($new_moderator) {
+                return response()->json([
+                    "success" => "true",
+                    "community_id" => $new_community->community_id
+                ], 200);
+            } else {
+                Community::removeCommunity($new_community->community_id);
             }
         }
     }
@@ -268,34 +257,31 @@ class CommunitiesController extends Controller
      */
     public function removeCommunity(Request $request)
     {
-      $user = auth()->user();
+        $user = auth()->user();
 
-      $existance = Community::communityExist($request->community_id);
-      if (!$existance) {
-          return response()->json([
-              "success" => "false",
-              "error" => "community doesn't exist"
-          ], 403);
-      }
+        $existance = Community::communityExist($request->community_id);
+        if (!$existance) {
+            return response()->json([
+                "success" => "false",
+                "error" => "community doesn't exist"
+            ], 403);
+        }
 
-      $user_moderation=ModerateCommunity::checkExisting($request->community_id, $user->username);
-      if(!$user_moderation)
-      {
-          return response()->json([
-              "success" => "false",
-              "error" => "this user is not a moderator"
-          ], 403);
-      }
+        $user_moderation = ModerateCommunity::checkExisting($request->community_id, $user->username);
+        if (!$user_moderation) {
+            return response()->json([
+                "success" => "false",
+                "error" => "this user is not a moderator"
+            ], 403);
+        }
 
 
-      $removal=Community::removeCommunity($request->community_id);
-      if($removal)
-      {
-          return response()->json([
-              "success" => "true",
-          ], 200);
-      }
-
+        $removal = Community::removeCommunity($request->community_id);
+        if ($removal) {
+            return response()->json([
+                "success" => "true",
+            ], 200);
+        }
     }
 
 

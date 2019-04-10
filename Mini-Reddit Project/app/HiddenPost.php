@@ -38,6 +38,7 @@ class HiddenPost extends Model
     {
         try {
             HiddenPost::create(['username' => $username , 'link_id' => $post_id ]);
+
             return true;
         } catch (\Exception $e) {
             return false;
@@ -56,6 +57,7 @@ class HiddenPost extends Model
     public static function unhidePost($post_id, $username)
     {
         $result = HiddenPost::where('username', $username)->where('link_id', $post_id)->delete();
+
         return $result;
     }
 }
