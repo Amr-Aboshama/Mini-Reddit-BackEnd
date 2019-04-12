@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
+use App\User;
+use Validator;
 
 /**
  * @group Account settings
@@ -58,9 +62,38 @@ class AccountSettingsController extends Controller
      * 	"error": "UnAuthorized"
      * }
      */
-    public function changePassword()
+    public function changePassword(Request $request)
     {
-        // ...
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+
+                "success" => "false",
+                "error" => "UnAuthorized"
+            ], 401);
+        } elseif ($request->password == '' || !$request->has('password') ||
+            ! User::checkIfPasswordRight($user->username, $request->password)) {
+            return response()->json([
+
+                "success" => "false",
+                "error" => "wrong old passwords"
+
+            ], 404);
+        } elseif (strcmp($request->new_password, $request->confirm_new_password) ||
+            $request->new_password == '' || !$request->has('new_password') ||
+            $request->confirm_new_password == '' || !$request->has('confirm_new_password')) {
+            return response()->json([
+
+                "success" => "false",
+                "error" => "new password doesn't match the confirmation"
+
+            ], 404);
+        } elseif (user::changeUserPassword($user->username, $request->new_password)) {
+            return response()->json([
+                'success' => 'true'
+            ], 200);
+        }
     }
 
 
@@ -72,8 +105,14 @@ class AccountSettingsController extends Controller
      * 	"success": "true"
      * }
      *
+     * @response 400 {
+     *  "success": "false",
+     *  "error": "you are trying to update with the old value"
+     * }
+     *
      * @response 401 {
-     * 	"success": "true",
+     *
+     * 	"success": "false",
      * 	"error": "UnAuthorized"
      * }
      *
@@ -82,9 +121,39 @@ class AccountSettingsController extends Controller
      * 	"error": "user must have a name"
      * }
      */
-    public function updateDisplayName()
+    public function updateDisplayName(Request $request)
     {
-        // ...
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+
+                "success" => "false",
+                "error" => "UnAuthorized"
+            ], 401);
+        }
+
+        if ($request->name == '' || !$request->has('name')) {
+            return response()->json([
+
+                "success" => "false",
+                "error" => "user must have a name"
+
+            ], 403);
+        }
+
+        if (User::updateDisplayNameFunction($user->username, $request->name)) {
+            return response()->json([
+                'success' => 'true'
+            ], 200);
+        } else {
+            return response()->json([
+
+                "success" => "false",
+                "error" => "you are trying to update with the old value"
+
+            ], 400);
+        }
     }
 
 
@@ -96,15 +165,54 @@ class AccountSettingsController extends Controller
      * 	"success": "true"
      * }
      *
+     * @response 400 {
+     *  "success": "false",
+     *  "error": "you are trying to update with the old value"
+     * }
+     *
      * @response 401 {
-     * 	"success": "true",
+     * 	"success": "false",
      * 	"error": "UnAuthorized"
      * }
      *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "no about is written"
+     * }
      */
-    public function updateAbout()
+    public function updateAbout(Request $request)
     {
-        // ...
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+
+                "success" => "false",
+                "error" => "UnAuthorized"
+            ], 401);
+        }
+
+        if ($request->about == '' || !$request->has('about')) {
+            return response()->json([
+
+                "success" => "false",
+                "error" => "no about is written"
+
+            ], 403);
+        }
+
+        if (User::updateAboutFunction($user->username, $request->about)) {
+            return response()->json([
+                'success' => 'true'
+            ], 200);
+        } else {
+            return response()->json([
+
+                "success" => "false",
+                "error" => "you are trying to update with the old value"
+
+            ], 400);
+        }
     }
 
     /**
@@ -114,7 +222,7 @@ class AccountSettingsController extends Controller
      *
      * @response 200 {
      * 	"success": "true",
-     * 	"path": "sotrage/app/avatar.jpg"
+     * 	"path": "storage/app/avatar.jpg"
      * }
      *
      * @response 401 {
@@ -127,14 +235,47 @@ class AccountSettingsController extends Controller
      * 	"error": "Unsupported media type"
      * }
      *
-     * @response 400 {
-     * 	"success": "false",
-     * 	"error": "Cannot upload the image"
-     * }
      */
-    public function updateProfileImage()
+    public function updateProfileImage(Request $request)
     {
-        // code...
+        $valid = Validator::make($request->all(), [
+            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3072'
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Unsupported media type',
+            ], 401);
+        }
+
+        $user = Auth()->user();
+
+        if (!$user) {
+            return response()->json([
+
+                "success" => "false",
+                "error" => "UnAuthorized"
+            ], 401);
+        }
+
+
+        $avatarName = $user->id.'_avatar'.time().'.'.request()->profile_image->getClientOriginalExtension();
+
+        $request->profile_image->storeAs('avatars', $avatarName);
+
+        $user->photo_url = $avatarName;
+        $user->save();
+
+
+        $response = response()->json([
+            'success' => 'true',
+            'path' => ('storage/'.'app/'.'avatars/'.$avatarName)
+        ], 200);
+
+
+
+        return $response;
     }
 
     /**

@@ -35,7 +35,7 @@ class FollowingController extends Controller
     {
         $current_username = auth()->user()->username;
         $username = $request->username;
-        
+
         if (! User::userExist($username) || Blocking::blockedOrBlocker($current_username, $username)) {
             return response()->json([
                 "success" => "false",

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Support\Facadex\DB;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -145,5 +147,76 @@ class User extends Authenticatable implements JWTSubject
             ->whereNotIn('username', Blocking::getUsersBlockedByUsername($currentuser))
             ->whereNotIn('username', Blocking::getUsersWhoBlockedUsername($currentuser))
             ->pluck('username')->toArray();
+    }
+
+    /**
+     * update the display_name of the currently logged in user
+     * @param  string $username the currently logged in user
+     * @param  string $displayname the updated displayname he wants
+     * @return int 1 or 0 according to the success of the update
+     */
+    public static function updateDisplayNameFunction($username, $displayname)
+    {
+        $result = User::where('username', $username)->update(['display_name' => $displayname]);
+
+        return $result;
+    }
+
+    /**
+     * update the display_name of the currently logged in user
+     * @param  string $username the currently logged in user
+     * @param  string $about the updated about he wants
+     * @return int 1 or 0 according to the success of the update
+     */
+    public static function updateAboutFunction($username, $about)
+    {
+        $result = User::where('username', $username)->update(['about' => $about]);
+
+        return $result;
+    }
+
+    /**
+     * check if the password entered by the user is right or not
+     * @param  string $username the currently logged in user
+     * @param  string $password the password i need to check its validity
+     * @return int 1 or 0 according to the success of the update
+     */
+    public static function checkIfPasswordRight($username, $password)
+    {
+        $hashedpassword = User::select('password')->where('username', $username)->first()->password;
+
+        if (Hash::check($password, $hashedpassword)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * changes the password of the user
+     * @param  array $username
+     * @param  array $password
+     * @return object the created user object
+     */
+    public static function changeUserPassword($username, $password)
+    {
+        $password = bcrypt($password);
+        $result = User::where('username', $username)->update(['password' => $password]);
+
+        return $result;
+    }
+
+    /**
+     * update the profile image
+     * @param  array $username
+     * @param  array $image   profile image
+     * @return object the created user object
+     */
+    public static function updateProfileImage($username, $image)
+    {
+        $result = User::where('username', $username)->update(['photo_url' => $image]);
+        dd($result);
+
+        return $result;
     }
 }

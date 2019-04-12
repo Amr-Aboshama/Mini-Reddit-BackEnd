@@ -339,8 +339,9 @@ class Link extends Model
 
     public static function upvotedPostsByUser($username)
     {
-         $posts = DB::Select("SELECT * from links where parent_id is null and link_id in (select U.link_id from upvoted_links as U where U.username = '$username' ) ");
-         return $posts;
+        $posts = DB::Select("SELECT * from links where parent_id is null and link_id in (select U.link_id from upvoted_links as U where U.username = '$username' ) ");
+
+        return $posts;
     }
 
     /**
@@ -351,8 +352,9 @@ class Link extends Model
 
     public static function downvotedPostsByUser($username)
     {
-         $posts = DB::Select("SELECT * from links where parent_id is null and link_id in (select D.link_id from downvoted_links as D where D.username = '$username' ) ");
-         return $posts;
+        $posts = DB::Select("SELECT * from links where parent_id is null and link_id in (select D.link_id from downvoted_links as D where D.username = '$username' ) ");
+
+        return $posts;
     }
 
     /**
@@ -366,7 +368,7 @@ class Link extends Model
         $posts = DB::Select("SELECT content as body , title , link_id as post_id , community_id
            FROM links
            where parent_id is null
-           and link_id in (Select l.post_id from links as l where l.author_username = '$username')" );
+           and link_id in (Select l.post_id from links as l where l.author_username = '$username')");
 
         return $posts;
     }
@@ -378,9 +380,9 @@ class Link extends Model
      * @return array           array of objects, each object is a comment of the user on the given post
      */
 
-    public static function commentsOfPostsByUser($link_id , $username)
+    public static function commentsOfPostsByUser($link_id, $username)
     {
-        $links = DB::Select("SELECT link_id as comment_id , content as body , link_date from links where author_username = '$username' and post_id = '$link_id' order by link_date DESC ");
+        $links = DB::Select("SELECT upvotes , downvotes , link_id as comment_id , content as body , link_date from links where author_username = '$username' and post_id = '$link_id' order by link_date DESC ");
         return $links;
     }
 
@@ -391,11 +393,12 @@ class Link extends Model
      * @return array           array of objects, each object is a comment of the given post saved by the user.
      */
 
-    public static function savedCommentsOfPostByUser($link_id,$username)
+    public static function savedCommentsOfPostByUser($link_id, $username)
     {
-        $links = DB::Select("SELECT author_username , link_id as comment_id , content as body , link_date from links where post_id = '$link_id' and link_id in (
+        $links = DB::Select("SELECT upvotes , downvotes , author_username , link_id as comment_id , content as body , link_date from links where post_id = '$link_id' and link_id in (
           select s.link_id from saved_links as s where s.username = '$username'
         ) order by link_date DESC ");
+
         return $links;
     }
 
@@ -422,13 +425,25 @@ class Link extends Model
      * @return boolean           true if the post has comments or replies saved by the given user,false if not.
      */
 
-    public static function isPostHasSavedCommentsByUser($link_id , $username)
+    public static function isPostHasSavedCommentsByUser($link_id, $username)
     {
         $links = DB::Select("SELECT exists(select * from links where post_id = '$link_id' and link_id in (
           select s.link_id from saved_links as s where s.username = '$username'
-        ) ) as result " );
+        ) ) as result ");
 
         return $links[0]->result;
+    }
+
+    public static function isCommentByUser($link_id , $username)
+    {
+         $result = DB::Select("SELECT exists( select * from links where author_username = '$username' and parent_id is not null and link_id = '$link_id'  ) as result");
+         return $result[0]->result;
+    }
+
+    public static function isCommentOrReplyOfPost($comment_id , $link_id)
+    {
+         $result = DB::Select("SELECT exists( select * from links where link_id = '$comment_id' and post_id = '$link_id' ) as result");
+         return $result[0]->result;
     }
 
 }
