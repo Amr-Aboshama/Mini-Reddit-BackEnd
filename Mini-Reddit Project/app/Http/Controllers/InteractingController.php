@@ -42,12 +42,71 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
+     * 	"error" : "The post doesn't exist"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "Only posts can be hidden"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "There is something went wrong!"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "post_id is required"
      * }
      */
-    public function hidePost()
+    public function hidePost(Request $request)
     {
-        // ...
+        //token should be parsed to get the user name
+
+        $user = auth()->user();
+
+        if (!$request->has('post_id')) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'post_id is required'
+
+            ], 403);
+        }
+        //if the post is not existing
+        $result = Link::checkExisting($request->post_id);
+        if (!$result) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'The post doesn\'t exist'
+            ], 403);
+        }
+        //if the id is for comment or reply "not a post"
+        $result = Link::getParent($request->post_id);
+        if ($result) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Only posts can be hidden'
+            ], 403);
+        } else {   // the id belongs to a post
+            $result = HiddenPost::hidden($request->post_id, $user->username);
+            if ($result) {
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'already hidden'
+                ], 403);
+            } else {
+                $result = HiddenPost::hidePost($request->post_id, $user->username);
+                if ($result) {
+                    return response()->json([
+                        'success' => 'true'
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'success' => 'false',
+                        'error' => 'There is something went wrong!'
+                    ], 403);
+                }
+            }
+        }
     }
 
 
@@ -64,16 +123,64 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "already unhidden"
+     * 	"error" : "Only posts can be unhidden!"
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "post doesn't exist"
+     * 	"error" : "post_id is required"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "Only hidden posts can be unhidden!"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "There is something went wrong!"
      * }
      */
-    public function unhidePost()
+    public function unhidePost(Request $request)
     {
-        // ...
+        //token should be parsed to get the user name
+
+        $user = auth()->user();
+
+        if (!$request->has('post_id')) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'post_id is required'
+
+            ], 403);
+        }
+        //if the post is not hidden
+        $result = HiddenPost::hidden($request->post_id, $user->username);
+        if (!$result) {  //if the post is not hidden
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Only hidden posts can be unhidden!'
+            ], 403);
+        } else {   //if the post is hidden
+            //if the id is for comment or reply "not a post"
+            $result = Link::getParent($request->post_id);
+            if ($result) {
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'Only posts can be unhidden!'
+                ], 403);
+            } else {
+                $result = HiddenPost::unhidePost($request->post_id, $user->username);
+                if ($result) {  //if the post undidden successfully
+                    return response()->json([
+                        'success' => 'true'
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'success' => 'false',
+                        'error' => 'There is something went wrong!'
+                    ], 403);
+                }
+            }
+        }
     }
 
 
@@ -512,7 +619,7 @@ class InteractingController extends Controller
 
         $i = 0;
         foreach ($posts as $post) {
-            $renamed_posts[$i] =(object)[
+            $renamed_posts[$i] = (object)[
 
                 'post_id' => $post->link_id,
                 'body' => $post->content,
@@ -583,18 +690,14 @@ class InteractingController extends Controller
      * @bodyParam username string required username of the user you wanna see his/her comments on posts.
      * @response 200 {
      *  "0":{"post":{"post_id" : 1 ,"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 },"comments" :[
-     *      {"comment_id":55 ,"body":"comment1 on post1" , "date" : "2 days ago"},{"comment_id":59 ,"body":"comment2 on post1" , "date" : "3 days ago"}
+     *      {"comment_id":55 ,"body":"comment1 on post1" , "date" : "2 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":59 ,"body":"comment2 on post1" , "date" : "3 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
      *  ] } ,
      *  "1":{"post":{"post_id" : 7 ,"body":"post2" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 } , "comments":[
-     *     {"comment_id":40 ,"body":"comment1 on post2" , "date" : "2 days ago"},{"comment_id":89 ,"body":"comment2 on post2" , "date" : "3 days ago"},{"comment_id":79 ,"body":"comment3 on post2" , "date" : "3 days ago"}
+     *     {"comment_id":40 ,"body":"comment1 on post2" , "date" : "2 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":89 ,"body":"comment2 on post2" , "date" : "3 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":79 ,"body":"comment3 on post2" , "date" : "3 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
      *  ]},
      *  "2":{"post":{"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 },"commments" : [
-     *     {"comment_id":80 ,"body":"comment1 on post3" , "date" : "2 days ago"}
+     *     {"comment_id":80 ,"body":"comment1 on post3" , "date" : "2 days ago", "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
      *  ]}
-     * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
      * }
      * @response 403 {
      * 	"success" : "false",
@@ -604,13 +707,12 @@ class InteractingController extends Controller
 
     public function ViewComments(Request $request)
     {
-        $valid = Validator::make($request->all() , ['username'=>'required']);
-        if($valid->Fails())
-        {
-             return response()->json([
-                	"success" => "false",
-                	"error" => "username is required"
-             ],403);
+        $valid = Validator::make($request->all(), ['username' => 'required']);
+        if ($valid->Fails()) {
+            return response()->json([
+                "success" => "false",
+                "error" => "username is required"
+            ], 403);
         }
 
         $Commentedposts = Link::postsUserCommentedOn($request->username);
@@ -628,12 +730,32 @@ class InteractingController extends Controller
              $posts_comments[$i]['post'] = $post;
              $posts_comments[$i]['comments'] = Link ::commentsOfPostsByUser($post->post_id ,$request->username );
 
+             foreach($posts_comments[$i]['comments'] as $comments)
+             {
+                  try {
+                      $comments->upvoted = 'false';
+                      $comments->downvoted = 'false';
+                      $tokenFetch = JWTAuth::parseToken()->authenticate();
+                      $username = auth()->user()->username;
+                      if (UpvotedLink::upvoted($comments->comment_id, $username)) {
+                          $comments->upvoted = 'true';
+                      } elseif (DownvotedLink::downvoted($comments->comment_id, $username)) {
+                          $comments->downvoted = 'true';
+                      }
+                  } catch (JWTException $e) {
+                  }
+
+             }
              $i++;
         }
 
-        return response()->json($posts_comments,200);
+            $posts_comments[$i]['post'] = $post;
+            $posts_comments[$i]['comments'] = Link ::commentsOfPostsByUser($post->post_id, $request->username);
 
+            $i++;
+        }
 
+        return response()->json($posts_comments, 200);
     }
 
 
@@ -682,31 +804,28 @@ class InteractingController extends Controller
      */
     public function ViewUpVotedOrDownVotedPosts(Request $request)
     {
-        $valid = Validator::make($request->all() , ['type' => 'required']);
-        if($valid->Fails())
-        {
-             return response()->json([
+        $valid = Validator::make($request->all(), ['type' => 'required']);
+        if ($valid->Fails()) {
+            return response()->json([
 
-               'success' => 'false',
-               'error' => 'type is required'
+                'success' => 'false',
+                'error' => 'type is required'
 
-             ],403);
+            ], 403);
         }
 
-        if($request->type != 1 && $request->type != 0 )
-        {
-             return response()->json([
+        if ($request->type != 1 && $request->type != 0) {
+            return response()->json([
 
-               'success' => 'false',
-               'error' => 'type is undefined it must be one for upvoted posts and 0 for downvoted ones'
+                'success' => 'false',
+                'error' => 'type is undefined it must be one for upvoted posts and 0 for downvoted ones'
 
-             ],403);
+            ], 403);
         }
 
         $username = auth()->user()->username;
         $posts;
-        if($request->type)
-        {
+        if ($request->type) {
             $posts = Link::upvotedPostsByUser($username);
         } else {
             $posts = Link::downvotedPostsByUser($username);
@@ -716,7 +835,7 @@ class InteractingController extends Controller
 
         $i = 0;
         foreach ($posts as $post) {
-            $renamed_posts[$i] =(object) [
+            $renamed_posts[$i] = (object) [
 
                 'post_id' => $post->link_id,
                 'body' => $post->content,
@@ -755,8 +874,7 @@ class InteractingController extends Controller
             $i++;
         }
 
-        return response()->json(['posts' => $renamed_posts],200);
-
+        return response()->json(['posts' => $renamed_posts], 200);
     }
 
 
@@ -840,6 +958,7 @@ class InteractingController extends Controller
      *  "type": "comment",
      *  "post": {
      *      "title": "post1",
+     *      "post_id" : 1,
      *      "body": "amro post1",
      *      "community_id": -1,
      *      "author_username": "amro"
@@ -849,7 +968,11 @@ class InteractingController extends Controller
      *          "comment_id": 15,
      *          "author_username": "ahmed",
      *          "body": "reply on comment2 on post1",
-     *          "link_date": "2019-04-08 00:07:00"
+     *          "link_date": "2019-04-08 00:07:00",
+     *          "upvotes" : 20,
+     *          "downvotes" : 26,
+     *             "upvoted" : "true",
+     *             "downvoted" : "false"
      *      }
      *    ]
      *},
@@ -888,8 +1011,10 @@ class InteractingController extends Controller
      *    "type": "post"
      *},
      *"3":{
+     * "type" : "comment",
      * "post": {
      *      "title": "post1",
+     *      "post_id" : 1,
      *        "body": "ahmed post1",
      *        "community_id": -1,
      *        "author_username": "ahmed"
@@ -899,14 +1024,22 @@ class InteractingController extends Controller
      *            "comment_id": 13,
      *            "body": "comment on post4",
      *            "author_username": "amro",
-     *            "link_date": "2019-04-08 00:07:00"
+     *            "link_date": "2019-04-08 00:07:00",
+     *            "upvotes" : 20,
+     *            "downvotes" : 26,
+     *             "upvoted" : "true",
+     *             "downvoted" : "false"
      *        },
      *        {
      *
      *            "comment_id": 22,
      *            "author_username": "menna",
      *            "body": "comment on post4",
-     *            "link_date": "2019-04-08 00:07:00"
+     *            "link_date": "2019-04-08 00:07:00",
+     *            "upvotes" : 20,
+     *            "downvotes" : 26,
+     *             "upvoted" : "true",
+     *             "downvoted" : "false"
      *        }
      *    ]
      *}
@@ -928,10 +1061,22 @@ class InteractingController extends Controller
              {
                   $links_comments[$i]['type'] = 'comment';
                   $links_comments[$i]['post']['title']=$link->title;
+                  $links_comments[$i]['post']['post_id']=$link->link_id;
                   $links_comments[$i]['post']['body']=$link->content;
                   $links_comments[$i]['post']['community_id']=$link->community_id != null ? $link->community_id : -1;
                   $links_comments[$i]['post']['author_username']=$link->author_username;
                   $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id ,$username);
+                  foreach($links_comments[$i]['comments'] as $comments)
+                  {
+                       $comments->upvoted = 'false';
+                       $comments->downvoted = 'false';
+                       if (UpvotedLink::upvoted($comments->comment_id, $username)) {
+                           $comments->upvoted = 'true';
+                       } elseif (DownvotedLink::downvoted($comments->comment_id, $username)) {
+                           $comments->downvoted = 'true';
+                       }
+                  }
+
              } else {
                   $links_comments[$i]['body'] = $link->content;
                   $links_comments[$i]['title'] = $link->title;
@@ -969,10 +1114,21 @@ class InteractingController extends Controller
                   {
                        $i++;
                        $links_comments[$i]['post']['title']=$link->title;
+                       $links_comments[$i]['post']['post_id']=$link->link_id;
                        $links_comments[$i]['post']['body']=$link->content;
                        $links_comments[$i]['post']['community_id']=$link->community_id != null ? $link->community_id : -1;
                        $links_comments[$i]['post']['author_username']=$link->author_username;
                        $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id ,$username);
+                       foreach($links_comments[$i]['comments'] as $comments)
+                       {
+                            $comments->upvoted = 'false';
+                            $comments->downvoted = 'false';
+                            if (UpvotedLink::upvoted($comments->comment_id, $username)) {
+                                $comments->upvoted = 'true';
+                            } elseif (DownvotedLink::downvoted($comments->comment_id, $username)) {
+                                $comments->downvoted = 'true';
+                            }
+                       }
                   }
 
              }
@@ -981,6 +1137,7 @@ class InteractingController extends Controller
 
          return response()->json($links_comments,200);
 
+        return response()->json($links_comments, 200);
     }
 
 
@@ -1061,12 +1218,12 @@ class InteractingController extends Controller
         $current_user = auth()->user()->username;
         $community_id = Link::getCommunity($request->link_id);
         if (!$community_id) {     //the post isn't in community
-          if ($current_user == Link::getAuthor($request->link_id)){
-                $result=Link::removeLink($request->link_id);
-                if($result){
+            if ($current_user == Link::getAuthor($request->link_id)) {
+                $result = Link::removeLink($request->link_id);
+                if ($result) {
                     return response()->json([
                         'success' => 'true'
-                 ], 200);
+                    ], 200);
                 } else {
                     return response()->json([
                         'success' => 'false',
@@ -1080,10 +1237,10 @@ class InteractingController extends Controller
                 ], 403);
             }
         } else {  // the post is in acommunity
-            if ((ModerateCommunity::checkExisting($community_id, $current_user))||
+            if ((ModerateCommunity::checkExisting($community_id, $current_user)) ||
             ($current_user == Link::getAuthor($request->link_id))) {
-                $result=Link::removeLink($request->link_id);
-                if($result){
+                $result = Link::removeLink($request->link_id);
+                if ($result) {
                     return response()->json([
                         'success' => 'true'
                     ], 200);
@@ -1100,7 +1257,6 @@ class InteractingController extends Controller
                 ], 403);
             }
         }
-
     }
 
     /**
@@ -1189,17 +1345,17 @@ class InteractingController extends Controller
      * }
      *
      * @response 401 {
-     * 	"seccess": "false",
+     * 	"success": "false",
      * 	"error": "UnAuthorized"
      * }
      *
      * @response 401 {
-     * 	"seccess": "false",
+     * 	"success": "false",
      * 	"error": "Unsupported media type"
      * }
      *
      * @response 400 {
-     * 	"seccess": "false",
+     * 	"success": "false",
      * 	"error": "Cannot upload the image"
      * }
      */

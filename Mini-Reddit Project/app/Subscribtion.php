@@ -16,15 +16,17 @@ class Subscribtion extends Model
     public static function subscribed($community_id, $username)
     {
         $result = Subscribtion::where('community_id', $community_id)->where('username', $username)->exists();
+
         return $result;
     }
 
     public static function subscribed_communities($username)
     {
-        $subscribed_communities=DB::select(" select community_id
+        $subscribed_communities = DB::select(" select community_id
         	                              from subscribtions
         	                              where (username='$username')");
-       return $subscribed_communities;
+
+        return $subscribed_communities;
     }
 
 
@@ -33,6 +35,7 @@ class Subscribtion extends Model
     {
         try {
             Subscribtion::create(['username' => $username , 'community_id' => $community_id ]);
+
             return true;
         } catch (\Exception $e) {
             return false;
@@ -43,11 +46,12 @@ class Subscribtion extends Model
     public static function remove($username, $community_id)
     {
         $result = Subscribtion::where('username', $username)->where('community_id', $community_id)->delete();
+
         return $result;
     }
 
 
-    public static function createDummySubscribtion($community_id,$username)
+    public static function createDummySubscribtion($community_id, $username)
     {
         return Subscribtion::create(['username' => $username , 'community_id' => $community_id ]);
     }
