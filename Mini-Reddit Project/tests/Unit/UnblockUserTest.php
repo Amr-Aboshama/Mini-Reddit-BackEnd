@@ -11,7 +11,6 @@ use App\Following;
 
 class UnblockUserTest extends TestCase
 {
-
     public function testUnAuthorizedUser()
     {
         $this->json('POST', 'api/auth/unblockUser', [], [])
@@ -146,5 +145,4 @@ class UnblockUserTest extends TestCase
         $user1->delete();
         $user2->delete();
     }
-
 }

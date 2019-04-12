@@ -718,36 +718,32 @@ class InteractingController extends Controller
         $Commentedposts = Link::postsUserCommentedOn($request->username);
         $posts_comments = array();
         $i = 0;
-        foreach($Commentedposts as $post)
-        {
-             $post->community_id = $post->community_id != null ? $post->community_id : -1;
-             $post->community = "none";
-             if($post->community_id != -1)
-             {
-                 $post->community = Community::getCommunity($post->community_id)->name;
-             }
+        foreach ($Commentedposts as $post) {
+            $post->community_id = $post->community_id != null ? $post->community_id : -1;
+            $post->community = "none";
+            if ($post->community_id != -1) {
+                $post->community = Community::getCommunity($post->community_id)->name;
+            }
 
-             $posts_comments[$i]['post'] = $post;
-             $posts_comments[$i]['comments'] = Link ::commentsOfPostsByUser($post->post_id ,$request->username );
+            $posts_comments[$i]['post'] = $post;
+            $posts_comments[$i]['comments'] = Link ::commentsOfPostsByUser($post->post_id, $request->username);
 
-             foreach($posts_comments[$i]['comments'] as $comments)
-             {
-                  try {
-                      $comments->upvoted = 'false';
-                      $comments->downvoted = 'false';
-                      $tokenFetch = JWTAuth::parseToken()->authenticate();
-                      $username = auth()->user()->username;
-                      if (UpvotedLink::upvoted($comments->comment_id, $username)) {
-                          $comments->upvoted = 'true';
-                      } elseif (DownvotedLink::downvoted($comments->comment_id, $username)) {
-                          $comments->downvoted = 'true';
-                      }
-                  } catch (JWTException $e) {
-                  }
+            foreach ($posts_comments[$i]['comments'] as $comments) {
+                try {
+                    $comments->upvoted = 'false';
+                    $comments->downvoted = 'false';
+                    $tokenFetch = JWTAuth::parseToken()->authenticate();
+                    $username = auth()->user()->username;
+                    if (UpvotedLink::upvoted($comments->comment_id, $username)) {
+                        $comments->upvoted = 'true';
+                    } elseif (DownvotedLink::downvoted($comments->comment_id, $username)) {
+                        $comments->downvoted = 'true';
+                    }
+                } catch (JWTException $e) {
+                }
+            }
 
-             }
-
-             $i++;
+            $i++;
         }
 
         return response()->json($posts_comments, 200);
@@ -1046,91 +1042,83 @@ class InteractingController extends Controller
      */
     public function ViewSavedLinks(Request $request)
     {
-         $username = auth()->user()->username;
-         $links = Link::savedPostsOrPostsHaveSavedComments($username);
-         $links_comments = array();
-         $i = 0;
-         foreach($links as $link)
-         {
-             if(!SavedLink::isSaved($link->link_id , $username))
-             {
-                  $links_comments[$i]['type'] = 'comment';
-                  $links_comments[$i]['post']['title']=$link->title;
-                  $links_comments[$i]['post']['post_id']=$link->link_id;
-                  $links_comments[$i]['post']['body']=$link->content;
-                  $links_comments[$i]['post']['community_id']=$link->community_id != null ? $link->community_id : -1;
-                  $links_comments[$i]['post']['author_username']=$link->author_username;
-                  $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id ,$username);
-                  foreach($links_comments[$i]['comments'] as $comments)
-                  {
-                       $comments->upvoted = 'false';
-                       $comments->downvoted = 'false';
-                       if (UpvotedLink::upvoted($comments->comment_id, $username)) {
-                           $comments->upvoted = 'true';
-                       } elseif (DownvotedLink::downvoted($comments->comment_id, $username)) {
-                           $comments->downvoted = 'true';
-                       }
-                  }
+        $username = auth()->user()->username;
+        $links = Link::savedPostsOrPostsHaveSavedComments($username);
+        $links_comments = array();
+        $i = 0;
+        foreach ($links as $link) {
+            if (!SavedLink::isSaved($link->link_id, $username)) {
+                $links_comments[$i]['type'] = 'comment';
+                $links_comments[$i]['post']['title'] = $link->title;
+                $links_comments[$i]['post']['post_id'] = $link->link_id;
+                $links_comments[$i]['post']['body'] = $link->content;
+                $links_comments[$i]['post']['community_id'] = $link->community_id != null ? $link->community_id : -1;
+                $links_comments[$i]['post']['author_username'] = $link->author_username;
+                $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id, $username);
+                foreach ($links_comments[$i]['comments'] as $comments) {
+                    $comments->upvoted = 'false';
+                    $comments->downvoted = 'false';
+                    if (UpvotedLink::upvoted($comments->comment_id, $username)) {
+                        $comments->upvoted = 'true';
+                    } elseif (DownvotedLink::downvoted($comments->comment_id, $username)) {
+                        $comments->downvoted = 'true';
+                    }
+                }
+            } else {
+                $links_comments[$i]['body'] = $link->content;
+                $links_comments[$i]['title'] = $link->title;
+                $links_comments[$i]['upvotes'] = $link->upvotes;
+                $links_comments[$i]['downvotes'] = $link->downvotes;
+                $links_comments[$i]['post_id'] = $link->link_id;
+                $links_comments[$i]['community_id'] = $link->community_id != null ? $link->community_id :-1 ;
+                $links_comments[$i]['community'] = 'none';
+                $links_comments[$i]['subscribed'] = 'false';
+                $links_comments[$i]['upvoted'] = 'false';
+                $links_comments[$i]['downvoted'] = 'false';
+                $links_comments[$i]['comments_num'] = Link::commentsNum($link->link_id);
+                $links_comments[$i]['hidden'] = 'false';
+                $links_comments[$i]['post_image'] = $link->content_image != null ? $post->content_image : -1;
+                $links_comments[$i]['video_url'] = $link->video_url != null ? $post->video_url : -1  ;
+                if (HiddenPost::hidden($link->link_id, $username)) {
+                    $links_comments[$i]['hidden'] = 'true';
+                }
+                if (UpvotedLink::upvoted($link->link_id, $username)) {
+                    $links_comments[$i]['upvoted'] = 'true';
+                } elseif (DownvotedLink::downvoted($link->link_id, $username)) {
+                    $links_comments[$i]['downvoted'] = 'true';
+                }
+                if ($links_comments[$i]['community_id'] != -1) {
+                    $community = Community::getCommunity($link->community_id);
+                    $links_comments[$i]['community'] = $community->name;
+                    if (Subscribtion::subscribed($links_comments[$i]['community_id'], $username)) {
+                        $links_comments[$i]['subscribed'] = "true";
+                    }
+                }
 
-             } else {
-                  $links_comments[$i]['body'] = $link->content;
-                  $links_comments[$i]['title'] = $link->title;
-                  $links_comments[$i]['upvotes'] = $link->upvotes;
-                  $links_comments[$i]['downvotes'] = $link->downvotes;
-                  $links_comments[$i]['post_id'] = $link->link_id;
-                  $links_comments[$i]['community_id'] = $link->community_id != null ? $link->community_id :-1 ;
-                  $links_comments[$i]['community'] = 'none';
-                  $links_comments[$i]['subscribed'] = 'false';
-                  $links_comments[$i]['upvoted'] = 'false';
-                  $links_comments[$i]['downvoted'] = 'false';
-                  $links_comments[$i]['comments_num'] = Link::commentsNum($link->link_id);
-                  $links_comments[$i]['hidden'] = 'false';
-                  $links_comments[$i]['post_image'] = $link->content_image != null ? $post->content_image : -1;
-                  $links_comments[$i]['video_url'] = $link->video_url != null ? $post->video_url : -1  ;
-                  if (HiddenPost::hidden($link->link_id, $username)) {
-                      $links_comments[$i]['hidden'] = 'true';
-                  }
-                  if (UpvotedLink::upvoted($link->link_id, $username)) {
-                      $links_comments[$i]['upvoted'] = 'true';
-                  } elseif (DownvotedLink::downvoted($link->link_id, $username)) {
-                      $links_comments[$i]['downvoted'] = 'true';
-                  }
-                  if($links_comments[$i]['community_id'] != -1)
-                  {
-                       $community = Community::getCommunity($link->community_id);
-                       $links_comments[$i]['community'] = $community->name;
-                       if (Subscribtion::subscribed($links_comments[$i]['community_id'], $username)) {
-                            $links_comments[$i]['subscribed'] = "true";
-                       }
-                  }
+                $links_comments[$i]['type'] = 'post';
+                if (Link::isPostHasSavedCommentsByUser($link->link_id, $username)) {
+                    $i++;
+                    $links_comments[$i]['post']['title'] = $link->title;
+                    $links_comments[$i]['post']['post_id'] = $link->link_id;
+                    $links_comments[$i]['post']['body'] = $link->content;
+                    $links_comments[$i]['post']['community_id'] = $link->community_id != null ? $link->community_id : -1;
+                    $links_comments[$i]['post']['author_username'] = $link->author_username;
+                    $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id, $username);
+                    foreach ($links_comments[$i]['comments'] as $comments) {
+                        $comments->upvoted = 'false';
+                        $comments->downvoted = 'false';
+                        if (UpvotedLink::upvoted($comments->comment_id, $username)) {
+                            $comments->upvoted = 'true';
+                        } elseif (DownvotedLink::downvoted($comments->comment_id, $username)) {
+                            $comments->downvoted = 'true';
+                        }
+                    }
+                }
+            }
+            $i++;
+        }
 
-                  $links_comments[$i]['type'] = 'post';
-                  if(Link::isPostHasSavedCommentsByUser($link->link_id , $username))
-                  {
-                       $i++;
-                       $links_comments[$i]['post']['title']=$link->title;
-                       $links_comments[$i]['post']['post_id']=$link->link_id;
-                       $links_comments[$i]['post']['body']=$link->content;
-                       $links_comments[$i]['post']['community_id']=$link->community_id != null ? $link->community_id : -1;
-                       $links_comments[$i]['post']['author_username']=$link->author_username;
-                       $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id ,$username);
-                       foreach($links_comments[$i]['comments'] as $comments)
-                       {
-                            $comments->upvoted = 'false';
-                            $comments->downvoted = 'false';
-                            if (UpvotedLink::upvoted($comments->comment_id, $username)) {
-                                $comments->upvoted = 'true';
-                            } elseif (DownvotedLink::downvoted($comments->comment_id, $username)) {
-                                $comments->downvoted = 'true';
-                            }
-                       }
-                  }
-
-             }
-             $i++;
-         }
-
-         return response()->json($links_comments,200);
+        return response()->json($links_comments, 200);
 
         return response()->json($links_comments, 200);
     }

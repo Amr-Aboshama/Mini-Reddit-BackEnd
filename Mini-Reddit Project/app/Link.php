@@ -383,6 +383,7 @@ class Link extends Model
     public static function commentsOfPostsByUser($link_id, $username)
     {
         $links = DB::Select("SELECT upvotes , downvotes , link_id as comment_id , content as body , link_date from links where author_username = '$username' and post_id = '$link_id' order by link_date DESC ");
+
         return $links;
     }
 
@@ -441,23 +442,24 @@ class Link extends Model
      * @return boolean           return 1 if it's a comment or a reply bu the user , 0 if not.
      */
 
-    public static function isCommentByUser($link_id , $username)
+    public static function isCommentByUser($link_id, $username)
     {
-         $result = DB::Select("SELECT exists( select * from links where author_username = '$username' and parent_id is not null and link_id = '$link_id'  ) as result");
-         return $result[0]->result;
+        $result = DB::Select("SELECT exists( select * from links where author_username = '$username' and parent_id is not null and link_id = '$link_id'  ) as result");
+
+        return $result[0]->result;
     }
 
     /**
      * check if the given comment or reply belongs to the given post
      * @param  int  $comment_id the id of the comment or the reply.
      * @param  int  $link_id    the id of the post
-     * @return boolean             return 1 if it's a comment or reply on the given post ,0 if not.  
+     * @return boolean             return 1 if it's a comment or reply on the given post ,0 if not.
      */
 
-    public static function isCommentOrReplyOfPost($comment_id , $link_id)
+    public static function isCommentOrReplyOfPost($comment_id, $link_id)
     {
-         $result = DB::Select("SELECT exists( select * from links where link_id = '$comment_id' and post_id = '$link_id' ) as result");
-         return $result[0]->result;
-    }
+        $result = DB::Select("SELECT exists( select * from links where link_id = '$comment_id' and post_id = '$link_id' ) as result");
 
+        return $result[0]->result;
+    }
 }
