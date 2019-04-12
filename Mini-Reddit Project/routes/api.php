@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 
 Route::middleware('auth:api')->group(function () {
-    Route::delete('/auth/delete/account', 'AccountSettingsController@deleteMyAccount');
+    Route::post('/auth/delete/account', 'AccountSettingsController@deleteMyAccount');
     Route::patch('/auth/change/password', 'AccountSettingsController@changePassword');
     Route::patch('/auth/updateDisplayName', 'AccountSettingsController@updateDisplayName');
     Route::patch('/auth/updateAbout', 'AccountSettingsController@updateAbout');
@@ -27,7 +27,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/auth/followers', 'FollowingController@viewUserFollowers');
     Route::get('/auth/following', 'FollowingController@viewUserFollowing');
     Route::post('/auth/follow', 'FollowingController@followUser');//
-    Route::delete('/auth/unfollow', 'FollowingController@unfollowUser');//*
+    Route::post('/auth/unfollow', 'FollowingController@unfollowUser');//*
     Route::get('/auth/viewUserMessage', 'MessagesController@viewUserMessage');
     Route::get('/auth/viewUserSentMessages', 'MessagesController@viewUserSentMessages');
     Route::get('/auth/viewUserInboxMessages', 'MessagesController@viewUserInboxMessages');
@@ -35,21 +35,21 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/auth/signOut', 'AuthenticationController@signOut');
     Route::get('/auth/blockedUsers', 'PrivacyController@viewBlockedUsers');
     Route::post('/auth/blockUser', 'PrivacyController@blockUser');//
-    Route::delete('/auth/unblockUser', 'PrivacyController@unblockUser');//*
+    Route::post('/auth/unblockUser', 'PrivacyController@unblockUser');//*
     Route::post('/auth/editCommunity', 'CommunitiesController@editCommunity');
     Route::post('/auth/createCommunity', 'CommunitiesController@createCommunity');
-    Route::delete('/auth/removeCommunity', 'CommunitiesController@removeCommunity');
+    Route::post('/auth/removeCommunity', 'CommunitiesController@removeCommunity');
     Route::post('/auth/addModerator', 'CommunitiesController@addModretorForCommunity');
-    Route::delete('/auth/removeModerator', 'CommunitiesController@removeModretorFromCommunity');
+    Route::post('/auth/removeModerator', 'CommunitiesController@removeModretorFromCommunity');
     Route::post('/auth/subscribeCommunity', 'CommunitiesController@subscribeCommunity'); //
-    Route::delete('/auth/unSubscribeCommunity', 'CommunitiesController@unsubscribeCommunity'); //*
+    Route::post('/auth/unSubscribeCommunity', 'CommunitiesController@unsubscribeCommunity'); //*
     Route::post('/auth/saveLink', 'InteractingController@saveLink'); //
-    Route::delete('/auth/saveLink', 'InteractingController@unsaveLink'); //*
+    Route::post('/auth/saveLink', 'InteractingController@unsaveLink'); //*
     Route::post('/auth/addLink', 'InteractingController@addNewLink');
     Route::patch('/auth/pinPost', 'InteractingController@pinOrUnpinPost');
-    Route::delete('/auth/removeLink', 'InteractingController@removeLink');//
+    Route::post('/auth/removeLink', 'InteractingController@removeLink');//
     Route::post('/auth/hidePost', 'InteractingController@hidePost'); //
-    Route::delete('/auth/unhidePost', 'InteractingController@unhidePost');//
+    Route::post('/auth/unhidePost', 'InteractingController@unhidePost');//
     Route::patch('/auth/editPost', 'InteractingController@editPost');
     Route::patch('/auth/editComment', 'InteractingController@editComment');
     Route::post('/auth/upvoteLink', 'InteractingController@upvoteLink');//
