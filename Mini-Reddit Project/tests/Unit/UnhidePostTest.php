@@ -31,7 +31,7 @@ class UnhidePostTest extends TestCase
         auth()->logout($user);
 
         $payload = ['post_id' => $post->id];
-        $this->json('DELETE', 'api/auth/unhidePost', $payload, $headers)
+        $this->json('POST', 'api/auth/unhidePost', $payload, $headers)
           ->assertStatus(401)
           ->assertJson([
               'success' => 'false',
@@ -52,7 +52,7 @@ class UnhidePostTest extends TestCase
 
         $token = auth()->login($user);
         $headers = [$token];
-        $this->json('DELETE', 'api/auth/unhidePost', [], $headers)
+        $this->json('POST', 'api/auth/unhidePost', [], $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -85,7 +85,7 @@ class UnhidePostTest extends TestCase
         $headers = [$token];
         $payload = ['post_id' => $comment->id];
         HiddenPost::hidePost($comment->id, $user->username);
-        $this->json('DELETE', 'api/auth/unhidePost', $payload, $headers)
+        $this->json('POST', 'api/auth/unhidePost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -112,7 +112,7 @@ class UnhidePostTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['post_id' => $post->id];
-        $this->json('DELETE', 'api/auth/unhidePost', $payload, $headers)
+        $this->json('POST', 'api/auth/unhidePost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -140,7 +140,7 @@ class UnhidePostTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['post_id' => $post->id];
-        $this->json('DELETE', 'api/auth/unhidePost', $payload, $headers)
+        $this->json('POST', 'api/auth/unhidePost', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'

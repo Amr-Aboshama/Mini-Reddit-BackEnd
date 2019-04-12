@@ -31,7 +31,7 @@ class RemoveLinkTest extends TestCase
         auth()->logout($user);
 
         $payload = ['link_id' => $link->id];
-        $this->json('DELETE', 'api/auth/removeLink', $payload, $headers)
+        $this->json('POST', 'api/auth/removeLink', $payload, $headers)
           ->assertStatus(401)
           ->assertJson([
               'success' => 'false',
@@ -56,7 +56,7 @@ class RemoveLinkTest extends TestCase
         ]);
         $token = auth()->login($user);
         $headers = [$token];
-        $this->json('DELETE', 'api/auth/removeLink', [], $headers)
+        $this->json('POST', 'api/auth/removeLink', [], $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -83,7 +83,7 @@ class RemoveLinkTest extends TestCase
         $headers = [$token];
         Link::removeLink($link->id);
         $payload = ['link_id' => $link->id];
-        $this->json('DELETE', 'api/auth/removeLink', $payload, $headers)
+        $this->json('POST', 'api/auth/removeLink', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -109,7 +109,7 @@ class RemoveLinkTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['link_id' => $link->id];
-        $this->json('DELETE', 'api/auth/removeLink', $payload, $headers)
+        $this->json('POST', 'api/auth/removeLink', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -136,7 +136,7 @@ class RemoveLinkTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['link_id' => $link->id];
-        $this->json('DELETE', 'api/auth/removeLink', $payload, $headers)
+        $this->json('POST', 'api/auth/removeLink', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'
@@ -163,7 +163,7 @@ class RemoveLinkTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['link_id' => $link->id];
-        $this->json('DELETE', 'api/auth/removeLink', $payload, $headers)
+        $this->json('POST', 'api/auth/removeLink', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'
@@ -197,7 +197,7 @@ class RemoveLinkTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['link_id' => $link->id];
-        $this->json('DELETE', 'api/auth/removeLink', $payload, $headers)
+        $this->json('POST', 'api/auth/removeLink', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'
@@ -224,7 +224,7 @@ class RemoveLinkTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['link_id' => $link->id];
-        $this->json('DELETE', 'api/auth/removeLink', $payload, $headers)
+        $this->json('POST', 'api/auth/removeLink', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',

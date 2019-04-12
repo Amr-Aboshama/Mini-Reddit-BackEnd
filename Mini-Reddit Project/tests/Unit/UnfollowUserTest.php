@@ -13,7 +13,7 @@ class UnfollowUserTest extends TestCase
 {
     public function testUnAuthorizedUser()
     {
-        $this->json('DELETE', 'api/auth/unfollow', [], [])
+        $this->json('POST', 'api/auth/unfollow', [], [])
             ->assertStatus(401)
             ->assertJson([
                 "success" => "false",
@@ -33,7 +33,7 @@ class UnfollowUserTest extends TestCase
 
         $headers = [$token];
         $payload = ['username' => 'tes'];
-        $this->json('DELETE', 'api/auth/unfollow', $payload, $headers)
+        $this->json('POST', 'api/auth/unfollow', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -41,7 +41,7 @@ class UnfollowUserTest extends TestCase
             ]);
 
         $payload = ['username' => ''];
-        $this->json('DELETE', 'api/auth/unfollow', $payload, $headers)
+        $this->json('POST', 'api/auth/unfollow', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -72,7 +72,7 @@ class UnfollowUserTest extends TestCase
         $headers = [$token];
         $payload = ['username' => $user2->username];
 
-        $this->json('DELETE', 'api/auth/unfollow', $payload, $headers)
+        $this->json('POST', 'api/auth/unfollow', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -104,7 +104,7 @@ class UnfollowUserTest extends TestCase
         $headers = [$token];
         $payload = ['username' => $user2->username];
 
-        $this->json('DELETE', 'api/auth/unfollow', $payload, $headers)
+        $this->json('POST', 'api/auth/unfollow', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -134,7 +134,7 @@ class UnfollowUserTest extends TestCase
 
         $headers = [$token];
         $payload = ['username' => $user2->username];
-        $this->json('DELETE', 'api/auth/unfollow', $payload, $headers)
+        $this->json('POST', 'api/auth/unfollow', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -165,7 +165,7 @@ class UnfollowUserTest extends TestCase
 
         $headers = [$token];
         $payload = ['username' => $user2->username];
-        $this->json('DELETE', 'api/auth/unfollow', $payload, $headers)
+        $this->json('POST', 'api/auth/unfollow', $payload, $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true"
