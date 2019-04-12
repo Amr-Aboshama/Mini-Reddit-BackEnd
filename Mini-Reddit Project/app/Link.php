@@ -434,11 +434,25 @@ class Link extends Model
         return $links[0]->result;
     }
 
+    /**
+     * check if the give id is the id of a comment by the given user
+     * @param  int  $link_id  the id of the comments or the reply.
+     * @param  string  $username the username of the user
+     * @return boolean           return 1 if it's a comment or a reply bu the user , 0 if not.
+     */
+
     public static function isCommentByUser($link_id , $username)
     {
          $result = DB::Select("SELECT exists( select * from links where author_username = '$username' and parent_id is not null and link_id = '$link_id'  ) as result");
          return $result[0]->result;
     }
+
+    /**
+     * check if the given comment or reply belongs to the given post
+     * @param  int  $comment_id the id of the comment or the reply.
+     * @param  int  $link_id    the id of the post
+     * @return boolean             return 1 if it's a comment or reply on the given post ,0 if not.  
+     */
 
     public static function isCommentOrReplyOfPost($comment_id , $link_id)
     {

@@ -746,13 +746,8 @@ class InteractingController extends Controller
                   }
 
              }
+
              $i++;
-        }
-
-            $posts_comments[$i]['post'] = $post;
-            $posts_comments[$i]['comments'] = Link ::commentsOfPostsByUser($post->post_id, $request->username);
-
-            $i++;
         }
 
         return response()->json($posts_comments, 200);
