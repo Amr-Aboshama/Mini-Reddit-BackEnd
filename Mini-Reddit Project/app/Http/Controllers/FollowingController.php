@@ -19,7 +19,7 @@ class FollowingController extends Controller
      * @bodyParam username string required Username to show his followers
      * @response 200 {
      *  "success": "true",
-     * 	"follwersList": ["John Smith"]
+     * 	"follwersList": ["john-smith"]
      * }
      *
      * @response 401 {
@@ -63,7 +63,7 @@ class FollowingController extends Controller
      * @bodyParam username string required Username to show his followering
      * @response 200 {
      *  "success": "true",
-     * 	"follwingList": ["John Smith", "John Kay"]
+     * 	"follwingList": ["john_smith", "john-kay"]
      * }
      *
      * @response 401 {
