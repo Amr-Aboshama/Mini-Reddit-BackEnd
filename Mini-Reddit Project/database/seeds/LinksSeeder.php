@@ -147,7 +147,7 @@ class LinksSeeder extends Seeder
             'content' => 'reply on comment2 on post1',
             'link_date' => date('Y-m-d H:i:s'),
             'author_username' => 'menna',
-            'parent_id' =>11 ,
+            'parent_id' => 11 ,
             'post_id' => 1
 
 

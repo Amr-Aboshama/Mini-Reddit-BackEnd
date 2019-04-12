@@ -44,7 +44,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/auth/subscribeCommunity', 'CommunitiesController@subscribeCommunity'); //
     Route::post('/auth/unSubscribeCommunity', 'CommunitiesController@unsubscribeCommunity'); //*
     Route::post('/auth/saveLink', 'InteractingController@saveLink'); //
-    Route::post('/auth/saveLink', 'InteractingController@unsaveLink'); //*
+    Route::post('/auth/unsaveLink', 'InteractingController@unsaveLink'); //*
     Route::post('/auth/addLink', 'InteractingController@addNewLink');
     Route::patch('/auth/pinPost', 'InteractingController@pinOrUnpinPost');
     Route::post('/auth/removeLink', 'InteractingController@removeLink');//
