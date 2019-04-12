@@ -13,15 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call( [UsersSeeder::class
+        $this->call([UsersSeeder::class
             ,CommunitiesSeeder::class
             ,FollowingSeeder::class
             ,LinksSeeder::class
             ,SubsribeSeeder::class
             ,BlockingSeeder::class
             ,SavedLinksSeeder::class
-            ,UpvotedLinks::class
-            ,DownvotedLinks::class
+            ,UpvotedLinksSeeder::class
+            ,DownvotedLinksSeeder::class
         ]);
     }
 }
