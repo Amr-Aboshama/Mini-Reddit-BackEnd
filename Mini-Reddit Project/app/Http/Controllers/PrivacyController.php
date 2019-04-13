@@ -18,7 +18,7 @@ class PrivacyController extends Controller
      * @authenticated
      * @response 200 {
      * 	"success": "true",
-     * 	"blockedList": ["John Smith"]
+     * 	"blockedList": ["john-smith"]
      * }
      *
      * @response 401 {

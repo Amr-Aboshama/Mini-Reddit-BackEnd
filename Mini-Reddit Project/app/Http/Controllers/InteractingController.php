@@ -690,18 +690,14 @@ class InteractingController extends Controller
      * @bodyParam username string required username of the user you wanna see his/her comments on posts.
      * @response 200 {
      *  "0":{"post":{"post_id" : 1 ,"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 },"comments" :[
-     *      {"comment_id":55 ,"body":"comment1 on post1" , "date" : "2 days ago"},{"comment_id":59 ,"body":"comment2 on post1" , "date" : "3 days ago"}
+     *      {"comment_id":55 ,"body":"comment1 on post1" , "date" : "2 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":59 ,"body":"comment2 on post1" , "date" : "3 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
      *  ] } ,
      *  "1":{"post":{"post_id" : 7 ,"body":"post2" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 } , "comments":[
-     *     {"comment_id":40 ,"body":"comment1 on post2" , "date" : "2 days ago"},{"comment_id":89 ,"body":"comment2 on post2" , "date" : "3 days ago"},{"comment_id":79 ,"body":"comment3 on post2" , "date" : "3 days ago"}
+     *     {"comment_id":40 ,"body":"comment1 on post2" , "date" : "2 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":89 ,"body":"comment2 on post2" , "date" : "3 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":79 ,"body":"comment3 on post2" , "date" : "3 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
      *  ]},
      *  "2":{"post":{"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 },"commments" : [
-     *     {"comment_id":80 ,"body":"comment1 on post3" , "date" : "2 days ago"}
+     *     {"comment_id":80 ,"body":"comment1 on post3" , "date" : "2 days ago", "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
      *  ]}
-     * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
      * }
      * @response 403 {
      * 	"success" : "false",
@@ -731,6 +727,21 @@ class InteractingController extends Controller
 
             $posts_comments[$i]['post'] = $post;
             $posts_comments[$i]['comments'] = Link ::commentsOfPostsByUser($post->post_id, $request->username);
+
+            foreach ($posts_comments[$i]['comments'] as $comments) {
+                try {
+                    $comments->upvoted = 'false';
+                    $comments->downvoted = 'false';
+                    $tokenFetch = JWTAuth::parseToken()->authenticate();
+                    $username = auth()->user()->username;
+                    if (UpvotedLink::upvoted($comments->comment_id, $username)) {
+                        $comments->upvoted = 'true';
+                    } elseif (DownvotedLink::downvoted($comments->comment_id, $username)) {
+                        $comments->downvoted = 'true';
+                    }
+                } catch (JWTException $e) {
+                }
+            }
 
             $i++;
         }
@@ -938,6 +949,7 @@ class InteractingController extends Controller
      *  "type": "comment",
      *  "post": {
      *      "title": "post1",
+     *      "post_id" : 1,
      *      "body": "amro post1",
      *      "community_id": -1,
      *      "author_username": "amro"
@@ -947,7 +959,11 @@ class InteractingController extends Controller
      *          "comment_id": 15,
      *          "author_username": "ahmed",
      *          "body": "reply on comment2 on post1",
-     *          "link_date": "2019-04-08 00:07:00"
+     *          "link_date": "2019-04-08 00:07:00",
+     *          "upvotes" : 20,
+     *          "downvotes" : 26,
+     *             "upvoted" : "true",
+     *             "downvoted" : "false"
      *      }
      *    ]
      *},
@@ -986,8 +1002,10 @@ class InteractingController extends Controller
      *    "type": "post"
      *},
      *"3":{
+     * "type" : "comment",
      * "post": {
      *      "title": "post1",
+     *      "post_id" : 1,
      *        "body": "ahmed post1",
      *        "community_id": -1,
      *        "author_username": "ahmed"
@@ -997,14 +1015,22 @@ class InteractingController extends Controller
      *            "comment_id": 13,
      *            "body": "comment on post4",
      *            "author_username": "amro",
-     *            "link_date": "2019-04-08 00:07:00"
+     *            "link_date": "2019-04-08 00:07:00",
+     *            "upvotes" : 20,
+     *            "downvotes" : 26,
+     *             "upvoted" : "true",
+     *             "downvoted" : "false"
      *        },
      *        {
      *
      *            "comment_id": 22,
      *            "author_username": "menna",
      *            "body": "comment on post4",
-     *            "link_date": "2019-04-08 00:07:00"
+     *            "link_date": "2019-04-08 00:07:00",
+     *            "upvotes" : 20,
+     *            "downvotes" : 26,
+     *             "upvoted" : "true",
+     *             "downvoted" : "false"
      *        }
      *    ]
      *}
@@ -1024,10 +1050,20 @@ class InteractingController extends Controller
             if (!SavedLink::isSaved($link->link_id, $username)) {
                 $links_comments[$i]['type'] = 'comment';
                 $links_comments[$i]['post']['title'] = $link->title;
+                $links_comments[$i]['post']['post_id'] = $link->link_id;
                 $links_comments[$i]['post']['body'] = $link->content;
                 $links_comments[$i]['post']['community_id'] = $link->community_id != null ? $link->community_id : -1;
                 $links_comments[$i]['post']['author_username'] = $link->author_username;
                 $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id, $username);
+                foreach ($links_comments[$i]['comments'] as $comments) {
+                    $comments->upvoted = 'false';
+                    $comments->downvoted = 'false';
+                    if (UpvotedLink::upvoted($comments->comment_id, $username)) {
+                        $comments->upvoted = 'true';
+                    } elseif (DownvotedLink::downvoted($comments->comment_id, $username)) {
+                        $comments->downvoted = 'true';
+                    }
+                }
             } else {
                 $links_comments[$i]['body'] = $link->content;
                 $links_comments[$i]['title'] = $link->title;
@@ -1063,14 +1099,26 @@ class InteractingController extends Controller
                 if (Link::isPostHasSavedCommentsByUser($link->link_id, $username)) {
                     $i++;
                     $links_comments[$i]['post']['title'] = $link->title;
+                    $links_comments[$i]['post']['post_id'] = $link->link_id;
                     $links_comments[$i]['post']['body'] = $link->content;
                     $links_comments[$i]['post']['community_id'] = $link->community_id != null ? $link->community_id : -1;
                     $links_comments[$i]['post']['author_username'] = $link->author_username;
                     $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id, $username);
+                    foreach ($links_comments[$i]['comments'] as $comments) {
+                        $comments->upvoted = 'false';
+                        $comments->downvoted = 'false';
+                        if (UpvotedLink::upvoted($comments->comment_id, $username)) {
+                            $comments->upvoted = 'true';
+                        } elseif (DownvotedLink::downvoted($comments->comment_id, $username)) {
+                            $comments->downvoted = 'true';
+                        }
+                    }
                 }
             }
             $i++;
         }
+
+        return response()->json($links_comments, 200);
 
         return response()->json($links_comments, 200);
     }
