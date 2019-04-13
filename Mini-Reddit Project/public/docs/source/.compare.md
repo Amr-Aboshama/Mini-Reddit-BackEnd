@@ -32,7 +32,7 @@ curl -X POST "http://localhost/api/auth/delete/account" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"password":"2xdjp6qzYh3UP7Lm"}'
+    -d '{"password":"ALOgdGzJziguHT2f"}'
 
 ```
 
@@ -46,7 +46,7 @@ let headers = {
 }
 
 let body = {
-    "password": "2xdjp6qzYh3UP7Lm"
+    "password": "ALOgdGzJziguHT2f"
 }
 
 fetch(url, {
@@ -104,7 +104,7 @@ curl -X PATCH "http://localhost/api/auth/change/password" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"password":"mcxgUI9WyIS5ro9e","new_password":"0ZdTA165oGwMTNDY","confirm_new_password":"6MQW0MKMYUUiANqN"}'
+    -d '{"password":"AVuzWkZKO2AldKqo","new_password":"7Vsz9RSmsvpA0bFP","confirm_new_password":"ogIaH4CbHt8sFv8j"}'
 
 ```
 
@@ -118,9 +118,9 @@ let headers = {
 }
 
 let body = {
-    "password": "mcxgUI9WyIS5ro9e",
-    "new_password": "0ZdTA165oGwMTNDY",
-    "confirm_new_password": "6MQW0MKMYUUiANqN"
+    "password": "AVuzWkZKO2AldKqo",
+    "new_password": "7Vsz9RSmsvpA0bFP",
+    "confirm_new_password": "ogIaH4CbHt8sFv8j"
 }
 
 fetch(url, {
@@ -188,7 +188,7 @@ curl -X PATCH "http://localhost/api/auth/updateDisplayName" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"name":"PIf4woE4SqjENYr8"}'
+    -d '{"name":"OHDQRMTTJXGltU2P"}'
 
 ```
 
@@ -202,7 +202,7 @@ let headers = {
 }
 
 let body = {
-    "name": "PIf4woE4SqjENYr8"
+    "name": "OHDQRMTTJXGltU2P"
 }
 
 fetch(url, {
@@ -268,7 +268,7 @@ curl -X PATCH "http://localhost/api/auth/updateAbout" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"about":"1EFKK1O0Z3B6Zsrw"}'
+    -d '{"about":"ehFOhq3fIdtvw2nm"}'
 
 ```
 
@@ -282,7 +282,7 @@ let headers = {
 }
 
 let body = {
-    "about": "1EFKK1O0Z3B6Zsrw"
+    "about": "ehFOhq3fIdtvw2nm"
 }
 
 fetch(url, {
@@ -337,23 +337,23 @@ Parameter | Type | Status | Description
 
 <!-- END_27bac20603448461f03965177b89d240 -->
 
-<!-- START_68b720b538f30f554aa42df9fd07f2d3 -->
-## Update user profile image
+<!-- START_54936a26e59a000204b04cb07e52753c -->
+## Update user profile image or cover image
 
 <br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 > Example request:
 
 ```bash
-curl -X POST "http://localhost/api/auth/updateProfileImage" \
+curl -X POST "http://localhost/api/auth/updateCoverAndProfileImage" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"profile_image":"sSQD4UhbEDFb7rGP"}'
+    -d '{"profile_image":"ugdq5uXC5bIIslDU","profile_or_cover":10}'
 
 ```
 
 ```javascript
-const url = new URL("http://localhost/api/auth/updateProfileImage");
+const url = new URL("http://localhost/api/auth/updateCoverAndProfileImage");
 
 let headers = {
     "Accept": "application/json",
@@ -362,7 +362,8 @@ let headers = {
 }
 
 let body = {
-    "profile_image": "sSQD4UhbEDFb7rGP"
+    "profile_image": "ugdq5uXC5bIIslDU",
+    "profile_or_cover": 10
 }
 
 fetch(url, {
@@ -379,7 +380,7 @@ fetch(url, {
 ```json
 {
     "success": "true",
-    "path": "storage\/app\/avatar.jpg"
+    "path": "storage\/app\/avatars\/avatar.jpg"
 }
 ```
 > Example response (401):
@@ -398,17 +399,26 @@ fetch(url, {
     "error": "Unsupported media type"
 }
 ```
+> Example response (403):
+
+```json
+{
+    "success": "false",
+    "error": "photo is not categorized neither profile nor cover photo"
+}
+```
 
 ### HTTP Request
-`POST api/auth/updateProfileImage`
+`POST api/auth/updateCoverAndProfileImage`
 
 #### Body Parameters
 
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
     profile_image | file |  required  | User's new profile image.
+    profile_or_cover | integer |  required  | 1 for profile 2 for cover.
 
-<!-- END_68b720b538f30f554aa42df9fd07f2d3 -->
+<!-- END_54936a26e59a000204b04cb07e52753c -->
 
 #Authentication
 sign in , sign up .....etc
@@ -471,7 +481,7 @@ fetch(url, {
 ```bash
 curl -X POST "http://localhost/api/unauth/signIn" \
     -H "Content-Type: application/json" \
-    -d '{"username":"uXeTaogk5h7fjqZn","password":"i2kPIgxPONxUMH4k"}'
+    -d '{"username":"jFZlNtLl722qE3eM","password":"g35QrAzw2c2dARWu"}'
 
 ```
 
@@ -484,8 +494,8 @@ let headers = {
 }
 
 let body = {
-    "username": "uXeTaogk5h7fjqZn",
-    "password": "i2kPIgxPONxUMH4k"
+    "username": "jFZlNtLl722qE3eM",
+    "password": "g35QrAzw2c2dARWu"
 }
 
 fetch(url, {
@@ -542,7 +552,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X POST "http://localhost/api/unauth/signUp" \
     -H "Content-Type: application/json" \
-    -d '{"username":"diW6Q2oMsVtHMijv","password":"VxFWLWq6KmM5J0pI","password_confirmation":"K9IiNms0tKBipLUJ","email":"TwEpjJe1bCtuKGlV"}'
+    -d '{"username":"7JHweQExZdynhB7F","password":"nA4zHVVsh4e8CTDK","password_confirmation":"ijqBjsGtWUOGETIE","email":"0hwx21dDPUj8vMni"}'
 
 ```
 
@@ -555,10 +565,10 @@ let headers = {
 }
 
 let body = {
-    "username": "diW6Q2oMsVtHMijv",
-    "password": "VxFWLWq6KmM5J0pI",
-    "password_confirmation": "K9IiNms0tKBipLUJ",
-    "email": "TwEpjJe1bCtuKGlV"
+    "username": "7JHweQExZdynhB7F",
+    "password": "nA4zHVVsh4e8CTDK",
+    "password_confirmation": "ijqBjsGtWUOGETIE",
+    "email": "0hwx21dDPUj8vMni"
 }
 
 fetch(url, {
@@ -609,7 +619,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X POST "http://localhost/api/unauth/forgetPassword" \
     -H "Content-Type: application/json" \
-    -d '{"email":"6eQED5Ti3NOFppGA"}'
+    -d '{"email":"PEsqTC7mdPPiLvhd"}'
 
 ```
 
@@ -622,7 +632,7 @@ let headers = {
 }
 
 let body = {
-    "email": "6eQED5Ti3NOFppGA"
+    "email": "PEsqTC7mdPPiLvhd"
 }
 
 fetch(url, {
@@ -669,7 +679,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X POST "http://localhost/api/unauth/resetPassword" \
     -H "Content-Type: application/json" \
-    -d '{"new_password":"fyO18vRzWpe4hGJz","confirm_new_password":"X7f7Np8Zawk8C0PL"}'
+    -d '{"new_password":"5Y4cWE8ZlfZ8OsET","confirm_new_password":"jQ469vyvFCtaEOmV"}'
 
 ```
 
@@ -682,8 +692,8 @@ let headers = {
 }
 
 let body = {
-    "new_password": "fyO18vRzWpe4hGJz",
-    "confirm_new_password": "X7f7Np8Zawk8C0PL"
+    "new_password": "5Y4cWE8ZlfZ8OsET",
+    "confirm_new_password": "jQ469vyvFCtaEOmV"
 }
 
 fetch(url, {
@@ -745,7 +755,7 @@ curl -X POST "http://localhost/api/auth/editCommunity" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":5,"rules_content":"rKDrCzeJNzVblulz","des_content":"VGZwRBoWkw7WcMy4","banner":"hizdJZkP28CO9eTt","logo":"2yh0rJHp9mbQQSt6"}'
+    -d '{"community_id":3,"rules_content":"hWxDSn5MtV7P4Ey6","des_content":"p1J08Sy48WBxXs6e","banner":"uoVg5b71OOE2ylIg","logo":"9xlNillZ5ytfoTzN"}'
 
 ```
 
@@ -759,11 +769,11 @@ let headers = {
 }
 
 let body = {
-    "community_id": 5,
-    "rules_content": "rKDrCzeJNzVblulz",
-    "des_content": "VGZwRBoWkw7WcMy4",
-    "banner": "hizdJZkP28CO9eTt",
-    "logo": "2yh0rJHp9mbQQSt6"
+    "community_id": 3,
+    "rules_content": "hWxDSn5MtV7P4Ey6",
+    "des_content": "p1J08Sy48WBxXs6e",
+    "banner": "uoVg5b71OOE2ylIg",
+    "logo": "9xlNillZ5ytfoTzN"
 }
 
 fetch(url, {
@@ -849,7 +859,7 @@ curl -X POST "http://localhost/api/auth/createCommunity" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_name":"QPLeyxBD0nhoYe4e"}'
+    -d '{"community_name":"nO28dOFcFNJKZxSN"}'
 
 ```
 
@@ -863,7 +873,7 @@ let headers = {
 }
 
 let body = {
-    "community_name": "QPLeyxBD0nhoYe4e"
+    "community_name": "nO28dOFcFNJKZxSN"
 }
 
 fetch(url, {
@@ -930,7 +940,7 @@ curl -X POST "http://localhost/api/auth/removeCommunity" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":19}'
+    -d '{"community_id":15}'
 
 ```
 
@@ -944,7 +954,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": 19
+    "community_id": 15
 }
 
 fetch(url, {
@@ -1010,7 +1020,7 @@ curl -X POST "http://localhost/api/auth/addModerator" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":14,"moderator_username":"7Zeam6VSQLm5ckZV"}'
+    -d '{"community_id":5,"moderator_username":"C2R7rcm1QJqtPHdF"}'
 
 ```
 
@@ -1024,8 +1034,8 @@ let headers = {
 }
 
 let body = {
-    "community_id": 14,
-    "moderator_username": "7Zeam6VSQLm5ckZV"
+    "community_id": 5,
+    "moderator_username": "C2R7rcm1QJqtPHdF"
 }
 
 fetch(url, {
@@ -1100,7 +1110,7 @@ curl -X POST "http://localhost/api/auth/removeModerator" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":10,"moderator_username":"5L3eOu6E2MC777UN"}'
+    -d '{"community_id":13,"moderator_username":"cVV1YvAri0jvpFNj"}'
 
 ```
 
@@ -1114,8 +1124,8 @@ let headers = {
 }
 
 let body = {
-    "community_id": 10,
-    "moderator_username": "5L3eOu6E2MC777UN"
+    "community_id": 13,
+    "moderator_username": "cVV1YvAri0jvpFNj"
 }
 
 fetch(url, {
@@ -1190,7 +1200,7 @@ curl -X POST "http://localhost/api/auth/subscribeCommunity" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":12}'
+    -d '{"community_id":14}'
 
 ```
 
@@ -1204,7 +1214,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": 12
+    "community_id": 14
 }
 
 fetch(url, {
@@ -1270,7 +1280,7 @@ curl -X POST "http://localhost/api/auth/unSubscribeCommunity" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":6}'
+    -d '{"community_id":9}'
 
 ```
 
@@ -1284,7 +1294,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": 6
+    "community_id": 9
 }
 
 fetch(url, {
@@ -1347,7 +1357,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/viewUserCommunities" \
     -H "Content-Type: application/json" \
-    -d '{"username":"JRo8WDBAoaUAxTWU"}'
+    -d '{"username":"T6kVjwINs1Dkcm02"}'
 
 ```
 
@@ -1360,7 +1370,7 @@ let headers = {
 }
 
 let body = {
-    "username": "JRo8WDBAoaUAxTWU"
+    "username": "T6kVjwINs1Dkcm02"
 }
 
 fetch(url, {
@@ -1415,7 +1425,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/communityInformation" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":"T1bRdlCs9Fd3LYip"}'
+    -d '{"community_id":"m9fGH4fRLdBuhcTA"}'
 
 ```
 
@@ -1428,7 +1438,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": "T1bRdlCs9Fd3LYip"
+    "community_id": "m9fGH4fRLdBuhcTA"
 }
 
 fetch(url, {
@@ -1450,7 +1460,8 @@ fetch(url, {
     "desription": "This Community is for Potterheads",
     "num_subscribes": 30,
     "banner": "storage\/app\/banner.jpg",
-    "logo": "storage\/app\/logo.jpg"
+    "logo": "storage\/app\/logo.jpg",
+    "subscribed": "false"
 }
 ```
 > Example response (403):
@@ -1485,7 +1496,7 @@ curl -X GET -G "http://localhost/api/auth/followers" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"t5LD8B6aLWFJg1wN"}'
+    -d '{"username":"QlqtYGIwrXeAb2wI"}'
 
 ```
 
@@ -1499,7 +1510,7 @@ let headers = {
 }
 
 let body = {
-    "username": "t5LD8B6aLWFJg1wN"
+    "username": "QlqtYGIwrXeAb2wI"
 }
 
 fetch(url, {
@@ -1560,7 +1571,7 @@ curl -X GET -G "http://localhost/api/auth/following" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"HcCeibWdr60Marab"}'
+    -d '{"username":"XiL1p9yNjUyX6Qu3"}'
 
 ```
 
@@ -1574,7 +1585,7 @@ let headers = {
 }
 
 let body = {
-    "username": "HcCeibWdr60Marab"
+    "username": "XiL1p9yNjUyX6Qu3"
 }
 
 fetch(url, {
@@ -1636,7 +1647,7 @@ curl -X POST "http://localhost/api/auth/follow" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"ve0NY2lqmKqLxOLb"}'
+    -d '{"username":"xuGQgHQqXkPosoFI"}'
 
 ```
 
@@ -1650,7 +1661,7 @@ let headers = {
 }
 
 let body = {
-    "username": "ve0NY2lqmKqLxOLb"
+    "username": "xuGQgHQqXkPosoFI"
 }
 
 fetch(url, {
@@ -1716,7 +1727,7 @@ curl -X POST "http://localhost/api/auth/unfollow" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"7I2hV5j3WUO0CImy"}'
+    -d '{"username":"BePgTuNKUJtc2PA4"}'
 
 ```
 
@@ -1730,7 +1741,7 @@ let headers = {
 }
 
 let body = {
-    "username": "7I2hV5j3WUO0CImy"
+    "username": "BePgTuNKUJtc2PA4"
 }
 
 fetch(url, {
@@ -1798,7 +1809,7 @@ curl -X POST "http://localhost/api/auth/saveLink" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":15}'
+    -d '{"link_id":1}'
 
 ```
 
@@ -1812,7 +1823,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 15
+    "link_id": 1
 }
 
 fetch(url, {
@@ -1870,7 +1881,7 @@ curl -X POST "http://localhost/api/auth/unsaveLink" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":14}'
+    -d '{"link_id":3}'
 
 ```
 
@@ -1884,7 +1895,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 14
+    "link_id": 3
 }
 
 fetch(url, {
@@ -1942,7 +1953,7 @@ curl -X POST "http://localhost/api/auth/addLink" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_content":"J4X0CUMfWm4t6DMU","parent_link_id":16,"post_title":"fAfzuuCDdtyj4XRv","community_id":16,"image_path":"yusf9olGStM20uYU","video_url":"8bzNj74CMlfGIN7i"}'
+    -d '{"post_content":"CxQ0YcNsFya0reUf","parent_link_id":13,"post_title":"Q6ZN1b2xseE0Hhu0","community_id":9,"image_path":"wCVpGxNaYiLNmWGL","video_url":"nhv9IHxAAJfTs8Ji"}'
 
 ```
 
@@ -1956,12 +1967,12 @@ let headers = {
 }
 
 let body = {
-    "post_content": "J4X0CUMfWm4t6DMU",
-    "parent_link_id": 16,
-    "post_title": "fAfzuuCDdtyj4XRv",
-    "community_id": 16,
-    "image_path": "yusf9olGStM20uYU",
-    "video_url": "8bzNj74CMlfGIN7i"
+    "post_content": "CxQ0YcNsFya0reUf",
+    "parent_link_id": 13,
+    "post_title": "Q6ZN1b2xseE0Hhu0",
+    "community_id": 9,
+    "image_path": "wCVpGxNaYiLNmWGL",
+    "video_url": "nhv9IHxAAJfTs8Ji"
 }
 
 fetch(url, {
@@ -2048,7 +2059,7 @@ curl -X PATCH "http://localhost/api/auth/pinPost" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":8}'
+    -d '{"post_id":12}'
 
 ```
 
@@ -2062,7 +2073,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 8
+    "post_id": 12
 }
 
 fetch(url, {
@@ -2160,7 +2171,7 @@ curl -X POST "http://localhost/api/auth/removeLink" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":20}'
+    -d '{"link_id":11}'
 
 ```
 
@@ -2174,7 +2185,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 20
+    "link_id": 11
 }
 
 fetch(url, {
@@ -2256,7 +2267,7 @@ curl -X POST "http://localhost/api/auth/hidePost" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":13}'
+    -d '{"post_id":5}'
 
 ```
 
@@ -2270,7 +2281,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 13
+    "post_id": 5
 }
 
 fetch(url, {
@@ -2360,7 +2371,7 @@ curl -X POST "http://localhost/api/auth/unhidePost" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":6}'
+    -d '{"post_id":1}'
 
 ```
 
@@ -2374,7 +2385,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 6
+    "post_id": 1
 }
 
 fetch(url, {
@@ -2456,7 +2467,7 @@ curl -X PATCH "http://localhost/api/auth/editPost" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":17,"new_title":"GvveSLOJfRoaQ3Qb","new_content":"AKuBWwCcbnq3hpOu","new_image":"NBXJGtNOZ1M6zLP4"}'
+    -d '{"post_id":12,"new_title":"SYXD5IKnwPKcisoV","new_content":"iDB92FXhasnLBYfa","new_image":"sQ8Y9zaDp3uQ9FBd"}'
 
 ```
 
@@ -2470,10 +2481,10 @@ let headers = {
 }
 
 let body = {
-    "post_id": 17,
-    "new_title": "GvveSLOJfRoaQ3Qb",
-    "new_content": "AKuBWwCcbnq3hpOu",
-    "new_image": "NBXJGtNOZ1M6zLP4"
+    "post_id": 12,
+    "new_title": "SYXD5IKnwPKcisoV",
+    "new_content": "iDB92FXhasnLBYfa",
+    "new_image": "sQ8Y9zaDp3uQ9FBd"
 }
 
 fetch(url, {
@@ -2550,7 +2561,7 @@ curl -X PATCH "http://localhost/api/auth/editComment" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comment_id":7,"new_content":"y3wNf2mCYEB8S8Zo"}'
+    -d '{"comment_id":4,"new_content":"ZI211cDS0Dxr7KCT"}'
 
 ```
 
@@ -2564,8 +2575,8 @@ let headers = {
 }
 
 let body = {
-    "comment_id": 7,
-    "new_content": "y3wNf2mCYEB8S8Zo"
+    "comment_id": 4,
+    "new_content": "ZI211cDS0Dxr7KCT"
 }
 
 fetch(url, {
@@ -2632,7 +2643,7 @@ curl -X POST "http://localhost/api/auth/upvoteLink" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":6}'
+    -d '{"link_id":7}'
 
 ```
 
@@ -2646,7 +2657,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 6
+    "link_id": 7
 }
 
 fetch(url, {
@@ -2800,7 +2811,7 @@ curl -X GET -G "http://localhost/api/auth/viewUpOrDownvotedPosts" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"type":14}'
+    -d '{"type":5}'
 
 ```
 
@@ -2814,7 +2825,7 @@ let headers = {
 }
 
 let body = {
-    "type": 14
+    "type": 5
 }
 
 fetch(url, {
@@ -2934,7 +2945,7 @@ curl -X GET -G "http://localhost/api/auth/viewOverview" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"A73YrnSIlicSxccm"}'
+    -d '{"username":"ao6hjVzaDIG0OfAd"}'
 
 ```
 
@@ -2948,7 +2959,7 @@ let headers = {
 }
 
 let body = {
-    "username": "A73YrnSIlicSxccm"
+    "username": "ao6hjVzaDIG0OfAd"
 }
 
 fetch(url, {
@@ -3236,6 +3247,119 @@ fetch(url, {
 
 <!-- END_27cc02800063c6e70dae5179f50b36bf -->
 
+<!-- START_a3530892d5e3e0ccd46bfd2ad33eb9e1 -->
+## Viewing the hidden posts of the user.
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+> Example request:
+
+```bash
+curl -X GET -G "http://localhost/api/auth/viewHiddenPosts" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}"
+```
+
+```javascript
+const url = new URL("http://localhost/api/auth/viewHiddenPosts");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+> Example response (200):
+
+```json
+{
+    "posts": [
+        {
+            "post_id": 1,
+            "body": "post1",
+            "image": "storage\/app\/avater.jpg",
+            "video_url": "https:\/\/www.youtube.com",
+            "title": "title1",
+            "username": "ahmed",
+            "community": "laravel",
+            "subscribed": "true",
+            "author_photo_path": "storage\/app\/avater.jpg",
+            "downvotes": 17,
+            "upvotes": 30,
+            "date": " 2 days ago ",
+            "comments_num": 0,
+            "saved": "true",
+            "upvoted": "true",
+            "downvoted": "false"
+        },
+        {
+            "post_id": 2,
+            "body": "post2",
+            "image": "storage\/app\/avater.jpg",
+            "video_url": "https:\/\/www.youtube.com",
+            "title": "title1",
+            "username": "ahmed",
+            "community": "none",
+            "subscribed": "false",
+            "author_photo_path": "storage\/app\/avater.jpg",
+            "downvotes": 15,
+            "upvotes": 20,
+            "date": " 2 days ago ",
+            "comments_num": 0,
+            "saved": "false",
+            "upvoted": "true",
+            "downvoted": "false"
+        },
+        {
+            "post_id": 3,
+            "body": "post3",
+            "image": "storage\/app\/avater.jpg",
+            "video_url": "https:\/\/www.youtube.com",
+            "title": "title1",
+            "username": "ahmed",
+            "community": "none",
+            "subscribed": "false",
+            "author_photo_path": "storage\/app\/avater.jpg",
+            "downvotes": 15,
+            "upvotes": 20,
+            "date": " 2 days ago ",
+            "comments_num": 0,
+            "saved": "true",
+            "upvoted": "true",
+            "downvoted": "false"
+        }
+    ]
+}
+```
+> Example response (404):
+
+```json
+{
+    "error": "somethimg wrong!!!!"
+}
+```
+> Example response (401):
+
+```json
+{
+    "success": "false",
+    "error": "UnAuthorized"
+}
+```
+
+### HTTP Request
+`GET api/auth/viewHiddenPosts`
+
+
+<!-- END_a3530892d5e3e0ccd46bfd2ad33eb9e1 -->
+
 <!-- START_84a5a9632e17b6b55498c323b0035bb6 -->
 ## Give Karma to a user.
 
@@ -3247,7 +3371,7 @@ curl -X POST "http://localhost/api/auth/giveReward" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"nW797PoRn1CavDKZ"}'
+    -d '{"username":"xmoKDBuyTz7vjiql"}'
 
 ```
 
@@ -3261,7 +3385,7 @@ let headers = {
 }
 
 let body = {
-    "username": "nW797PoRn1CavDKZ"
+    "username": "xmoKDBuyTz7vjiql"
 }
 
 fetch(url, {
@@ -3327,7 +3451,7 @@ curl -X POST "http://localhost/api/auth/uploadImage" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"uploaded_image":"D8HiQdiUmM2UQ6Xw"}'
+    -d '{"uploaded_image":"9jAofCGlIK1A8OLl"}'
 
 ```
 
@@ -3341,7 +3465,7 @@ let headers = {
 }
 
 let body = {
-    "uploaded_image": "D8HiQdiUmM2UQ6Xw"
+    "uploaded_image": "9jAofCGlIK1A8OLl"
 }
 
 fetch(url, {
@@ -3405,7 +3529,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/ViewPosts" \
     -H "Content-Type: application/json" \
-    -d '{"page_type":4,"username":"1sZC59EDWBtvBPRD","community_id":13}'
+    -d '{"page_type":16,"username":"Z10xa3zCYC5SwgGo","community_id":10}'
 
 ```
 
@@ -3418,9 +3542,9 @@ let headers = {
 }
 
 let body = {
-    "page_type": 4,
-    "username": "1sZC59EDWBtvBPRD",
-    "community_id": 13
+    "page_type": 16,
+    "username": "Z10xa3zCYC5SwgGo",
+    "community_id": 10
 }
 
 fetch(url, {
@@ -3533,7 +3657,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/viewComments" \
     -H "Content-Type: application/json" \
-    -d '{"username":"2XTahfTC9BvHvnmp"}'
+    -d '{"username":"eyzTqv17zHZoV5Cn"}'
 
 ```
 
@@ -3546,7 +3670,7 @@ let headers = {
 }
 
 let body = {
-    "username": "2XTahfTC9BvHvnmp"
+    "username": "eyzTqv17zHZoV5Cn"
 }
 
 fetch(url, {
@@ -3681,7 +3805,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/viewCommentsReplies" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":2}'
+    -d '{"link_id":7}'
 
 ```
 
@@ -3694,7 +3818,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 2
+    "link_id": 7
 }
 
 fetch(url, {
@@ -3788,7 +3912,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/viewSinglePost" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":12}'
+    -d '{"post_id":5}'
 
 ```
 
@@ -3801,7 +3925,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 12
+    "post_id": 5
 }
 
 fetch(url, {
@@ -3873,7 +3997,7 @@ curl -X GET -G "http://localhost/api/auth/viewUserMessage" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"message_id":9}'
+    -d '{"message_id":8}'
 
 ```
 
@@ -3887,7 +4011,7 @@ let headers = {
 }
 
 let body = {
-    "message_id": 9
+    "message_id": 8
 }
 
 fetch(url, {
@@ -4099,7 +4223,7 @@ curl -X POST "http://localhost/api/auth/sendMessage" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"rec_username":"q5O4AsGeruYX42vz","msg_content":"UkuZ9Fvh3Uc2w5FO"}'
+    -d '{"rec_username":"CgwiNJ0vRgN469Ae","msg_content":"1s08B7fj4GZQPzqT"}'
 
 ```
 
@@ -4113,8 +4237,8 @@ let headers = {
 }
 
 let body = {
-    "rec_username": "q5O4AsGeruYX42vz",
-    "msg_content": "UkuZ9Fvh3Uc2w5FO"
+    "rec_username": "CgwiNJ0vRgN469Ae",
+    "msg_content": "1s08B7fj4GZQPzqT"
 }
 
 fetch(url, {
@@ -4346,7 +4470,7 @@ curl -X POST "http://localhost/api/auth/blockUser" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"ug15kfHg0uh8tUFt"}'
+    -d '{"username":"q4cBBvxVaDle7eFE"}'
 
 ```
 
@@ -4360,7 +4484,7 @@ let headers = {
 }
 
 let body = {
-    "username": "ug15kfHg0uh8tUFt"
+    "username": "q4cBBvxVaDle7eFE"
 }
 
 fetch(url, {
@@ -4426,7 +4550,7 @@ curl -X POST "http://localhost/api/auth/unblockUser" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"4T5GpKYSgt8N3sOt"}'
+    -d '{"username":"XZJOB5RBxME5tAfM"}'
 
 ```
 
@@ -4440,7 +4564,7 @@ let headers = {
 }
 
 let body = {
-    "username": "4T5GpKYSgt8N3sOt"
+    "username": "XZJOB5RBxME5tAfM"
 }
 
 fetch(url, {
@@ -4504,7 +4628,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/search" \
     -H "Content-Type: application/json" \
-    -d '{"search_content":"cWzpCZOdrpRBKi27"}'
+    -d '{"search_content":"sroxAAe1fvxRPplv"}'
 
 ```
 
@@ -4517,7 +4641,7 @@ let headers = {
 }
 
 let body = {
-    "search_content": "cWzpCZOdrpRBKi27"
+    "search_content": "sroxAAe1fvxRPplv"
 }
 
 fetch(url, {
@@ -4676,7 +4800,7 @@ fetch(url, {
 ```bash
 curl -X GET -G "http://localhost/api/unauth/viewPublicUserInfo" \
     -H "Content-Type: application/json" \
-    -d '{"username":"ka2pZSFQiIXdkvFJ"}'
+    -d '{"username":"D6mQCrshwV4FnQ1S"}'
 
 ```
 
@@ -4689,7 +4813,7 @@ let headers = {
 }
 
 let body = {
-    "username": "ka2pZSFQiIXdkvFJ"
+    "username": "D6mQCrshwV4FnQ1S"
 }
 
 fetch(url, {

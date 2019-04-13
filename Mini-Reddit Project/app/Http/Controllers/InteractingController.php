@@ -1142,7 +1142,7 @@ class InteractingController extends Controller
      */
 
 
-    public function ViewHiddenPosts()
+    public function viewHiddenPosts()
     {
         //..
     }

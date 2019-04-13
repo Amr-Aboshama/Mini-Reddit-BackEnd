@@ -84,7 +84,7 @@ class InformationController extends Controller
             "username" => $selected_user->username,
             "name" => $selected_user->display_name,
             "karma" => $selected_user->karma,
-            "cake_day" => $selected_user->cake_day,
+            "cake_day" => $selected_user->cake_date,
             "about" => $selected_user->about,
             "photo_path" => $selected_user->photo_url,
             "cover_path" => $selected_user->cover_url
