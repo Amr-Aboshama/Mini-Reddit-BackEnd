@@ -147,11 +147,12 @@ class CommunitiesController extends Controller
             ], 401);
         }
 
-        $new_name_logo = $request->community_id.'logo'.time().'.'.request()->logo->getClientOriginalExtension();
+        
+        $new_name_logo = $request->community_id.'logo.'.request()->logo->getClientOriginalExtension();
 
         $request->logo->storeAs('avatars', $new_name_logo);
 
-        $new_name_banner = $request->community_id.'banner'.time().'.'.request()->banner->getClientOriginalExtension();
+        $new_name_banner = $request->community_id.'banner.'.request()->banner->getClientOriginalExtension();
 
         $request->banner->storeAs('avatars', $new_name_banner);
 
