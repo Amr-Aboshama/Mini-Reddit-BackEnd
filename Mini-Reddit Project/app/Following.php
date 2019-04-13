@@ -83,7 +83,7 @@ class Following extends Model
      * Get the followers of "username" except the blocked or blocking ones from "the requesting user"
      * @param  string $username        username to get his followings
      * @param  string $requesting_user username that requests to get the list
-     * @return array                  [ List of users that follows the username ] 
+     * @return array                  [ List of users that follows the username ]
      */
 
 

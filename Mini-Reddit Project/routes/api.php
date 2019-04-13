@@ -16,13 +16,13 @@ use Illuminate\Http\Request;
 
 
 Route::middleware('auth:api')->group(function () {
-    Route::post('/auth/delete/account', 'AccountSettingsController@deleteMyAccount');
-    Route::patch('/auth/change/password', 'AccountSettingsController@changePassword');
+    Route::post('/auth/deleteMyAccount', 'AccountSettingsController@deleteMyAccount');
+    Route::patch('/auth/changePassword', 'AccountSettingsController@changePassword');
     Route::patch('/auth/updateDisplayName', 'AccountSettingsController@updateDisplayName');
     Route::patch('/auth/updateAbout', 'AccountSettingsController@updateAbout');
     Route::post('/auth/updateCoverAndProfileImage', 'AccountSettingsController@updateCoverAndProfileImage');
-    Route::get('/auth/notification/check', 'NotificationController@checkNotification');
-    Route::get('/auth/notification/push', 'NotificationController@pushNotification');
+    Route::get('/auth/checkNotification', 'NotificationController@checkNotification');
+    Route::get('/auth/pushNotification', 'NotificationController@pushNotification');
     Route::get('/auth/viewPrivateUserInfo', 'InformationController@viewPrivateUserInfo');
     Route::get('/auth/followers', 'FollowingController@viewUserFollowers');
     Route::get('/auth/following', 'FollowingController@viewUserFollowing');
@@ -57,7 +57,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/auth/viewUpOrDownvotedPosts', 'InteractingController@ViewUpVotedOrDownVotedPosts');
     Route::get('/auth/viewOverview', 'InteractingController@ViewOverview');
     Route::get('/auth/viewSavedLinks', 'InteractingController@ViewSavedLinks');
-    Route::get('/auth/viewHiddenPosts' , 'InteractingController@viewHiddenPosts');
+    Route::get('/auth/viewHiddenPosts', 'InteractingController@viewHiddenPosts');
     Route::post('/auth/giveReward', 'InteractingController@giveReward');
     Route::post('/auth/uploadImage', 'InteractingController@uploadImage');
     Route::get('/auth/getUsername', 'InformationController@getUsername');
