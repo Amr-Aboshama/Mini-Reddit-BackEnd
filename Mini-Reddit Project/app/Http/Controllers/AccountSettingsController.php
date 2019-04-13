@@ -219,10 +219,11 @@ class AccountSettingsController extends Controller
      * Update user profile image
      * @authenticated
      * @bodyParam profile_image file required User's new profile image.
+     * @bodyParam profile_or_cover int required 1 for profile 2 for cover.
      *
      * @response 200 {
      * 	"success": "true",
-     * 	"path": "storage/app/avatar.jpg"
+     * 	"path": "storage/app/avatars/avatar.jpg"
      * }
      *
      * @response 401 {
@@ -235,11 +236,17 @@ class AccountSettingsController extends Controller
      * 	"error": "Unsupported media type"
      * }
      *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "photo is not categorized neither profile nor cover photo"
+     * }
+     *
      */
     public function updateProfileImage(Request $request)
     {
         $valid = Validator::make($request->all(), [
-            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3072'
+            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3072',
+            'profile_or_cover' => 'required'
         ]);
 
         if ($valid->fails()) {
@@ -254,18 +261,39 @@ class AccountSettingsController extends Controller
         if (!$user) {
             return response()->json([
 
-                "success" => "false",
-                "error" => "UnAuthorized"
+                'success' => 'false',
+                'error' => 'UnAuthorized'
             ], 401);
         }
 
+        if (!$request->has('profile_or_cover')|| 
+            !($request->profile_or_cover==1 || $request->profile_or_cover==2)) {
+            return response()->json([
 
-        $avatarName = $user->id.'_avatar'.time().'.'.request()->profile_image->getClientOriginalExtension();
+                'success' => 'false',
+                'error' => 'photo is not categorized neither profile nor cover photo'
+            ], 403);
+        }
+
+        
+        $image = $request->profile_image;
+        $avatarName = $image->getClientOriginalName();
 
         $request->profile_image->storeAs('avatars', $avatarName);
 
-        $user->photo_url = $avatarName;
-        $user->save();
+        if ($request->profile_or_cover == 1) {
+
+            
+            $user->photo_url = $avatarName;
+            $user->save();
+        } else {
+
+
+            $user->cover_url = $avatarName;
+            $user->save();
+
+        }
+        
 
 
         $response = response()->json([

@@ -215,8 +215,23 @@ class User extends Authenticatable implements JWTSubject
     public static function updateProfileImage($username, $image)
     {
         $result = User::where('username', $username)->update(['photo_url' => $image]);
-        dd($result);
+        
 
         return $result;
     }
+
+    /**
+     * getHashedPassword
+     * @param  string $username the currently logged in user
+     * @param  string $password the password i need to check its validity
+     * @return int string hashed password
+     */
+    public static function getHashedPassword($username)
+    {
+        $hashedpassword = User::select('password')->where('username', $username)->first()->password;
+
+        return $hashedpassword;
+    }
+
+   
 }
