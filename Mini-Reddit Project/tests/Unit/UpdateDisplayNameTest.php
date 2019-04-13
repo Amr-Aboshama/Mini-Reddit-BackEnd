@@ -30,10 +30,10 @@ class UpdateDisplayNameTest extends TestCase
             ->assertJson([
                 "success" => "true"
             ]);
-    
 
-        $userdisplayname = User::getUserWholeRecord($user->username)->display_name;    
-        Assert::assertEquals('testlolo', $userdisplayname);    
+
+        $userdisplayname = User::getUserWholeRecord($user->username)->display_name;
+        Assert::assertEquals('testlolo', $userdisplayname);
 
 
         $user->delete();
@@ -60,8 +60,8 @@ class UpdateDisplayNameTest extends TestCase
                 "success" => "true"
             ]);
 
-        $userdisplayname = User::getUserWholeRecord($user->username)->display_name;    
-        Assert::assertEquals('testlolo', $userdisplayname); 
+        $userdisplayname = User::getUserWholeRecord($user->username)->display_name;
+        Assert::assertEquals('testlolo', $userdisplayname);
 
         $this->json('PATCH', 'api/auth/updateDisplayName', ['name' => 'testlolo'], $headers)
             ->assertStatus(400)
@@ -88,7 +88,7 @@ class UpdateDisplayNameTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         auth()->logout();
-    
+
 
         $this->json('PATCH', 'api/auth/updateDisplayName', ['name' => 'testlolo'], $headers)
             ->assertStatus(401)
@@ -127,7 +127,7 @@ class UpdateDisplayNameTest extends TestCase
             ->assertJson([
                 'success' => 'false',
                 'error' => 'user must have a name'
-            ]);    
+            ]);
 
         $user->delete();
     }

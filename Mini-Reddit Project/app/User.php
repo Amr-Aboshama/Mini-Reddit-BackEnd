@@ -215,7 +215,7 @@ class User extends Authenticatable implements JWTSubject
     public static function updateProfileImage($username, $image)
     {
         $result = User::where('username', $username)->update(['photo_url' => $image]);
-        
+
 
         return $result;
     }
@@ -232,6 +232,4 @@ class User extends Authenticatable implements JWTSubject
 
         return $hashedpassword;
     }
-
-   
 }

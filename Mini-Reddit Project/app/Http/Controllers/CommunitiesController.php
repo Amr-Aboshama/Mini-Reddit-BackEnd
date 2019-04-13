@@ -147,7 +147,7 @@ class CommunitiesController extends Controller
             ], 401);
         }
 
-        
+
         $new_name_logo = $request->community_id.'logo.'.request()->logo->getClientOriginalExtension();
 
         $request->logo->storeAs('avatars', $new_name_logo);
