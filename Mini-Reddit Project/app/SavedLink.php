@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class SavedLink extends Model
 {
-   /**
-   * checks if the given link is saved by the given user.
-   * @param  [type]  $link_id
-   * @param  [type]  $username
-   * @return boolean     [true if saved, false if not].      
-   */
+    /**
+     * checks if the given link is saved by the given user.
+     * @param  [type]  $link_id
+     * @param  [type]  $username
+     * @return boolean     [true if saved, false if not].
+     */
 
     public static function isSaved($link_id, $username)
     {

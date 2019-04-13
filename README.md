@@ -7,11 +7,11 @@ At facing some seeder doesn't exist, run command: composer dump-autoload
 
 To Run Tests: composer test
 
-#Coding Style
+# Coding Style
 camelCase => Variables
 StudlyCaps => Objects
 
-#After Cloning
+# After Cloning
 1) Run : Composer install
 2) Run : copy .env.example .env
 3) Run : php artisan key:generate
@@ -46,4 +46,4 @@ StudlyCaps => Objects
 
    1)install the package "atom-markdown-auto-preview" on atom..
    2)from the settings of this package activate "Observe Opens" option.
-   3)go and open the file "api.md" with atom (the function doc will appear automatically ) 
+   3)go and open the file "api.md" with atom (the function doc will appear automatically )

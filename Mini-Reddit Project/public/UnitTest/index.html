@@ -36,6 +36,21 @@
             <li style="color: #555753;">✓ Already blocked user</li>
             <li style="color: #555753;">✓ Successful blocking</li>
         </ul>
+        <h2 id="Tests\Unit\ChangePasswordTest">Unit\ChangePassword</h2>
+        <ul>
+            <li style="color: #555753;">✓ Unauthorized change of password</li>
+            <li style="color: #555753;">✓ Valid change of password</li>
+            <li style="color: #555753;">✓ I wrong old password to change password</li>
+            <li style="color: #555753;">✓ Unmatched confirmation to change password</li>
+        </ul>
+        <h2 id="Tests\Unit\CreateCommunityTest">Unit\CreateCommunity</h2>
+        <ul>
+            <li style="color: #555753;">✓ Un authorization of user</li>
+            <li style="color: #555753;">✓ Non exceeding thirty days</li>
+            <li style="color: #555753;">✓ Missing contents</li>
+            <li style="color: #555753;">✓ Community name exist</li>
+            <li style="color: #555753;">✓ Community creation</li>
+        </ul>
         <h2 id="Tests\Unit\DownvoteLinkTest">Unit\DownvoteLink</h2>
         <ul>
             <li style="color: #555753;">✓ Downvote upvoted post</li>
@@ -49,6 +64,15 @@
         <ul>
             <li style="color: #555753;">✓ Unauthorized users</li>
             <li style="color: #555753;">✓ Authorized users</li>
+        </ul>
+        <h2 id="Tests\Unit\EditCommunityTest">Unit\EditCommunity</h2>
+        <ul>
+            <li style="color: #555753;">✓ Un authorization of user</li>
+            <li style="color: #555753;">✓ Non existance of community</li>
+            <li style="color: #555753;">✓ User not modirator</li>
+            <li style="color: #555753;">✓ Un valid logo</li>
+            <li style="color: #555753;">✓ Un validbanner</li>
+            <li style="color: #555753;">✓ Success edit</li>
         </ul>
         <h2 id="Tests\Unit\FollowUserTest">Unit\FollowUser</h2>
         <ul>
@@ -83,6 +107,13 @@
             <li style="color: #555753;">✓ Pin post with non owner user</li>
             <li style="color: #555753;">✓ Pin post in community by moderator</li>
             <li style="color: #555753;">✓ Pin post in community by non moderator</li>
+        </ul>
+        <h2 id="Tests\Unit\RemoveCommunityTest">Unit\RemoveCommunity</h2>
+        <ul>
+            <li style="color: #555753;">✓ Un authorization of user</li>
+            <li style="color: #555753;">✓ Non existance of community</li>
+            <li style="color: #555753;">✓ User not modirator</li>
+            <li style="color: #555753;">✓ Success removal</li>
         </ul>
         <h2 id="Tests\Unit\RemoveLinkTest">Unit\RemoveLink</h2>
         <ul>
@@ -160,6 +191,27 @@
             <li style="color: #555753;">✓ Un authorization of user</li>
             <li style="color: #555753;">✓ Successful unsubscribtion</li>
             <li style="color: #555753;">✓ Already unsubscribed</li>
+        </ul>
+        <h2 id="Tests\Unit\UpdateAboutTest">Unit\UpdateAbout</h2>
+        <ul>
+            <li style="color: #555753;">✓ Valid update of user about</li>
+            <li style="color: #555753;">✓ Update about with old value</li>
+            <li style="color: #555753;">✓ Unauthorized update of about</li>
+            <li style="color: #555753;">✓ Update about with no name</li>
+        </ul>
+        <h2 id="Tests\Unit\UpdateDisplayNameTest">Unit\UpdateDisplayName</h2>
+        <ul>
+            <li style="color: #555753;">✓ Valid update of user display name</li>
+            <li style="color: #555753;">✓ Update display name with old value</li>
+            <li style="color: #555753;">✓ Unauthorized update of display name</li>
+            <li style="color: #555753;">✓ Update display name with no name</li>
+        </ul>
+        <h2 id="Tests\Unit\UpdateProfileImageTest">Unit\UpdateProfileImage</h2>
+        <ul>
+            <li style="color: #555753;">✓ Unauthorized update of profile image</li>
+            <li style="color: #555753;">✓ Unsupported media to update profile image</li>
+            <li style="color: #555753;">✓ Uncategorized image to update profile image</li>
+            <li style="color: #555753;">✓ Valid update of user profile image</li>
         </ul>
         <h2 id="Tests\Unit\UpvotedLinkTest">Unit\UpvotedLink</h2>
         <ul>
