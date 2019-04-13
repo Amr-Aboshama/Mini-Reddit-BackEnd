@@ -12,28 +12,28 @@ class SavedLinksSeeder extends Seeder
     public function run()
     {
         DB::table('saved_links')->insert([
-            'username'=>'ahmed',
-            'link_id'=>'15'
+            'username' => 'ahmed',
+            'link_id' => '15'
         ]);
 
         DB::table('saved_links')->insert([
-            'username'=>'ahmed',
-            'link_id'=>'13'
+            'username' => 'ahmed',
+            'link_id' => '13'
         ]);
 
         DB::table('saved_links')->insert([
-            'username'=>'menna',
-            'link_id'=>'1'
+            'username' => 'menna',
+            'link_id' => '1'
         ]);
 
         DB::table('saved_links')->insert([
-            'username'=>'amro',
-            'link_id'=>'12'
+            'username' => 'amro',
+            'link_id' => '12'
         ]);
 
         DB::table('saved_links')->insert([
-            'username'=>'amro',
-            'link_id'=>'14'
+            'username' => 'amro',
+            'link_id' => '14'
         ]);
     }
 }
