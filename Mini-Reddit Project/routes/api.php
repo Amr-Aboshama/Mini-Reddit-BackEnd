@@ -20,7 +20,7 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('/auth/change/password', 'AccountSettingsController@changePassword');
     Route::patch('/auth/updateDisplayName', 'AccountSettingsController@updateDisplayName');
     Route::patch('/auth/updateAbout', 'AccountSettingsController@updateAbout');
-    Route::post('/auth/updateProfileImage', 'AccountSettingsController@updateProfileImage');
+    Route::post('/auth/updateCoverAndProfileImage', 'AccountSettingsController@updateCoverAndProfileImage');
     Route::get('/auth/notification/check', 'NotificationController@checkNotification');
     Route::get('/auth/notification/push', 'NotificationController@pushNotification');
     Route::get('/auth/viewPrivateUserInfo', 'InformationController@viewPrivateUserInfo');
@@ -57,6 +57,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/auth/viewUpOrDownvotedPosts', 'InteractingController@ViewUpVotedOrDownVotedPosts');
     Route::get('/auth/viewOverview', 'InteractingController@ViewOverview');
     Route::get('/auth/viewSavedLinks', 'InteractingController@ViewSavedLinks');
+    Route::get('/auth/viewHiddenPosts' , 'InteractingController@viewHiddenPosts');
     Route::post('/auth/giveReward', 'InteractingController@giveReward');
     Route::post('/auth/uploadImage', 'InteractingController@uploadImage');
     Route::get('/auth/getUsername', 'InformationController@getUsername');

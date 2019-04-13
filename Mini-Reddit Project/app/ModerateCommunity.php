@@ -11,12 +11,12 @@ class ModerateCommunity extends Model
     public $timestamps = false; //so that doesn't expext time columns
 
     /**
-     * this function checks if  a specific user moderate a specific community
+     * this function checks if a specific user given its username moderates a specific community given its id.
      *
      * @param   int  $community_id  the id of the community
      * @param   string  $username      the username of the user
      *
-     * @return  boolean                 true if the user moderates the community and false if not
+     * @return  boolean                 t[ rue if the user moderates the community and false if not ].
      */
     public static function checkExisting($community_id, $username)
     {
@@ -27,12 +27,12 @@ class ModerateCommunity extends Model
 
 
     /**
-     * this function creats a record in the database relation called 'moderate_community'
+     * this function creats a record in the database relation called 'moderate_community' givent the username of the moderator and the community id.
      *
      * @param   int  $community_id  the id of the community to be moderated by the user
      * @param   string  $username      the username of the moderator
      *
-     * @return  boolean                 returns true if the creation succeeded and false if it faild
+     * @return  boolean                [ true if the creation succeeded and false if it faild ].
      */
     public static function store($community_id, $username)
     {

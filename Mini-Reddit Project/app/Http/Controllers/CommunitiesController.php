@@ -59,7 +59,8 @@ class CommunitiesController extends Controller
      *    "desription": "This Community is for Potterheads",
      *    "num_subscribes": 30,
      *    "banner": "storage/app/banner.jpg",
-     *    "logo": "storage/app/logo.jpg"
+     *    "logo": "storage/app/logo.jpg",
+     *    "subscribed" : "false"
      * }
      *
      * @response 403 {

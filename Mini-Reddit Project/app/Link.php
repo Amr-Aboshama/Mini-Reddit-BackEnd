@@ -11,7 +11,7 @@ class Link extends Model
     public $timestamps = false; //so that doesn't expext time columns
 
     /**
-     * function to increment the upvotes of a specific link
+     * function to increment the upvotes of a specific link.
      *
      * @param   int  $link_id
      *
@@ -26,7 +26,7 @@ class Link extends Model
 
 
     /**
-     * function to decrement the upvotes of a specific link
+     * function to decrement the upvotes of a specific link.
      *
      * @param   int  $link_id
      *
@@ -41,7 +41,7 @@ class Link extends Model
     }
 
     /**
-     * function to increment the downvotes of a specific link
+     * function to increment the downvotes of a specific link.
      *
      * @param   int  $link_id
      *
@@ -55,7 +55,7 @@ class Link extends Model
     }
 
     /**
-     * function to decrement the downvotes of a specific link
+     * function to decrement the downvotes of a specific link.
      *
      * @param   int  $link_id
      *
@@ -72,9 +72,9 @@ class Link extends Model
 
     /**
      * scopegetPosts it's a scope type function which returns a query of all posts
-     * which i can use to filter these posts with more checks
+     * which i can use to filter these posts with more checks .
      *
-     * @return  object        query of selected posts
+     * @return  object        [ query of selected posts ].
      */
     public static function scopegetPosts($query)
     {
@@ -86,11 +86,11 @@ class Link extends Model
      * the posts of the users that our user follows and of the communities that
      * our user subscribe and excluded the posts of the users that our user
      * blocked them or be blocked by our user and then return the posts ordered
-     * by the post date
+     * by the post date.
      *
      * @param  string $username the username of our user
      *
-     * @return array list of required posts
+     * @return array  [ list of home posts ].
      */
     public static function homePosts($username)
     {
@@ -117,11 +117,11 @@ class Link extends Model
 
     /**
      * function to get the posts, either for a specific user or the whole posts
-     * based of the given argument
+     * based of the given argument ( it returns all posts if $username is null , if $username is assigned a username of a user, it returns the posts of that user ).
      *
      * @param   string  $username  default is null unless we send a username
      *
-     * @return  Array    array of objects(posts)
+     * @return  Array    [ array of objects(posts) ].
      */
     public static function popularPosts($username = null)
     {
@@ -144,12 +144,12 @@ class Link extends Model
     /**
      * return all the posts of a specific community given its id to a specific
      * user but exclude the posts of the users who block our user or blocked by
-     * him/her and then order the posts by date before returning them
+     * him/her and then order the posts by date before returning them.
      * @param  integer $community_id the id of the community that the user wants
      * to see its posts
      * @param  string $username the username of the user who wants to see the
      * community posts
-     * @return array list of the required posts
+     * @return array  [ list of the required posts ].
      */
     public static function postsOfcommunity($community_id, $username)
     {
@@ -164,11 +164,11 @@ class Link extends Model
 
 
     /**
-     * function to return the number of comments on a specific post
+     * function to return the number of comments on a specific post.
      *
      * @param   int  $post_id
      *
-     * @return  int number of comments
+     * @return  int [ number of comments ].
      */
     public static function commentsNum($post_id)
     {
@@ -194,7 +194,7 @@ class Link extends Model
 
 
     /**
-     * function to check if a link is pinned
+     * function to check if a link is pinned.
      *
      * @param   int  $link_id
      *
@@ -215,11 +215,11 @@ class Link extends Model
 
     /**
      * function to get the parent of a specific link i.e: get the post of the comment
-     * or get the comment of the reply
+     * or get the comment of the reply.
      *
      * @param   int  $link_id
      *
-     * @return  int parent id / and returns -1 if the link is a post
+     * @return  int  [ parent id / and returns -1 if the link is a post ].
      */
     public static function getParent($link_id)
     {
@@ -235,12 +235,11 @@ class Link extends Model
 
 
     /**
-     * this function toggle the pinstatus of the post
+     * this function toggle the pin status of the post given its id.
      *
      * @param   int  $link_id  the id of the link to be pinned or unpinned
      *
-     * @return  boolean            return false if the post doesn't exist or anything went wrong
-     * and returns true if it toggled the pinned status successfully
+     * @return  boolean            [ false if the post doesn't exist or anything went wrong , true if it toggled the pinned status successfully ].
      */
     public static function togglePinStatus($link_id)
     {
@@ -263,11 +262,11 @@ class Link extends Model
 
 
     /**
-     * this function gets the community id where the link is published
+     * this function gets the community id where the link is published given the id of the link.
      *
      * @param   int  $link_id  the id of the link
      *
-     * @return  int            returns -1 if the link doesn't exist and return the community id if the link exists
+     * @return  int            [ -1 if the link doesn't exist and return the community id if the link exists ].
      */
     public static function getCommunity($link_id)
     {
@@ -283,12 +282,11 @@ class Link extends Model
 
 
     /**
-     * this function gets the author's username of a specific link
+     * this function gets the author's username of a specific link given its id.
      *
      * @param   int  $link_id  the id of the link
      *
-     * @return  string            returns -1 if the link doesn't exists
-     * or the username of the author of the link if the link exists
+     * @return  string            [ -1 if the link doesn't exists  or the username of the author of the link if the link exists ].
      */
     public static function getAuthor($link_id)
     {
@@ -304,11 +302,11 @@ class Link extends Model
 
 
     /**
-     * this function creates a record into the database relation calles 'links'
+     * this function creates a record into the database relation calles 'links' given the id of the link.
      *
      * @param   array  $link_data  the data of the link to be created
      *
-     * @return  object              the created link
+     * @return  object              [ the created link ].
      */
     public static function storeLink($link_data)
     {
@@ -317,11 +315,11 @@ class Link extends Model
 
 
     /**
-     * this function is to remove a specific link from the database relation called 'links'
+     * this function is to remove a specific link from the database relation called 'links' given its id.
      *
      * @param   int  $link_id  the id of the link to be removed
      *
-     * @return  boolean            returns true if the deletion succeeded and false if it failed
+     * @return  boolean            [ true if the deletion succeeded and false if it failed ].
      */
 
     public static function removeLink($link_id)
@@ -334,7 +332,7 @@ class Link extends Model
     /**
      * it returns the posts that are upvoted by a user.
      * @param  string  $username username of the user you want to get his/her uovoted posts .
-     * @return array           it returns an array of object each object is an upvoted post by the user.
+     * @return array           [ an array of object each object is an upvoted post by the user ].
      */
 
     public static function upvotedPostsByUser($username)
@@ -345,9 +343,9 @@ class Link extends Model
     }
 
     /**
-     * it returns the posts that are downvoted by a user.
+     * it returns the posts that are downvoted by a user given his/her username.
      * @param  string $username username of the user you want to get his/her downvoted posts .
-     * @return array          it returns an array of object each object is a downvoted post by the user.
+     * @return array           [ an array of objects, each object is a downvoted post by the user ].
      */
 
     public static function downvotedPostsByUser($username)
@@ -360,7 +358,7 @@ class Link extends Model
     /**
      * this function returns all the posts which the user commented on or replied on comments of these posts.
      * @param  string $username username of the user
-     * @return array           array of object, each object is a post that the user commented on or replied on a comment belongs to that post
+     * @return array           [ array of object, each object is a post that the user commented on or replied on a comment belongs to that post ].
      */
 
     public static function postsUserCommentedOn($username)
@@ -374,10 +372,10 @@ class Link extends Model
     }
 
     /**
-     * this function returns all the comments done by a specific user on a specific post
+     * this function returns all the comments done by a specific user on a specific post.
      * @param  int $link_id  the id of the post of which you wanna get the user's comments .
      * @param  string $username the username of the user you would like to get his/her comments on the given post.
-     * @return array           array of objects, each object is a comment of the user on the given post
+     * @return array           [ array of objects, each object is a comment of the user on the given post ].
      */
 
     public static function commentsOfPostsByUser($link_id, $username)
@@ -388,10 +386,10 @@ class Link extends Model
     }
 
     /**
-     * this function returns all the saved comments by a specific user on a specific post.
+     * this function returns all the saved comments by a specific user given his/her username on a specific post given its id.
      * @param  int $link_id  the id of the post of which you wanna get the saved comments by the user.
      * @param  string $username the username of the user you would like to get the comments saved by him/her of this post.
-     * @return array           array of objects, each object is a comment of the given post saved by the user.
+     * @return array           [ array of objects, each object is a comment of the given post saved by the user ].
      */
 
     public static function savedCommentsOfPostByUser($link_id, $username)
@@ -406,7 +404,7 @@ class Link extends Model
     /**
      * this function returns the saved posts by the given user or the posts that have comments or replies saved by that user
      * @param  string $username the username of the user
-     * @return array           array of objects, each object is a post saved by the user or have comments or replies saved by that user.
+     * @return array           [ array of objects, each object is a post saved by the user or have comments or replies saved by that user ].
      */
 
     public static function savedPostsOrPostsHaveSavedComments($username)
@@ -420,10 +418,10 @@ class Link extends Model
     }
 
     /**
-     * this function checks if the given post has comments or replies which are saved by the given user or not.
+     * this function checks if the given post has comments or replies which are saved by the given user .
      * @param  int  $link_id  the id of the post
      * @param  string  $username the username of the user
-     * @return boolean           true if the post has comments or replies saved by the given user,false if not.
+     * @return boolean           [ true if the post has comments or replies saved by the given user,false if not ] .
      */
 
     public static function isPostHasSavedCommentsByUser($link_id, $username)
@@ -439,7 +437,7 @@ class Link extends Model
      * check if the give id is the id of a comment by the given user
      * @param  int  $link_id  the id of the comments or the reply.
      * @param  string  $username the username of the user
-     * @return boolean           return 1 if it's a comment or a reply bu the user , 0 if not.
+     * @return boolean           [ true if it's a comment or a reply bu the user , false if not. ]
      */
 
     public static function isCommentByUser($link_id, $username)
@@ -450,10 +448,10 @@ class Link extends Model
     }
 
     /**
-     * check if the given comment or reply belongs to the given post
+     * check if the given comment or reply ($comment_id) belongs to the given post ($link_id)
      * @param  int  $comment_id the id of the comment or the reply.
      * @param  int  $link_id    the id of the post
-     * @return boolean             return 1 if it's a comment or reply on the given post ,0 if not.
+     * @return boolean             [ true if it's a comment or reply on the given post ,false if not ].
      */
 
     public static function isCommentOrReplyOfPost($comment_id, $link_id)

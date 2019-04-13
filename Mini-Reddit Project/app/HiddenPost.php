@@ -11,13 +11,13 @@ class HiddenPost extends Model
     public $timestamps = false; //so that doesn't expext time columns
 
     /**
-     * function to check if a specific link is hidden by a user or not
+     * function to check if a specific link given its id is hidden by a user or not, given the username of that user.
      *
      * @param   int $link_id
      *
      * @param   string  $username
      *
-     * @return  bool   true for hidden, false for unhidden
+     * @return  bool   [ true for hidden, false for unhidden ]
      */
     public static function hidden($link_id, $username)
     {
@@ -27,12 +27,12 @@ class HiddenPost extends Model
     }
 
     /**
-     * function to store a record in the database relation called "hidden_posts" making a specific user hida a specific post
+     * function to store a record in the database relation called "hidden_posts" making a specific user hide a specific post
      *
      * @param   int  $post_id   the id of the post to be hidden by the user
      * @param   string  $username  the username of the user about to hide a post
      *
-     * @return  boolean             returns true if the the data recorded successfully and false otherwise
+     * @return  boolean             [ true if the the data recorded successfully and false otherwise ]
      */
     public static function hidePost($post_id, $username)
     {
@@ -47,12 +47,12 @@ class HiddenPost extends Model
 
     /**
      * function to delete a record from the database relation called "hidden_posts"
-     * making a user who hided a post to unhide it
+     * making a user who hided a post to unhide it,(given the id of the post and the username of the user).
      *
      * @param   int  $post_id   the id of the post to be unhidden by a user
      * @param   string  $username  the username of the user about to unhide a post
      *
-     * @return  boolean             return true if the record has been removed successfully and false otherwise
+     * @return  boolean             [ true if the record has been removed successfully and false otherwise ]
      */
     public static function unhidePost($post_id, $username)
     {

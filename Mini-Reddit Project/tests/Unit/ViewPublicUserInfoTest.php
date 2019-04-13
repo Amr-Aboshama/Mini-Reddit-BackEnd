@@ -50,18 +50,14 @@ class ViewPublicUserInfoTest extends TestCase
             ]);
     }
 
-    /**
-     * Utilitiy function to test invalid signout
-     * $headers => Holds the token to authenticate
-     */
+
     public function validReturn($username)
     {
         return [
             "success" => "true",
             "username" => $username,
             "name" => null,
-            "karma" => "0",
-            "cake_day" => null,
+            "karma" => 0,
             "about" => null,
             "photo_path" => null,
             "cover_path" => null

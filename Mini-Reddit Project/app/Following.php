@@ -15,10 +15,10 @@ class Following extends Model
     public $timestamps = false; // To cancel expectations of updated_at and created_at tables.
 
     /**
-     * function to check if a user is following another user
+     * function to check if a user is following another user given their usernames where the first username belongs to the follower.
      * @param   string  $follower
      * @param   string  $followed
-     * @return  boolean
+     * @return  boolean [ true if the first user follows the other , false otherwise ]
      */
     public static function CheckExisting($follower, $followed)
     {
@@ -28,11 +28,10 @@ class Following extends Model
     }
 
     /**
-     * Add a new following relation.
-     * If existing, return false. otherwise, create relation and return true
+     * Add a new following relation given both, the username of the follower and the followed user .
      * @param  string $follower_username follower
      * @param  string $followed_username followed
-     * @return boolean
+     * @return boolean  [ If existing, return false. otherwise, create relation and return true ]
      */
     public static function createFollow($follower_username, $followed_username)
     {
@@ -49,11 +48,10 @@ class Following extends Model
     }
 
     /**
-     * Remove an existing following relation
-     * If not existing, return false. otherwise, delete relation and return true
+     * Remove an existing following relation given the username of the follower and followed users.
      * @param  string $follower_username follower
      * @param  string $followed_username followed
-     * @return boolean
+     * @return boolean [ If not existing, return false. otherwise, delete relation and return true ]
      */
     public static function deleteFollow($follower_username, $followed_username)
     {
@@ -71,7 +69,7 @@ class Following extends Model
      * Get the followers of "username" except the blocked or blocking ones from "the requesting user"
      * @param  string $username        username to get his followers
      * @param  string $requesting_user username that requests to get the list
-     * @return array                  List of users that the username follow
+     * @return array                  [ List of users that the username follow ]
      */
     public static function getUserFollowers($username, $requesting_user)
     {
@@ -85,8 +83,10 @@ class Following extends Model
      * Get the followers of "username" except the blocked or blocking ones from "the requesting user"
      * @param  string $username        username to get his followings
      * @param  string $requesting_user username that requests to get the list
-     * @return array                  List of users that follows the username
+     * @return array                  [ List of users that follows the username ] 
      */
+
+
     public static function getUserFollowing($username, $requesting_user)
     {
         return Following::where('follower_username', $username)

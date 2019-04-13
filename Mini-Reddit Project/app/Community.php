@@ -15,7 +15,7 @@ class Community extends Model
      * return a specific community given its id
      * @param  integer $community_id the id of the community that we want to return
      * its data
-     * @return object the community object which given its id
+     * @return object  [ the community object which given its id ]
      */
     public static function getCommunity($community_id)
     {
@@ -27,7 +27,7 @@ class Community extends Model
     /**
      * return a specific community given its name
      * @param  string $community_name the name of the community that we want to return
-     * @return object the community object which given its name
+     * @return object  [ the community object which given its name ]
      */
     public static function getCommunityByName($community_name)
     {
@@ -39,9 +39,9 @@ class Community extends Model
 
 
     /**
-     * create community for testing
+     * create community for testing given its name
      * @param  string $communityname the name of the community
-     * @return object the community object that just has been created
+     * @return object  [ the community object that just has been created ]
      */
     public static function createDummyCommunity($communityname)
     {
@@ -51,10 +51,9 @@ class Community extends Model
     }
 
     /**
-     * return all the communities that their name contains a specific subname
+     * return all the communities that their name contains a specific subname ($comm_name)
      * @param  string $comm_name the subname that we search for it
-     * @return array  the array of communities that their name contains the
-     * subname
+     * @return array   [ the array of communities that their name contains the subname ]
      */
     public static function getCommunitiesByName($comm_name)
     {
@@ -65,9 +64,9 @@ class Community extends Model
     }
 
     /**
-     * check if the community exists in the database or not
+     * check if the community exists in the database or not given its id
      * @param  integer $community_id the community we need to check its existance
-     * @return boolean true or false according to the existance of the community
+     * @return boolean  [ true or false according to the existance of the community ]
      */
     public static function communityExist($community_id)
     {
@@ -76,10 +75,10 @@ class Community extends Model
         return $result;
     }
     /**
-     * check if the name of this community exist in the database
+     * check if the name of this community exist in the database given its name
      * @param  string $community_name the name that we want to check its
      * existance
-     * @return boolean true or false according to the existance of the community
+     * @return boolean [ true or false according to the existance of the community ]
      * name
      */
     public static function communityNameExist($community_name)
@@ -92,7 +91,7 @@ class Community extends Model
     /**
      * remove an existing community giving its id
      * @param  int $community_id the id of the community
-     * @return boolean true or false according to the deletion of the community
+     * @return boolean [ true or false according to the deletion of the community ]
      */
     public static function removeCommunity($community_id)
     {
@@ -102,13 +101,13 @@ class Community extends Model
     }
 
     /**
-     * edit a specific community data given its community_id
+     * edit a specific community data given its community_id and its information (content , description , banner and logo)
      * @param  integer $community_id the id of the community
      * @param  text $rules_content  the rules of the community
      * @param  text $description_content the description of the community
      * @param  string $banner  the banner of the communtiy
      * @param  string $logo  community logo
-     * @return boolean true or false according to the edit success
+     * @return boolean [ true or false according to the edit success ]
      */
     public static function editCommunity($community_id, $rules_content, $description_content, $banner, $logo)
     {
@@ -120,7 +119,7 @@ class Community extends Model
 
     /**
      * return the maximum community id
-     * @return integer the max community_id
+     * @return integer  [ the max community_id ]
      */
     public static function getMaxId()
     {

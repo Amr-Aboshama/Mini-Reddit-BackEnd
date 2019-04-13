@@ -16,9 +16,9 @@ class Blocking extends Model
 
 
     /**
-     * function to get a list of the blocked users by a specific user
+     * function to get a list of the blocked users by a specific user given his/her username
      * @param   string  $username
-     * @return  array    array containing blocked usernames
+     * @return  array    [ containing blocked usernames ]
      */
     public static function getUsersBlockedByUsername($username)
     {
@@ -28,9 +28,9 @@ class Blocking extends Model
     }
 
     /**
-     * function to get a list of the users uwho blocked a specific user
+     * function to get a list of the users who blocked a specific user given his/her username
      * @param   string  $username the user who is blocked
-     * @return  array    array containing usernames who blocked $username
+     * @return  array    [ containing usernames who blocked $username ]
      */
     public static function getUsersWhoBlockedUsername($username)
     {
@@ -40,10 +40,10 @@ class Blocking extends Model
     }
 
     /**
-     * function to make a user block other user
+     * function to make a user block another user given their usernames where the first username belongs to the one who blocks
      * @param   string  $blocker_username
      * @param   string   $blocked_username
-     * @return boolean                   if already blocked return false. otherwise, return true
+     * @return boolean                   [ if already blocked return false. otherwise, return true ]
      */
     public static function blockUser($blocker_username, $blocked_username)
     {
@@ -59,10 +59,10 @@ class Blocking extends Model
     }
 
     /**
-     * function to make a user unblock other user
+     * function to make a user unblock another user given their usernames where the first username belongs to the one who blocked.
      * @param  string $blocker_username
      * @param  string $blocked_username
-     * @return boolean                   if already unblocked return false. otherwise, return true
+     * @return boolean                  [ if already unblocked return false. otherwise, return true ]
      */
     public static function unblockUser($blocker_username, $blocked_username)
     {
@@ -77,10 +77,10 @@ class Blocking extends Model
     }
 
     /**
-     * Check if a user is blocking other user
+     * Check if a user is blocking another user given their usernames where the first username belongs to the blocker.
      * @param  string $blocker
      * @param  string $blocked
-     * @return boolean          if blocker is blocking blocked return true. otherwise, return false
+     * @return boolean          [ if blocker is blocking return true. otherwise, return false ].
      */
     public static function checkBlock($blocker, $blocked)
     {
@@ -93,7 +93,7 @@ class Blocking extends Model
      * function to check if username1 is blocking another username2 or vice versa
      * @param   string  $username1
      * @param   string  $username1
-     * @return  bool true if anyone is blocking the other, false if not
+     * @return  bool  [ true if anyone is blocking the other, false if not ]
      */
     public static function blockedOrBlocker($username1, $username2)
     {

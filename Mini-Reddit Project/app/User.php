@@ -74,9 +74,9 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * takes the data of the user then bcrypt its password then create this user
-     * and return it
+     * and return it.
      * @param  array $user_data the data of the user (name,password,email)
-     * @return object the created user object
+     * @return object  [ the created user object ].
      */
     public static function storeUser($user_data)
     {
@@ -86,9 +86,9 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * return list of users that their name contains a specific subname
+     * return list of users that their name contains a specific subname.
      * @param  string $username the subname that we are searching for it
-     * @return array  the list of users that their name contains the subname
+     * @return array  [ the list of users that their name contains the subname ].
      */
     public static function getUsersByUsername($username)
     {
@@ -99,10 +99,10 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * return the data of a specific user given his/her username
+     * return the data of a specific user given his/her username.
      * @param  string $username the username of the user that we want his/her
      * data
-     * @return object  the user object wanted
+     * @return object  [ the user object wanted ].
      */
     public static function getUserWholeRecord($username)
     {
@@ -110,9 +110,9 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * delete specific user from the database
+     * delete specific user from the database.
      * @param  string $username the username of the user that wanted to be removed
-     * @return boolean true or false according t the deletion of the user object
+     * @return boolean  [ true or false according t the deletion of the user object ].
      */
     public static function deleteUserByUsername($username)
     {
@@ -120,9 +120,9 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * check if the user exists in the database or not
+     * check if the user exists in the database or not given the username.
      * @param  string $username the user we need to check its existance
-     * @return boolean true or false according to the existance of the user
+     * @return boolean  [ true or false according to the existance of the user ].
      */
     public static function userExist($username)
     {
@@ -132,12 +132,12 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * return all the users except the blocked users and the users be blocked
-     * @param  string $currentuser the username of the user  who searches for
-     * the other users
-     * @param  string $username the subname of the users who the current user
+     * return all the users except the blocked users and the users be blocked where $currentuser is the username of the user  who searches for the other users
+     * and $username is the subname of the users who the current user.
+     * @param  string
+     * @param  string
      * wants to search for them
-     * @return array  the list of users who the current user searching for
+     * @return array  [ the list of users who the current user searching for ].
      */
     public static function getUsersByUsernameExceptblockedOrBlockedBy($currentuser, $username)
     {
@@ -150,10 +150,10 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * update the display_name of the currently logged in user
+     * update the display_name of the currently logged in user.
      * @param  string $username the currently logged in user
      * @param  string $displayname the updated displayname he wants
-     * @return int 1 or 0 according to the success of the update
+     * @return int [ 1 or 0 according to the success of the update ].
      */
     public static function updateDisplayNameFunction($username, $displayname)
     {
@@ -163,10 +163,10 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * update the display_name of the currently logged in user
+     * update the display_name of the currently logged in user.
      * @param  string $username the currently logged in user
      * @param  string $about the updated about he wants
-     * @return int 1 or 0 according to the success of the update
+     * @return int [ 1 or 0 according to the success of the update ].
      */
     public static function updateAboutFunction($username, $about)
     {
@@ -176,10 +176,10 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * check if the password entered by the user is right or not
+     * check if the password entered by the user is right or not.
      * @param  string $username the currently logged in user
      * @param  string $password the password i need to check its validity
-     * @return int 1 or 0 according to the success of the update
+     * @return int [ 1 or 0 according to the success of the update ].
      */
     public static function checkIfPasswordRight($username, $password)
     {
@@ -193,10 +193,10 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * changes the password of the user
+     * changes the password of the user.
      * @param  array $username
      * @param  array $password
-     * @return object the created user object
+     * @return object [ the created user object ].
      */
     public static function changeUserPassword($username, $password)
     {
@@ -207,10 +207,10 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * update the profile image
+     * update the profile image.
      * @param  array $username
      * @param  array $image   profile image
-     * @return object the created user object
+     * @return object [ the created user object ].
      */
     public static function updateProfileImage($username, $image)
     {
@@ -224,7 +224,7 @@ class User extends Authenticatable implements JWTSubject
      * getHashedPassword
      * @param  string $username the currently logged in user
      * @param  string $password the password i need to check its validity
-     * @return int string hashed password
+     * @return string [ hashed password ].
      */
     public static function getHashedPassword($username)
     {
