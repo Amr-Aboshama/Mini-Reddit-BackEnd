@@ -31,8 +31,8 @@ class UpdateAboutTest extends TestCase
                 "success" => "true"
             ]);
 
-        $userabout = User::getUserWholeRecord($user->username)->about;    
-        Assert::assertEquals('testabout', $userabout);   
+        $userabout = User::getUserWholeRecord($user->username)->about;
+        Assert::assertEquals('testabout', $userabout);
 
 
         $user->delete();
@@ -59,8 +59,8 @@ class UpdateAboutTest extends TestCase
                 "success" => "true"
             ]);
 
-        $userabout = User::getUserWholeRecord($user->username)->about;    
-        Assert::assertEquals('testabout', $userabout);  
+        $userabout = User::getUserWholeRecord($user->username)->about;
+        Assert::assertEquals('testabout', $userabout);
 
         $this->json('PATCH', 'api/auth/updateAbout', ['about' => 'testabout'], $headers)
             ->assertStatus(400)
@@ -87,7 +87,7 @@ class UpdateAboutTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         auth()->logout();
-    
+
 
         $this->json('PATCH', 'api/auth/updateAbout', ['about' => 'testabout'], $headers)
             ->assertStatus(401)
@@ -126,7 +126,7 @@ class UpdateAboutTest extends TestCase
             ->assertJson([
                 'success' => 'false',
                 'error' => 'no about is written'
-            ]);    
+            ]);
 
         $user->delete();
     }

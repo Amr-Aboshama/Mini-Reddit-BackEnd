@@ -26,7 +26,7 @@ class ChangePasswordTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         auth()->logout();
-    
+
 
         $this->json('PATCH', 'api/auth/change/password', ['password' => 'armne123456',
             'new_password' => 'newarmne123456', 'confirm_new_password' => 'newarmne123456'], $headers)
@@ -51,7 +51,7 @@ class ChangePasswordTest extends TestCase
             'password' => 'armne123456',
         ]);
 
-        
+
 
         $token = auth()->login($user);
         $headers = [$token];
@@ -63,9 +63,9 @@ class ChangePasswordTest extends TestCase
                 'success' => 'true'
             ]);
 
-        $hashedpassword = User::getHashedPassword($user->username);    
+        $hashedpassword = User::getHashedPassword($user->username);
         Assert::assertEquals(1, Hash::check('newarmne123456', $hashedpassword));
-        
+
 
         $user->delete();
     }
@@ -82,7 +82,7 @@ class ChangePasswordTest extends TestCase
             'password' => 'armne123456',
         ]);
 
-        
+
 
         $token = auth()->login($user);
         $headers = [$token];
@@ -110,7 +110,7 @@ class ChangePasswordTest extends TestCase
             'password' => 'armne123456',
         ]);
 
-        
+
 
         $token = auth()->login($user);
         $headers = [$token];
@@ -125,5 +125,4 @@ class ChangePasswordTest extends TestCase
 
         $user->delete();
     }
-
 }

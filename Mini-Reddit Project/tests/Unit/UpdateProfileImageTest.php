@@ -12,7 +12,7 @@ use App\User;
 
 class UpdateProfileImageTest extends TestCase
 {
-    
+
     /**
      * Test unauthoried update of user profile/cover photo
      * $headers => Holds the token to authenticate $user
@@ -28,11 +28,15 @@ class UpdateProfileImageTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         auth()->logout();
-    
 
-        $this->json('POST', 'api/auth/updateProfileImage', 
-        	['profile_image' => UploadedFile::fake()->image('avatar.jpg'),
-            'profile_or_cover' => 1], $headers)
+
+        $this->json(
+            'POST',
+            'api/auth/updateProfileImage',
+            ['profile_image' => UploadedFile::fake()->image('avatar.jpg'),
+                'profile_or_cover' => 1],
+            $headers
+        )
             ->assertStatus(401)
             ->assertJson([
                 'success' => 'false',
@@ -56,11 +60,15 @@ class UpdateProfileImageTest extends TestCase
 
         $token = auth()->login($user);
         $headers = [$token];
-    
 
-        $this->json('POST', 'api/auth/updateProfileImage',
-        	['profile_image' => UploadedFile::fake()->image('avatar.jpp'),
-            'profile_or_cover' => 1], $headers)
+
+        $this->json(
+            'POST',
+            'api/auth/updateProfileImage',
+            ['profile_image' => UploadedFile::fake()->image('avatar.jpp'),
+                'profile_or_cover' => 1],
+            $headers
+        )
             ->assertStatus(401)
             ->assertJson([
                 'success' => 'false',
@@ -84,11 +92,15 @@ class UpdateProfileImageTest extends TestCase
 
         $token = auth()->login($user);
         $headers = [$token];
-    
 
-        $this->json('POST', 'api/auth/updateProfileImage', 
-        	['profile_image' => UploadedFile::fake()->image('avatar.jpg'),
-            'profile_or_cover' => 3], $headers)
+
+        $this->json(
+            'POST',
+            'api/auth/updateProfileImage',
+            ['profile_image' => UploadedFile::fake()->image('avatar.jpg'),
+                'profile_or_cover' => 3],
+            $headers
+        )
             ->assertStatus(403)
             ->assertJson([
                 'success' => 'false',
@@ -113,34 +125,41 @@ class UpdateProfileImageTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('POST', 'api/auth/updateProfileImage',
+        $this->json(
+            'POST',
+            'api/auth/updateProfileImage',
             ['profile_image' => UploadedFile::fake()->image('avatar.jpg'),
-            'profile_or_cover' => 1], $headers)
+                'profile_or_cover' => 1],
+            $headers
+        )
             ->assertStatus(200)
             ->assertJson([
                 'success' => 'true',
                 'path' => 'storage/app/avatars/avatar.jpg'
             ]);
-    
 
-        $userprofileimage = User::getUserWholeRecord($user->username)->photo_url;    
+
+        $userprofileimage = User::getUserWholeRecord($user->username)->photo_url;
         Assert::assertEquals('avatar.jpg', $userprofileimage);
 
-        $this->json('POST', 'api/auth/updateProfileImage',
+        $this->json(
+            'POST',
+            'api/auth/updateProfileImage',
             ['profile_image' => UploadedFile::fake()->image('avatar.jpg'),
-            'profile_or_cover' => 2], $headers)
+                'profile_or_cover' => 2],
+            $headers
+        )
             ->assertStatus(200)
             ->assertJson([
                 'success' => 'true',
                 'path' => 'storage/app/avatars/avatar.jpg'
             ]);
-    
 
-        $usercoverimage = User::getUserWholeRecord($user->username)->cover_url;    
-        Assert::assertEquals('avatar.jpg', $usercoverimage);    
+
+        $usercoverimage = User::getUserWholeRecord($user->username)->cover_url;
+        Assert::assertEquals('avatar.jpg', $usercoverimage);
 
 
         $user->delete();
     }
-
 }

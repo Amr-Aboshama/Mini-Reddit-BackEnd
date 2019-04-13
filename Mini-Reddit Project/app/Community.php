@@ -124,7 +124,8 @@ class Community extends Model
      */
     public static function getMaxId()
     {
-        $max_id=Community::max('community_id');
+        $max_id = Community::max('community_id');
+
         return $max_id;
     }
 }

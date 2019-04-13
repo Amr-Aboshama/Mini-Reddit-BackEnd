@@ -266,8 +266,8 @@ class AccountSettingsController extends Controller
             ], 401);
         }
 
-        if (!$request->has('profile_or_cover')|| 
-            !($request->profile_or_cover==1 || $request->profile_or_cover==2)) {
+        if (!$request->has('profile_or_cover') ||
+            !($request->profile_or_cover == 1 || $request->profile_or_cover == 2)) {
             return response()->json([
 
                 'success' => 'false',
@@ -275,25 +275,20 @@ class AccountSettingsController extends Controller
             ], 403);
         }
 
-        
+
         $image = $request->profile_image;
         $avatarName = $image->getClientOriginalName();
 
         $request->profile_image->storeAs('avatars', $avatarName);
 
         if ($request->profile_or_cover == 1) {
-
-            
             $user->photo_url = $avatarName;
             $user->save();
         } else {
-
-
             $user->cover_url = $avatarName;
             $user->save();
-
         }
-        
+
 
 
         $response = response()->json([
