@@ -25,6 +25,20 @@ class Community extends Model
     }
 
     /**
+     * return a specific community given its name
+     * @param  string $community_name the name of the community that we want to return
+     * @return object the community object which given its name
+     */
+    public static function getCommunityByName($community_name)
+    {
+        $result = Community::where("name", $community_name)->get()->first();
+
+        return $result;
+    }
+
+
+
+    /**
      * create community for testing
      * @param  string $communityname the name of the community
      * @return object the community object that just has been created
@@ -87,11 +101,30 @@ class Community extends Model
         return $result;
     }
 
-    public static function editCommunity($community_id, $rules_content, $destination_content, $banner, $logo)
+    /**
+     * edit a specific community data given its community_id
+     * @param  integer $community_id the id of the community
+     * @param  text $rules_content  the rules of the community
+     * @param  text $description_content the description of the community
+     * @param  string $banner  the banner of the communtiy
+     * @param  string $logo  community logo
+     * @return boolean true or false according to the edit success
+     */
+    public static function editCommunity($community_id, $rules_content, $description_content, $banner, $logo)
     {
         $result = Community::where('community_id', $community_id)
-      ->update(['rules' => $rules_content,'description' => $destination_content,'community_banner' => $banner,'community_logo' => $logo]);
+      ->update(['rules' => $rules_content,'description' => $description_content,'community_banner' => $banner,'community_logo' => $logo]);
 
         return $result;
+    }
+
+    /**
+     * return the maximum community id
+     * @return integer the max community_id
+     */
+    public static function getMaxId()
+    {
+        $max_id=Community::max('community_id');
+        return $max_id;
     }
 }
