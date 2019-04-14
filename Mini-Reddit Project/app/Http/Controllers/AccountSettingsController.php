@@ -231,7 +231,7 @@ class AccountSettingsController extends Controller
      * 	"error": "UnAuthorized"
      * }
      *
-     * @response 401 {
+     * @response 403 {
      * 	"success": "false",
      * 	"error": "Unsupported media type"
      * }
@@ -253,7 +253,7 @@ class AccountSettingsController extends Controller
             return response()->json([
                 'success' => 'false',
                 'error' => 'Unsupported media type',
-            ], 401);
+            ], 403);
         }
 
         $user = Auth()->user();

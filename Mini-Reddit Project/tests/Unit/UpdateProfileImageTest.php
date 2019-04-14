@@ -69,7 +69,7 @@ class UpdateProfileImageTest extends TestCase
                 'profile_or_cover' => 1],
             $headers
         )
-            ->assertStatus(401)
+            ->assertStatus(403)
             ->assertJson([
                 'success' => 'false',
                 'error' => 'Unsupported media type'

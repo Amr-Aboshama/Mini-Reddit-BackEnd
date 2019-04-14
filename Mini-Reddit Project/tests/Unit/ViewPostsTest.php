@@ -120,12 +120,12 @@ class ViewPostsTest extends TestCase
         //testing that posts are sorted by upvotes
         $this->assertTrue($this->checkPopular($posts) == 1);
         //home page
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['page_type' => 1])->assertStatus(401)->assertJson([
+        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['page_type' => 1])->assertStatus(403)->assertJson([
             "success" => "false",
             "error" => "Something wrong!!"
         ]);
         //no parameters are sent
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', [])->assertStatus(401)->assertJson([
+        $response1 = $this->json('GET', 'api/unauth/ViewPosts', [])->assertStatus(403)->assertJson([
             "success" => "false",
             "error" => "Something wrong!!"
         ]);

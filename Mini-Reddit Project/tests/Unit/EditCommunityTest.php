@@ -85,10 +85,10 @@ class EditCommunityTest extends TestCase
             'banner' => UploadedFile::fake()->image('random.jpg'),'logo' => 'kkk'];
 
         $this->json('POST', 'api/auth/editCommunity', $payload, $headers)
-          ->assertStatus(401)
+          ->assertStatus(403)
           ->assertJson([
               "success" => "false",
-              "error" => "unvalid logo"
+              "error" => "invalid logo"
           ]);
 
 
@@ -110,10 +110,10 @@ class EditCommunityTest extends TestCase
             'banner' => 'kkk','logo' => UploadedFile::fake()->image('random.jpg')];
 
         $this->json('POST', 'api/auth/editCommunity', $payload, $headers)
-        ->assertStatus(401)
+        ->assertStatus(403)
         ->assertJson([
             "success" => "false",
-            "error" => "unvalid banner"
+            "error" => "invalid banner"
         ]);
 
 
