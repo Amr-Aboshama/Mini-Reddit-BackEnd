@@ -28,7 +28,7 @@ class CreateCommunitiesTable extends Migration
         //this bcuz community is created after links and i'd like to put a foreign key in links refering to community
 
         Schema::table('links', function (Blueprint $table) {
-            $table->foreign('community_id')->references('community_id')->on('communities');
+            $table->foreign('community_id')->references('community_id')->on('communities')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -569,7 +569,7 @@ class InteractingController extends Controller
                         "success" => "false",
                         "error" => "Something wrong!!"
 
-                    ], 401);
+                    ], 403);
                 } else {
                     //posts by followers and communities excluding posts of blocked users
                     $posts = Link::homePosts(auth()->user()->username);
@@ -609,7 +609,7 @@ class InteractingController extends Controller
                     "success" => "false",
                     "error" => "Something wrong!!"
 
-                ], 401);
+                ], 403);
             } else {
                 $posts = Link::getPosts()->where('author_username', auth()->user()->username)->orderBy('link_date', 'DESC')->get();
             }
@@ -920,7 +920,7 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "post must have a title"
      * }
-     * @response 401 {
+     * @response 403 {
      *  "success": "false",
      *  "error": "post must have a content"
      * }
@@ -1332,7 +1332,7 @@ class InteractingController extends Controller
      * 	"error": "UnAuthorized"
      * }
      *
-     * @response 401 {
+     * @response 403 {
      * 	"success": "false",
      * 	"error": "Unsupported media type"
      * }

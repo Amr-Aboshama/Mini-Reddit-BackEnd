@@ -99,13 +99,13 @@ class CommunitiesController extends Controller
      * 	"success": "false",
      * 	"error": "community doesn't exist"
      * }
-     * @response 401 {
+     * @response 403 {
      * 	"success": "false",
-     * 	"error": "unvalid logo"
+     * 	"error": "invalid logo"
      * }
-     * @response 401 {
+     * @response 403 {
      * 	"success": "false",
-     * 	"error": "unvalid banner"
+     * 	"error": "invalid banner"
      * }
      */
     public function editCommunity(Request $request)
@@ -134,8 +134,8 @@ class CommunitiesController extends Controller
         if ($valid->fails()) {
             return response()->json([
                 'success' => 'false',
-                'error' => 'unvalid logo',
-            ], 401);
+                'error' => 'invalid logo',
+            ], 403);
         }
         $valid = Validator::make($request->all(), [
             'banner' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3072'
@@ -144,8 +144,8 @@ class CommunitiesController extends Controller
         if ($valid->fails()) {
             return response()->json([
                 'success' => 'false',
-                'error' => 'unvalid banner',
-            ], 401);
+                'error' => 'invalid banner',
+            ], 403);
         }
 
 
@@ -174,11 +174,15 @@ class CommunitiesController extends Controller
      *  "success": "true",
      *  "community_id": 5
      * }
+     * @response 401 {
+     *  "success": "false",
+     *  "error" : "UnAuthorized "
+     * }
      * @response 403 {
      *  "success": "false",
      *  "error" : "some of the needed contents are missed"
      * }
-     * @response 401 {
+     * @response 403 {
      *  "success": "false",
      *  "error" : "you have to complete 30 days "
      * }
@@ -199,7 +203,7 @@ class CommunitiesController extends Controller
             return response()->json([
                 "success" => "false",
                 "error" => "you have to complete 30 days "
-            ], 401);
+            ], 403);
         }
 
         if (!$request->has('community_name') || $request->community_name == "") {
@@ -377,7 +381,8 @@ class CommunitiesController extends Controller
      *  "error": "user already is subscribed in that community"
      * }
      */
-    public function subscribeCommunity(Request $request)
+
+    function subscribeCommunity(Request $request)
     {
         $user = auth()->user();
 

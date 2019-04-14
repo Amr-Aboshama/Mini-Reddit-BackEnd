@@ -28,7 +28,7 @@ class CreateCommunityTest extends TestCase
 
         $payload = ['community_name' => 'testkokowawa'];
         $this->json('POST', 'api/auth/createCommunity', $payload, $headers)
-        ->assertStatus(401)
+        ->assertStatus(403)
         ->assertJson([
             "success" => "false",
             "error" => "you have to complete 30 days "
