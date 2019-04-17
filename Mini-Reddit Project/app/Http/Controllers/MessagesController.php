@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Message;
 
 /**
  * @group Messages
@@ -60,9 +62,29 @@ class MessagesController extends Controller
      * 	"error": "UnAuthorized"
      * }
      */
-    public function viewUserSentMessages()
+    public function viewUserSentMessages(Request $request)
     {
-        // ...
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'UnAuthorized'
+            ], 401);
+        }
+
+
+
+        $sentmessages= Message::sentMessages($user->username);
+        
+
+        return response()->json([
+
+                'success' => 'true', 
+                'messages' => $sentmessages
+            ], 401);
+
     }
 
 
@@ -128,8 +150,42 @@ class MessagesController extends Controller
      * 	"error": "message must have a content"
      * }
      */
-    public function sendMessage()
+    public function sendMessage(Request $request)
     {
-        // ...
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+
+
+                'success' => 'false',
+                'error' => 'UnAuthorized'
+            ], 401);
+        }
+
+        if (!$request->has('rec_username') || !User::userExist($request->rec_username)){
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'username doesn\'t exist'
+            ], 403);
+
+        }
+
+        if (!$request->has('msg_content') || $request->msg_content==''){
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'message must have a content'
+            ], 403);
+
+        }
+
+        return response()->json([
+
+                'success' => 'true'
+            ], 200);
+
+
     }
 }
