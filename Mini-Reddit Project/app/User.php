@@ -127,7 +127,7 @@ class User extends Authenticatable implements JWTSubject
     public static function userExist($username)
     {
         $result = User::where('username', $username)->exists();
-
+        
         return $result;
     }
 
@@ -232,4 +232,6 @@ class User extends Authenticatable implements JWTSubject
 
         return $hashedpassword;
     }
+
+    
 }
