@@ -767,21 +767,50 @@ class InteractingController extends Controller
      * Viewing comments of a specific post or replies of a specific comment
      * @bodyParam link_id int required the id of the post or the id of the comment.
      * @response 200 {
-     *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed",  "author_photo_path" : "storage/app/avater.jpg","downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" }]
+     *	"comments" :[ { "link_id": 1 , "content" : "comment1" ,"author_username": "ahmed" , "downvotes" : 15, "upvotes" : 0 , "link_date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "link_id": 2 , "content" : "comment2" ,"author_username": "ahmed","downvotes" : 23, "upvotes" : 17 , "link_date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "link_id": 3 , "content" : "comment3" ,"author_username": "ahmed","downvotes" : 31, "upvotes" : 78 , "link_date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" }]
      * }
      *
-     * @response 404 {
-     *	"error" :"somethimg wrong!!!!"
-     * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "this post, comment or reply doesn't exist"
+     * 	"error" : "the link_id is required"
      * }
      */
-    public function ViewCommentsAndRepliesOfPostsAndComments()
+    public function viewCommentsAndRepliesOfPostsAndComments(Request $request)
     {
+        $valid = Validator::make($request->all() , ['link_id' => 'required']);
+        if($valid->Fails()) {
+            return response()->json([
+                	'success' => 'false',
+                	'error' => 'the link_id is required'
+            ],403);
+        }
+
+        $links = Link::linksOflink($request->link_id);
+        foreach($links as $link) {
+            $link->comments_num = Link::commentsNum($link->link_id);
+            $link->upvoted = 'false';
+            $link->downvoted = 'false';
+            $link->saved = 'false';
+            try {
+                $tokenFetch = JWTAuth::parseToken()->authenticate();
+                $username = auth()->user()->username;
+                if(UpvotedLink::upvoted($link->link_id , $username)) {
+                    $link->upvoted = 'true';
+                  } else if (DownvotedLink::downvoted($link->link_id , $username)) {
+                    $link->downvoted = 'true';
+                  }
+                  if(SavedLink::isSaved($link->link_id , $username)) {
+                    $link->saved = 'true';
+                  }
+                } catch (JWTException $e) {
+
+                }
+        }
+
+        return response()->json(['comments' => $links],200);
+
     }
 
 
