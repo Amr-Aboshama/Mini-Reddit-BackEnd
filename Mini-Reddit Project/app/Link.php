@@ -515,4 +515,15 @@ class Link extends Model
 
         return $result[0]->result;
     }
+
+    /**
+     * function to get all the comments of a post or all replies of a comment
+     * @param  int $link_id [description]
+     * @return array          [description]
+     */
+    public static function linksOfLink($link_id)
+    {
+        $links = Link::where('parent_id' , $link_id)->select('content' , 'author_username' , 'link_date' , 'link_id' , 'upvotes' , 'downvotes' )->orderBy('link_date' , 'DESC' )->get();
+        return $links;
+    }
 }
