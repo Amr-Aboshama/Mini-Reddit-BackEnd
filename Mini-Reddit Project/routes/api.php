@@ -55,7 +55,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/auth/upvoteLink', 'InteractingController@upvoteLink');//
     Route::post('/auth/downvoteLink', 'InteractingController@downvoteLink');//*
     Route::get('/auth/viewUpOrDownvotedPosts', 'InteractingController@ViewUpVotedOrDownVotedPosts');
-    Route::get('/auth/viewOverview', 'InteractingController@ViewOverview');
     Route::get('/auth/viewSavedLinks', 'InteractingController@ViewSavedLinks');
     Route::get('/auth/viewHiddenPosts', 'InteractingController@viewHiddenPosts');
     Route::post('/auth/giveReward', 'InteractingController@giveReward');
@@ -63,7 +62,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/auth/getUsername', 'InformationController@getUsername');
 });
 
-
+Route::get('/unauth/viewOverview', 'InteractingController@ViewOverview');
 Route::get('/unauth/viewPublicUserInfo', 'InformationController@viewPublicUserInfo');
 Route::get('/unauth/search', 'SearchingController@search');
 Route::post('/unauth/signIn', 'AuthenticationController@signIn');
