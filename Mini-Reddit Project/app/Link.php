@@ -418,6 +418,61 @@ class Link extends Model
     }
 
     /**
+     * function to return all the posts by the given user or the posts which have comments by the given user.
+     * @param  string $username [description]
+     * @return array           [description]
+     */
+
+    public static function postsOrpostsHaveComments($username)
+    {
+        $links = DB::Select("SELECT * from links as a where a.parent_id is null and ( a.author_username = '$username'  or  '$username' in (
+          select l.author_username from links as l where l.post_id = a.link_id
+        )) order by a.link_date DESC");
+
+        return $links;
+    }
+
+    /**
+     * function to check if the guven post belongs to the given user
+     * @param  string  $username [description]
+     * @param  int  $link_id  [description]
+     * @return boolean           [ true if belongs , false if not ].
+     */
+
+    public static function isPostByUser($username, $link_id)
+    {
+        $result = Link::where('author_username' , $username )->where('link_id' , $link_id)->exists();
+        return $result;
+    }
+    /**
+     * function to get the comments by the given user on the given post
+     * @param  int $link_id  [description]
+     * @param  string $username [description]
+     * @return array           [description]
+     */
+
+    public static function commentsOfPostByUser($link_id , $username)
+    {
+        $links = DB::Select("SELECT upvotes , downvotes , author_username , link_id as comment_id , content as body , link_date from links where post_id = '$link_id' and author_username = '$username' order by link_date DESC");
+
+        return $links;
+    }
+
+    /**
+     * function to check if the given post has comments by the given user.
+     * @param  int $link_id  [description]
+     * @param  string $username [description]
+     * @return boolean           [ true if the post has comments by the user , false if not ].
+     */
+
+    public static function ispostHasCommentsByUser($link_id , $username)
+    {
+        $links = DB::Select("SELECT exists(select * from links where post_id = '$link_id' and author_username = '$username' ) as result ");
+
+        return $links[0]->result;
+    }
+
+    /**
      * this function checks if the given post has comments or replies which are saved by the given user .
      * @param  int  $link_id  the id of the post
      * @param  string  $username the username of the user
@@ -459,5 +514,16 @@ class Link extends Model
         $result = DB::Select("SELECT exists( select * from links where link_id = '$comment_id' and post_id = '$link_id' ) as result");
 
         return $result[0]->result;
+    }
+
+    /**
+     * function to get all the comments of a post or all replies of a comment
+     * @param  int $link_id [description]
+     * @return array          [description]
+     */
+    public static function linksOfLink($link_id)
+    {
+        $links = Link::where('parent_id' , $link_id)->select('content' , 'author_username' , 'link_date' , 'link_id' , 'upvotes' , 'downvotes' )->orderBy('link_date' , 'DESC' )->get();
+        return $links;
     }
 }
