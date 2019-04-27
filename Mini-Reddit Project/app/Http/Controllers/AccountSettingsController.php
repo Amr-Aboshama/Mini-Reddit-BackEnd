@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -31,9 +30,39 @@ class AccountSettingsController extends Controller
      * 	"error": "password isn't correct"
      * }
      */
-    public function deleteMyAccount()
+    public function deleteMyAccount(Request $request)
     {
-        // ...
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+
+                "success" => "false",
+                "error" => "UnAuthorized"
+            ], 401);
+
+        }  
+
+        if ($request->password == '' || !$request->has('password') ||
+            ! User::checkIfPasswordRight($user->username, $request->password)) {
+            return response()->json([
+
+                "success" => "false",
+                "error" => "password isn't correct"
+            ], 403);
+        }
+
+        $result= User::deleteAccount($user->username);
+        if ($result){
+
+            return response()->json([
+                'success' => 'true'
+            ], 200);
+
+        }
+
+
+    
     }
 
 

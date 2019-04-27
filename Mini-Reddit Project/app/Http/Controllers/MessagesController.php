@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Message;
 
 /**
  * @group Messages
@@ -32,9 +34,44 @@ class MessagesController extends Controller
      * 	"error": "message doesn't exist"
      * }
      */
-    public function viewUserMessage()
+    public function viewUserMessage(Request $request)
     {
-        // ...
+        
+
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'UnAuthorized'
+            ], 401);
+        }
+
+
+        if ($request->message_id == '' || !$request->has('message_id') || 
+            !Message::checkMessageExistance($request->message_id)) {
+
+            return response()->json([
+
+                "success" => "false",
+                "error" => "message doesn't exist"
+
+            ], 403);
+        }
+
+
+        $message= Message::getMessageOfSpecificId($request->message_id);
+
+        return response()->json([
+
+                'success' => 'true', 
+                'username2' => $message->sender_username,
+                'user_photo' => $message->photo_url,
+                'message_content' => $message->content
+            ], 200);
+
+
     }
 
 
@@ -44,13 +81,13 @@ class MessagesController extends Controller
      * @response 200{
      *  "success": "true",
      *  "messages" : [{
-     *   	 "reciever_name":"maged",
-     *   	 "reciever_photo":"photo1",
+     *   	 "receiver_name":"maged",
+     *   	 "receiver_photo":"photo1",
      *   	 "message_content":"hello world",
      *       "message_id":"5"
      *    }, {
-     *   	 "reciever_name":"nour",
-     *   	 "reciever_photo":"photo2",
+     *   	 "receiver_name":"nour",
+     *   	 "receiver_photo":"photo2",
      *   	 "message_content":"hello world tany",
      *       "message_id":"6"
      *   }]
@@ -60,9 +97,29 @@ class MessagesController extends Controller
      * 	"error": "UnAuthorized"
      * }
      */
-    public function viewUserSentMessages()
+    public function viewUserSentMessages(Request $request)
     {
-        // ...
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'UnAuthorized'
+            ], 401);
+        }
+
+
+
+        $sentmessages= Message::sentMessages($user->username);
+
+
+        return response()->json([
+
+                'success' => 'true', 
+                'messages' => $sentmessages
+            ], 200);
+
     }
 
 
@@ -99,9 +156,31 @@ class MessagesController extends Controller
 
 
 
-    public function viewUserInboxMessages()
+    public function viewUserInboxMessages(Request $request)
     {
-        // ...
+
+        $user = auth()->user();
+
+
+
+        if (!$user) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'UnAuthorized'
+            ], 401);
+        }
+
+
+
+        $inboxmessages= Message::inboxMessage($user->username);
+
+
+        return response()->json([
+
+                'success' => 'true', 
+                'messages' => $inboxmessages
+            ], 200);
     }
 
 
@@ -128,8 +207,42 @@ class MessagesController extends Controller
      * 	"error": "message must have a content"
      * }
      */
-    public function sendMessage()
+    public function sendMessage(Request $request)
     {
-        // ...
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+
+
+                'success' => 'false',
+                'error' => 'UnAuthorized'
+            ], 401);
+        }
+
+        if ( $request->rec_username=='' || !$request->has('rec_username') || !User::userExist($request->rec_username)){
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'username doesn\'t exist'
+            ], 403);
+
+        }
+
+        if (!$request->has('msg_content') || $request->msg_content==''){
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'message must have a content'
+            ], 403);
+
+        }
+
+        return response()->json([
+
+                'success' => 'true'
+            ], 200);
+
+
     }
 }

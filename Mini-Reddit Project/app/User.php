@@ -127,7 +127,7 @@ class User extends Authenticatable implements JWTSubject
     public static function userExist($username)
     {
         $result = User::where('username', $username)->exists();
-
+        
         return $result;
     }
 
@@ -232,4 +232,19 @@ class User extends Authenticatable implements JWTSubject
 
         return $hashedpassword;
     }
+
+    /**
+     * delete account
+     * @param  string $username the currently logged in user
+     * @return boolean [true if the deletion process succeeded, false otherwise] 
+     */
+    public static function deleteAccount($username)
+    {
+        $result = User::where('username', $username)->delete();
+
+        return $result;
+
+    }
+
+    
 }
