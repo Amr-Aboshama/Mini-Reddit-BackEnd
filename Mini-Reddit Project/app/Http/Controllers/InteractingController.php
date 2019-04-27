@@ -689,13 +689,13 @@ class InteractingController extends Controller
      * Viewing comments of a user on posts he/she has interacted with.
      * @bodyParam username string required username of the user you wanna see his/her comments on posts.
      * @response 200 {
-     *  "0":{"post":{"post_id" : 1 ,"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 },"comments" :[
+     *  "0":{"post":{"post_id" : 1 ,"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1,"subscribed" : "true" },"comments" :[
      *      {"comment_id":55 ,"body":"comment1 on post1" , "date" : "2 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":59 ,"body":"comment2 on post1" , "date" : "3 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
      *  ] } ,
-     *  "1":{"post":{"post_id" : 7 ,"body":"post2" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 } , "comments":[
+     *  "1":{"post":{"post_id" : 7 ,"body":"post2" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1,"subscribed" : "true" } , "comments":[
      *     {"comment_id":40 ,"body":"comment1 on post2" , "date" : "2 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":89 ,"body":"comment2 on post2" , "date" : "3 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":79 ,"body":"comment3 on post2" , "date" : "3 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
      *  ]},
-     *  "2":{"post":{"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1 },"commments" : [
+     *  "2":{"post":{"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1,"subscribed" : "true" },"commments" : [
      *     {"comment_id":80 ,"body":"comment1 on post3" , "date" : "2 days ago", "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
      *  ]}
      * }
@@ -721,9 +721,22 @@ class InteractingController extends Controller
         foreach ($Commentedposts as $post) {
             $post->community_id = $post->community_id != null ? $post->community_id : -1;
             $post->community = "none";
+            $post->subscribed = 'false';
+
             if ($post->community_id != -1) {
                 $post->community = Community::getCommunity($post->community_id)->name;
             }
+            try {
+                $tokenFetch = JWTAuth::parseToken()->authenticate();
+                $username = auth()->user()->username;
+                if ($post->community_id != -1 && Subscribtion::subscribed($post->community_id ,$username )) {
+                    $post->subscribed = 'true';
+                }
+            } catch (JWTException $e) {
+
+            }
+
+
 
             $posts_comments[$i]['post'] = $post;
             $posts_comments[$i]['comments'] = Link ::commentsOfPostsByUser($post->post_id, $request->username);
@@ -754,21 +767,50 @@ class InteractingController extends Controller
      * Viewing comments of a specific post or replies of a specific comment
      * @bodyParam link_id int required the id of the post or the id of the comment.
      * @response 200 {
-     *	"comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" , "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed",  "author_photo_path" : "storage/app/avater.jpg","downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg", "downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" }]
+     *	"comments" :[ { "link_id": 1 , "content" : "comment1" ,"author_username": "ahmed" , "downvotes" : 15, "upvotes" : 0 , "link_date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "link_id": 2 , "content" : "comment2" ,"author_username": "ahmed","downvotes" : 23, "upvotes" : 17 , "link_date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "link_id": 3 , "content" : "comment3" ,"author_username": "ahmed","downvotes" : 31, "upvotes" : 78 , "link_date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" }]
      * }
      *
-     * @response 404 {
-     *	"error" :"somethimg wrong!!!!"
-     * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "this post, comment or reply doesn't exist"
+     * 	"error" : "the link_id is required"
      * }
      */
-    public function ViewCommentsAndRepliesOfPostsAndComments()
+    public function viewCommentsAndRepliesOfPostsAndComments(Request $request)
     {
+        $valid = Validator::make($request->all() , ['link_id' => 'required']);
+        if($valid->Fails()) {
+            return response()->json([
+                	'success' => 'false',
+                	'error' => 'the link_id is required'
+            ],403);
+        }
+
+        $links = Link::linksOflink($request->link_id);
+        foreach($links as $link) {
+            $link->comments_num = Link::commentsNum($link->link_id);
+            $link->upvoted = 'false';
+            $link->downvoted = 'false';
+            $link->saved = 'false';
+            try {
+                $tokenFetch = JWTAuth::parseToken()->authenticate();
+                $username = auth()->user()->username;
+                if(UpvotedLink::upvoted($link->link_id , $username)) {
+                    $link->upvoted = 'true';
+                  } else if (DownvotedLink::downvoted($link->link_id , $username)) {
+                    $link->downvoted = 'true';
+                  }
+                  if(SavedLink::isSaved($link->link_id , $username)) {
+                    $link->saved = 'true';
+                  }
+                } catch (JWTException $e) {
+
+                }
+        }
+
+        return response()->json(['comments' => $links],200);
+
     }
 
 
@@ -873,31 +915,297 @@ class InteractingController extends Controller
     /**
      * View the overview of the user [Posts, comments, and links].
      * @bodyParam username string required if you visited another user profile this is his username.
-     * @authenticated
      * @response 200 {
-     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "none","subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false", "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "none","subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true", "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "laravel","subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true", "upvoted" : "true" , "downvoted" : "false" }] ,
+     * "0":{
+     *  "type": "comment",
+     *  "post": {
+     *      "title": "post1",
+     *      "post_id" : 1,
+     *      "body": "amro post1",
+     *      "community_id": -1,
+     *      "author_username": "amro",
+     *      "community": "none",
+     *      "subscribed": "false"
+     *  },
+     *  "comments": [
+     *      {
+     *          "comment_id": 15,
+     *          "author_username": "ahmed",
+     *          "body": "reply on comment2 on post1",
+     *          "link_date": "2019-04-08 00:07:00",
+     *          "upvotes" : 20,
+     *          "downvotes" : 26,
+     *             "upvoted" : "true",
+     *             "downvoted" : "false"
+     *      }
+     *    ]
+     *},
+     *"1":{
+     *    "body": "amro post2",
+     *    "title": "post2",
+     *    "upvotes": 0,
+     *    "downvotes": 0,
+     *    "post_id": 2,
+     *    "community_id": 1,
+     *    "community": "laravel",
+     *    "subscribed": "true",
+     *    "upvoted": "false",
+     *    "downvoted": "false",
+     *    "post_image": "app.storage.koko.jpg",
+     *    "video_url": "app.storage.videomp4",
+     *    "comments_num": 1,
+     *    "hidden": "false",
+     *    "saved" : "true",
+     *    "type": "post",
+     *    "subscribed": "true"
+     *},
+     *"2":{
+     *    "body": "ahmed post1",
+     *    "title": "post1",
+     *    "upvotes": 0,
+     *    "downvotes": 0,
+     *    "post_id": 4,
+     *    "community_id": -1,
+     *    "community": "none",
+     *    "subscribed": "false",
+     *    "upvoted": "false",
+     *    "downvoted": "false",
+     *    "post_image": -1,
+     *    "video_url": -1,
+     *    "comments_num": 1,
+     *    "hidden": "false",
+     *     "saved" : "true",
+     *    "type": "post",
+     *      "subscribed": "false"
+     *},
+     *"3":{
+     * "type" : "comment",
+     * "post": {
+     *      "title": "post1",
+     *      "post_id" : 1,
+     *        "body": "ahmed post1",
+     *        "community_id": -1,
+     *        "author_username": "ahmed",
+     *        "community": "none",
+     *       "subscribed": "false"
+     *    },
+     *        "comments": [
+     *        {
+     *            "comment_id": 13,
+     *            "body": "comment on post4",
+     *            "author_username": "amro",
+     *            "link_date": "2019-04-08 00:07:00",
+     *            "upvotes" : 20,
+     *            "downvotes" : 26,
+     *             "upvoted" : "true",
+     *             "downvoted" : "false"
+     *        },
+     *        {
      *
-     * "comments" :[ { "comment_id": 1 , "body" : "comment1" ,"username": "ahmed" ,  "author_photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes" : 0 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 2 , "body" : "comment2" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 23, "upvotes" : 17 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "comment_id": 3 , "body" : "comment3" ,"username": "ahmed", "author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 31, "upvotes" : 78 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false"}]
-     * }
+     *            "comment_id": 22,
+     *            "author_username": "menna",
+     *            "body": "comment on post4",
+     *            "link_date": "2019-04-08 00:07:00",
+     *            "upvotes" : 20,
+     *            "downvotes" : 26,
+     *             "upvoted" : "true",
+     *             "downvoted" : "false"
+     *        }
+     *    ]
+     *}
+     *}
      * @response 404 {
      * "error" : "something wrong!!!"
      * }
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "username doesn't exist"
+     * 	"error" : "username is required"
      * }
      */
-    public function ViewOverview()
+    public function ViewOverview(Request $request)
     {
-    }
+        $valid = Validator::make($request->all(), ['username' => 'required']);
+        if ($valid->Fails()) {
+            return response()->json([
+                "success" => "false",
+                "error" => "username is required"
+              ], 403);
+        }
+
+        $username = $request->username;
+        $links = Link::postsOrpostsHaveComments($username);
+        $links_comments = array();
+        $i = 0;
+        foreach ($links as $link) {
+
+              if (!Link::isPostByUser( $username , $link->link_id)) {
+                  $links_comments[$i]['type'] = 'comment';
+                  $links_comments[$i]['post']['title'] = $link->title;
+                  $links_comments[$i]['post']['post_id'] = $link->link_id;
+                  $links_comments[$i]['post']['body'] = $link->content;
+                  $links_comments[$i]['post']['community_id'] = $link->community_id != null ? $link->community_id : -1;
+                  $links_comments[$i]['post']['author_username'] = $link->author_username;
+                  $links_comments[$i]['post']['community'] = 'none';
+                  $links_comments[$i]['post']['subscribed'] = 'false';
+
+                  if($link->community_id != null) {
+                      $links_comments[$i]['post']['community'] = Community::getCommunity($link->community_id)->name;
+                  }
+
+                  try {
+
+                    $tokenFetch = JWTAuth::parseToken()->authenticate();
+                    $username2 = auth()->user()->username;
+                    if($link->community_id != null) {
+                        if(Subscribtion::subscribed($link->community_id ,$username2 )) {
+                            $links_comments[$i]['post']['subscribed'] = 'true';
+                        }
+                    }
+
+                  } catch (JWTException $e) {
+
+                  }
+
+                  $links_comments[$i]['comments'] = Link ::commentsOfPostByUser($link->link_id, $username);
+
+                  foreach($links_comments[$i]['comments'] as $comment) {
+
+                    try {
+
+                        $comment->upvoted = 'false';
+                        $comment->downvoted = 'false';
+                        $comment->saved = 'false';
+
+                        $tokenFetch = JWTAuth::parseToken()->authenticate();
+                        $username2 = auth()->user()->username;
+                        if (UpvotedLink::upvoted($comment->comment_id, $username2)) {
+                            $comment->upvoted = 'true';
+                        } elseif (DownvotedLink::downvoted($comment->comment_id, $username2)) {
+                            $comment->downvoted = 'true';
+                        }
+                        if(SavedLink::isSaved($comment->comment_id , $username2)) {
+                            $comment->saved = 'true';
+                        }
+
+                    } catch (JWTException $e) {
+                      }
+                  }
+
+              } else {
+
+                    $links_comments[$i]['body'] = $link->content;
+                    $links_comments[$i]['title'] = $link->title;
+                    $links_comments[$i]['upvotes'] = $link->upvotes;
+                    $links_comments[$i]['downvotes'] = $link->downvotes;
+                    $links_comments[$i]['post_id'] = $link->link_id;
+                    $links_comments[$i]['community_id'] = $link->community_id != null ? $link->community_id :-1 ;
+                    $links_comments[$i]['community'] = 'none';
+                    $links_comments[$i]['subscribed'] = 'false';
+                    $links_comments[$i]['upvoted'] = 'false';
+                    $links_comments[$i]['downvoted'] = 'false';
+                    $links_comments[$i]['comments_num'] = Link::commentsNum($link->link_id);
+                    $links_comments[$i]['hidden'] = 'false';
+                    $links_comments[$i]['subscribed'] = 'false';
+                    $links_comments[$i]['saved'] = 'false';
+                    $links_comments[$i]['post_image'] = $link->content_image != null ? $post->content_image : -1;
+                    $links_comments[$i]['video_url'] = $link->video_url != null ? $post->video_url : -1  ;
+                    $links_comments[$i]['type'] = 'post';
+                    if($link->community_id != null) {
+                        $links_comments[$i]['community'] = Community::getCommunity($link->community_id)->name;
+                    }
+
+                    try {
+
+                        $tokenFetch = JWTAuth::parseToken()->authenticate();
+                        $username2 = auth()->user()->username;
+                        if (UpvotedLink::upvoted($link->link_id, $username2)) {
+                            $links_comments[$i]['upvoted'] = 'true';
+                        } elseif (DownvotedLink::downvoted($link->link_id, $username2)) {
+                            $links_comments[$i]['downvoted'] = 'true';
+                        }
+
+                        if(SavedLink::isSaved($link->link_id , $username2)) {
+                            $links_comments[$i]['saved'] = 'true';
+
+                        }
+
+                        if(HiddenPost::hidden($link->link_id , $username2)) {
+                            $links_comments[$i]['hidden'] = 'true';
+                        }
+
+                        if($link->community_id != null) {
+                            if(Subscribtion::subscribed($link->community_id ,$username2 )) {
+                                $links_comments[$i]['subscribed'] = 'true';
+                            }
+                        }
+                    } catch (JWTException $e) {
+                      }
+
+                if (Link::ispostHasCommentsByUser($link->link_id, $username)) {
+                      $i++;
+                      $links_comments[$i]['post']['title'] = $link->title;
+                      $links_comments[$i]['post']['post_id'] = $link->link_id;
+                      $links_comments[$i]['post']['body'] = $link->content;
+                      $links_comments[$i]['post']['community_id'] = $link->community_id != null ? $link->community_id : -1;
+                      $links_comments[$i]['post']['author_username'] = $link->author_username;
+                      $links_comments[$i]['post']['community'] = 'none';
+                      $links_comments[$i]['post']['subscribed'] = 'false';
+
+                      if($link->community_id != null) {
+                          $links_comments[$i]['post']['community'] = Community::getCommunity($link->community_id)->name;
+                      }
+
+                      try {
+
+                        $tokenFetch = JWTAuth::parseToken()->authenticate();
+                        $username2 = auth()->user()->username;
+                        if($link->community_id != null) {
+                            if(Subscribtion::subscribed($link->community_id ,$username2 )) {
+                                $links_comments[$i]['post']['subscribed'] = 'true';
+                            }
+                        }
+
+                      } catch (JWTException $e) {
+
+                      }
+
+
+
+                      $links_comments[$i]['comments'] = Link ::commentsOfPostByUser($link->link_id, $username);
+
+                      foreach($links_comments[$i]['comments'] as $comment) {
+
+                        try {
+                          $comment->upvoted = 'false';
+                          $comment->downvoted = 'false';
+                          $comment->saved = 'false';
+
+                          $tokenFetch = JWTAuth::parseToken()->authenticate();
+                          $username2 = auth()->user()->username;
+                          if (UpvotedLink::upvoted($comment->comment_id, $username2)) {
+                              $comment->upvoted = 'true';
+                          } elseif (DownvotedLink::downvoted($comment->comment_id, $username2)) {
+                              $comment->downvoted = 'true';
+                          }
+                          if(SavedLink::isSaved($comment->comment_id , $username2)) {
+                              $comment->saved = 'true';
+                          }
+
+                        } catch (JWTException $e) {
+                          }
+
+                      }
+
+
+                  }
+               }
+
+              $i++;
+
+          }
+
+          return response()->json($links_comments,200);
+      }
 
 
     /**
@@ -964,8 +1272,10 @@ class InteractingController extends Controller
      *      "title": "post1",
      *      "post_id" : 1,
      *      "body": "amro post1",
-     *      "community_id": -1,
-     *      "author_username": "amro"
+     *      "community_id": 3,
+     *      "author_username": "amro",
+     *      "community": "gogo",
+     *        "subscribed": "true"
      *  },
      *  "comments": [
      *      {
@@ -995,7 +1305,8 @@ class InteractingController extends Controller
      *    "video_url": "app.storage.videomp4",
      *    "comments_num": 1,
      *    "hidden": "false",
-     *    "type": "post"
+     *    "type": "post",
+     *      "subscribed": "true"
      *},
      *"2":{
      *    "body": "ahmed post1",
@@ -1012,7 +1323,8 @@ class InteractingController extends Controller
      *    "video_url": -1,
      *    "comments_num": 1,
      *    "hidden": "false",
-     *    "type": "post"
+     *    "type": "post",
+     *     "subscribed": "false"
      *},
      *"3":{
      * "type" : "comment",
@@ -1021,7 +1333,9 @@ class InteractingController extends Controller
      *      "post_id" : 1,
      *        "body": "ahmed post1",
      *        "community_id": -1,
-     *        "author_username": "ahmed"
+     *        "author_username": "ahmed",
+     *        "community": "none",
+     *        "subscribed": "false"
      *    },
      *        "comments": [
      *        {
@@ -1060,6 +1374,16 @@ class InteractingController extends Controller
         $links_comments = array();
         $i = 0;
         foreach ($links as $link) {
+
+            $link->community = 'none';
+            $link->subscribed = 'false';
+            if($link->community_id != null) {
+                $link->community = Community::getCommunity($link->community_id)->name;
+                if(subscribtion::subscribed($link->community_id , auth()->user()->username)) {
+                    $link->subscribed = 'true';
+                }
+
+            }
             if (!SavedLink::isSaved($link->link_id, $username)) {
                 $links_comments[$i]['type'] = 'comment';
                 $links_comments[$i]['post']['title'] = $link->title;
@@ -1067,6 +1391,8 @@ class InteractingController extends Controller
                 $links_comments[$i]['post']['body'] = $link->content;
                 $links_comments[$i]['post']['community_id'] = $link->community_id != null ? $link->community_id : -1;
                 $links_comments[$i]['post']['author_username'] = $link->author_username;
+                $links_comments[$i]['post']['community'] = $link->community;
+                $links_comments[$i]['post']['subscribed'] = $link->subscribed;
                 $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id, $username);
                 foreach ($links_comments[$i]['comments'] as $comments) {
                     $comments->upvoted = 'false';
@@ -1116,6 +1442,8 @@ class InteractingController extends Controller
                     $links_comments[$i]['post']['body'] = $link->content;
                     $links_comments[$i]['post']['community_id'] = $link->community_id != null ? $link->community_id : -1;
                     $links_comments[$i]['post']['author_username'] = $link->author_username;
+                    $links_comments[$i]['post']['community'] = $link->community;
+                    $links_comments[$i]['post']['subscribed'] = $link->subscribed;
                     $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id, $username);
                     foreach ($links_comments[$i]['comments'] as $comments) {
                         $comments->upvoted = 'false';
@@ -1133,7 +1461,6 @@ class InteractingController extends Controller
 
         return response()->json($links_comments, 200);
 
-        return response()->json($links_comments, 200);
     }
 
 

@@ -16,7 +16,7 @@ class CreateMessagesTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->bigIncrements('message_id');   //primary key
             $table->string('content');
-            $table->dateTime('message_date');
+            $table->timestamp('message_date');
             $table->string('sender_username');
             $table->string('receiver_username');
 
