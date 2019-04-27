@@ -904,7 +904,7 @@ class InteractingController extends Controller
      * Add new Link
      * @bodyParam post_content string required the content written in the post
      * @bodyParam parent_link_id int required the ID of the parent link, this parameter should be 'null' if the link is a post
-     * @bodyParam post_title string this parameter is not required only for posts
+     * @bodyParam post_title string this parameter is required only for posts
      * @bodyParam community_id int this parameter is required only if the link is inside a community
      * @bodyParam image_path string if a post contains an image.
      * @bodyParam video_url string  if a post contains a video.
@@ -933,9 +933,22 @@ class InteractingController extends Controller
      * 	"error" : "community doesn't exist"
      * }
      */
-    public function addNewLink()
+    public function addNewLink(Request $request)
     {
-        // ...
+        //token should be parsed to get the user name
+        $user = auth()->user();
+        $p['author_username'] = $user->username;
+
+        $p['content']='oh';
+
+        $res= Link::storeLink($p);
+        if(!$res)
+        {
+            return 'hola';
+        }
+        else {
+            return $res;
+        }
     }
 
 

@@ -310,7 +310,11 @@ class Link extends Model
      */
     public static function storeLink($link_data)
     {
-        return  Link::create($link_data);
+        try {
+          return Link::create($link_data);
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
 
