@@ -44,4 +44,18 @@ class ModerateCommunity extends Model
             return false;
         }
     }
+
+    /**
+     * function to remove modirator.
+     * @param  string $username
+     * @param  int $community_id
+     * @return boolean               [true if deleted successfully , false if not].
+     */
+
+    public static function remove($username, $community_id)
+    {
+        $result = ModerateCommunity::where('username', $username)->where('community_id', $community_id)->delete();
+
+        return $result;
+    }
 }
