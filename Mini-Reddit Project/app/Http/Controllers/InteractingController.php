@@ -1368,8 +1368,6 @@ class InteractingController extends Controller
                           $notification2 = " '$username' has replied to '$auth_username' on your post '$title' ";
                           PushNotification::sendNotificationToSpecificUsers($notification2 , [$post_username]);
                       }
-
-
                   }
               }
 
@@ -1842,7 +1840,7 @@ class InteractingController extends Controller
 
     public function viewSinglePost(Request $request)
     {
-        $valid = Validator::make($request->all() , ['post_id' => 'required']);
+        $valid = Validator::Make($request->all() , ['post_id' => 'required']);
         if($valid->Fails())
         {
             return response()->json([
