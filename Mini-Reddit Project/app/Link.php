@@ -530,4 +530,10 @@ class Link extends Model
         $links = Link::where('parent_id' , $link_id)->select('content' , 'author_username' , 'link_date' , 'link_id' , 'upvotes' , 'downvotes' )->orderBy('link_date' , 'DESC' )->get();
         return $links;
     }
+
+    public static function getComment($comment_id)
+    {
+        $comment = Link::where('link_id' , $comment_id)->get()->first();
+        return $comment;
+    }
 }

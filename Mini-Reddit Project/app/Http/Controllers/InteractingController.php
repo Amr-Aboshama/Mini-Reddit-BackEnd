@@ -13,8 +13,10 @@ use App\SavedLink;
 use App\HiddenPost;
 use App\Community;
 use App\Blocking;
+use App\Following;
 use App\Subscribtion;
 use App\ModerateCommunity;
+use App\PushNotification;
 use Validator;
 
 /**
