@@ -16,7 +16,7 @@ class ModerateCommunity extends Model
      * @param   int  $community_id  the id of the community
      * @param   string  $username      the username of the user
      *
-     * @return  boolean                 t[ rue if the user moderates the community and false if not ].
+     * @return  boolean                 true if the user moderates the community and false if not.
      */
     public static function checkExisting($community_id, $username)
     {
