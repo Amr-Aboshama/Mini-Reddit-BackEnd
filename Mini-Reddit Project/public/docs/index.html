@@ -50,7 +50,7 @@
 <!-- END_INFO -->
 <h1>Account settings</h1>
 <!-- START_fb955c4796315027ad6b2fa378a6fdc6 -->
-<h2>Delete current user account</h2>
+<h2>Delete current user account.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -59,7 +59,7 @@
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"password":"NiNDrIGCoGROsIfK"}'
+    -d '{"password":"sunt"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/deleteMyAccount");
 
@@ -70,7 +70,7 @@ let headers = {
 }
 
 let body = {
-    "password": "NiNDrIGCoGROsIfK"
+    "password": "sunt"
 }
 
 fetch(url, {
@@ -123,7 +123,7 @@ fetch(url, {
 </table>
 <!-- END_fb955c4796315027ad6b2fa378a6fdc6 -->
 <!-- START_a066651329044f2d5ecb79a31945e0da -->
-<h2>Change current user password</h2>
+<h2>Change current user password.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -132,7 +132,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"password":"uVRI9NYnGtGioDmG","new_password":"MYOZRdXtSh4MBNPJ","confirm_new_password":"a4rWSIq9qnncwmL0"}'
+    -d '{"password":"eum","new_password":"consequatur","confirm_new_password":"dolorum"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/changePassword");
 
@@ -143,9 +143,9 @@ let headers = {
 }
 
 let body = {
-    "password": "uVRI9NYnGtGioDmG",
-    "new_password": "MYOZRdXtSh4MBNPJ",
-    "confirm_new_password": "a4rWSIq9qnncwmL0"
+    "password": "eum",
+    "new_password": "consequatur",
+    "confirm_new_password": "dolorum"
 }
 
 fetch(url, {
@@ -217,7 +217,7 @@ fetch(url, {
 </table>
 <!-- END_a066651329044f2d5ecb79a31945e0da -->
 <!-- START_dfd1f84709d37e78da0a09b0dde49ae3 -->
-<h2>Update current user Displayed Name</h2>
+<h2>Update current user Displayed Name.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -226,7 +226,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"name":"H0jyKChspC00zJLC"}'
+    -d '{"name":"dolores"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/updateDisplayName");
 
@@ -237,7 +237,7 @@ let headers = {
 }
 
 let body = {
-    "name": "H0jyKChspC00zJLC"
+    "name": "dolores"
 }
 
 fetch(url, {
@@ -297,7 +297,7 @@ fetch(url, {
 </table>
 <!-- END_dfd1f84709d37e78da0a09b0dde49ae3 -->
 <!-- START_27bac20603448461f03965177b89d240 -->
-<h2>Update current user About</h2>
+<h2>Update current user About.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -306,7 +306,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"about":"GwLTqaZAonL8nzR5"}'
+    -d '{"about":"qui"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/updateAbout");
 
@@ -317,7 +317,7 @@ let headers = {
 }
 
 let body = {
-    "about": "GwLTqaZAonL8nzR5"
+    "about": "qui"
 }
 
 fetch(url, {
@@ -377,7 +377,7 @@ fetch(url, {
 </table>
 <!-- END_27bac20603448461f03965177b89d240 -->
 <!-- START_54936a26e59a000204b04cb07e52753c -->
-<h2>Update user profile image or cover image</h2>
+<h2>Update user profile image or cover image.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -386,7 +386,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"profile_image":"el4zI48liAY3wRcl","profile_or_cover":16}'
+    -d '{"profile_image":"nisi","profile_or_cover":18}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/updateCoverAndProfileImage");
 
@@ -397,8 +397,8 @@ let headers = {
 }
 
 let body = {
-    "profile_image": "el4zI48liAY3wRcl",
-    "profile_or_cover": 16
+    "profile_image": "nisi",
+    "profile_or_cover": 18
 }
 
 fetch(url, {
@@ -467,7 +467,7 @@ fetch(url, {
 <h1>Authentication</h1>
 <p>sign in , sign up .....etc</p>
 <!-- START_62b2bf96e5822d93574a44e6d4b39d50 -->
-<h2>Sign Out a user</h2>
+<h2>Sign Out a user.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -506,13 +506,13 @@ fetch(url, {
 <p><code>POST api/auth/signOut</code></p>
 <!-- END_62b2bf96e5822d93574a44e6d4b39d50 -->
 <!-- START_3326cf80694aff2cc124bc89a1f752c9 -->
-<h2>Sign in a user</h2>
+<h2>Sign in a user.</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-bash">curl -X POST "http://localhost/api/unauth/signIn" \
     -H "Content-Type: application/json" \
-    -d '{"username":"Ax5kcORKB76FnBS9","password":"PXh5f9OpI1DK4bUl"}'
+    -d '{"username":"dolorem","password":"sint"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/signIn");
 
@@ -522,8 +522,8 @@ let headers = {
 }
 
 let body = {
-    "username": "Ax5kcORKB76FnBS9",
-    "password": "PXh5f9OpI1DK4bUl"
+    "username": "dolorem",
+    "password": "sint"
 }
 
 fetch(url, {
@@ -583,13 +583,13 @@ fetch(url, {
 </table>
 <!-- END_3326cf80694aff2cc124bc89a1f752c9 -->
 <!-- START_7bb46f44c88791cf906ead98dec97533 -->
-<h2>Signup a user</h2>
+<h2>Signup a user.</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-bash">curl -X POST "http://localhost/api/unauth/signUp" \
     -H "Content-Type: application/json" \
-    -d '{"username":"smiP58pLYZJIHFNm","password":"zTmk40Jx7gCylI87","password_confirmation":"TMUfvpyJijeJiGDt","email":"un1OzAHMSRKIyPkm"}'
+    -d '{"username":"et","password":"qui","password_confirmation":"eaque","email":"nemo"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/signUp");
 
@@ -599,10 +599,10 @@ let headers = {
 }
 
 let body = {
-    "username": "smiP58pLYZJIHFNm",
-    "password": "zTmk40Jx7gCylI87",
-    "password_confirmation": "TMUfvpyJijeJiGDt",
-    "email": "un1OzAHMSRKIyPkm"
+    "username": "et",
+    "password": "qui",
+    "password_confirmation": "eaque",
+    "email": "nemo"
 }
 
 fetch(url, {
@@ -667,13 +667,13 @@ fetch(url, {
 </table>
 <!-- END_7bb46f44c88791cf906ead98dec97533 -->
 <!-- START_bc8fed275be3bfaa2a6eedef61e0dc26 -->
-<h2>Send Email to Reset Password [Under investigation]</h2>
+<h2>Send Email to Reset Password.</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-bash">curl -X POST "http://localhost/api/unauth/forgetPassword" \
     -H "Content-Type: application/json" \
-    -d '{"email":"3DYT6561ZtLsJwOg"}'
+    -d '{"email":"voluptas"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/forgetPassword");
 
@@ -683,7 +683,7 @@ let headers = {
 }
 
 let body = {
-    "email": "3DYT6561ZtLsJwOg"
+    "email": "voluptas"
 }
 
 fetch(url, {
@@ -728,16 +728,16 @@ fetch(url, {
 </tbody>
 </table>
 <!-- END_bc8fed275be3bfaa2a6eedef61e0dc26 -->
-<!-- START_ff5252a2a0c9ebc5b68a7d349c3cd8c0 -->
-<h2>Reset User Password after receiving a mail [Under investigation]</h2>
+<!-- START_21d07a01c4c6e7893f0cb5e342d0c60b -->
+<h2>Reset User Password after receiving a mail.</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
-<pre><code class="language-bash">curl -X POST "http://localhost/api/unauth/resetPassword" \
+<pre><code class="language-bash">curl -X POST "http://localhost/api/unauth/resetPassword/1" \
     -H "Content-Type: application/json" \
-    -d '{"new_password":"ZagkRgkImZPe8WFK","confirm_new_password":"jj9Qa0m1HGiF77eM"}'
+    -d '{"new_password":"nam","password_confirmation":"optio"}'
 </code></pre>
-<pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/resetPassword");
+<pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/resetPassword/1");
 
 let headers = {
     "Content-Type": "application/json",
@@ -745,8 +745,8 @@ let headers = {
 }
 
 let body = {
-    "new_password": "ZagkRgkImZPe8WFK",
-    "confirm_new_password": "jj9Qa0m1HGiF77eM"
+    "new_password": "nam",
+    "password_confirmation": "optio"
 }
 
 fetch(url, {
@@ -760,8 +760,7 @@ fetch(url, {
 <p>Example response (200):</p>
 </blockquote>
 <pre><code class="language-json">{
-    "success": "true",
-    "token": "6155cb365da1512356e99b6f8b5cb5757a28fb5baeae91503721fd201e61810be503e8167abad97c"
+    "success": "true"
 }</code></pre>
 <blockquote>
 <p>Example response (403):</p>
@@ -775,10 +774,10 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-json">{
     "success": "false",
-    "error": "Link expired"
+    "error": "Link is wrong or expired"
 }</code></pre>
 <h3>HTTP Request</h3>
-<p><code>POST api/unauth/resetPassword</code></p>
+<p><code>POST api/unauth/resetPassword/{hash}</code></p>
 <h4>Body Parameters</h4>
 <table>
 <thead>
@@ -797,14 +796,14 @@ fetch(url, {
 <td>The new password of the user .</td>
 </tr>
 <tr>
-<td>confirm_new_password</td>
+<td>password_confirmation</td>
 <td>string</td>
 <td>required</td>
 <td>The new password confirmation of the user .</td>
 </tr>
 </tbody>
 </table>
-<!-- END_ff5252a2a0c9ebc5b68a7d349c3cd8c0 -->
+<!-- END_21d07a01c4c6e7893f0cb5e342d0c60b -->
 <h1>Communities</h1>
 <p>all community features are handled by the following APIs</p>
 <!-- START_9f6f4e4dabe420fe51a72a3b00335a19 -->
@@ -817,7 +816,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":14,"rules_content":"nL4ADkUBcNGHjikJ","des_content":"bAGnC25yHXBvjwuf","banner":"ovKozwLGYGiHSdxi","logo":"OkIxCYrw0RwV0aUY"}'
+    -d '{"community_id":9,"rules_content":"qui","des_content":"inventore","banner":"sit","logo":"amet"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/editCommunity");
 
@@ -828,11 +827,11 @@ let headers = {
 }
 
 let body = {
-    "community_id": 14,
-    "rules_content": "nL4ADkUBcNGHjikJ",
-    "des_content": "bAGnC25yHXBvjwuf",
-    "banner": "ovKozwLGYGiHSdxi",
-    "logo": "OkIxCYrw0RwV0aUY"
+    "community_id": 9,
+    "rules_content": "qui",
+    "des_content": "inventore",
+    "banner": "sit",
+    "logo": "amet"
 }
 
 fetch(url, {
@@ -930,7 +929,7 @@ fetch(url, {
 </table>
 <!-- END_9f6f4e4dabe420fe51a72a3b00335a19 -->
 <!-- START_423ebf50357e4010e3005269f1aea07d -->
-<h2>Create a community</h2>
+<h2>Create a community.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -939,7 +938,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_name":"gRZI0uONTEmqrN7i"}'
+    -d '{"community_name":"sed"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/createCommunity");
 
@@ -950,7 +949,7 @@ let headers = {
 }
 
 let body = {
-    "community_name": "gRZI0uONTEmqrN7i"
+    "community_name": "sed"
 }
 
 fetch(url, {
@@ -1018,7 +1017,7 @@ fetch(url, {
 </table>
 <!-- END_423ebf50357e4010e3005269f1aea07d -->
 <!-- START_c252c2289522b311fafcb463ecfffaaf -->
-<h2>Remove an existing community</h2>
+<h2>Remove an existing community.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -1027,7 +1026,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":5}'
+    -d '{"community_id":3}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/removeCommunity");
 
@@ -1038,7 +1037,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": 5
+    "community_id": 3
 }
 
 fetch(url, {
@@ -1098,7 +1097,7 @@ fetch(url, {
 </table>
 <!-- END_c252c2289522b311fafcb463ecfffaaf -->
 <!-- START_9a172571e6f52a7c8d92fe39a004f06f -->
-<h2>Add a moderator to a community</h2>
+<h2>Add a moderator to a community.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -1107,7 +1106,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":11,"moderator_username":"GnGO1HPIy2wmRPlp"}'
+    -d '{"community_id":14,"moderator_username":"laborum"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/addModerator");
 
@@ -1118,8 +1117,8 @@ let headers = {
 }
 
 let body = {
-    "community_id": 11,
-    "moderator_username": "GnGO1HPIy2wmRPlp"
+    "community_id": 14,
+    "moderator_username": "laborum"
 }
 
 fetch(url, {
@@ -1163,6 +1162,13 @@ fetch(url, {
     "success": "false",
     "error": "user is already a moderator in that community"
 }</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "you are not a modirator to add another modirator"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/addModerator</code></p>
 <h4>Body Parameters</h4>
@@ -1192,7 +1198,7 @@ fetch(url, {
 </table>
 <!-- END_9a172571e6f52a7c8d92fe39a004f06f -->
 <!-- START_dcb0ad58c9cdad6f432f6e12beb4779d -->
-<h2>Remove a moderator from a community</h2>
+<h2>Remove a moderator from a community.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -1201,7 +1207,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":7,"moderator_username":"mges3VlnsCvSkPGS"}'
+    -d '{"community_id":19,"moderator_username":"nobis"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/removeModerator");
 
@@ -1212,8 +1218,8 @@ let headers = {
 }
 
 let body = {
-    "community_id": 7,
-    "moderator_username": "mges3VlnsCvSkPGS"
+    "community_id": 19,
+    "moderator_username": "nobis"
 }
 
 fetch(url, {
@@ -1257,6 +1263,20 @@ fetch(url, {
     "success": "false",
     "error": "user isn't a moderator already in that community"
 }</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "you are not a modirator to remove another modirator"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "there is no moderators except you"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/removeModerator</code></p>
 <h4>Body Parameters</h4>
@@ -1285,8 +1305,91 @@ fetch(url, {
 </tbody>
 </table>
 <!-- END_dcb0ad58c9cdad6f432f6e12beb4779d -->
+<!-- START_04a761f14e6e2004816f77f59d3c1476 -->
+<h2>view moderators of a specific community.</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "http://localhost/api/auth/viewModerators" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer: {token}" \
+    -H "Content-Type: application/json" \
+    -d '{"community_id":18}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/viewModerators");
+
+let headers = {
+    "Accept": "application/json",
+    "Authorization": "Bearer: {token}",
+    "Content-Type": "application/json",
+}
+
+let body = {
+    "community_id": 18
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "true",
+    "moderators": [
+        {
+            "moderator_username": "nour",
+            "moderator_photo": "storage\/app\/photo2.jpg"
+        },
+        {
+            "moderator_username": "ahmed",
+            "moderator_photo": "storage\/app\/photo1.jpg"
+        }
+    ]
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "community doesn't exist"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "UnAuthorized"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/auth/viewModerators</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>community_id</td>
+<td>integer</td>
+<td>required</td>
+<td>The ID of the community to view its modirators.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_04a761f14e6e2004816f77f59d3c1476 -->
 <!-- START_fe9703d357e06a738e2b8221312a839c -->
-<h2>Subscribe a community</h2>
+<h2>Subscribe a community.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -1295,7 +1398,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":18}'
+    -d '{"community_id":14}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/subscribeCommunity");
 
@@ -1306,7 +1409,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": 18
+    "community_id": 14
 }
 
 fetch(url, {
@@ -1366,7 +1469,7 @@ fetch(url, {
 </table>
 <!-- END_fe9703d357e06a738e2b8221312a839c -->
 <!-- START_fb4e96f4ebc57cbe7334830d3b73931e -->
-<h2>Unsubscribe a community</h2>
+<h2>Unsubscribe a community.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -1375,7 +1478,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":9}'
+    -d '{"community_id":10}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/unSubscribeCommunity");
 
@@ -1386,7 +1489,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": 9
+    "community_id": 10
 }
 
 fetch(url, {
@@ -1446,13 +1549,13 @@ fetch(url, {
 </table>
 <!-- END_fb4e96f4ebc57cbe7334830d3b73931e -->
 <!-- START_2c1613bb279fcc1976917064b712fc07 -->
-<h2>View the communities which the user has subscribed</h2>
+<h2>View the communities which the user has subscribed.</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/viewUserCommunities" \
     -H "Content-Type: application/json" \
-    -d '{"username":"qrQcfKMg27W1BOOX"}'
+    -d '{"username":"quo"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/viewUserCommunities");
 
@@ -1462,7 +1565,7 @@ let headers = {
 }
 
 let body = {
-    "username": "qrQcfKMg27W1BOOX"
+    "username": "quo"
 }
 
 fetch(url, {
@@ -1479,10 +1582,14 @@ fetch(url, {
     "success": "true",
     "communities": [
         {
-            "community_id": 5
+            "community_id": 5,
+            "community_name": "logic",
+            "community_logo": "storage\/app\/logo1.jpg"
         },
         {
-            "community_id": 10
+            "community_id": 10,
+            "community_name": "micro",
+            "communtiy_logo": "storage\/app\/logo2.jpg"
         }
     ]
 }</code></pre>
@@ -1516,13 +1623,13 @@ fetch(url, {
 </table>
 <!-- END_2c1613bb279fcc1976917064b712fc07 -->
 <!-- START_dd12f7cd4b0cdde7e4b6650101645efc -->
-<h2>View information of a specific community</h2>
+<h2>View information of a specific community.</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/communityInformation" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":"Kx4x510301QmGgG4"}'
+    -d '{"community_id":"quidem"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/communityInformation");
 
@@ -1532,7 +1639,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": "Kx4x510301QmGgG4"
+    "community_id": "quidem"
 }
 
 fetch(url, {
@@ -1553,7 +1660,8 @@ fetch(url, {
     "num_subscribes": 30,
     "banner": "storage\/app\/banner.jpg",
     "logo": "storage\/app\/logo.jpg",
-    "subscribed": "false"
+    "subscribed": "false",
+    "moderator": "true"
 }</code></pre>
 <blockquote>
 <p>Example response (403):</p>
@@ -1586,7 +1694,7 @@ fetch(url, {
 <!-- END_dd12f7cd4b0cdde7e4b6650101645efc -->
 <h1>Following</h1>
 <!-- START_ccdaeeb27930f362d9dc52d8bd41457b -->
-<h2>View User&#039;s Followers</h2>
+<h2>View User&#039;s Followers.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -1595,7 +1703,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"jTBngibczfVhcKqR"}'
+    -d '{"username":"et"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/followers");
 
@@ -1606,7 +1714,7 @@ let headers = {
 }
 
 let body = {
-    "username": "jTBngibczfVhcKqR"
+    "username": "et"
 }
 
 fetch(url, {
@@ -1662,7 +1770,7 @@ fetch(url, {
 </table>
 <!-- END_ccdaeeb27930f362d9dc52d8bd41457b -->
 <!-- START_f700781e554299c355d61830d75e81a0 -->
-<h2>View Who User is Following</h2>
+<h2>View Who User is Following.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -1671,7 +1779,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"cg4JkBJYeIN3h1nz"}'
+    -d '{"username":"ut"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/following");
 
@@ -1682,7 +1790,7 @@ let headers = {
 }
 
 let body = {
-    "username": "cg4JkBJYeIN3h1nz"
+    "username": "ut"
 }
 
 fetch(url, {
@@ -1739,7 +1847,7 @@ fetch(url, {
 </table>
 <!-- END_f700781e554299c355d61830d75e81a0 -->
 <!-- START_55d6ca855d9d056b6ecf2b90aad97fd3 -->
-<h2>Follow a user</h2>
+<h2>Follow a user.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -1748,7 +1856,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"rXxzzOG2BJCLpdno"}'
+    -d '{"username":"nobis"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/follow");
 
@@ -1759,7 +1867,7 @@ let headers = {
 }
 
 let body = {
-    "username": "rXxzzOG2BJCLpdno"
+    "username": "nobis"
 }
 
 fetch(url, {
@@ -1819,7 +1927,7 @@ fetch(url, {
 </table>
 <!-- END_55d6ca855d9d056b6ecf2b90aad97fd3 -->
 <!-- START_e188d5b7be3b8faacdc7875bdbf1f85e -->
-<h2>Unfollow a user</h2>
+<h2>Unfollow a user.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -1828,7 +1936,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"vzcV4BNdHezfPqvX"}'
+    -d '{"username":"facere"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/unfollow");
 
@@ -1839,7 +1947,7 @@ let headers = {
 }
 
 let body = {
-    "username": "vzcV4BNdHezfPqvX"
+    "username": "facere"
 }
 
 fetch(url, {
@@ -1951,6 +2059,13 @@ fetch(url, {
     "success": "false",
     "error": "this post, comment or reply doesn't exist"
 }</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "already saved"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/saveLink</code></p>
 <h4>Body Parameters</h4>
@@ -1974,7 +2089,7 @@ fetch(url, {
 </table>
 <!-- END_fec7c4928bbbced52914728f12df0735 -->
 <!-- START_412bc91cb0a80764cd3fc4d4472eab56 -->
-<h2>Unsave Post, Comment or Reply</h2>
+<h2>Unsave Post, Comment or Reply.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -1983,7 +2098,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":4}'
+    -d '{"link_id":19}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/unsaveLink");
 
@@ -1994,7 +2109,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 4
+    "link_id": 19
 }
 
 fetch(url, {
@@ -2024,6 +2139,13 @@ fetch(url, {
     "success": "false",
     "error": "this post, comment or reply doesn't exist"
 }</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "already unsaved"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/unsaveLink</code></p>
 <h4>Body Parameters</h4>
@@ -2047,7 +2169,7 @@ fetch(url, {
 </table>
 <!-- END_412bc91cb0a80764cd3fc4d4472eab56 -->
 <!-- START_852249fac82b4ffd44b4f83bf7cf156b -->
-<h2>Add new Link</h2>
+<h2>Add new Link.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -2056,7 +2178,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_content":"4pEwzeUwykfJSbUj","parent_link_id":11,"post_title":"4yaazTqfOCwGjmf1","community_id":14,"image_path":"EeJYFTujKX9M87Z2","video_url":"QkNEC5NWAdrm6NDV"}'
+    -d '{"post_content":"doloribus","parent_link_id":1,"post_title":"aut","community_id":9,"image_path":"eos","video_url":"nobis"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/addLink");
 
@@ -2067,12 +2189,12 @@ let headers = {
 }
 
 let body = {
-    "post_content": "4pEwzeUwykfJSbUj",
-    "parent_link_id": 11,
-    "post_title": "4yaazTqfOCwGjmf1",
-    "community_id": 14,
-    "image_path": "EeJYFTujKX9M87Z2",
-    "video_url": "QkNEC5NWAdrm6NDV"
+    "post_content": "doloribus",
+    "parent_link_id": 1,
+    "post_title": "aut",
+    "community_id": 9,
+    "image_path": "eos",
+    "video_url": "nobis"
 }
 
 fetch(url, {
@@ -2086,7 +2208,8 @@ fetch(url, {
 <p>Example response (200):</p>
 </blockquote>
 <pre><code class="language-json">{
-    "success": "true"
+    "success": "true",
+    "link_id": 3
 }</code></pre>
 <blockquote>
 <p>Example response (401):</p>
@@ -2100,28 +2223,28 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-json">{
     "success": "false",
-    "error": "post must have a title"
+    "error": "There are some missing or invalid data!"
 }</code></pre>
 <blockquote>
 <p>Example response (403):</p>
 </blockquote>
 <pre><code class="language-json">{
     "success": "false",
-    "error": "post must have a content"
+    "error": "Only moderators or subscribers can post in the community"
 }</code></pre>
 <blockquote>
 <p>Example response (403):</p>
 </blockquote>
 <pre><code class="language-json">{
     "success": "false",
-    "error": "parent doesn't exist"
+    "error": "The post you are replying on isn't in the sent community!"
 }</code></pre>
 <blockquote>
 <p>Example response (403):</p>
 </blockquote>
 <pre><code class="language-json">{
     "success": "false",
-    "error": "community doesn't exist"
+    "error": "There is something went wrong!"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/auth/addLink</code></p>
@@ -2145,14 +2268,14 @@ fetch(url, {
 <tr>
 <td>parent_link_id</td>
 <td>integer</td>
-<td>required</td>
-<td>the ID of the parent link, this parameter should be 'null' if the link is a post</td>
+<td>optional</td>
+<td>the ID of the parent link, this parameter is required only if the link isn't a post</td>
 </tr>
 <tr>
 <td>post_title</td>
 <td>string</td>
 <td>optional</td>
-<td>this parameter is not required only for posts</td>
+<td>this parameter is required only for posts</td>
 </tr>
 <tr>
 <td>community_id</td>
@@ -2176,7 +2299,7 @@ fetch(url, {
 </table>
 <!-- END_852249fac82b4ffd44b4f83bf7cf156b -->
 <!-- START_91b9daa53d81bf9e0b76809894a5cf12 -->
-<h2>Pin or unpin a post</h2>
+<h2>Pin or unpin a post.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -2185,7 +2308,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":2}'
+    -d '{"post_id":10}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/pinPost");
 
@@ -2196,7 +2319,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 2
+    "post_id": 10
 }
 
 fetch(url, {
@@ -2293,7 +2416,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":2}'
+    -d '{"link_id":18}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/removeLink");
 
@@ -2304,7 +2427,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 2
+    "link_id": 18
 }
 
 fetch(url, {
@@ -2378,7 +2501,7 @@ fetch(url, {
 </table>
 <!-- END_899b7785dab86f03b9b38c9ead479b99 -->
 <!-- START_36b17ee7dcddc0f62d5f96c4be165df1 -->
-<h2>Hide a post</h2>
+<h2>Hide a post.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -2387,7 +2510,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":15}'
+    -d '{"post_id":2}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/hidePost");
 
@@ -2398,7 +2521,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 15
+    "post_id": 2
 }
 
 fetch(url, {
@@ -2479,7 +2602,7 @@ fetch(url, {
 </table>
 <!-- END_36b17ee7dcddc0f62d5f96c4be165df1 -->
 <!-- START_6921c7ac73ec879ae7db025283031598 -->
-<h2>Unhide a post</h2>
+<h2>Unhide a post.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -2488,7 +2611,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":3}'
+    -d '{"post_id":8}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/unhidePost");
 
@@ -2499,7 +2622,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 3
+    "post_id": 8
 }
 
 fetch(url, {
@@ -2573,7 +2696,7 @@ fetch(url, {
 </table>
 <!-- END_6921c7ac73ec879ae7db025283031598 -->
 <!-- START_86c8750a7026719a977549da5fa8bf89 -->
-<h2>Edit a post</h2>
+<h2>Edit a post.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -2582,7 +2705,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":6,"new_title":"lrf0nsgffsXd8yMx","new_content":"7M7sLKbh2arGH0qC","new_image":"r2H2ZRDGqSXUfvDu"}'
+    -d '{"post_id":6,"new_title":"sint","new_content":"omnis","new_image":"culpa","new_video_url":"perspiciatis"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/editPost");
 
@@ -2594,9 +2717,10 @@ let headers = {
 
 let body = {
     "post_id": 6,
-    "new_title": "lrf0nsgffsXd8yMx",
-    "new_content": "7M7sLKbh2arGH0qC",
-    "new_image": "r2H2ZRDGqSXUfvDu"
+    "new_title": "sint",
+    "new_content": "omnis",
+    "new_image": "culpa",
+    "new_video_url": "perspiciatis"
 }
 
 fetch(url, {
@@ -2631,14 +2755,21 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-json">{
     "success": "false",
-    "error": "post must have a title"
+    "error": "There are some missing or invalid data!"
 }</code></pre>
 <blockquote>
 <p>Example response (403):</p>
 </blockquote>
 <pre><code class="language-json">{
     "success": "false",
-    "error": "post must have a content"
+    "error": "Only the author of the post can edit it"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "There are something went wrong!"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>PATCH api/auth/editPost</code></p>
@@ -2677,11 +2808,17 @@ fetch(url, {
 <td>optional</td>
 <td>the directory of the new image if there is .</td>
 </tr>
+<tr>
+<td>new_video_url</td>
+<td>string</td>
+<td>optional</td>
+<td>the url of the new video if there is .</td>
+</tr>
 </tbody>
 </table>
 <!-- END_86c8750a7026719a977549da5fa8bf89 -->
 <!-- START_aaa3e5368de55f5371eef86ba9480062 -->
-<h2>Edit a comment</h2>
+<h2>Edit a comment.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -2690,7 +2827,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comment_id":1,"new_content":"rmNERI2UEDXyi47O"}'
+    -d '{"comment_id":17,"new_content":"quos"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/editComment");
 
@@ -2701,8 +2838,8 @@ let headers = {
 }
 
 let body = {
-    "comment_id": 1,
-    "new_content": "rmNERI2UEDXyi47O"
+    "comment_id": 17,
+    "new_content": "quos"
 }
 
 fetch(url, {
@@ -2730,14 +2867,28 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-json">{
     "success": "false",
-    "error": "comment doesn't exist"
+    "error": "comment\/reply doesn't exist"
 }</code></pre>
 <blockquote>
 <p>Example response (403):</p>
 </blockquote>
 <pre><code class="language-json">{
     "success": "false",
-    "error": "comment must have a content"
+    "error": "There are some missing or invalid data!"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "Only the author of the comment\/reply can edit it"
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "success": "false",
+    "error": "There are something went wrong!"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>PATCH api/auth/editComment</code></p>
@@ -2768,7 +2919,7 @@ fetch(url, {
 </table>
 <!-- END_aaa3e5368de55f5371eef86ba9480062 -->
 <!-- START_21c0f0392f688f23b849c42f0ae878fd -->
-<h2>Upvote Link</h2>
+<h2>Upvote Link.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -2777,7 +2928,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":1}'
+    -d '{"link_id":20}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/upvoteLink");
 
@@ -2788,7 +2939,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 1
+    "link_id": 20
 }
 
 fetch(url, {
@@ -2848,7 +2999,7 @@ fetch(url, {
 </table>
 <!-- END_21c0f0392f688f23b849c42f0ae878fd -->
 <!-- START_90257d45d2242d53590a7222d7736e58 -->
-<h2>Add Downvote to a post</h2>
+<h2>Add Downvote to a post.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -2857,7 +3008,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":15}'
+    -d '{"link_id":19}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/downvoteLink");
 
@@ -2868,7 +3019,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 15
+    "link_id": 19
 }
 
 fetch(url, {
@@ -2935,7 +3086,7 @@ fetch(url, {
 </table>
 <!-- END_90257d45d2242d53590a7222d7736e58 -->
 <!-- START_f573b8826a3b9adf6bfce04e80913e16 -->
-<h2>View the upvoted posts of the user or the downvoted ones</h2>
+<h2>View the upvoted posts of the user or the downvoted ones.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -2944,7 +3095,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"type":4}'
+    -d '{"type":2}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/viewUpOrDownvotedPosts");
 
@@ -2955,7 +3106,7 @@ let headers = {
 }
 
 let body = {
-    "type": 4
+    "type": 2
 }
 
 fetch(url, {
@@ -3308,7 +3459,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"um2GPKxSKybVTuTt"}'
+    -d '{"username":"sapiente"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/giveReward");
 
@@ -3319,7 +3470,7 @@ let headers = {
 }
 
 let body = {
-    "username": "um2GPKxSKybVTuTt"
+    "username": "sapiente"
 }
 
 fetch(url, {
@@ -3379,7 +3530,7 @@ fetch(url, {
 </table>
 <!-- END_84a5a9632e17b6b55498c323b0035bb6 -->
 <!-- START_674c76e3d18904b323f9a1fbed72342c -->
-<h2>Upload an image</h2>
+<h2>Upload an image.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -3388,7 +3539,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"uploaded_image":"bcd0LV2FJmgdE8Sh"}'
+    -d '{"uploaded_image":"odio"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/uploadImage");
 
@@ -3399,7 +3550,7 @@ let headers = {
 }
 
 let body = {
-    "uploaded_image": "bcd0LV2FJmgdE8Sh"
+    "uploaded_image": "odio"
 }
 
 fetch(url, {
@@ -3466,7 +3617,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/viewOverview" \
     -H "Content-Type: application/json" \
-    -d '{"username":"ha204kFbLpZmR2iM"}'
+    -d '{"username":"itaque"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/viewOverview");
 
@@ -3476,7 +3627,7 @@ let headers = {
 }
 
 let body = {
-    "username": "ha204kFbLpZmR2iM"
+    "username": "itaque"
 }
 
 fetch(url, {
@@ -3627,7 +3778,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/ViewPosts" \
     -H "Content-Type: application/json" \
-    -d '{"page_type":1,"username":"pi2niHoXmc7R60sT","community_id":15}'
+    -d '{"page_type":6,"username":"est","community_id":8}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/ViewPosts");
 
@@ -3637,9 +3788,9 @@ let headers = {
 }
 
 let body = {
-    "page_type": 1,
-    "username": "pi2niHoXmc7R60sT",
-    "community_id": 15
+    "page_type": 6,
+    "username": "est",
+    "community_id": 8
 }
 
 fetch(url, {
@@ -3767,7 +3918,7 @@ fetch(url, {
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/viewComments" \
     -H "Content-Type: application/json" \
-    -d '{"username":"BCHs81L3GxMlYJbR"}'
+    -d '{"username":"distinctio"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/viewComments");
 
@@ -3777,7 +3928,7 @@ let headers = {
 }
 
 let body = {
-    "username": "BCHs81L3GxMlYJbR"
+    "username": "distinctio"
 }
 
 fetch(url, {
@@ -3914,13 +4065,13 @@ fetch(url, {
 </table>
 <!-- END_c6253b8ad80cdaa856097b30169b6467 -->
 <!-- START_1cc48635a898d6e79adaa7887ec66b6b -->
-<h2>Viewing comments of a specific post or replies of a specific comment</h2>
+<h2>Viewing comments of a specific post or replies of a specific comment.</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/viewCommentsReplies" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":13}'
+    -d '{"link_id":19}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/viewCommentsReplies");
 
@@ -3930,7 +4081,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 13
+    "link_id": 19
 }
 
 fetch(url, {
@@ -4013,13 +4164,13 @@ fetch(url, {
 </table>
 <!-- END_1cc48635a898d6e79adaa7887ec66b6b -->
 <!-- START_b3c3d824135c9f9572665ac6374f5a02 -->
-<h2>Viewing a single post</h2>
+<h2>Viewing a single post.</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/viewSinglePost" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":6}'
+    -d '{"post_id":2}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/viewSinglePost");
 
@@ -4029,7 +4180,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 6
+    "post_id": 2
 }
 
 fetch(url, {
@@ -4049,7 +4200,8 @@ fetch(url, {
     "title": "title1",
     "username": "ahmed",
     "community": "none",
-    "photo_path": "storage\/app\/avater.jpg",
+    "community_id": -1,
+    "author_photo_path": "storage\/app\/avater.jpg",
     "downvotes": 17,
     "upvotes": 30,
     "date": " 2 days ago ",
@@ -4060,17 +4212,11 @@ fetch(url, {
     "downvoted": "true"
 }</code></pre>
 <blockquote>
-<p>Example response (404):</p>
-</blockquote>
-<pre><code class="language-json">{
-    "error": "somethimg wrong!!!!"
-}</code></pre>
-<blockquote>
 <p>Example response (403):</p>
 </blockquote>
 <pre><code class="language-json">{
     "success": "false",
-    "error": "id doesn't exist"
+    "error": "post_id is required"
 }</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/unauth/viewSinglePost</code></p>
@@ -4096,7 +4242,7 @@ fetch(url, {
 <!-- END_b3c3d824135c9f9572665ac6374f5a02 -->
 <h1>Messages</h1>
 <!-- START_a3866fe0c9a833e61357bd41e54fbc4d -->
-<h2>View the content of a specific message</h2>
+<h2>View the content of a specific message.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -4105,7 +4251,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"message_id":8}'
+    -d '{"message_id":17}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/viewUserMessage");
 
@@ -4116,7 +4262,7 @@ let headers = {
 }
 
 let body = {
-    "message_id": 8
+    "message_id": 17
 }
 
 fetch(url, {
@@ -4172,7 +4318,7 @@ fetch(url, {
 </table>
 <!-- END_a3866fe0c9a833e61357bd41e54fbc4d -->
 <!-- START_39c9aed4a7b992d52b5db4f1f43dfdac -->
-<h2>View current user outbox messages</h2>
+<h2>View current user outbox messages.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -4201,14 +4347,14 @@ fetch(url, {
     "success": "true",
     "messages": [
         {
-            "reciever_name": "maged",
-            "reciever_photo": "photo1",
+            "receiver_name": "maged",
+            "receiver_photo": "photo1",
             "message_content": "hello world",
             "message_id": "5"
         },
         {
-            "reciever_name": "nour",
-            "reciever_photo": "photo2",
+            "receiver_name": "nour",
+            "receiver_photo": "photo2",
             "message_content": "hello world tany",
             "message_id": "6"
         }
@@ -4225,7 +4371,7 @@ fetch(url, {
 <p><code>GET api/auth/viewUserSentMessages</code></p>
 <!-- END_39c9aed4a7b992d52b5db4f1f43dfdac -->
 <!-- START_f4d8c50aa2297f3004921b5a43b5bb25 -->
-<h2>View current user inbox Message</h2>
+<h2>View current user inbox Message.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -4234,7 +4380,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"state":11}'
+    -d '{"state":13}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/viewUserInboxMessages");
 
@@ -4245,7 +4391,7 @@ let headers = {
 }
 
 let body = {
-    "state": 11
+    "state": 13
 }
 
 fetch(url, {
@@ -4312,7 +4458,7 @@ fetch(url, {
 </table>
 <!-- END_f4d8c50aa2297f3004921b5a43b5bb25 -->
 <!-- START_1c2dc085d932a4d3ed3555745054136d -->
-<h2>Send a message to user from current user</h2>
+<h2>Send a message to user from current user.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -4321,7 +4467,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"rec_username":"FXfIBUsSUZiUxs8P","msg_content":"kmCvXIZoasN6ThBI"}'
+    -d '{"rec_username":"et","msg_content":"ullam"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/sendMessage");
 
@@ -4332,8 +4478,8 @@ let headers = {
 }
 
 let body = {
-    "rec_username": "FXfIBUsSUZiUxs8P",
-    "msg_content": "kmCvXIZoasN6ThBI"
+    "rec_username": "et",
+    "msg_content": "ullam"
 }
 
 fetch(url, {
@@ -4400,7 +4546,7 @@ fetch(url, {
 <!-- END_1c2dc085d932a4d3ed3555745054136d -->
 <h1>Notification</h1>
 <!-- START_f07c390d554ff547461bfdffb6b99c2a -->
-<h2>Check if there are new notifications fo the current user</h2>
+<h2>Check if there are new notifications fo the current user.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -4440,7 +4586,7 @@ fetch(url, {
 <p><code>GET api/auth/checkNotification</code></p>
 <!-- END_f07c390d554ff547461bfdffb6b99c2a -->
 <!-- START_aa55ab33f0c01ab82c60c2148e4a7def -->
-<h2>Return last 20 notifications for the current user</h2>
+<h2>Return last 20 notifications for the current user.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -4486,7 +4632,7 @@ fetch(url, {
 <!-- END_aa55ab33f0c01ab82c60c2148e4a7def -->
 <h1>Privacy settings</h1>
 <!-- START_be7fc64a0aa69cf9b0967d89e3c5d561 -->
-<h2>Show current user blocklist</h2>
+<h2>Show current user blocklist.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -4528,7 +4674,7 @@ fetch(url, {
 <p><code>GET api/auth/blockedUsers</code></p>
 <!-- END_be7fc64a0aa69cf9b0967d89e3c5d561 -->
 <!-- START_e73fa36ef8a7088995ce793582c73ebc -->
-<h2>Block a user</h2>
+<h2>Block a user.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -4537,7 +4683,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"0hK1ykRZLhsPHy0y"}'
+    -d '{"username":"distinctio"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/blockUser");
 
@@ -4548,7 +4694,7 @@ let headers = {
 }
 
 let body = {
-    "username": "0hK1ykRZLhsPHy0y"
+    "username": "distinctio"
 }
 
 fetch(url, {
@@ -4608,7 +4754,7 @@ fetch(url, {
 </table>
 <!-- END_e73fa36ef8a7088995ce793582c73ebc -->
 <!-- START_8599abaf71212530bab0c370ba1b576a -->
-<h2>Unblock a user</h2>
+<h2>Unblock a user.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -4617,7 +4763,7 @@ fetch(url, {
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"YN6IMl7xjH0ZDdLz"}'
+    -d '{"username":"consectetur"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/auth/unblockUser");
 
@@ -4628,7 +4774,7 @@ let headers = {
 }
 
 let body = {
-    "username": "YN6IMl7xjH0ZDdLz"
+    "username": "consectetur"
 }
 
 fetch(url, {
@@ -4689,13 +4835,13 @@ fetch(url, {
 <!-- END_8599abaf71212530bab0c370ba1b576a -->
 <h1>Searching</h1>
 <!-- START_0f4b030572180f70ac4811706078f762 -->
-<h2>Search for a community or a user</h2>
+<h2>Search for a community or a user.</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/search" \
     -H "Content-Type: application/json" \
-    -d '{"search_content":"sjNGmLy4YlSTzky0"}'
+    -d '{"search_content":"eos"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/search");
 
@@ -4705,7 +4851,7 @@ let headers = {
 }
 
 let body = {
-    "search_content": "sjNGmLy4YlSTzky0"
+    "search_content": "eos"
 }
 
 fetch(url, {
@@ -4759,7 +4905,7 @@ fetch(url, {
 <!-- END_0f4b030572180f70ac4811706078f762 -->
 <h1>User Information</h1>
 <!-- START_b148d8fae4a198cdbc7dd7f4a488aa94 -->
-<h2>Show user&#039;s private information</h2>
+<h2>Show user&#039;s private information.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -4799,7 +4945,7 @@ fetch(url, {
 <p><code>GET api/auth/viewPrivateUserInfo</code></p>
 <!-- END_b148d8fae4a198cdbc7dd7f4a488aa94 -->
 <!-- START_eed3f30d6d0993a5e57e1d28092a53d7 -->
-<h2>Show user&#039;s username</h2>
+<h2>Show user&#039;s username.</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
 <blockquote>
 <p>Example request:</p>
@@ -4839,13 +4985,13 @@ fetch(url, {
 <p><code>GET api/auth/getUsername</code></p>
 <!-- END_eed3f30d6d0993a5e57e1d28092a53d7 -->
 <!-- START_6a0485e3dc9ad38ceaf3c5165a1becf9 -->
-<h2>Show user&#039;s public information</h2>
+<h2>Show user&#039;s public information.</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-bash">curl -X GET -G "http://localhost/api/unauth/viewPublicUserInfo" \
     -H "Content-Type: application/json" \
-    -d '{"username":"DgJtqfvXdDhoUmj9"}'
+    -d '{"username":"vel"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL("http://localhost/api/unauth/viewPublicUserInfo");
 
@@ -4855,7 +5001,7 @@ let headers = {
 }
 
 let body = {
-    "username": "DgJtqfvXdDhoUmj9"
+    "username": "vel"
 }
 
 fetch(url, {
