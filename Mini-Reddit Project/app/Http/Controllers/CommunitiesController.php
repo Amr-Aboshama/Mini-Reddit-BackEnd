@@ -22,9 +22,13 @@ class CommunitiesController extends Controller
      * @response 200{
      *   "success" : "true",
      *   "communities" : [{
-     *   "community_id": 5
+     *   "community_id": 5,
+     *   "community_name":logic,
+     *   "community_logo":"storage/app/logo1.jpg"
      *   }, {
      *   "community_id": 10
+     *   "community_name":micro,
+     *   "communtiy_logo":"storage/app/logo2.jpg"
      *   }]
      * }
      * @response 403 {
@@ -42,10 +46,21 @@ class CommunitiesController extends Controller
             ], 403);
         }
 
-        $communities_subscribed = Subscribtion::subscribed_communities($request->username);
+        $communities_subscribed = Subscribtion::subscribed_communities_data($request->username);
 
+        $i=0;
+        foreach ($communities_subscribed as $community) {
+            $communities[$i]['community_id']=$community->community_id;
+            $communities[$i]['community_name']=$community->name;
+            if($community->community_logo)
+                $communities[$i]['community_logo']='storage/app/avatars/'.$community->community_logo;
+            else {
+                $communities[$i]['community_logo']=$community->community_logo;
+                }
+            $i++;
+        }
         return response()->json(["success" => "true",
-            'communities' => $communities_subscribed
+            'communities' => $communities
         ], 200);
     }
 
@@ -60,7 +75,9 @@ class CommunitiesController extends Controller
      *    "num_subscribes": 30,
      *    "banner": "storage/app/banner.jpg",
      *    "logo": "storage/app/logo.jpg",
-     *    "subscribed" : "false"
+     *    "subscribed" : "false",
+     *    "moderator":"true"
+     *
      * }
      *
      * @response 403 {
@@ -81,9 +98,11 @@ class CommunitiesController extends Controller
         try {
             $user = auth()->userOrFail();
             $auth_user=Subscribtion::subscribed($request->community_id, $user->username);
+            $user_moderate=ModerateCommunity::checkExisting($request->community_id, $user->username);
 
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
-              $auth_user=null;
+              $auth_user=false;
+              $user_moderate=false;
             }
         $number_sub=Subscribtion::numberOfSubscriptions($request->community_id);
         $community=Community::getCommunity($request->community_id);
@@ -96,7 +115,8 @@ class CommunitiesController extends Controller
                 "num_subscribes" =>$number_sub ,
                 "banner" => $community->community_banner,
                 "logo" =>$community->community_logo ,
-                "subscribed" =>$auth_user
+                "subscribed" =>$auth_user,
+                "moderator"=>$user_moderate
             ], 200);
         }
     }
@@ -426,7 +446,11 @@ class CommunitiesController extends Controller
      * }
      * @response 403 {
      *  "success": "false",
-     *  "error": "you are not a modirator to add another modirator"
+     *  "error": "you are not a modirator to remove another modirator"
+     * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "there is no moderators except you"
      * }
      */
     public function removeModretorFromCommunity(Request $request)
@@ -450,7 +474,7 @@ class CommunitiesController extends Controller
         if( ! $current_user_modirate){
             return response()->json([
                 "success" => "false",
-                "error" => "you are not a modirator to add another modirator"
+                "error" => "you are not a modirator to remove another modirator"
             ], 403);
         }
         $user_modirate=ModerateCommunity::checkExisting($request->community_id, $request->moderator_username);
@@ -460,6 +484,14 @@ class CommunitiesController extends Controller
                 "error" => "user isn't a moderator already in that community"
             ], 403);
         }
+        $last_moderator=ModerateCommunity::numberOfModerators($request->community_id);
+        if($last_moderator==1)
+        {
+          return response()->json([
+              "success" => "false",
+              "error" => "there is no moderators except you"
+          ], 403);
+        }
         $removed=ModerateCommunity::remove($request->moderator_username, $request->community_id);
         if($removed){
             return response()->json([
@@ -467,6 +499,59 @@ class CommunitiesController extends Controller
             ], 200);
 
         }
+
+    }
+
+    /**
+     * view moderators of a specific community
+     * @authenticated
+     * @bodyParam community_id int required The ID of the community to view its modirators.
+     * * @response 200 {
+     *  "success": "true",
+     *   "moderators" : [{
+     *   "moderator_username": nour,
+     *   "moderator_photo":"storage/app/photo2.jpg"
+     *   }, {
+     *   "moderator_username": ahmed,
+     *   "moderator_photo":"storage/app/photo1.jpg"
+     *   }]
+     * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "community doesn't exist"
+     * }
+     *  @response 401 {
+     *  "success": "false",
+     *  "error": "UnAuthorized"
+     * }
+     * }
+     */
+    public function viewModretorsCommunity(Request $request)
+    {
+        $user = auth()->user();
+        $existance = Community::communityExist($request->community_id);
+        if (!$existance) {
+            return response()->json([
+                "success" => "false",
+                "error" => "community doesn't exist"
+            ], 403);
+        }
+
+        $moderators=ModerateCommunity::getModerators($request->community_id);
+
+        $i=0;
+        foreach ($moderators as $moderator) {
+            $comm_moderators[$i]['moderator_username']=$moderator->username;
+            if($moderator->photo_url)
+                $comm_moderators[$i]['moderator_photo']='storage/'.'app/'.'avatars/'.$moderator->photo_url;
+                else {
+                    $comm_moderators[$i]['moderator_photo']=$moderator->photo_url;
+                }
+            $i++;
+        }
+        return response()->json(["success" => "true",
+            'moderators' => $comm_moderators
+        ], 200);
 
     }
 
