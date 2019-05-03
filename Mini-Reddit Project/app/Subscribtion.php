@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Subscribtion extends Model
 {
     protected $fillable = ['username', 'community_id'];
@@ -50,6 +51,22 @@ class Subscribtion extends Model
         $subscribed_communities = DB::select(" select community_id
         	                              from subscribtions
         	                              where (username='$username')");
+
+        return $subscribed_communities;
+    }
+
+
+    /**
+     * function to get the communities subsribed by a user given its username.
+     * @param  string $username
+     * @return array           [ list of all communities subscribed by the given user ].
+     */
+
+    public static function subscribed_communities_data($username)
+    {
+        $subscribed_communities = DB::select(" select c.community_id,c.name,c.community_logo
+        	                              from subscribtions s ,communities c
+        	                              where (username='$username')&&(c.community_id=s.community_id)");
 
         return $subscribed_communities;
     }

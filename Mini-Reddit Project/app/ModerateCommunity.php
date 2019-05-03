@@ -16,13 +16,27 @@ class ModerateCommunity extends Model
      * @param   int  $community_id  the id of the community
      * @param   string  $username      the username of the user
      *
-     * @return  boolean                 t[ rue if the user moderates the community and false if not ].
+     * @return  boolean                 true if the user moderates the community and false if not.
      */
     public static function checkExisting($community_id, $username)
     {
         $result = ModerateCommunity::where('community_id', $community_id)->where('username', $username)->exists();
 
         return $result;
+    }
+
+    /**
+     * [getModerators description]
+     * @param  int $community_id [the id of the community]
+     * @return array              [th moderators of specific community]
+     */
+    public static function getModerators($community_id)
+    {
+        $subscribed_communities = DB::select(" select u.username,u.photo_url
+                                        from moderate_communities m,users u
+                                        where (m.community_id='$community_id')&&(u.username=m.username)");
+
+        return $subscribed_communities;
     }
 
 
@@ -44,6 +58,20 @@ class ModerateCommunity extends Model
             return false;
         }
     }
+
+
+    /**
+     * [numberOfModerators description]
+     * @param  int $community_id community_id
+     * @return int  number of moderators
+     */
+      public static function numberOfModerators($community_id)
+      {
+          $result = ModerateCommunity::where('community_id', $community_id)->count();
+
+          return $result;
+      }
+
 
     /**
      * function to remove modirator.
