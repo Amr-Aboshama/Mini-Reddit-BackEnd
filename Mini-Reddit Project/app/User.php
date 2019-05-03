@@ -109,6 +109,24 @@ class User extends Authenticatable implements JWTSubject
         return User::where('username', '=', $username)->first();
     }
 
+
+
+    /**
+     * return the data of a specific user given his/her email.
+     * @param  string $email the email of the user that we want his/her
+     * data
+     * @return object  [ the user object wanted ].
+     */
+    public static function getUserWholeRecordByEmail($email)
+    {
+        try {
+            return User::where('email', $email)->first();
+        } catch (\Exception $e) {
+          return false;
+        }
+
+    }
+
     /**
      * delete specific user from the database.
      * @param  string $username the username of the user that wanted to be removed
@@ -127,7 +145,7 @@ class User extends Authenticatable implements JWTSubject
     public static function userExist($username)
     {
         $result = User::where('username', $username)->exists();
-        
+
         return $result;
     }
 
@@ -236,15 +254,12 @@ class User extends Authenticatable implements JWTSubject
     /**
      * delete account
      * @param  string $username the currently logged in user
-     * @return boolean [true if the deletion process succeeded, false otherwise] 
+     * @return boolean [true if the deletion process succeeded, false otherwise]
      */
     public static function deleteAccount($username)
     {
         $result = User::where('username', $username)->delete();
 
         return $result;
-
     }
-
-    
 }
