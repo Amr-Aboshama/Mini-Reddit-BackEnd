@@ -13,10 +13,13 @@ use App\SavedLink;
 use App\HiddenPost;
 use App\Community;
 use App\Blocking;
+use App\Following;
 use App\Subscribtion;
 use App\ModerateCommunity;
+use App\PushNotification;
 use Validator;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 /**
  * @group Interacting Actions
@@ -1818,7 +1821,8 @@ class InteractingController extends Controller
      *  "title":"title1",
      *	"username": "ahmed" ,
      *  "community" : "none",
-     * 	"photo_path" : "storage/app/avater.jpg",
+     *  "community_id" : -1,
+     * 	"author_photo_path" : "storage/app/avater.jpg",
      *	"downvotes" : 17,
      *	"upvotes" : 30 ,
      *	"date":" 2 days ago " ,
@@ -1829,17 +1833,70 @@ class InteractingController extends Controller
      *	"downvoted" : "true"
      * }
      *
-     * @response 404 {
-     *	"error" :"somethimg wrong!!!!"
-     * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "id doesn't exist"
+     * 	"error" : "post_id is required"
      * }
      */
 
-    public function viewSinglePost()
+    public function viewSinglePost(Request $request)
     {
-        // code ...
+        $valid = Validator::make($request->all() , ['post_id' => 'required']);
+        if($valid->Fails())
+        {
+            return response()->json([
+              "success" => "false",
+             	"error" => "post_id is required"
+            ],403);
+        }
+        $auth = 0;
+        try {
+            $tokenFetch = JWTAuth::parseToken()->authenticate();
+            $auth++;
+        } catch (JWTException $e) {
+
+        }
+
+        $post =(object) Link::getPosts()->where('link_id' , $request->post_id)->get()->first();
+        $post->upvoted = "false";
+        $post->downvoted = "false";
+        $post->hidden = "false";
+        $post->saved = "false";
+        $post->community = "none";
+        if($auth) {
+            $username = auth()->user()->username;
+            if(UpvotedLink::upvoted($request->post_id,$username)) {
+                $post ->upvoted = "true";
+            } else if(DownvotedLink::downvoted($request->post_id,$username)) {
+                $post->downvoted = "true";
+            }
+
+            if(SavedLink::saved($request->post_id , $username)) {
+                $post->saved = "true";
+            }
+            if(HiddenPost::hidden($request->post_id , $username)) {
+                $post->hidden = "true";
+            }
+        }
+
+        return response()->json([
+          "post_id" => $post->link_id,
+          "body" => $post->content,
+          "image"=> $post->image_content,
+          "title"=> $post->title,
+          "username"=> $post->author_username,
+          "community"=> $post->community_id != null ? Community::getCommunity($post->community_id)->name : -1 ,
+          "author_photo_path"=> User::where('username', $post->author_username)->get()->first()->photo_url,
+          "downvotes"=> $post->downvotes,
+          "upvotes" => $post->upvotes,
+          "date" => Link::Duration($post->link_date),
+          "comments_num"=>Link::commentsNum($post->link_id) ,
+          "saved"=>$post->saved,
+          "hidden"=> $post->hidden,
+          "upvoted"=> $post->upvoted,
+          "downvoted"=> $post->downvoted,
+          "pinned" => $post->pinned == 1 ? "true" : "false"
+        ],200);
+
     }
 }

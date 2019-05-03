@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Link extends Model
 {
@@ -542,5 +543,44 @@ class Link extends Model
     {
         $result = DB::select("SELECT post_id FROM links where link_id='$link_id';");
         return $result[0]->post_id;
+    }
+
+    public static function getComment($comment_id)
+    {
+        $comment = Link::where('link_id' , $comment_id)->get()->first();
+        return $comment;
+    }
+
+    public static function Duration($link_date)
+    {
+        $start = Carbon::parse($link_date);
+        $end = Carbon::parse( date('Y-m-d H:i:s'));
+        $minutes = $end->diffInMinutes($start);
+        $hours = $minutes / 60;
+        $minutes = $minutes % 60;
+        $days = $hours/24;
+        $hours = $hours %24;
+        $years = $days / 365;
+        $days = $days % 365;
+        $months = $days / 30;
+        $days = $days % 30;
+        $weeks = $days / 7;
+        $days = $days % 7;
+
+        if( $years >= 1) {
+            return Carbon::now()->subYears($years)->diffForHumans();
+          } else if ($months >= 1) {
+            return  Carbon::now()->subMonths($months)->diffForHumans();
+          } else if ($weeks >= 1) {
+            return  Carbon::now()->subWeeks($weeks)->diffForHumans();
+          } else if ($days >= 1) {
+            return  Carbon::now()->subDays($days)->diffForHumans();
+          } else if ($hours >= 1) {
+            return  Carbon::now()->subHours($hours)->diffForHumans();
+          } else if ($minutes >= 1) {
+            return  Carbon::now()->subMinutes($minutes)->diffForHumans();
+          } else {
+            return  Carbon::now()->subYears( $end->diffInSeconds($start))->diffForHumans();
+          }
     }
 }
