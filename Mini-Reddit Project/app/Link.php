@@ -530,4 +530,17 @@ class Link extends Model
         $links = Link::where('parent_id' , $link_id)->select('content' , 'author_username' , 'link_date' , 'link_id' , 'upvotes' , 'downvotes' )->orderBy('link_date' , 'DESC' )->get();
         return $links;
     }
+
+    /**
+     * function to get the attribute called post_id for a specific link given the link_id
+     *
+     * @param   int  $link_id  the id of the link i need to know its post_id
+     *
+     * @return  int            returns the post_id of the link
+     */
+    public static function getPostID($link_id)
+    {
+        $result = DB::select("SELECT post_id FROM links where link_id='$link_id';");
+        return $result[0]->post_id;
+    }
 }
