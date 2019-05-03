@@ -1294,6 +1294,7 @@ class InteractingController extends Controller
         $p['community_id']=$request->community_id;
         $p['video_url']=$request->video_url;
         $p['content_image']=$request->image_path;
+        $p['link_date']=date('Y-m-d H:i:s');
         if($request->has('parent_link_id')){
             $p['title']=null;
             $p['post_id']=link::getPostID($request->parent_link_id);
