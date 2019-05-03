@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Mail Driver
@@ -56,8 +55,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'minireddit@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Mini-Reddit'),
     ],
 
     /*
@@ -132,5 +131,4 @@ return [
     */
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
-
 ];
