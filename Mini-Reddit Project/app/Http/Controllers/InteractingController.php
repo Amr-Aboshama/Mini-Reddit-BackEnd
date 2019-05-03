@@ -1713,17 +1713,22 @@ class InteractingController extends Controller
      *	"downvoted" : "true"
      * }
      *
-     * @response 404 {
-     *	"error" :"somethimg wrong!!!!"
-     * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "id doesn't exist"
+     * 	"error" : "post_id is required"
      * }
      */
 
     public function viewSinglePost(Request $request)
     {
+        $valid = Validator::make($request->all() , ['post_id' => 'required']);
+        if($valid->Fails())
+        {
+            return response()->json([
+              "success" => "false",
+             	"error" => "post_id is required"
+            ],403);
+        }
         $auth = 0;
         try {
             $tokenFetch = JWTAuth::parseToken()->authenticate();
@@ -1753,7 +1758,7 @@ class InteractingController extends Controller
                 $post->hidden = "true";
             }
         }
-        
+
         return response()->json([
           "post_id" => $post->link_id,
           "body" => $post->content,
