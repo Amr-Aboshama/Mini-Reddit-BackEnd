@@ -11,6 +11,20 @@ class Subscribtion extends Model
     public $timestamps = false; //so that doesn't expext time columns
     protected $primaryKey = 'subscribtion_id';
 
+
+  /**
+   * [numberOfSubscriptions description]
+   * @param  int $community_id community_id
+   * @return int  number of subscriptions
+   */
+    public static function numberOfSubscriptions($community_id)
+    {
+        $result = Subscribtion::where('community_id', $community_id)->count();
+
+        return $result;
+    }
+
+
     /**
      * checks if the given user subscribed the given community.
      * @param  int $community_id

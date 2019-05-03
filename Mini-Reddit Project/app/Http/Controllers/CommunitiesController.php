@@ -68,9 +68,37 @@ class CommunitiesController extends Controller
      * 	"error": "community doesn't exist"
      * }
      */
-    public function viewCommunityInformation()
+    public function viewCommunityInformation(Request $request)
     {
-        //...
+        $existance = Community::communityExist($request->community_id);
+        if (!$existance) {
+            return response()->json([
+                "success" => "false",
+                "error" => "community doesn't exist"
+            ], 403);
+        }
+        $auth_user;
+        try {
+            $user = auth()->userOrFail();
+            $auth_user=Subscribtion::subscribed($request->community_id, $user->username);
+
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+              $auth_user=null;
+            }
+        $number_sub=Subscribtion::numberOfSubscriptions($request->community_id);
+        $community=Community::getCommunity($request->community_id);
+        if($community){
+            return response()->json([
+                "success" => "true",
+                "name" =>$community->name ,
+                "rules" =>$community->rules,
+                "desription" =>$community->description ,
+                "num_subscribes" =>$number_sub ,
+                "banner" => $community->community_banner,
+                "logo" =>$community->community_logo ,
+                "subscribed" =>$auth_user
+            ], 200);
+        }
     }
 
 
@@ -319,9 +347,52 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "user is already a moderator in that community"
      * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "you are not a modirator to add another modirator"
+     * }
      */
-    public function addModretorForCommunity()
+    public function addModretorForCommunity(Request $request)
     {
+        $user = auth()->user();
+        $existance = Community::communityExist($request->community_id);
+        if (!$existance) {
+            return response()->json([
+                "success" => "false",
+                "error" => "community doesn't exist"
+            ], 403);
+        }
+        $current_user_modirate=ModerateCommunity::checkExisting($request->community_id, $user->username);
+        if( ! $current_user_modirate){
+            return response()->json([
+                "success" => "false",
+                "error" => "you are not a modirator to add another modirator"
+            ], 403);
+        }
+        $user_exist=User::userExist($request->moderator_username);
+        if (!$user_exist) {
+            return response()->json([
+                "success" => "false",
+                "error" => "user doesn't exist"
+            ], 403);
+        }
+
+        $user_modirate=ModerateCommunity::checkExisting($request->community_id, $request->moderator_username);
+        if(  $user_modirate){
+            return response()->json([
+                "success" => "false",
+                "error" => "user is already a moderator in that community"
+            ], 403);
+        }
+        $add_modirator=ModerateCommunity::store($request->community_id, $request->moderator_username);
+        if($add_modirator){
+          return response()->json([
+              "success" => "true"
+          ],200);
+
+        }
+
+
     }
 
 
@@ -353,9 +424,50 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "user isn't a moderator already in that community"
      * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "you are not a modirator to add another modirator"
+     * }
      */
-    public function removeModretorFromCommunity()
+    public function removeModretorFromCommunity(Request $request)
     {
+        $user = auth()->user();
+        $user_exist=User::userExist($request->moderator_username);
+        if (!$user_exist) {
+            return response()->json([
+                "success" => "false",
+                "error" => "user doesn't exist"
+            ], 403);
+        }
+        $existance = Community::communityExist($request->community_id);
+        if (!$existance) {
+            return response()->json([
+                "success" => "false",
+                "error" => "community doesn't exist"
+            ], 403);
+        }
+        $current_user_modirate=ModerateCommunity::checkExisting($request->community_id, $user->username);
+        if( ! $current_user_modirate){
+            return response()->json([
+                "success" => "false",
+                "error" => "you are not a modirator to add another modirator"
+            ], 403);
+        }
+        $user_modirate=ModerateCommunity::checkExisting($request->community_id, $request->moderator_username);
+        if( ! $user_modirate){
+            return response()->json([
+                "success" => "false",
+                "error" => "user isn't a moderator already in that community"
+            ], 403);
+        }
+        $removed=ModerateCommunity::remove($request->moderator_username, $request->community_id);
+        if($removed){
+            return response()->json([
+                "success" => "true"
+            ], 200);
+
+        }
+
     }
 
     /**

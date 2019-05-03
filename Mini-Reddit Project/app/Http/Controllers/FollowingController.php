@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Following;
 use App\Blocking;
+use App\PushNotification;
 
 /**
  * @group Following
@@ -136,9 +137,13 @@ class FollowingController extends Controller
 
         try {
             if (Following::createFollow($current_username, $follow_username)) {
+                // sending notification to the followed user.....
+                PushNotification::sendNotificationToSpecificUsers("'$current_username' has followed you", [$follow_username]);
+
                 return response()->json([
                     "success" => "true"
                 ], 200);
+
             } else {
                 return response()->json([
                     "success" => "false",
