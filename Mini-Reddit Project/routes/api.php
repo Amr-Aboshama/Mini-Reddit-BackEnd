@@ -41,6 +41,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/auth/removeCommunity', 'CommunitiesController@removeCommunity');
     Route::post('/auth/addModerator', 'CommunitiesController@addModretorForCommunity');
     Route::post('/auth/removeModerator', 'CommunitiesController@removeModretorFromCommunity');
+    Route::get('/auth/viewModerators', 'CommunitiesController@viewModretorsCommunity');
     Route::post('/auth/subscribeCommunity', 'CommunitiesController@subscribeCommunity'); //
     Route::post('/auth/unSubscribeCommunity', 'CommunitiesController@unsubscribeCommunity'); //*
     Route::post('/auth/saveLink', 'InteractingController@saveLink'); //

@@ -33,6 +33,7 @@ class CreateLinksTable extends Migration
             $table->foreign('author_username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('parent_id')->references('link_id')->on('links')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('post_id')->references('link_id')->on('links')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('community_id')->references('community_id')->on('communities')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

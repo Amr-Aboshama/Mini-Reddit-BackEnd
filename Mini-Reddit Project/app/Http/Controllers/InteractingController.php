@@ -1599,9 +1599,36 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "this post, comment or reply doesn't exist"
      * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "already saved"
+     * }
      */
-    public function saveLink()
+    public function saveLink(Request $request)
     {
+          $user = auth()->user();
+          $result = Link::checkExisting($request->link_id);
+          if (!$result) {
+              return response()->json([
+                  'success' => 'false',
+                  'error' => 'this post, comment or reply doesn\'t exist'
+              ], 403);
+          }
+          $link_saved=SavedLink::linkSaved($request->link_id, $user->username);
+          if($link_saved)
+          {
+              return response()->json([
+                  'success' => 'false',
+                  'error' => 'already saved'
+              ], 403);
+          }
+          $save_link=SavedLink::store($user->username, $request->link_id);
+          if($save_link)
+          {
+              return response()->json([
+                  'success' => 'true'
+              ], 200);
+          }
     }
 
 
@@ -1622,10 +1649,38 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "this post, comment or reply doesn't exist"
      * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "already unsaved"
+     * }
      */
-    public function unsaveLink()
+    public function unsaveLink(Request $request)
     {
-        // ...
+        $user = auth()->user();
+        $result = Link::checkExisting($request->link_id);
+        if (!$result) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'this post, comment or reply doesn\'t exist'
+            ], 403);
+        }
+        $link_saved=SavedLink::linkSaved($request->link_id, $user->username);
+        if(!$link_saved)
+        {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'already unsaved'
+            ], 403);
+        }
+        $save_link=SavedLink::remove($user->username, $request->link_id);
+        if($save_link)
+        {
+            return response()->json([
+                'success' => 'true'
+            ], 200);
+        }
+
+
     }
 
     /**
