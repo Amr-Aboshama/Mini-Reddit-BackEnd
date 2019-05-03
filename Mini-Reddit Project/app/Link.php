@@ -580,7 +580,7 @@ class Link extends Model
           } else if ($minutes >= 1) {
             return  Carbon::now()->subMinutes($minutes)->diffForHumans();
           } else {
-            return  Carbon::now()->subYears( $end->diffInSeconds($start))->diffForHumans();
+            return  Carbon::now()->subSeconds( $end->diffInSeconds($start))->diffForHumans();
           }
     }
 }
