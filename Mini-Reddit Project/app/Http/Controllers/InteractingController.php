@@ -18,6 +18,8 @@ use App\Subscribtion;
 use App\ModerateCommunity;
 use App\PushNotification;
 use Validator;
+use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 /**
  * @group Interacting Actions
@@ -193,6 +195,7 @@ class InteractingController extends Controller
      * @bodyParam new_title string the new title of the post
      * @bodyParam new_content string the new content of the post
      * @bodyParam new_image string the directory of the new image if there is .
+     * @bodyParam new_video_url string the url of the new video if there is .
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -207,18 +210,115 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "post must have a title"
+     * 	"error" : "There are some missing or invalid data!"
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "post must have a content"
+     * 	"error" : "Only the author of the post can edit it"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "There are something went wrong!"
      * }
      */
 
 
-    public function editPost()
+    public function editPost(Request $request)
     {
-        // ...
+        $user = auth()->user();
+
+        $validator = Validator::make($request->all(), [
+            'post_id' => [
+                'required',
+                'numeric'
+            ],
+            'new_title' => [
+                'nullable',
+                'max:20',
+                'string',
+                'min:1'
+            ],
+            'new_content' => [
+                'nullable',
+                'max:500',
+                'string',
+                'min:1'
+            ],
+            'new_video_url' => [
+                'nullable',
+                'url'
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are some missing or invalid data!'
+
+            ], 403);
+        }
+        // the post doesn't exist
+        if(!link::checkExisting($request->post_id)){
+            return response()->json([
+                'success' => 'false',
+                'error' => 'post doesn\'t exist'
+            ]);
+        }
+        //a non-owner user trying to edit the post
+        if($user->username != Link::getAuthor($request->post_id)) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Only the author of the post can edit it'
+            ]);
+        }
+
+        if((!$request->has('new_content'))&&(!$request->has('new_title'))&&(!$request->has('new_image'))
+        &&(!$request->has('new_video_url'))) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are some missing or invalid data!'
+
+            ], 403);
+        }
+
+        if($request->has('new_content')&&(!link::updateLinkContent($request->post_id,$request->new_content))){
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are something went wrong!'
+
+            ], 403);
+        }
+        if($request->has('new_title')&&(!link::updatePostTitle($request->post_id,$request->new_title))) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are something went wrong!'
+
+            ], 403);
+        }
+        if($request->has('new_image')&&(!link::updatePostImage($request->post_id,$request->new_image))) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are something went wrong!'
+
+            ], 403);
+        }
+        if($request->has('new_video_url')&&(!link::updatePostVideo($request->post_id,$request->new_video_url))) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are something went wrong!'
+
+            ], 403);
+        }
+
+        return response()->json([
+            'success' => 'true'
+        ], 200);
     }
 
     /**
@@ -235,16 +335,74 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "comment doesn't exist"
+     * 	"error" : "comment/reply doesn't exist"
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "comment must have a content"
+     * 	"error" : "There are some missing or invalid data!"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "Only the author of the comment/reply can edit it"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "There are something went wrong!"
      * }
      */
-    public function editComment()
+    public function editComment(Request $request)
     {
-        // ...
+        $user = auth()->user();
+
+        $validator = Validator::make($request->all(), [
+            'comment_id' => [
+                'required',
+                'numeric'
+            ],
+            'new_content' => [
+                'required',
+                'max:500',
+                'string',
+                'min:1'
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are some missing or invalid data!'
+
+            ], 403);
+        }
+        // the comment doesn't exist
+        if(!link::checkExisting($request->comment_id)||(link::getParent($request->comment_id)==null)){
+            return response()->json([
+                'success' => 'false',
+                'error' => 'comment/reply doesn\'t exist'
+            ]);
+        }
+
+        //a non-owner user trying to edit the comment
+        if($user->username != Link::getAuthor($request->comment_id)) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Only the author of the comment/reply can edit it'
+            ]);
+        }
+
+        if($request->has('new_content')&&(!link::updateLinkContent($request->comment_id,$request->new_content))){
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are something went wrong!'
+
+            ], 403);
+        }
+
+        return response()->json([
+            'success' => 'true'
+        ], 200);
     }
 
 
@@ -1213,14 +1371,15 @@ class InteractingController extends Controller
     /**
      * Add new Link
      * @bodyParam post_content string required the content written in the post
-     * @bodyParam parent_link_id int required the ID of the parent link, this parameter should be 'null' if the link is a post
+     * @bodyParam parent_link_id int the ID of the parent link, this parameter is required only if the link isn't a post
      * @bodyParam post_title string this parameter is required only for posts
      * @bodyParam community_id int this parameter is required only if the link is inside a community
      * @bodyParam image_path string if a post contains an image.
      * @bodyParam video_url string  if a post contains a video.
      * @authenticated
      * @response 200 {
-     *  "success": "true"
+     *  "success": "true",
+     *  "link_id" :  3
      * }
      * @response 401 {
      *  "success": "false",
@@ -1228,37 +1387,158 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      *  "success": "false",
-     *  "error": "post must have a title"
+     *  "error": "There are some missing or invalid data!"
      * }
      * @response 403 {
      *  "success": "false",
-     *  "error": "post must have a content"
+     *  "error": "Only moderators or subscribers can post in the community"
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "parent doesn't exist"
+     * 	"error" : "The post you are replying on isn't in the sent community!"
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "community doesn't exist"
+     * 	"error" : "There is something went wrong!"
      * }
      */
     public function addNewLink(Request $request)
     {
         //token should be parsed to get the user name
         $user = auth()->user();
-        $p['author_username'] = $user->username;
 
-        $p['content']='oh';
+        $validator = Validator::make($request->all(), [
+            'post_content' => [
+                'required',
+                'max:500',
+                'filled',
+                'string',
+                'min:1'
+            ],
+            'parent_link_id' => [
+                'nullable',
+                'exists:links,link_id',
+                'numeric'
+            ],
+            'post_title' => [
+                Rule::requiredIf($request->parent_link_id == null),
+                'max:20',
+                'string',
+                'min:1'
+            ],
+            'community_id' => [
+                'nullable',
+                'numeric',
+                'exists:communities,community_id'
+            ],
+            'video_url' => [
+                'nullable',
+                'url'
+            ]
+
+        ]);
+       if ($validator->fails()) {
+        return response()->json([
+
+            'success' => 'false',
+            'error' => 'There are some missing or invalid data!'
+
+        ], 403);
+       }
+
+       //setting data::
+        $p['author_username'] = $user->username;
+        $p['content']=$request->post_content;
+        $p['parent_id']=$request->parent_link_id;
+        $p['title']=$request->post_title;
+        $p['community_id']=$request->community_id;
+        $p['video_url']=$request->video_url;
+        $p['content_image']=$request->image_path;
+        $p['link_date']=date('Y-m-d H:i:s');
+        if($request->has('parent_link_id')){
+            $p['title']=null;
+            $p['post_id']=link::getPostID($request->parent_link_id);
+            if($request->has('community_id')&&(link::getCommunity($request->parent_link_id)!=$request->community_id)){
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'The post you are replying on isn\'t in the sent community!'
+                ],403);
+            }
+        }
+
+        if($request->has('community_id')){
+            if(!(moderateCommunity::checkExisting($request->community_id,$user->username))
+            &&!(Subscribtion::subscribed($request->community_id,$user->username))){
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'Only moderators or subscribers can post in the community'
+                ], 403);
+            }
+        }
 
         $res= Link::storeLink($p);
         if(!$res)
         {
-            return 'hola';
+            return response()->json([
+                'success' => 'false',
+                'error' => 'There is something went wrong!'
+            ], 403);
         }
         else {
-            return $res;
+            $NotPost = Validator::Make($request->all() , ['parent_link_id'=>'required']);
+            if($NotPost->Fails()) {
+                $username = auth()->user()->username;
+                $users = Following::getUserFollowers($username ,$username);
+                $notification = "your friend '$username' created a new post";
+                if($request->has('community_id'))
+                {
+                    $name = Community::getCommunity($request->community_id)->name;
+                    $notification = $notification." in '$name' community ";
+                }
+
+                PushNotification::sendNotificationToSpecificUsers($notification , $users);
+            }
+            else {
+              $username = auth()->user()->username;
+              $auth_username = Link::getAuthor($request->parent_link_id);
+              $post_id=$p['post_id'];
+              $same = 0;
+              if($username == $auth_username) {
+                  $same++;
+              }
+
+              if(!$same) {
+                  if($request->parent_link_id == $post_id ) {
+                      $title = Link::getPosts()->where('link_id' , $request->parent_link_id  )->get()->first()->title;
+                      $notification = " '$username' has just commented on your post '$title' ";
+                      PushNotification::sendNotificationToSpecificUsers($notification , [$auth_username]);
+                  }
+                  else {
+                      $post_username = Link::getAuthor($post_id);
+                      $content = Link::getComment($request->parent_link_id)->content;
+                      $title = Link::getPosts()->where('link_id' , $post_id )->get()->first()->title;
+                      $notification1 = "'$username' has just replied to your comment '$content' on post '$title'";
+                      PushNotification::sendNotificationToSpecificUsers($notification1 , [$auth_username]);
+                      $f = 0;
+                      if($post_username == $username) {
+                          $f++;
+                      }
+
+                      if(!$f) {
+                          $notification2 = " '$username' has replied to '$auth_username' on your post '$title' ";
+                          PushNotification::sendNotificationToSpecificUsers($notification2 , [$post_username]);
+                      }
+                  }
+              }
+
+            }
+
+            return response()->json([
+                'success' => 'true',
+                'link_id' => $res->id
+            ], 200);
         }
+
     }
 
 
@@ -1601,9 +1881,36 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "this post, comment or reply doesn't exist"
      * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "already saved"
+     * }
      */
-    public function saveLink()
+    public function saveLink(Request $request)
     {
+          $user = auth()->user();
+          $result = Link::checkExisting($request->link_id);
+          if (!$result) {
+              return response()->json([
+                  'success' => 'false',
+                  'error' => 'this post, comment or reply doesn\'t exist'
+              ], 403);
+          }
+          $link_saved=SavedLink::linkSaved($request->link_id, $user->username);
+          if($link_saved)
+          {
+              return response()->json([
+                  'success' => 'false',
+                  'error' => 'already saved'
+              ], 403);
+          }
+          $save_link=SavedLink::store($user->username, $request->link_id);
+          if($save_link)
+          {
+              return response()->json([
+                  'success' => 'true'
+              ], 200);
+          }
     }
 
 
@@ -1624,10 +1931,38 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "this post, comment or reply doesn't exist"
      * }
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "already unsaved"
+     * }
      */
-    public function unsaveLink()
+    public function unsaveLink(Request $request)
     {
-        // ...
+        $user = auth()->user();
+        $result = Link::checkExisting($request->link_id);
+        if (!$result) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'this post, comment or reply doesn\'t exist'
+            ], 403);
+        }
+        $link_saved=SavedLink::linkSaved($request->link_id, $user->username);
+        if(!$link_saved)
+        {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'already unsaved'
+            ], 403);
+        }
+        $save_link=SavedLink::remove($user->username, $request->link_id);
+        if($save_link)
+        {
+            return response()->json([
+                'success' => 'true'
+            ], 200);
+        }
+
+
     }
 
     /**
@@ -1712,17 +2047,22 @@ class InteractingController extends Controller
      *	"downvoted" : "true"
      * }
      *
-     * @response 404 {
-     *	"error" :"somethimg wrong!!!!"
-     * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "id doesn't exist"
+     * 	"error" : "post_id is required"
      * }
      */
 
     public function viewSinglePost(Request $request)
     {
+        $valid = Validator::Make($request->all() , ['post_id' => 'required']);
+        if($valid->Fails())
+        {
+            return response()->json([
+              "success" => "false",
+             	"error" => "post_id is required"
+            ],403);
+        }
         $auth = 0;
         try {
             $tokenFetch = JWTAuth::parseToken()->authenticate();
@@ -1763,7 +2103,7 @@ class InteractingController extends Controller
           "author_photo_path"=> User::where('username', $post->author_username)->get()->first()->photo_url,
           "downvotes"=> $post->downvotes,
           "upvotes" => $post->upvotes,
-          "date" => $post->link_date,
+          "date" => Link::Duration($post->link_date),
           "comments_num"=>Link::commentsNum($post->link_id) ,
           "saved"=>$post->saved,
           "hidden"=> $post->hidden,

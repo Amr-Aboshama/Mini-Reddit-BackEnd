@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Link extends Model
 {
@@ -531,9 +532,135 @@ class Link extends Model
         return $links;
     }
 
+    /**
+     * function to get the attribute called post_id for a specific link given the link_id
+     *
+     * @param   int  $link_id  the id of the link i need to know its post_id
+     *
+     * @return  int            returns the post_id of the link
+     */
+    public static function getPostID($link_id)
+    {
+        $result = DB::select("SELECT post_id FROM links where link_id='$link_id';");
+        return $result[0]->post_id;
+    }
+
     public static function getComment($comment_id)
     {
         $comment = Link::where('link_id' , $comment_id)->get()->first();
         return $comment;
+    }
+
+    public static function Duration($link_date)
+    {
+        $start = Carbon::parse($link_date);
+        $end = Carbon::parse( date('Y-m-d H:i:s'));
+        $minutes = $end->diffInMinutes($start);
+        $hours = $minutes / 60;
+        $minutes = $minutes % 60;
+        $days = $hours/24;
+        $hours = $hours %24;
+        $years = $days / 365;
+        $days = $days % 365;
+        $months = $days / 30;
+        $days = $days % 30;
+        $weeks = $days / 7;
+        $days = $days % 7;
+
+        if( $years >= 1) {
+            return Carbon::now()->subYears($years)->diffForHumans();
+          } else if ($months >= 1) {
+            return  Carbon::now()->subMonths($months)->diffForHumans();
+          } else if ($weeks >= 1) {
+            return  Carbon::now()->subWeeks($weeks)->diffForHumans();
+          } else if ($days >= 1) {
+            return  Carbon::now()->subDays($days)->diffForHumans();
+          } else if ($hours >= 1) {
+            return  Carbon::now()->subHours($hours)->diffForHumans();
+          } else if ($minutes >= 1) {
+            return  Carbon::now()->subMinutes($minutes)->diffForHumans();
+          } else {
+            return  Carbon::now()->subSeconds( $end->diffInSeconds($start))->diffForHumans();
+          }
+    }
+
+    /**
+     * this function is to update the attribute called title of
+     * a spesific row in the relation called links in the database given the id of that link
+     *
+     * @param   int  $post_id  the id of the post that its title is to be updated
+     * @param   string  $title    the new title to be set for the attribute called title in the database relation called links
+     *
+     * @return  int            the number of the updated rows
+     */
+    public static function updatePostTitle($post_id,$title)
+    {
+        try {
+            return (DB::table('links')
+            ->where('link_id', $post_id)
+            ->update(['title' => $title]));
+        } catch (\Exception $e) {
+              return 0;
+        }
+    }
+
+    /**
+     * this function is to update the attribute called content of
+     * a spesific row in the relation called links in the database given the id of that link
+     *
+     * @param   int  $link_id  the id of the post that its content is to be updated
+     * @param   string  $content  the new content to be set for the attribute called content in the database relation called links
+     *
+     * @return  int            the number of the updated rows
+     */
+    public static function updateLinkContent($link_id,$content)
+    {
+        try {
+            return (DB::table('links')
+            ->where('link_id', $link_id)
+            ->update(['content' => $content]));
+        } catch (\Exception $e) {
+              return 0;
+        }
+    }
+
+    /**
+     * this function is to update the attribute called content_image of
+     * a spesific row in the relation called links in the database given the id of that link
+     *
+     * @param   int  $link_id    the id of the post that its content_image is to be updated
+     * @param   string  $image    the path of the new image
+     *
+     * @return  int            the number of the updated rows
+     */
+    public static function updatePostImage($link_id,$image)
+    {
+        try {
+            return (DB::table('links')
+            ->where('link_id', $link_id)
+            ->update(['content_image' => $image]));
+        } catch (\Exception $e) {
+              return 0;
+        }
+    }
+
+    /**
+     * this function is to update the attribute called video_url of
+     * a spesific row in the relation called links in the database given the id of that link
+     *
+     * @param   int  $link_id  the id of the post that its video_url is to be updated
+     * @param   string  $url      the url of the new video_url
+     *
+     * @return  int            the number of the updated rows
+     */
+    public static function updatePostVideo($link_id,$url)
+    {
+        try {
+            return (DB::table('links')
+            ->where('link_id', $link_id)
+            ->update(['video_url' => $url]));
+        } catch (\Exception $e) {
+              return 0;
+        }
     }
 }
