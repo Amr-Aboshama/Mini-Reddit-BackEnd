@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Message;
+use App\PushNotification;
 
 /**
  * @group Messages
@@ -36,8 +37,6 @@ class MessagesController extends Controller
      */
     public function viewUserMessage(Request $request)
     {
-        
-
         $user = auth()->user();
 
         if (!$user) {
@@ -49,7 +48,7 @@ class MessagesController extends Controller
         }
 
 
-        if ($request->message_id == '' || !$request->has('message_id') || 
+        if ($request->message_id == '' || !$request->has('message_id') ||
             !Message::checkMessageExistance($request->message_id)) {
 
             return response()->json([
@@ -116,7 +115,7 @@ class MessagesController extends Controller
 
         return response()->json([
 
-                'success' => 'true', 
+                'success' => 'true',
                 'messages' => $sentmessages
             ], 200);
 
@@ -178,7 +177,7 @@ class MessagesController extends Controller
 
         return response()->json([
 
-                'success' => 'true', 
+                'success' => 'true',
                 'messages' => $inboxmessages
             ], 200);
     }
@@ -237,6 +236,10 @@ class MessagesController extends Controller
             ], 403);
 
         }
+
+        //sending notification to user who received the messages
+
+        PushNotification::sendNotificationToSpecificUsers(" you have a new message from '$user->username'" , [$request->rec_username]);
 
         return response()->json([
 
