@@ -16,6 +16,7 @@ use App\Blocking;
 use App\Subscribtion;
 use App\ModerateCommunity;
 use Validator;
+use Illuminate\Validation\Rule;
 
 /**
  * @group Interacting Actions
@@ -1211,14 +1212,15 @@ class InteractingController extends Controller
     /**
      * Add new Link
      * @bodyParam post_content string required the content written in the post
-     * @bodyParam parent_link_id int required the ID of the parent link, this parameter should be 'null' if the link is a post
+     * @bodyParam parent_link_id int the ID of the parent link, this parameter is required only if the link isn't a post
      * @bodyParam post_title string this parameter is required only for posts
      * @bodyParam community_id int this parameter is required only if the link is inside a community
      * @bodyParam image_path string if a post contains an image.
      * @bodyParam video_url string  if a post contains a video.
      * @authenticated
      * @response 200 {
-     *  "success": "true"
+     *  "success": "true",
+     *  "link_id" :  3
      * }
      * @response 401 {
      *  "success": "false",
@@ -1226,37 +1228,155 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      *  "success": "false",
-     *  "error": "post must have a title"
+     *  "error": "There are some missing or invalid data!"
      * }
      * @response 403 {
      *  "success": "false",
-     *  "error": "post must have a content"
+     *  "error": "Only moderators or subscribers can post in the community"
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "parent doesn't exist"
+     * 	"error" : "The post you are replying on isn't in the sent community!"
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "community doesn't exist"
+     * 	"error" : "There is something went wrong!"
      * }
      */
     public function addNewLink(Request $request)
     {
         //token should be parsed to get the user name
         $user = auth()->user();
-        $p['author_username'] = $user->username;
 
-        $p['content']='oh';
+        $validator = Validator::make($request->all(), [
+            'post_content' => [
+                'required',
+                'max:500',
+                'filled'
+            ],
+            'parent_link_id' => [
+                'nullable',
+                'exists:links,link_id',
+                'numeric'
+            ],
+            'post_title' => [
+                Rule::requiredIf($request->parent_link_id == null),
+                'max:20',
+            ],
+            'community_id' => [
+                'nullable',
+                'numeric',
+                'exists:communities,community_id'
+            ],
+            'video_url' => [
+                'nullable',
+                'url'
+            ]
+
+        ]);
+       if ($validator->fails()) {
+        return response()->json([
+
+            'success' => 'false',
+            'error' => 'There are some missing or invalid data!'
+
+        ], 403);
+       }
+
+       //setting data::
+        $p['author_username'] = $user->username;
+        $p['content']=$request->post_content;
+        $p['parent_id']=$request->parent_link_id;
+        $p['title']=$request->post_title;
+        $p['community_id']=$request->community_id;
+        $p['video_url']=$request->video_url;
+        $p['content_image']=$request->image_path;
+        if($request->has('parent_link_id')){
+            $p['title']=null;
+            $p['post_id']=link::getPostID($request->parent_link_id);
+            if($request->has('community_id')&&(link::getCommunity($request->parent_link_id)!=$request->community_id)){
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'The post you are replying on isn\'t in the sent community!'
+                ],403);
+            }
+        }
+
+        if($request->has('community_id')){
+            if(!(moderateCommunity::checkExisting($request->community_id,$user->username))
+            &&!(Subscribtion::subscribed($request->community_id,$user->username))){
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'Only moderators or subscribers can post in the community'
+                ], 403);
+            }
+        }
 
         $res= Link::storeLink($p);
         if(!$res)
         {
-            return 'hola';
+            return response()->json([
+                'success' => 'false',
+                'error' => 'There is something went wrong!'
+            ], 403);
         }
         else {
-            return $res;
+            $NotPost = Validator::Make($request->all() , ['parent_link_id'=>'required']);
+            if($NotPost->Fails()) {
+                $username = auth()->user()->username;
+                $users = Following::getUserFollowers($username ,$username);
+                $notification = "your friend '$username' created a new post";
+                if($request->has('community_id'))
+                {
+                    $name = Community::getCommunity($request->community_id)->name;
+                    $notification = $notification." in '$name' community ";
+                }
+
+                PushNotification::sendNotificationToSpecificUsers($notification , $users);
+            }
+            else {
+              $username = auth()->user()->username;
+              $auth_username = Link::getAuthor($request->parent_link_id);
+              $post_id=$p['post_id'];
+              $same = 0;
+              if($username == $auth_username) {
+                  $same++;
+              }
+
+              if(!$same) {
+                  if($request->parent_link_id == $post_id ) {
+                      $title = Link::getPosts()->where('link_id' , $request->parent_link_id  )->get()->first()->title;
+                      $notification = " '$username' has just commented on your post '$title' ";
+                      PushNotification::sendNotificationToSpecificUsers($notification , [$auth_username]);
+                  }
+                  else {
+                      $post_username = Link::getAuthor($post_id);
+                      $content = Link::getComment($request->parent_link_id)->content;
+                      $title = Link::getPosts()->where('link_id' , $post_id )->get()->first()->title;
+                      $notification1 = "'$username' has just replied to your comment '$content' on post '$title'";
+                      PushNotification::sendNotificationToSpecificUsers($notification1 , [$auth_username]);
+                      $f = 0;
+                      if($post_username == $username) {
+                          $f++;
+                      }
+
+                      if(!$f) {
+                          $notification2 = " '$username' has replied to '$auth_username' on your post '$title' ";
+                          PushNotification::sendNotificationToSpecificUsers($notification2 , [$post_username]);
+                      }
+
+
+                  }
+              }
+
+            }
+
+            return response()->json([
+                'success' => 'true',
+                'link_id' => $res->id
+            ], 200);
         }
+
     }
 
 
