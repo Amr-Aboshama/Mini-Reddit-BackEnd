@@ -583,4 +583,84 @@ class Link extends Model
             return  Carbon::now()->subYears( $end->diffInSeconds($start))->diffForHumans();
           }
     }
+
+    /**
+     * this function is to update the attribute called title of
+     * a spesific row in the relation called links in the database given the id of that link
+     *
+     * @param   int  $post_id  the id of the post that its title is to be updated
+     * @param   string  $title    the new title to be set for the attribute called title in the database relation called links
+     *
+     * @return  int            the number of the updated rows
+     */
+    public static function updatePostTitle($post_id,$title)
+    {
+        try {
+            return (DB::table('links')
+            ->where('link_id', $post_id)
+            ->update(['title' => $title]));
+        } catch (\Exception $e) {
+              return 0;
+        }
+    }
+
+    /**
+     * this function is to update the attribute called content of
+     * a spesific row in the relation called links in the database given the id of that link
+     *
+     * @param   int  $link_id  the id of the post that its content is to be updated
+     * @param   string  $content  the new content to be set for the attribute called content in the database relation called links
+     *
+     * @return  int            the number of the updated rows
+     */
+    public static function updateLinkContent($link_id,$content)
+    {
+        try {
+            return (DB::table('links')
+            ->where('link_id', $link_id)
+            ->update(['content' => $content]));
+        } catch (\Exception $e) {
+              return 0;
+        }
+    }
+
+    /**
+     * this function is to update the attribute called content_image of
+     * a spesific row in the relation called links in the database given the id of that link
+     *
+     * @param   int  $link_id    the id of the post that its content_image is to be updated
+     * @param   string  $image    the path of the new image
+     *
+     * @return  int            the number of the updated rows
+     */
+    public static function updatePostImage($link_id,$image)
+    {
+        try {
+            return (DB::table('links')
+            ->where('link_id', $link_id)
+            ->update(['content_image' => $image]));
+        } catch (\Exception $e) {
+              return 0;
+        }
+    }
+
+    /**
+     * this function is to update the attribute called video_url of
+     * a spesific row in the relation called links in the database given the id of that link
+     *
+     * @param   int  $link_id  the id of the post that its video_url is to be updated
+     * @param   string  $url      the url of the new video_url
+     *
+     * @return  int            the number of the updated rows
+     */
+    public static function updatePostVideo($link_id,$url)
+    {
+        try {
+            return (DB::table('links')
+            ->where('link_id', $link_id)
+            ->update(['video_url' => $url]));
+        } catch (\Exception $e) {
+              return 0;
+        }
+    }
 }

@@ -195,6 +195,7 @@ class InteractingController extends Controller
      * @bodyParam new_title string the new title of the post
      * @bodyParam new_content string the new content of the post
      * @bodyParam new_image string the directory of the new image if there is .
+     * @bodyParam new_video_url string the url of the new video if there is .
      * @authenticated
      * @response 200 {
      *  "success": "true"
@@ -209,18 +210,115 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "post must have a title"
+     * 	"error" : "There are some missing or invalid data!"
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "post must have a content"
+     * 	"error" : "Only the author of the post can edit it"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "There are something went wrong!"
      * }
      */
 
 
-    public function editPost()
+    public function editPost(Request $request)
     {
-        // ...
+        $user = auth()->user();
+
+        $validator = Validator::make($request->all(), [
+            'post_id' => [
+                'required',
+                'numeric'
+            ],
+            'new_title' => [
+                'nullable',
+                'max:20',
+                'string',
+                'min:1'
+            ],
+            'new_content' => [
+                'nullable',
+                'max:500',
+                'string',
+                'min:1'
+            ],
+            'new_video_url' => [
+                'nullable',
+                'url'
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are some missing or invalid data!'
+
+            ], 403);
+        }
+        // the post doesn't exist
+        if(!link::checkExisting($request->post_id)){
+            return response()->json([
+                'success' => 'false',
+                'error' => 'post doesn\'t exist'
+            ]);
+        }
+        //a non-owner user trying to edit the post
+        if($user->username != Link::getAuthor($request->post_id)) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Only the author of the post can edit it'
+            ]);
+        }
+
+        if((!$request->has('new_content'))&&(!$request->has('new_title'))&&(!$request->has('new_image'))
+        &&(!$request->has('new_video_url'))) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are some missing or invalid data!'
+
+            ], 403);
+        }
+
+        if($request->has('new_content')&&(!link::updateLinkContent($request->post_id,$request->new_content))){
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are something went wrong!'
+
+            ], 403);
+        }
+        if($request->has('new_title')&&(!link::updatePostTitle($request->post_id,$request->new_title))) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are something went wrong!'
+
+            ], 403);
+        }
+        if($request->has('new_image')&&(!link::updatePostImage($request->post_id,$request->new_image))) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are something went wrong!'
+
+            ], 403);
+        }
+        if($request->has('new_video_url')&&(!link::updatePostVideo($request->post_id,$request->new_video_url))) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are something went wrong!'
+
+            ], 403);
+        }
+
+        return response()->json([
+            'success' => 'true'
+        ], 200);
     }
 
     /**
@@ -237,16 +335,74 @@ class InteractingController extends Controller
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "comment doesn't exist"
+     * 	"error" : "comment/reply doesn't exist"
      * }
      * @response 403 {
      * 	"success" : "false",
-     * 	"error" : "comment must have a content"
+     * 	"error" : "There are some missing or invalid data!"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "Only the author of the comment/reply can edit it"
+     * }
+     * @response 403 {
+     * 	"success" : "false",
+     * 	"error" : "There are something went wrong!"
      * }
      */
-    public function editComment()
+    public function editComment(Request $request)
     {
-        // ...
+        $user = auth()->user();
+
+        $validator = Validator::make($request->all(), [
+            'comment_id' => [
+                'required',
+                'numeric'
+            ],
+            'new_content' => [
+                'required',
+                'max:500',
+                'string',
+                'min:1'
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are some missing or invalid data!'
+
+            ], 403);
+        }
+        // the comment doesn't exist
+        if(!link::checkExisting($request->comment_id)||(link::getParent($request->comment_id)==null)){
+            return response()->json([
+                'success' => 'false',
+                'error' => 'comment/reply doesn\'t exist'
+            ]);
+        }
+
+        //a non-owner user trying to edit the comment
+        if($user->username != Link::getAuthor($request->comment_id)) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Only the author of the comment/reply can edit it'
+            ]);
+        }
+
+        if($request->has('new_content')&&(!link::updateLinkContent($request->comment_id,$request->new_content))){
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'There are something went wrong!'
+
+            ], 403);
+        }
+
+        return response()->json([
+            'success' => 'true'
+        ], 200);
     }
 
 
@@ -1255,7 +1411,9 @@ class InteractingController extends Controller
             'post_content' => [
                 'required',
                 'max:500',
-                'filled'
+                'filled',
+                'string',
+                'min:1'
             ],
             'parent_link_id' => [
                 'nullable',
@@ -1265,6 +1423,8 @@ class InteractingController extends Controller
             'post_title' => [
                 Rule::requiredIf($request->parent_link_id == null),
                 'max:20',
+                'string',
+                'min:1'
             ],
             'community_id' => [
                 'nullable',
