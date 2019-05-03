@@ -18,6 +18,7 @@ use App\Subscribtion;
 use App\ModerateCommunity;
 use App\PushNotification;
 use Validator;
+use Carbon\Carbon;
 
 /**
  * @group Interacting Actions
@@ -1752,7 +1753,7 @@ class InteractingController extends Controller
                 $post->hidden = "true";
             }
         }
-
+        
         return response()->json([
           "post_id" => $post->link_id,
           "body" => $post->content,
@@ -1763,7 +1764,7 @@ class InteractingController extends Controller
           "author_photo_path"=> User::where('username', $post->author_username)->get()->first()->photo_url,
           "downvotes"=> $post->downvotes,
           "upvotes" => $post->upvotes,
-          "date" => $post->link_date,
+          "date" => Link::Duration($post->link_date),
           "comments_num"=>Link::commentsNum($post->link_id) ,
           "saved"=>$post->saved,
           "hidden"=> $post->hidden,

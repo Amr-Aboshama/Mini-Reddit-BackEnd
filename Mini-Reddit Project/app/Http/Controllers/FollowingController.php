@@ -137,8 +137,6 @@ class FollowingController extends Controller
 
         try {
             if (Following::createFollow($current_username, $follow_username)) {
-
-
                 // sending notification to the followed user.....
                 PushNotification::sendNotificationToSpecificUsers("'$current_username' has followed you", [$follow_username]);
 
