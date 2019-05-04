@@ -33,7 +33,7 @@ class SendMessageTest extends TestCase
             'password' => '123456789'
         ]);
 
-        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
         $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
                                                         'msg_content'=> 'test_hii'], $headers)
@@ -70,7 +70,7 @@ class SendMessageTest extends TestCase
 
         $receiveruser->delete();
 
-        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
         $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
                                                         'msg_content'=> 'test_hii'], $headers)
@@ -122,7 +122,7 @@ class SendMessageTest extends TestCase
 
        
 
-        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
         $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
                                                         'msg_content'=> ''], $headers)
@@ -169,7 +169,7 @@ class SendMessageTest extends TestCase
 
        
 
-        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
         $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
                                                         'msg_content'=> 'test_hii'], $headers)
