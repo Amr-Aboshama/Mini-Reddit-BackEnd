@@ -1227,6 +1227,7 @@ class InteractingController extends Controller
                     $links_comments[$i]['post']['author_username'] = $link->author_username;
                     $links_comments[$i]['post']['community'] = 'none';
                     $links_comments[$i]['post']['subscribed'] = 'false';
+                    $links_comments[$i]['type'] = 'comment';
 
                     if (null != $link->community_id) {
                         $links_comments[$i]['post']['community'] = Community::getCommunity($link->community_id)->name;
