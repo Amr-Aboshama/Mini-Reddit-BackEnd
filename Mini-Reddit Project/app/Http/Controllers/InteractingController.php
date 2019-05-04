@@ -1682,21 +1682,61 @@ class InteractingController extends Controller
      *
      * @authenticated
      *@response 200 {
-     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" , "community" : "laravel" ,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true",  "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none" ,"subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","subscribed" : "false" ,"author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true",  "upvoted" : "true" , "downvoted" : "false" }]
+     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" , "community" : "laravel" ,"community_id":1,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " ,"duration" : 1 min ago ,"comments_num" : 0, "saved": "true",  "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none" ,"community_id":-1"subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " ,"duration" : 1 min ago , "comments_num" : 0, "saved": "false", "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","community_id":-1"subscribed" : "false" ,"author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "duration" : 1 min ago ,"comments_num" : 0, "saved": "true",  "upvoted" : "true" , "downvoted" : "false"  }]
      *}
-     * @response 404 {
-     *	"error" :"somethimg wrong!!!!"
-     * }
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
      */
-    public function viewHiddenPosts()
+    public function viewHiddenPosts(Request $request)
     {
-        //..
+        $username = auth()->user()->username;
+        $posts = Link::getHiddenPosts($username);
+        $renamed_posts = array();
+        $i = 0;
+        foreach($posts as $post) {
+
+            $renamed_posts[$i] = (object) [
+                'post_id' => $post->link_id,
+                'body' => $post->content,
+                'video_url' => null != $post->video_url ? $post->video_url : -1,
+                'image' => null != $post->content_image ? $post->content_image : -1,
+                'title' => $post->title,
+                'username' => $post->author_username,
+                'community' => null != $post->community_id ? Community::getCommunity($post->community_id)->name : 'none',
+                'community_id' => null != $post->community_id ? $post->community_id : -1,
+                'subscribed' => 'false',
+                'author_photo_path' => User::where('username', $post->author_username)->get()->first()->photo_url,
+                'downvotes' => $post->downvotes,
+                'upvotes' => $post->upvotes,
+                'date' => $post->link_date,
+                'duration' => Link::Duration($post->link_date),
+                'comments_num' => $post->comments_num = Link::commentsNum($post->link_id),
+                'saved' => 'false',
+                'upvoted' => 'false',
+                'downvoted' => 'false',
+                'pinned' => $post->pinned,
+            ];
+
+            if(UpvotedLink::upvoted($post->link_id , $username)) {
+                $renamed_posts[$i]->upvoted = 'true';
+            } else if(DownvotedLink::downvoted($post->link_id , $username)) {
+                $renamed_posts[$i]->downvoted = 'true';
+            }
+            if(SavedLink::isSaved($post->link_id , $username)) {
+                $renamed_posts[$i]->saved = 'true';
+            }
+
+            if($post->community_id != null && Subscribtion::subscribed($post->community_id , $username) ) {
+                $renamed_posts[$i]->subscribed = 'true';
+            }
+            ++$i;
+        }
+
+        return response()->json(['posts' => $renamed_posts ],200);
     }
 
     /**
