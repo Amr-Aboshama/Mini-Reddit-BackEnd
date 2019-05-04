@@ -32,7 +32,7 @@ curl -X POST "http://localhost/api/auth/deleteMyAccount" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"password":"sint"}'
+    -d '{"password":"sapiente"}'
 
 ```
 
@@ -46,7 +46,7 @@ let headers = {
 }
 
 let body = {
-    "password": "sint"
+    "password": "sapiente"
 }
 
 fetch(url, {
@@ -104,7 +104,7 @@ curl -X PATCH "http://localhost/api/auth/changePassword" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"password":"deserunt","new_password":"voluptatibus","confirm_new_password":"ut"}'
+    -d '{"password":"in","new_password":"dolores","confirm_new_password":"perferendis"}'
 
 ```
 
@@ -118,9 +118,9 @@ let headers = {
 }
 
 let body = {
-    "password": "deserunt",
-    "new_password": "voluptatibus",
-    "confirm_new_password": "ut"
+    "password": "in",
+    "new_password": "dolores",
+    "confirm_new_password": "perferendis"
 }
 
 fetch(url, {
@@ -188,7 +188,7 @@ curl -X PATCH "http://localhost/api/auth/updateDisplayName" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"name":"ratione"}'
+    -d '{"name":"exercitationem"}'
 
 ```
 
@@ -202,7 +202,7 @@ let headers = {
 }
 
 let body = {
-    "name": "ratione"
+    "name": "exercitationem"
 }
 
 fetch(url, {
@@ -268,7 +268,7 @@ curl -X PATCH "http://localhost/api/auth/updateAbout" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"about":"rerum"}'
+    -d '{"about":"sed"}'
 
 ```
 
@@ -282,7 +282,7 @@ let headers = {
 }
 
 let body = {
-    "about": "rerum"
+    "about": "sed"
 }
 
 fetch(url, {
@@ -348,7 +348,7 @@ curl -X POST "http://localhost/api/auth/updateCoverAndProfileImage" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"profile_image":"consequuntur","profile_or_cover":10}'
+    -d '{"profile_image":"quia","profile_or_cover":10}'
 
 ```
 
@@ -362,7 +362,7 @@ let headers = {
 }
 
 let body = {
-    "profile_image": "consequuntur",
+    "profile_image": "quia",
     "profile_or_cover": 10
 }
 
@@ -481,7 +481,7 @@ fetch(url, {
 ```bash
 curl -X POST "http://localhost/api/unauth/signIn" \
     -H "Content-Type: application/json" \
-    -d '{"username":"recusandae","password":"et"}'
+    -d '{"username":"facere","password":"voluptatum"}'
 
 ```
 
@@ -494,8 +494,8 @@ let headers = {
 }
 
 let body = {
-    "username": "recusandae",
-    "password": "et"
+    "username": "facere",
+    "password": "voluptatum"
 }
 
 fetch(url, {
@@ -552,7 +552,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X POST "http://localhost/api/unauth/signUp" \
     -H "Content-Type: application/json" \
-    -d '{"username":"ut","password":"ullam","password_confirmation":"sit","email":"inventore"}'
+    -d '{"username":"blanditiis","password":"rerum","password_confirmation":"ullam","email":"asperiores"}'
 
 ```
 
@@ -565,10 +565,10 @@ let headers = {
 }
 
 let body = {
-    "username": "ut",
-    "password": "ullam",
-    "password_confirmation": "sit",
-    "email": "inventore"
+    "username": "blanditiis",
+    "password": "rerum",
+    "password_confirmation": "ullam",
+    "email": "asperiores"
 }
 
 fetch(url, {
@@ -619,7 +619,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X POST "http://localhost/api/unauth/forgetPassword" \
     -H "Content-Type: application/json" \
-    -d '{"email":"sed"}'
+    -d '{"email":"cupiditate"}'
 
 ```
 
@@ -632,7 +632,7 @@ let headers = {
 }
 
 let body = {
-    "email": "sed"
+    "email": "cupiditate"
 }
 
 fetch(url, {
@@ -679,7 +679,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X POST "http://localhost/api/unauth/resetPassword/1" \
     -H "Content-Type: application/json" \
-    -d '{"new_password":"unde","password_confirmation":"quos"}'
+    -d '{"new_password":"voluptate","password_confirmation":"velit"}'
 
 ```
 
@@ -692,8 +692,8 @@ let headers = {
 }
 
 let body = {
-    "new_password": "unde",
-    "password_confirmation": "quos"
+    "new_password": "voluptate",
+    "password_confirmation": "velit"
 }
 
 fetch(url, {
@@ -754,7 +754,7 @@ curl -X POST "http://localhost/api/auth/editCommunity" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":14,"rules_content":"veniam","banner":"in","des_content":"rem","logo":"commodi"}'
+    -d '{"community_id":20,"rules_content":"ut","banner":"voluptatem","des_content":"asperiores","logo":"voluptatem"}'
 
 ```
 
@@ -768,11 +768,11 @@ let headers = {
 }
 
 let body = {
-    "community_id": 14,
-    "rules_content": "veniam",
-    "banner": "in",
-    "des_content": "rem",
-    "logo": "commodi"
+    "community_id": 20,
+    "rules_content": "ut",
+    "banner": "voluptatem",
+    "des_content": "asperiores",
+    "logo": "voluptatem"
 }
 
 fetch(url, {
@@ -866,7 +866,7 @@ curl -X POST "http://localhost/api/auth/createCommunity" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_name":"quibusdam"}'
+    -d '{"community_name":"sapiente"}'
 
 ```
 
@@ -880,7 +880,7 @@ let headers = {
 }
 
 let body = {
-    "community_name": "quibusdam"
+    "community_name": "sapiente"
 }
 
 fetch(url, {
@@ -955,7 +955,7 @@ curl -X POST "http://localhost/api/auth/removeCommunity" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":8}'
+    -d '{"community_id":20}'
 
 ```
 
@@ -969,7 +969,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": 8
+    "community_id": 20
 }
 
 fetch(url, {
@@ -1043,7 +1043,7 @@ curl -X POST "http://localhost/api/auth/addModerator" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":20,"moderator_username":"iure"}'
+    -d '{"community_id":11,"moderator_username":"dicta"}'
 
 ```
 
@@ -1057,8 +1057,8 @@ let headers = {
 }
 
 let body = {
-    "community_id": 20,
-    "moderator_username": "iure"
+    "community_id": 11,
+    "moderator_username": "dicta"
 }
 
 fetch(url, {
@@ -1149,7 +1149,7 @@ curl -X POST "http://localhost/api/auth/removeModerator" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":17,"moderator_username":"unde"}'
+    -d '{"community_id":14,"moderator_username":"voluptatem"}'
 
 ```
 
@@ -1163,8 +1163,8 @@ let headers = {
 }
 
 let body = {
-    "community_id": 17,
-    "moderator_username": "unde"
+    "community_id": 14,
+    "moderator_username": "voluptatem"
 }
 
 fetch(url, {
@@ -1263,7 +1263,7 @@ curl -X POST "http://localhost/api/auth/subscribeCommunity" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":3}'
+    -d '{"community_id":16}'
 
 ```
 
@@ -1277,7 +1277,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": 3
+    "community_id": 16
 }
 
 fetch(url, {
@@ -1351,7 +1351,7 @@ curl -X POST "http://localhost/api/auth/unSubscribeCommunity" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":19}'
+    -d '{"community_id":1}'
 
 ```
 
@@ -1365,7 +1365,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": 19
+    "community_id": 1
 }
 
 fetch(url, {
@@ -1436,7 +1436,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/viewModerators" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":11}'
+    -d '{"community_id":8}'
 
 ```
 
@@ -1449,7 +1449,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": 11
+    "community_id": 8
 }
 
 fetch(url, {
@@ -1486,14 +1486,6 @@ fetch(url, {
     "error": "community doesn't exist"
 }
 ```
-> Example response (401):
-
-```json
-{
-    "success": "false",
-    "error": "UnAuthorized"
-}
-```
 > Example response (422):
 
 ```json
@@ -1522,7 +1514,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/viewUserCommunities" \
     -H "Content-Type: application/json" \
-    -d '{"username":"ut"}'
+    -d '{"username":"nihil"}'
 
 ```
 
@@ -1535,7 +1527,7 @@ let headers = {
 }
 
 let body = {
-    "username": "ut"
+    "username": "nihil"
 }
 
 fetch(url, {
@@ -1602,7 +1594,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/communityInformation" \
     -H "Content-Type: application/json" \
-    -d '{"community_id":"ea"}'
+    -d '{"community_id":"quidem"}'
 
 ```
 
@@ -1615,7 +1607,7 @@ let headers = {
 }
 
 let body = {
-    "community_id": "ea"
+    "community_id": "quidem"
 }
 
 fetch(url, {
@@ -1682,7 +1674,7 @@ curl -X GET -G "http://localhost/api/auth/followers" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"dolorem"}'
+    -d '{"username":"eaque"}'
 
 ```
 
@@ -1696,7 +1688,7 @@ let headers = {
 }
 
 let body = {
-    "username": "dolorem"
+    "username": "eaque"
 }
 
 fetch(url, {
@@ -1757,7 +1749,7 @@ curl -X GET -G "http://localhost/api/auth/following" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"non"}'
+    -d '{"username":"placeat"}'
 
 ```
 
@@ -1771,7 +1763,7 @@ let headers = {
 }
 
 let body = {
-    "username": "non"
+    "username": "placeat"
 }
 
 fetch(url, {
@@ -1833,7 +1825,7 @@ curl -X POST "http://localhost/api/auth/follow" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"qui"}'
+    -d '{"username":"tempora"}'
 
 ```
 
@@ -1847,7 +1839,7 @@ let headers = {
 }
 
 let body = {
-    "username": "qui"
+    "username": "tempora"
 }
 
 fetch(url, {
@@ -1913,7 +1905,7 @@ curl -X POST "http://localhost/api/auth/unfollow" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"blanditiis"}'
+    -d '{"username":"incidunt"}'
 
 ```
 
@@ -1927,7 +1919,7 @@ let headers = {
 }
 
 let body = {
-    "username": "blanditiis"
+    "username": "incidunt"
 }
 
 fetch(url, {
@@ -2083,7 +2075,7 @@ curl -X POST "http://localhost/api/auth/unsaveLink" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":20}'
+    -d '{"link_id":19}'
 
 ```
 
@@ -2097,7 +2089,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 20
+    "link_id": 19
 }
 
 fetch(url, {
@@ -2171,7 +2163,7 @@ curl -X POST "http://localhost/api/auth/addLink" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_content":"sed","parent_link_id":17,"post_title":"tenetur","community_id":9,"image_path":"aspernatur","video_url":"libero"}'
+    -d '{"post_content":"exercitationem","parent_link_id":11,"post_title":"debitis","community_id":4,"image_path":"beatae","video_url":"assumenda"}'
 
 ```
 
@@ -2185,12 +2177,12 @@ let headers = {
 }
 
 let body = {
-    "post_content": "sed",
-    "parent_link_id": 17,
-    "post_title": "tenetur",
-    "community_id": 9,
-    "image_path": "aspernatur",
-    "video_url": "libero"
+    "post_content": "exercitationem",
+    "parent_link_id": 11,
+    "post_title": "debitis",
+    "community_id": 4,
+    "image_path": "beatae",
+    "video_url": "assumenda"
 }
 
 fetch(url, {
@@ -2278,7 +2270,7 @@ curl -X PATCH "http://localhost/api/auth/pinPost" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":20}'
+    -d '{"post_id":11}'
 
 ```
 
@@ -2292,7 +2284,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 20
+    "post_id": 11
 }
 
 fetch(url, {
@@ -2390,7 +2382,7 @@ curl -X POST "http://localhost/api/auth/removeLink" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":17}'
+    -d '{"link_id":2}'
 
 ```
 
@@ -2404,7 +2396,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 17
+    "link_id": 2
 }
 
 fetch(url, {
@@ -2486,7 +2478,7 @@ curl -X POST "http://localhost/api/auth/hidePost" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":5}'
+    -d '{"post_id":2}'
 
 ```
 
@@ -2500,7 +2492,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 5
+    "post_id": 2
 }
 
 fetch(url, {
@@ -2590,7 +2582,7 @@ curl -X POST "http://localhost/api/auth/unhidePost" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":14}'
+    -d '{"post_id":18}'
 
 ```
 
@@ -2604,7 +2596,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 14
+    "post_id": 18
 }
 
 fetch(url, {
@@ -2686,7 +2678,7 @@ curl -X PATCH "http://localhost/api/auth/editPost" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":6,"new_title":"qui","new_content":"laudantium","new_image":"suscipit","new_video_url":"blanditiis"}'
+    -d '{"post_id":11,"new_title":"quod","new_content":"id","new_image":"veritatis","new_video_url":"quis"}'
 
 ```
 
@@ -2700,11 +2692,11 @@ let headers = {
 }
 
 let body = {
-    "post_id": 6,
-    "new_title": "qui",
-    "new_content": "laudantium",
-    "new_image": "suscipit",
-    "new_video_url": "blanditiis"
+    "post_id": 11,
+    "new_title": "quod",
+    "new_content": "id",
+    "new_image": "veritatis",
+    "new_video_url": "quis"
 }
 
 fetch(url, {
@@ -2790,7 +2782,7 @@ curl -X PATCH "http://localhost/api/auth/editComment" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"comment_id":14,"new_content":"nesciunt"}'
+    -d '{"comment_id":3,"new_content":"similique"}'
 
 ```
 
@@ -2804,8 +2796,8 @@ let headers = {
 }
 
 let body = {
-    "comment_id": 14,
-    "new_content": "nesciunt"
+    "comment_id": 3,
+    "new_content": "similique"
 }
 
 fetch(url, {
@@ -2888,7 +2880,7 @@ curl -X POST "http://localhost/api/auth/upvoteLink" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":7}'
+    -d '{"link_id":10}'
 
 ```
 
@@ -2902,7 +2894,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 7
+    "link_id": 10
 }
 
 fetch(url, {
@@ -2968,7 +2960,7 @@ curl -X POST "http://localhost/api/auth/downvoteLink" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":17}'
+    -d '{"link_id":15}'
 
 ```
 
@@ -2982,7 +2974,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 17
+    "link_id": 15
 }
 
 fetch(url, {
@@ -3056,7 +3048,7 @@ curl -X GET -G "http://localhost/api/auth/viewUpOrDownvotedPosts" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"type":1}'
+    -d '{"type":12}'
 
 ```
 
@@ -3070,7 +3062,7 @@ let headers = {
 }
 
 let body = {
-    "type": 1
+    "type": 12
 }
 
 fetch(url, {
@@ -3454,7 +3446,7 @@ curl -X POST "http://localhost/api/auth/uploadImage" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"uploaded_image":"ab"}'
+    -d '{"uploaded_image":"rem"}'
 
 ```
 
@@ -3468,7 +3460,7 @@ let headers = {
 }
 
 let body = {
-    "uploaded_image": "ab"
+    "uploaded_image": "rem"
 }
 
 fetch(url, {
@@ -3532,7 +3524,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/viewOverview" \
     -H "Content-Type: application/json" \
-    -d '{"username":"qui"}'
+    -d '{"username":"beatae"}'
 
 ```
 
@@ -3545,7 +3537,7 @@ let headers = {
 }
 
 let body = {
-    "username": "qui"
+    "username": "beatae"
 }
 
 fetch(url, {
@@ -3699,7 +3691,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/ViewPosts" \
     -H "Content-Type: application/json" \
-    -d '{"page_type":2,"username":"accusantium","community_id":12}'
+    -d '{"page_type":20,"username":"voluptas","community_id":6}'
 
 ```
 
@@ -3712,9 +3704,9 @@ let headers = {
 }
 
 let body = {
-    "page_type": 2,
-    "username": "accusantium",
-    "community_id": 12
+    "page_type": 20,
+    "username": "voluptas",
+    "community_id": 6
 }
 
 fetch(url, {
@@ -3830,7 +3822,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/viewComments" \
     -H "Content-Type: application/json" \
-    -d '{"username":"quasi"}'
+    -d '{"username":"ducimus"}'
 
 ```
 
@@ -3843,7 +3835,7 @@ let headers = {
 }
 
 let body = {
-    "username": "quasi"
+    "username": "ducimus"
 }
 
 fetch(url, {
@@ -3990,7 +3982,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/viewCommentsReplies" \
     -H "Content-Type: application/json" \
-    -d '{"link_id":8}'
+    -d '{"link_id":13}'
 
 ```
 
@@ -4003,7 +3995,7 @@ let headers = {
 }
 
 let body = {
-    "link_id": 8
+    "link_id": 13
 }
 
 fetch(url, {
@@ -4090,7 +4082,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/viewSinglePost" \
     -H "Content-Type: application/json" \
-    -d '{"post_id":18}'
+    -d '{"post_id":13}'
 
 ```
 
@@ -4103,7 +4095,7 @@ let headers = {
 }
 
 let body = {
-    "post_id": 18
+    "post_id": 13
 }
 
 fetch(url, {
@@ -4171,7 +4163,7 @@ curl -X GET -G "http://localhost/api/auth/viewUserMessage" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"message_id":10}'
+    -d '{"message_id":7}'
 
 ```
 
@@ -4185,7 +4177,7 @@ let headers = {
 }
 
 let body = {
-    "message_id": 10
+    "message_id": 7
 }
 
 fetch(url, {
@@ -4317,7 +4309,7 @@ curl -X GET -G "http://localhost/api/auth/viewUserInboxMessages" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"state":2}'
+    -d '{"state":7}'
 
 ```
 
@@ -4331,7 +4323,7 @@ let headers = {
 }
 
 let body = {
-    "state": 2
+    "state": 7
 }
 
 fetch(url, {
@@ -4415,7 +4407,7 @@ curl -X POST "http://localhost/api/auth/sendMessage" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"rec_username":"quae","msg_content":"ex","msg_subject":"eos"}'
+    -d '{"rec_username":"et","msg_content":"consequatur","msg_subject":"quisquam"}'
 
 ```
 
@@ -4429,9 +4421,9 @@ let headers = {
 }
 
 let body = {
-    "rec_username": "quae",
-    "msg_content": "ex",
-    "msg_subject": "eos"
+    "rec_username": "et",
+    "msg_content": "consequatur",
+    "msg_subject": "quisquam"
 }
 
 fetch(url, {
@@ -4672,7 +4664,7 @@ curl -X POST "http://localhost/api/auth/blockUser" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"corporis"}'
+    -d '{"username":"recusandae"}'
 
 ```
 
@@ -4686,7 +4678,7 @@ let headers = {
 }
 
 let body = {
-    "username": "corporis"
+    "username": "recusandae"
 }
 
 fetch(url, {
@@ -4752,7 +4744,7 @@ curl -X POST "http://localhost/api/auth/unblockUser" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer: {token}" \
     -H "Content-Type: application/json" \
-    -d '{"username":"quas"}'
+    -d '{"username":"earum"}'
 
 ```
 
@@ -4766,7 +4758,7 @@ let headers = {
 }
 
 let body = {
-    "username": "quas"
+    "username": "earum"
 }
 
 fetch(url, {
@@ -4830,7 +4822,7 @@ Parameter | Type | Status | Description
 ```bash
 curl -X GET -G "http://localhost/api/unauth/search" \
     -H "Content-Type: application/json" \
-    -d '{"search_content":"est"}'
+    -d '{"search_content":"possimus"}'
 
 ```
 
@@ -4843,7 +4835,7 @@ let headers = {
 }
 
 let body = {
-    "search_content": "est"
+    "search_content": "possimus"
 }
 
 fetch(url, {
@@ -5002,7 +4994,7 @@ fetch(url, {
 ```bash
 curl -X GET -G "http://localhost/api/unauth/viewPublicUserInfo" \
     -H "Content-Type: application/json" \
-    -d '{"username":"autem"}'
+    -d '{"username":"non"}'
 
 ```
 
@@ -5015,7 +5007,7 @@ let headers = {
 }
 
 let body = {
-    "username": "autem"
+    "username": "non"
 }
 
 fetch(url, {
