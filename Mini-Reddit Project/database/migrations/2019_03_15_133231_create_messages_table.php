@@ -19,6 +19,8 @@ class CreateMessagesTable extends Migration
             $table->timestamp('message_date');
             $table->string('sender_username');
             $table->string('receiver_username');
+            $table->string('message_subject');
+            $table->boolean('read')->default(false);
 
             // restrictions
 
