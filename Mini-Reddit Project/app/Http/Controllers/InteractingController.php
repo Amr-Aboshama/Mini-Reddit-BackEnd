@@ -1380,7 +1380,7 @@ class InteractingController extends Controller
         $p['link_date'] = date('Y-m-d H:i:s');
         if ($request->has('parent_link_id')) {
             $p['title'] = null;
-            $p['post_id'] = link::getPostID($request->parent_link_id);
+            $p['post_id'] = link::getPostID($request->parent_link_id) == null ? $request->parent_link_id :link::getPostID($request->parent_link_id) ;
             if ($request->has('community_id') && (link::getCommunity($request->parent_link_id) != $request->community_id)) {
                 return response()->json([
                     'success' => 'false',
@@ -1944,6 +1944,7 @@ class InteractingController extends Controller
      *	"post_id": 1 ,
      *  "body" : "post1" ,
      *  "image" : "storage/app/avater.jpg",
+     *  "video_url" : "storage/app/avater.jpg",
      *  "title":"title1",
      *	"username": "ahmed" ,
      *  "community" : "none",
@@ -1987,6 +1988,7 @@ class InteractingController extends Controller
         $post->hidden = 'false';
         $post->saved = 'false';
         $post->community = 'none';
+        $post->subscribed = 'false';
         if ($auth) {
             $username = auth()->user()->username;
             if (UpvotedLink::upvoted($request->post_id, $username)) {
@@ -2001,15 +2003,21 @@ class InteractingController extends Controller
             if (HiddenPost::hidden($request->post_id, $username)) {
                 $post->hidden = 'true';
             }
+
+            if($post->community_id != null && Subscribtion::subscribed($post->community_id , $username)) {
+                $post->subscribed = 'true';
+            }
         }
 
         return response()->json([
           "post_id" => $post->link_id,
           "body" => $post->content,
-          "image"=> $post->image_content,
+          "video_url"=> $post->video_url != null ? $post->video_url : -1 ,
+          "image"=> $post->image_content != null ? $post->image_content : -1,
           "title"=> $post->title,
           "username"=> $post->author_username,
-          "community"=> $post->community_id != null ? Community::getCommunity($post->community_id)->name : -1 ,
+          "community_id" => $post->community_id != null ? $post->community_id != null : -1  ,
+          "community"=> $post->community_id != null ? Community::getCommunity($post->community_id)->name : "none" ,
           "author_photo_path"=> User::where('username', $post->author_username)->get()->first()->photo_url,
           "downvotes"=> $post->downvotes,
           "upvotes" => $post->upvotes,
@@ -2020,7 +2028,8 @@ class InteractingController extends Controller
           "hidden"=> $post->hidden,
           "upvoted"=> $post->upvoted,
           "downvoted"=> $post->downvoted,
-          "pinned" => $post->pinned == 1 ? "true" : "false"
+          "subscribed"=> $post->subscribed,
+          "pinned" => $post->pinned
         ],200);
 
     }
