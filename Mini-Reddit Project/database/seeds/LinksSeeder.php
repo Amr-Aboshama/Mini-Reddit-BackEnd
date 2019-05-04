@@ -68,6 +68,8 @@ class LinksSeeder extends Seeder
             'author_username' => 'menna'
 
         ]);
+
+
         DB::table('links')->insert([
 
             'content' => 'nour post1',
@@ -96,6 +98,8 @@ class LinksSeeder extends Seeder
             'post_id' => 1
 
         ]);
+
+
 
         DB::table('links')->insert([
 
@@ -152,5 +156,68 @@ class LinksSeeder extends Seeder
 
 
         ]);
+
+
+        DB::table('links')->insert([
+
+            'content' => 'reply on comment2 on post1 by badr',
+            'link_date' => date('Y-m-d H:i:s'),
+            'author_username' => 'mini-reddit',
+            'parent_id' => 11 ,
+            'post_id' => 1
+
+
+        ]);
+
+
+        DB::table('links')->insert([
+
+            'content' => 'reply on comment1 on post4 by badr',
+            'link_date' => date('Y-m-d H:i:s'),
+            'author_username' => 'mini-reddit',
+            'parent_id' => 13,
+            'post_id' => 4
+
+
+        ]);
+
+        DB::table('links')->insert([
+
+            'content' => 'badr post1',
+            'title' => 'post1 by badr',
+            'link_date' => date('Y-m-d H:i:s'),
+            'author_username' => 'mini-reddit'
+
+        ]);
+
+        DB::table('links')->insert([
+
+            'content' => 'badr post2',
+            'title' => 'post2 by badr',
+            'link_date' => date('Y-m-d H:i:s'),
+            'author_username' => 'mini-reddit'
+
+        ]);
+
+
+        DB::table('links')->insert([
+
+            'content' => 'badr post3',
+            'title' => 'post3 by badr',
+            'link_date' => date('Y-m-d H:i:s'),
+            'author_username' => 'mini-reddit'
+
+        ]);
+
+        DB::table('links')->insert([
+
+            'content' => 'comment on post 1 by badr',
+            'link_date' => date('Y-m-d H:i:s'),
+            'author_username' => 'mini-reddit',
+            'parent_id' => 1,
+            'post_id' => 1
+
+        ]);
+
     }
 }

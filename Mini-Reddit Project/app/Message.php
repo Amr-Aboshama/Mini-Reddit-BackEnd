@@ -121,11 +121,14 @@ class Message extends Model
     public static function getMessageOfSpecificId($id)
     {
 
+
         Message::where('message_id', $id)->update(['read'=> true]);
 
         return Message::where('message_id', $id)
                -> leftJoin('users', 'username', '=', 'sender_username')
                -> select ('sender_username', 'photo_url', 'content', 'message_subject', 'message_date')
+
+
                ->first();
     }
 

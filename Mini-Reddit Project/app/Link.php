@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class Link extends Model
 {
-    protected $fillable = ['content', 'content_image', 'video_url', 'title', 'author_username', 'community_id', 'parent_id'];
+    protected $fillable = ['content','post_id','link_date','content_image', 'video_url', 'title', 'author_username', 'community_id', 'parent_id'];
     public $timestamps = false; //so that doesn't expext time columns
 
     /**

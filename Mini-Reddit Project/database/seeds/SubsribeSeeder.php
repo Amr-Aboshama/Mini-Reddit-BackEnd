@@ -29,5 +29,19 @@ class SubsribeSeeder extends Seeder
             'username' => 'ahmed'
 
         ]);
+
+        DB::table('subscribtions')->insert([
+
+            'community_id' => 4,
+            'username' => 'mini-reddit'
+
+        ]);
+
+        DB::table('subscribtions')->insert([
+
+            'community_id' => 5,
+            'username' => 'mini-reddit'
+
+        ]);
     }
 }
