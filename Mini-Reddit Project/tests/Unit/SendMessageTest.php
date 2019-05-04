@@ -36,7 +36,8 @@ class SendMessageTest extends TestCase
         $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
         $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
-                                                        'msg_content'=> 'test_hii'], $headers)
+                                                     'msg_content'=> 'test_hii',
+                                                     'msg_subject'=> 'test_subject'], $headers)
             ->assertStatus(401)
             ->assertJson([
                 "success" => "false",
@@ -47,139 +48,195 @@ class SendMessageTest extends TestCase
         $receiveruser->delete();
     }
 
-    // /**
-    //  * Test for an unvalid action to send a messages
-    //  */
-    // public function testNonExistanceOfName()
-    // {
+    /**
+     * Test for an unvalid action to send a messages
+     */
+    public function testNonExistanceOfName()
+    {
 
-    //     $senderuser = User::storeUser([
-    //         'username' => 'testo',
-    //         'email' => 'testo@test.com',
-    //         'password' => '123456789'
-    //     ]);
+        $senderuser = User::storeUser([
+            'username' => 'testo',
+            'email' => 'testo@test.com',
+            'password' => '123456789'
+        ]);
 
-    //     $token = auth()->login($senderuser);
-    //     $headers = [$token];
+        $token = auth()->login($senderuser);
+        $headers = [$token];
 
-    //     $receiveruser = User::storeUser([
-    //         'username' => 'testoo',
-    //         'email' => 'testoo@test.com',
-    //         'password' => '123456789'
-    //     ]);
+        $receiveruser = User::storeUser([
+            'username' => 'testoo',
+            'email' => 'testoo@test.com',
+            'password' => '123456789'
+        ]);
 
-    //     $receiveruser->delete();
+        $receiveruser->delete();
 
-    //     $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
-    //     $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
-    //                                                     'msg_content'=> 'test_hii'], $headers)
-    //         ->assertStatus(403)
-    //         ->assertJson([
-    //             "success" => "false",
-    //             "error" => "username doesn't exist"
-    //         ]);
+        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+                                                     'msg_content'=> 'test_hii',
+                                                     'msg_subject'=> 'test_subject'], $headers)
+            ->assertStatus(403)
+            ->assertJson([
+                "success" => "false",
+                "error" => "username doesn't exist"
+            ]);
 
-    //     $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> '',
-    //                                                     'msg_content'=> 'test_hii'], $headers)
-    //         ->assertStatus(403)
-    //         ->assertJson([
-    //             "success" => "false",
-    //             "error" => "username doesn't exist"
-    //         ]); 
+        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> '',
+                                                     'msg_content'=> 'test_hii',
+                                                     'msg_subject'=> 'test_subject'], $headers)
+            ->assertStatus(403)
+            ->assertJson([
+                "success" => "false",
+                "error" => "username doesn't exist"
+            ]); 
             
-    //     $this->json('POST', 'api/auth/sendMessage', ['msg_content'=> 'test_hii'], $headers)
-    //         ->assertStatus(403)
-    //         ->assertJson([
-    //             "success" => "false",
-    //             "error" => "username doesn't exist"
-    //         ]);        
+        $this->json('POST', 'api/auth/sendMessage', ['msg_content'=> 'test_hii',
+                                                     'msg_subject'=> 'test_subject'], $headers)
+            ->assertStatus(403)
+            ->assertJson([
+                "success" => "false",
+                "error" => "username doesn't exist"
+            ]);        
 
-    //     $senderuser->delete();
+        $senderuser->delete();
        
-    // }
+    }
 
-    // /**
-    //  * Test for an unvalid action to send a messages - no message content
-    //  */
-    // public function testNonExistanceOfMessageContent()
-    // {
+    /**
+     * Test for an unvalid action to send a messages - no message content
+     */
+    public function testNonExistanceOfMessageContent()
+    {
 
-    //     $senderuser = User::storeUser([
-    //         'username' => 'testo',
-    //         'email' => 'testo@test.com',
-    //         'password' => '123456789'
-    //     ]);
+        $senderuser = User::storeUser([
+            'username' => 'testo',
+            'email' => 'testo@test.com',
+            'password' => '123456789'
+        ]);
 
-    //     $token = auth()->login($senderuser);
-    //     $headers = [$token];
+        $token = auth()->login($senderuser);
+        $headers = [$token];
 
-    //     $receiveruser = User::storeUser([
-    //         'username' => 'testoo',
-    //         'email' => 'testoo@test.com',
-    //         'password' => '123456789'
-    //     ]);
+        $receiveruser = User::storeUser([
+            'username' => 'testoo',
+            'email' => 'testoo@test.com',
+            'password' => '123456789'
+        ]);
 
        
 
-    //     $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
-    //     $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
-    //                                                     'msg_content'=> ''], $headers)
-    //         ->assertStatus(403)
-    //         ->assertJson([
-    //             "success" => "false",
-    //             "error" => "message must have a content"
-    //         ]);
+        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+                                                     'msg_content'=> '',
+                                                     'msg_subject'=> 'test_subject'], $headers)
+            ->assertStatus(403)
+            ->assertJson([
+                "success" => "false",
+                "error" => "message must have a content"
+            ]);
 
-    //     $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username], $headers)
-    //         ->assertStatus(403)
-    //         ->assertJson([
-    //             "success" => "false",
-    //             "error" => "message must have a content"
-    //         ]); 
+        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+                                                     'msg_subject'=> 'test_subject'], $headers)
+            ->assertStatus(403)
+            ->assertJson([
+                "success" => "false",
+                "error" => "message must have a content"
+            ]); 
             
                 
 
-    //     $senderuser->delete();
-    //     $receiveruser->delete();
+        $senderuser->delete();
+        $receiveruser->delete();
        
-    // }
+    }
 
-    // /**
-    //  * Test for an valid action to send a messages 
-    //  */
-    // public function testValidSendMessage()
-    // {
 
-    //     $senderuser = User::storeUser([
-    //         'username' => 'testo',
-    //         'email' => 'testo@test.com',
-    //         'password' => '123456789'
-    //     ]);
+    /**
+     * Test for an unvalid action to send a messages - no message subject
+     */
+    public function testNonExistanceOfMessageSubject()
+    {
 
-    //     $token = auth()->login($senderuser);
-    //     $headers = [$token];
+        $senderuser = User::storeUser([
+            'username' => 'testo',
+            'email' => 'testo@test.com',
+            'password' => '123456789'
+        ]);
 
-    //     $receiveruser = User::storeUser([
-    //         'username' => 'testoo',
-    //         'email' => 'testoo@test.com',
-    //         'password' => '123456789'
-    //     ]);
+        $token = auth()->login($senderuser);
+        $headers = [$token];
+
+        $receiveruser = User::storeUser([
+            'username' => 'testoo',
+            'email' => 'testoo@test.com',
+            'password' => '123456789'
+        ]);
 
        
 
-    //     $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
-    //     $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
-    //                                                     'msg_content'=> 'test_hii'], $headers)
-    //         ->assertStatus(200)
-    //         ->assertJson([
-    //             "success" => "true"
-    //         ]);
+        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+                                                     'msg_content'=> 'test_hii'], $headers)
+            ->assertStatus(403)
+            ->assertJson([
+                "success" => "false",
+                "error" => "message must have a subject"
+            ]);
 
-    //     $senderuser->delete();
-    //     $receiveruser->delete();
+        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+                                                     'msg_content'=> 'test_hii',
+                                                     'msg_subject'=> ''], $headers)
+            ->assertStatus(403)
+            ->assertJson([
+                "success" => "false",
+                "error" => "message must have a subject"
+            ]); 
+            
+                
+
+        $senderuser->delete();
+        $receiveruser->delete();
        
-    // }
+    }
+
+    /**
+     * Test for an valid action to send a messages 
+     */
+    public function testValidSendMessage()
+    {
+
+        $senderuser = User::storeUser([
+            'username' => 'testo',
+            'email' => 'testo@test.com',
+            'password' => '123456789'
+        ]);
+
+        $token = auth()->login($senderuser);
+        $headers = [$token];
+
+        $receiveruser = User::storeUser([
+            'username' => 'testoo',
+            'email' => 'testoo@test.com',
+            'password' => '123456789'
+        ]);
+
+       
+
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
+
+        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+                                                     'msg_content'=> 'test_hii',
+                                                     'msg_subject'=> 'test_subject'], $headers)
+            ->assertStatus(200)
+            ->assertJson([
+                "success" => "true"
+            ]);
+
+        $senderuser->delete();
+        $receiveruser->delete();
+       
+    }
 }
