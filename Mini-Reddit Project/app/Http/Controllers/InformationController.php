@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
+use App\Blocking;
 use App\User;
 
 /**
@@ -69,6 +72,24 @@ class InformationController extends Controller
                 'success' => 'false',
                 'error' => "username doesn't exist",
             ], 403);
+        }
+
+        $Auth = 1;
+        try {
+            $tokenFetch = JWTAuth::parseToken()->authenticate();
+        } catch (JWTException $e) {
+            $Auth = 0;
+        }
+
+        if ($Auth) {
+            $user = auth()->user();
+
+            if (Blocking::blockedOrBlocker($user->username, $request->username)) {
+                return response()->json([
+                    'success' => 'false',
+                    'error' => "username doesn't exist",
+                ], 403);
+            }
         }
 
         $selected_user = User::getUserWholeRecord($request->username);
