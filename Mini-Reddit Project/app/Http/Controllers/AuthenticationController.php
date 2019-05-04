@@ -164,7 +164,7 @@ class AuthenticationController extends Controller
     }
 
     /**
-     * Reset User Password after receiving a mail [Under investigation].
+     * Reset User Password after receiving a mail.
      *
      * @bodyParam new_password string required The new password of the user .
      * @bodyParam password_confirmation string required The new password confirmation of the user .
