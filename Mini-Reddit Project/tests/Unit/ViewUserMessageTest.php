@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use App\Message;
+use App\Link;
 
 class ViewUserMessageTest extends TestCase
 {
@@ -28,31 +29,15 @@ class ViewUserMessageTest extends TestCase
             'password' => '123456789'
         ]);
 
+        $token = auth()->login($receiveruser);
+        $headers = [$token];
         
-        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
-       
-
-        $this->json('GET', 'api/auth/viewUserMessage', ['message_id'=>$message->message_id], [])
-            ->assertStatus(401)
-            ->assertJson([
-                "success" => "false",
-                "error" => "UnAuthorized"
-            ]);
-
-
-        $receivertoken = auth()->login($receiveruser);
-        $receiverheaders = [$receivertoken];
         auth()->logout();
 
-        $this->json('GET', 'api/auth/viewUserMessage', ['message_id'=>$message->message_id], $receiverheaders)
-            ->assertStatus(401)
-            ->assertJson([
-                "success" => "false",
-                "error" => "UnAuthorized"
-            ]);
-
-        
+        $this->json('GET', 'api/auth/viewUserMessage', ['message_id'=>$message->message_id], $headers)
+            ->assertStatus(401);
 
         $senderuser->delete();
         $receiveruser->delete();
@@ -81,7 +66,7 @@ class ViewUserMessageTest extends TestCase
         $headers = [$token];
 
         
-        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
        
 
@@ -139,7 +124,7 @@ class ViewUserMessageTest extends TestCase
         $headers = [$token];
 
         
-        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
 
         $this->json('GET', 'api/auth/viewUserMessage', ['message_id'=>$message->message_id], $headers)
@@ -148,7 +133,9 @@ class ViewUserMessageTest extends TestCase
                 "success" => "true",
                 "username2" => "testo",
                 "user_photo" => null,
-                "message_content" => "test_hii"
+                'message_subject'=> 'test_subject',
+                "message_content" => "test_hii",
+                "duration" => link::duration($message->message_date)
             ]);
 
         $senderuser->delete();
