@@ -610,11 +610,6 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "community doesn't exist"
      * }
-     *
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
      * @response 422 {
      *  "success": "false",
      *  "error": "Invalid or some data missed"
