@@ -22,6 +22,7 @@ class MessagesController extends Controller
      *  "success": "true",
      * 	"username2":"lolo",
      *  "user_photo":"photo3",
+     *  "message_subject": "hello world",
      *  "message_content":"hello world"
      * }
      *
@@ -63,11 +64,13 @@ class MessagesController extends Controller
 
         $message= Message::getMessageOfSpecificId($request->message_id);
 
+
         return response()->json([
 
                 'success' => 'true', 
                 'username2' => $message->sender_username,
                 'user_photo' => $message->photo_url,
+                'message_subject'=> $message->message_subject,
                 'message_content' => $message->content
             ], 200);
 
@@ -83,11 +86,13 @@ class MessagesController extends Controller
      *  "messages" : [{
      *   	 "receiver_name":"maged",
      *   	 "receiver_photo":"photo1",
+     *       "message_subject": "hello world",
      *   	 "message_content":"hello world",
      *       "message_id":"5"
      *    }, {
      *   	 "receiver_name":"nour",
      *   	 "receiver_photo":"photo2",
+     *       "message_subject": "hello world tany",
      *   	 "message_content":"hello world tany",
      *       "message_id":"6"
      *   }]
@@ -126,17 +131,19 @@ class MessagesController extends Controller
     /**
      * View current user inbox Message
      * @authenticated
-     * @bodyParam state integer required 1 if unread messages ,2 if all messages,3 if notified messages
+     * @bodyParam state integer required 1 if unread messages ,2 if read messages ,3 if all messages
      * @response 200{
      *  "success": "true",
      *  "messages" : [{
      *   	 "sender_name":"maged",
      *   	 "sender_photo":"photo1",
+     *       "message_subject": "hello world",
      *   	 "message_content":"hello world",
      *     "message_id":"1"
      *   	}, {
      *   	 "sender_name":"nour",
      *   	 "sender_photo":"photo2",
+     *       "message_subject": "hello world",
      *   	 "message_content":"hello world tany",
      *     "message_id":"3"
      *   }]
@@ -151,6 +158,10 @@ class MessagesController extends Controller
      * 	"error": "undefined state"
      * }
      *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "state does not exist"
+     * }
      */
 
 
@@ -171,9 +182,37 @@ class MessagesController extends Controller
             ], 401);
         }
 
+        if ($request->state == '' || !$request->has('state') ){
+
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'state does not exist'
+            ], 403); 
+        }
+
+        if($request->state != 3 && $request->state != 2  &&  $request->state != 1 ){
+
+            return response()->json([
+
+                'success' => 'false',
+                'error' => 'undefined state'
+            ], 403);
+
+        }
 
 
-        $inboxmessages= Message::inboxMessage($user->username);
+        if ($request->state == 3){
+             $inboxmessages= Message::inboxMessage($user->username);
+        }
+
+        else if ($request->state == 2){
+             $inboxmessages= Message::readInboxMessage($user->username);
+        }
+
+        else if ($request->state == 1){
+             $inboxmessages= Message::unreadInboxMessage($user->username);
+        }
 
 
         return response()->json([

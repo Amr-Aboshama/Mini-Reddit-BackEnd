@@ -29,7 +29,7 @@ class ViewUserMessageTest extends TestCase
         ]);
 
         
-        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
        
 
@@ -81,7 +81,7 @@ class ViewUserMessageTest extends TestCase
         $headers = [$token];
 
         
-        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
        
 
@@ -139,7 +139,7 @@ class ViewUserMessageTest extends TestCase
         $headers = [$token];
 
         
-        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii');
+        $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
 
         $this->json('GET', 'api/auth/viewUserMessage', ['message_id'=>$message->message_id], $headers)
@@ -148,6 +148,7 @@ class ViewUserMessageTest extends TestCase
                 "success" => "true",
                 "username2" => "testo",
                 "user_photo" => null,
+                'message_subject'=> 'test_subject',
                 "message_content" => "test_hii"
             ]);
 
