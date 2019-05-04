@@ -1137,16 +1137,6 @@ class InteractingController extends Controller
         $links_comments = [];
         $i = 0;
         foreach ($links as $link) {
-            if (!Link::isPostByUser($username, $link->link_id)) {
-                $links_comments[$i]['type'] = 'comment';
-                $links_comments[$i]['post']['title'] = $link->title;
-                $links_comments[$i]['post']['post_id'] = $link->link_id;
-                $links_comments[$i]['post']['body'] = $link->content;
-                $links_comments[$i]['post']['community_id'] = null != $link->community_id ? $link->community_id : -1;
-                $links_comments[$i]['post']['author_username'] = $link->author_username;
-                $links_comments[$i]['post']['community'] = 'none';
-                $links_comments[$i]['post']['subscribed'] = 'false';
-
               if (!Link::isPostByUser( $username , $link->link_id)) {
                   $links_comments[$i]['type'] = 'comment';
                   $links_comments[$i]['post']['title'] = $link->title;
@@ -1161,8 +1151,6 @@ class InteractingController extends Controller
                   if($link->community_id != null) {
                       $links_comments[$i]['post']['community'] = Community::getCommunity($link->community_id)->name;
                   }
-
-                  try {
 
                 try {
                     $tokenFetch = JWTAuth::parseToken()->authenticate();
@@ -1198,31 +1186,8 @@ class InteractingController extends Controller
                       }
                   }
 
-              } else {
-
-                    $links_comments[$i]['body'] = $link->content;
-                    $links_comments[$i]['title'] = $link->title;
-                    $links_comments[$i]['upvotes'] = $link->upvotes;
-                    $links_comments[$i]['downvotes'] = $link->downvotes;
-                    $links_comments[$i]['post_id'] = $link->link_id;
-                    $links_comments[$i]['community_id'] = $link->community_id != null ? $link->community_id :-1 ;
-                    $links_comments[$i]['community'] = 'none';
-                    $links_comments[$i]['subscribed'] = 'false';
-                    $links_comments[$i]['upvoted'] = 'false';
-                    $links_comments[$i]['downvoted'] = 'false';
-                    $links_comments[$i]['comments_num'] = Link::commentsNum($link->link_id);
-                    $links_comments[$i]['hidden'] = 'false';
-                    $links_comments[$i]['subscribed'] = 'false';
-                    $links_comments[$i]['saved'] = 'false';
-                    $links_comments[$i]['post_image'] = $link->content_image != null ? $post->content_image : -1;
-                    $links_comments[$i]['video_url'] = $link->video_url != null ? $post->video_url : -1  ;
-                    $links_comments[$i]['type'] = 'post';
-                    $links_comments[$i]['duration'] = Link::Duration($link->link_date);
-                    if($link->community_id != null) {
-                        $links_comments[$i]['community'] = Community::getCommunity($link->community_id)->name;
-                    }
-                }
-            } else {
+              }  else {
+                $links_comments[$i]['duration'] = Link::Duration($link->link_date);
                 $links_comments[$i]['body'] = $link->content;
                 $links_comments[$i]['title'] = $link->title;
                 $links_comments[$i]['upvotes'] = $link->upvotes;
@@ -1284,8 +1249,6 @@ class InteractingController extends Controller
                       if($link->community_id != null) {
                           $links_comments[$i]['post']['community'] = Community::getCommunity($link->community_id)->name;
                       }
-
-                      try {
 
                     try {
                         $tokenFetch = JWTAuth::parseToken()->authenticate();
@@ -1645,7 +1608,7 @@ class InteractingController extends Controller
                     }
                 }
             } else {
-                $links_comments[$i]['duration'] = Link::Duration($link->link_date);;
+                $links_comments[$i]['duration'] = Link::Duration($link->link_date);
                 $links_comments[$i]['body'] = $link->content;
                 $links_comments[$i]['title'] = $link->title;
                 $links_comments[$i]['upvotes'] = $link->upvotes;
