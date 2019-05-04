@@ -698,9 +698,9 @@ class InteractingController extends Controller
      * @bodyParam username string if you visited another user profile this is his username [Default null=>guest / my username=>user].
      * @bodyParam community_id int if you want to show the posts of a specific community this is its id [Default null].
      *@response 200 {
-     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"video_url" : "https://www.youtube.com","image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "laravel", "community_id": 1 , "subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false", "upvoted" : "true" , "downvoted" : "false", "pinned" : 1 } ,
-     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "community_id": null, "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "hidden": "true", "upvoted" : "true" , "downvoted" : "false", "pinned" : 0 } ,
-     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "community_id": null, "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "true", "upvoted" : "true" , "downvoted" : "false", "pinned" : 1 }]
+     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"video_url" : "https://www.youtube.com","image":"storage/app/avater.jpg","title" : "title1","username": "ahmed" , "community" : "laravel", "community_id": 1 , "subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "duration" :"1 month ago" , "comments_num" : 0, "saved": "true", "hidden": "false", "upvoted" : "true" , "downvoted" : "false", "pinned" : 1 } ,
+     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "community_id": null, "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " ,"duration" :"1 month ago", "comments_num" : 0, "saved": "false", "hidden": "true", "upvoted" : "true" , "downvoted" : "false", "pinned" : 0 } ,
+     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none", "community_id": null, "subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " ,"duration" :"1 month ago", "comments_num" : 0, "saved": "true", "hidden": "true", "upvoted" : "true" , "downvoted" : "false", "pinned" : 1 }]
      *}
      * @response 403 {
      * 	"success" : "false",
@@ -794,6 +794,7 @@ class InteractingController extends Controller
                 'downvotes' => $post->downvotes,
                 'upvotes' => $post->upvotes,
                 'date' => $post->link_date,
+                'duration' => Link::Duration($post->link_date),
                 'comments_num' => $post->comments_num = Link::commentsNum($post->link_id),
                 'saved' => "false",
                 'hidden' => "false",
@@ -849,14 +850,14 @@ class InteractingController extends Controller
      * Viewing comments of a user on posts he/she has interacted with.
      * @bodyParam username string required username of the user you wanna see his/her comments on posts.
      * @response 200 {
-     *  "0":{"post":{"post_id" : 1 ,"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1,"subscribed" : "true" },"comments" :[
-     *      {"comment_id":55 ,"body":"comment1 on post1" , "date" : "2 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":59 ,"body":"comment2 on post1" , "date" : "3 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
+     *  "0":{"post":{"post_id" : 1 ,"body":"post1" ,"title":"post" ,"author_username" : "ahmed" ,"duration":"2 weeks" ,"community" :" laravel","community_id":1,"subscribed" : "true" },"comments" :[
+     *      {"comment_id":55 ,"body":"comment1 on post1" , "date" : "2 days ago","duration":"2 weeks" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":59 ,"body":"comment2 on post1" , "date" : "3 days ago" ,"duration":"2 weeks", "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
      *  ] } ,
-     *  "1":{"post":{"post_id" : 7 ,"body":"post2" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1,"subscribed" : "true" } , "comments":[
-     *     {"comment_id":40 ,"body":"comment1 on post2" , "date" : "2 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":89 ,"body":"comment2 on post2" , "date" : "3 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":79 ,"body":"comment3 on post2" , "date" : "3 days ago" , "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
+     *  "1":{"post":{"post_id" : 7 ,"body":"post2" ,"title":"post" ,"author_username" : "ahmed" ,"duration":"2 weeks", "community" :" laravel","community_id":1,"subscribed" : "true" } , "comments":[
+     *     {"comment_id":40 ,"body":"comment1 on post2" , "date" : "2 days ago" ,"duration":"2 weeks", "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":89 ,"body":"comment2 on post2" , "date" : "3 days ago" ,"duration":"2 weeks", "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"},{"comment_id":79 ,"body":"comment3 on post2" , "date" : "3 days ago" ,"duration":"2 weeks", "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
      *  ]},
-     *  "2":{"post":{"body":"post1" ,"title":"post" ,"author_username" : "ahmed" , "community" :" laravel","community_id":1,"subscribed" : "true" },"commments" : [
-     *     {"comment_id":80 ,"body":"comment1 on post3" , "date" : "2 days ago", "upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
+     *  "2":{"post":{"body":"post1" ,"title":"post" ,"author_username" : "ahmed" ,"duration":"2 weeks", "community" :" laravel","community_id":1,"subscribed" : "true" },"commments" : [
+     *     {"comment_id":80 ,"body":"comment1 on post3" , "date" : "2 days ago","duration":"2 weeks" ,"upvotes" : 12 , "downvotes" : 45 , "upvoted" : "true" , "downvoted" : "false"}
      *  ]}
      * }
      * @response 403 {
@@ -881,6 +882,7 @@ class InteractingController extends Controller
         foreach ($Commentedposts as $post) {
             $post->community_id = $post->community_id != null ? $post->community_id : -1;
             $post->community = "none";
+            $post->duration = Link::Duration($post->link_date);
             $post->subscribed = 'false';
 
             if ($post->community_id != -1) {
@@ -903,6 +905,7 @@ class InteractingController extends Controller
 
             foreach ($posts_comments[$i]['comments'] as $comments) {
                 try {
+                    $comments->duration = Link::Duration($comments->link_date);
                     $comments->upvoted = 'false';
                     $comments->downvoted = 'false';
                     $tokenFetch = JWTAuth::parseToken()->authenticate();
@@ -927,9 +930,9 @@ class InteractingController extends Controller
      * Viewing comments of a specific post or replies of a specific comment
      * @bodyParam link_id int required the id of the post or the id of the comment.
      * @response 200 {
-     *	"comments" :[ { "link_id": 1 , "content" : "comment1" ,"author_username": "ahmed" , "downvotes" : 15, "upvotes" : 0 , "link_date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "link_id": 2 , "content" : "comment2" ,"author_username": "ahmed","downvotes" : 23, "upvotes" : 17 , "link_date":" 2 days ago " , "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "link_id": 3 , "content" : "comment3" ,"author_username": "ahmed","downvotes" : 31, "upvotes" : 78 , "link_date":" 2 days ago " , "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" }]
+     *	"comments" :[ { "link_id": 1 , "content" : "comment1" ,"author_username": "ahmed" , "downvotes" : 15, "upvotes" : 0 , "link_date":" 2 days ago " ,"duration":"2 weeks", "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "link_id": 2 , "content" : "comment2" ,"author_username": "ahmed","downvotes" : 23, "upvotes" : 17 , "link_date":" 2 days ago " ,"duration":"2 weeks", "comments_num" : 0, "saved": "false" , "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "link_id": 3 , "content" : "comment3" ,"author_username": "ahmed","downvotes" : 31, "upvotes" : 78 , "link_date":" 2 days ago " ,"duration":"2 weeks", "comments_num" : 0, "saved": "true" , "upvoted" : "true" , "downvoted" : "false" }]
      * }
      *
      * @response 403 {
@@ -949,6 +952,7 @@ class InteractingController extends Controller
 
         $links = Link::linksOflink($request->link_id);
         foreach($links as $link) {
+            $link->duration = Link::Duration($link->link_date);
             $link->comments_num = Link::commentsNum($link->link_id);
             $link->upvoted = 'false';
             $link->downvoted = 'false';
@@ -979,9 +983,9 @@ class InteractingController extends Controller
      * @bodyParam type int required it is one for the upvoted posts and zero for the downvoted ones.
      * @authenticated
      * @response 200 {
-     *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed","community" : "none" , "community_id" : -1 ,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
-     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","community_id" : -1,"subscribed" : "false","author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" } ,
-     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "laravel" ,"community_id" : 1,"subscribed" : "true" ,"author_photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true", "hidden": "false" }]
+     *	"posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed","community" : "none" , "community_id" : -1 ,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" , "downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " ,"duration":"2 weeks", "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","community_id" : -1,"subscribed" : "false","author_photo_path" : "storage/app/avater.jpg", "downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " ,"duration":"2 weeks", "comments_num" : 0, "saved": "true", "hidden": "false" } ,
+     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "laravel" ,"community_id" : 1,"subscribed" : "true" ,"author_photo_path" : "storage/app/avater.jpg","downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " ,"duration":"2 weeks", "comments_num" : 0, "saved": "true", "hidden": "false" }]
      * }
      * @response 404 {
      * 	"error" :"somethimg wrong!!!!"
@@ -1043,6 +1047,7 @@ class InteractingController extends Controller
                 'downvotes' => $post->downvotes,
                 'upvotes' => $post->upvotes,
                 'date' => $post->link_date,
+                'duration' => Link::Duration($post->link_date),
                 'comments_num' => $post->comments_num = Link::commentsNum($post->link_id),
                 'saved' => "false",
                 'hidden' => "false",
@@ -1082,6 +1087,7 @@ class InteractingController extends Controller
      *      "title": "post1",
      *      "post_id" : 1,
      *      "body": "amro post1",
+     *      "duration":"2 weeks",
      *      "community_id": -1,
      *      "author_username": "amro",
      *      "community": "none",
@@ -1093,6 +1099,7 @@ class InteractingController extends Controller
      *          "author_username": "ahmed",
      *          "body": "reply on comment2 on post1",
      *          "link_date": "2019-04-08 00:07:00",
+     *          "duration":"2 weeks",
      *          "upvotes" : 20,
      *          "downvotes" : 26,
      *             "upvoted" : "true",
@@ -1117,6 +1124,7 @@ class InteractingController extends Controller
      *    "hidden": "false",
      *    "saved" : "true",
      *    "type": "post",
+     *    "duration":"2 weeks",
      *    "subscribed": "true"
      *},
      *"2":{
@@ -1136,6 +1144,7 @@ class InteractingController extends Controller
      *    "hidden": "false",
      *     "saved" : "true",
      *    "type": "post",
+     *    "duration":"2 weeks",
      *      "subscribed": "false"
      *},
      *"3":{
@@ -1144,6 +1153,7 @@ class InteractingController extends Controller
      *      "title": "post1",
      *      "post_id" : 1,
      *        "body": "ahmed post1",
+     *        "duration":"2 weeks",
      *        "community_id": -1,
      *        "author_username": "ahmed",
      *        "community": "none",
@@ -1155,6 +1165,7 @@ class InteractingController extends Controller
      *            "body": "comment on post4",
      *            "author_username": "amro",
      *            "link_date": "2019-04-08 00:07:00",
+     *            "duration":"2 weeks",
      *            "upvotes" : 20,
      *            "downvotes" : 26,
      *             "upvoted" : "true",
@@ -1166,6 +1177,7 @@ class InteractingController extends Controller
      *            "author_username": "menna",
      *            "body": "comment on post4",
      *            "link_date": "2019-04-08 00:07:00",
+     *            "duration" :"1 month ago",
      *            "upvotes" : 20,
      *            "downvotes" : 26,
      *             "upvoted" : "true",
@@ -1207,6 +1219,7 @@ class InteractingController extends Controller
                   $links_comments[$i]['post']['author_username'] = $link->author_username;
                   $links_comments[$i]['post']['community'] = 'none';
                   $links_comments[$i]['post']['subscribed'] = 'false';
+                  $links_comments[$i]['post']['duration'] = Link::Duration($link->link_date);
 
                   if($link->community_id != null) {
                       $links_comments[$i]['post']['community'] = Community::getCommunity($link->community_id)->name;
@@ -1231,7 +1244,7 @@ class InteractingController extends Controller
                   foreach($links_comments[$i]['comments'] as $comment) {
 
                     try {
-
+                        $comment->duration = Link::Duration($comment->link_date);
                         $comment->upvoted = 'false';
                         $comment->downvoted = 'false';
                         $comment->saved = 'false';
@@ -1270,6 +1283,7 @@ class InteractingController extends Controller
                     $links_comments[$i]['post_image'] = $link->content_image != null ? $post->content_image : -1;
                     $links_comments[$i]['video_url'] = $link->video_url != null ? $post->video_url : -1  ;
                     $links_comments[$i]['type'] = 'post';
+                    $links_comments[$i]['duration'] = Link::Duration($link->link_date);
                     if($link->community_id != null) {
                         $links_comments[$i]['community'] = Community::getCommunity($link->community_id)->name;
                     }
@@ -1311,6 +1325,7 @@ class InteractingController extends Controller
                       $links_comments[$i]['post']['community'] = 'none';
                       $links_comments[$i]['post']['subscribed'] = 'false';
                       $links_comments[$i]['type'] = 'comment';
+                      $links_comments[$i]['post']['duration'] = Link::Duration($link->link_date);
 
                       if($link->community_id != null) {
                           $links_comments[$i]['post']['community'] = Community::getCommunity($link->community_id)->name;
@@ -1337,6 +1352,7 @@ class InteractingController extends Controller
                       foreach($links_comments[$i]['comments'] as $comment) {
 
                         try {
+                          $comment->duration = Link::Duration($comment->link_date);
                           $comment->upvoted = 'false';
                           $comment->downvoted = 'false';
                           $comment->saved = 'false';
@@ -1555,6 +1571,7 @@ class InteractingController extends Controller
      *      "title": "post1",
      *      "post_id" : 1,
      *      "body": "amro post1",
+     *      "duration" : "1 min ago",
      *      "community_id": 3,
      *      "author_username": "amro",
      *      "community": "gogo",
@@ -1566,6 +1583,7 @@ class InteractingController extends Controller
      *          "author_username": "ahmed",
      *          "body": "reply on comment2 on post1",
      *          "link_date": "2019-04-08 00:07:00",
+     *          "duration" : "1 min ago",
      *          "upvotes" : 20,
      *          "downvotes" : 26,
      *             "upvoted" : "true",
@@ -1589,7 +1607,8 @@ class InteractingController extends Controller
      *    "comments_num": 1,
      *    "hidden": "false",
      *    "type": "post",
-     *      "subscribed": "true"
+     *    "duration" : "1 min ago",
+     *    "subscribed": "true"
      *},
      *"2":{
      *    "body": "ahmed post1",
@@ -1607,7 +1626,8 @@ class InteractingController extends Controller
      *    "comments_num": 1,
      *    "hidden": "false",
      *    "type": "post",
-     *     "subscribed": "false"
+     *    "duration" : "1 min ago",
+     *    "subscribed": "false"
      *},
      *"3":{
      * "type" : "comment",
@@ -1615,6 +1635,7 @@ class InteractingController extends Controller
      *      "title": "post1",
      *      "post_id" : 1,
      *        "body": "ahmed post1",
+     *        "duration" : "1 min ago",
      *        "community_id": -1,
      *        "author_username": "ahmed",
      *        "community": "none",
@@ -1626,6 +1647,7 @@ class InteractingController extends Controller
      *            "body": "comment on post4",
      *            "author_username": "amro",
      *            "link_date": "2019-04-08 00:07:00",
+     *            "duration" : "1 min ago",
      *            "upvotes" : 20,
      *            "downvotes" : 26,
      *             "upvoted" : "true",
@@ -1637,6 +1659,7 @@ class InteractingController extends Controller
      *            "author_username": "menna",
      *            "body": "comment on post4",
      *            "link_date": "2019-04-08 00:07:00",
+     *            "duration" : "1 min ago",
      *            "upvotes" : 20,
      *            "downvotes" : 26,
      *             "upvoted" : "true",
@@ -1676,8 +1699,10 @@ class InteractingController extends Controller
                 $links_comments[$i]['post']['author_username'] = $link->author_username;
                 $links_comments[$i]['post']['community'] = $link->community;
                 $links_comments[$i]['post']['subscribed'] = $link->subscribed;
+                $links_comments[$i]['post']['duration'] = Link::Duration($link->link_date);
                 $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id, $username);
                 foreach ($links_comments[$i]['comments'] as $comments) {
+                    $comments->duration = Link::Duration($comments->link_date);
                     $comments->upvoted = 'false';
                     $comments->downvoted = 'false';
                     if (UpvotedLink::upvoted($comments->comment_id, $username)) {
@@ -1687,6 +1712,7 @@ class InteractingController extends Controller
                     }
                 }
             } else {
+                $links_comments[$i]['duration'] = Link::Duration($link->link_date);;
                 $links_comments[$i]['body'] = $link->content;
                 $links_comments[$i]['title'] = $link->title;
                 $links_comments[$i]['upvotes'] = $link->upvotes;
@@ -1720,6 +1746,7 @@ class InteractingController extends Controller
                 $links_comments[$i]['type'] = 'post';
                 if (Link::isPostHasSavedCommentsByUser($link->link_id, $username)) {
                     $i++;
+                    $links_comments[$i]['post']['duration'] = Link::Duration($link->link_date);
                     $links_comments[$i]['post']['title'] = $link->title;
                     $links_comments[$i]['post']['post_id'] = $link->link_id;
                     $links_comments[$i]['post']['body'] = $link->content;
@@ -1729,6 +1756,7 @@ class InteractingController extends Controller
                     $links_comments[$i]['post']['subscribed'] = $link->subscribed;
                     $links_comments[$i]['comments'] = Link ::savedCommentsOfPostByUser($link->link_id, $username);
                     foreach ($links_comments[$i]['comments'] as $comments) {
+                        $comments->duration = Link::Duration($comments->link_date);
                         $comments->upvoted = 'false';
                         $comments->downvoted = 'false';
                         if (UpvotedLink::upvoted($comments->comment_id, $username)) {
@@ -2041,6 +2069,7 @@ class InteractingController extends Controller
      *	"downvotes" : 17,
      *	"upvotes" : 30 ,
      *	"date":" 2 days ago " ,
+     *	"duration" : "1 min ago",
      *	"comments_num" : 0,
      *	"saved": "true",
      *  "hidden": "false" ,
@@ -2104,7 +2133,8 @@ class InteractingController extends Controller
           "author_photo_path"=> User::where('username', $post->author_username)->get()->first()->photo_url,
           "downvotes"=> $post->downvotes,
           "upvotes" => $post->upvotes,
-          "date" => Link::Duration($post->link_date),
+          "date" => $post->link_date,
+          "duration" => Link::Duration($post->link_date),
           "comments_num"=>Link::commentsNum($post->link_id) ,
           "saved"=>$post->saved,
           "hidden"=> $post->hidden,

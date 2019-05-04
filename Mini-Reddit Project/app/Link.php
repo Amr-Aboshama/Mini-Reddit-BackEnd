@@ -368,7 +368,7 @@ class Link extends Model
 
     public static function postsUserCommentedOn($username)
     {
-        $posts = DB::Select("SELECT content as body , title , link_id as post_id , community_id
+        $posts = DB::Select("SELECT link_date , content as body , title , link_id as post_id , community_id
            FROM links
            where parent_id is null
            and link_id in (Select l.post_id from links as l where l.author_username = '$username')");
