@@ -230,7 +230,7 @@ class AccountSettingsController extends Controller
      *
      * @response 200 {
      * 	"success": "true",
-     * 	"path": "storage/app/avatars/avatar.jpg"
+     * 	"path": "storage/avatars/username-time-avatar.jpg"
      * }
      *
      * @response 401 {
@@ -285,10 +285,10 @@ class AccountSettingsController extends Controller
         $request->profile_image->storeAs('public/avatars', $avatarName);
 
         if (1 == $request->profile_or_cover) {
-            $user->photo_url = $avatarName;
+            $user->photo_url = 'storage/'.'avatars/'.$avatarName;
             $user->save();
         } else {
-            $user->cover_url = $avatarName;
+            $user->cover_url = 'storage/'.'avatars/'.$avatarName;
             $user->save();
         }
 

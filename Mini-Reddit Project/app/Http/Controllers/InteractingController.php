@@ -242,7 +242,7 @@ class InteractingController extends Controller
             ],
             'new_image' => [
                 'nullable',
-                'starts_with:storage/app/public/post_images/',
+                'starts_with:storage/post_images/',
             ],
         ]);
 
@@ -275,34 +275,30 @@ class InteractingController extends Controller
             ], 403);
         }
 
-        if ($request->has('new_content') && (!link::updateLinkContent($request->post_id, $request->new_content))) {
-            return response()->json([
-                'success' => 'false',
-                'error' => 'There are something went wrong!',
-            ], 403);
+        $val = 0;
+        if ($request->has('new_content') && (link::updateLinkContent($request->post_id, $request->new_content))) {
+            ++$val;
         }
-        if ($request->has('new_title') && (!link::updatePostTitle($request->post_id, $request->new_title))) {
-            return response()->json([
-                'success' => 'false',
-                'error' => 'There are something went wrong!',
-            ], 403);
+        if ($request->has('new_title') && (link::updatePostTitle($request->post_id, $request->new_title))) {
+            ++$val;
         }
-        if ($request->has('new_image') && (!link::updatePostImage($request->post_id, $request->new_image))) {
-            return response()->json([
-                'success' => 'false',
-                'error' => 'There are something went wrong!',
-            ], 403);
+        if ($request->has('new_image') && (link::updatePostImage($request->post_id, $request->new_image))) {
+            ++$val;
         }
-        if ($request->has('new_video_url') && (!link::updatePostVideo($request->post_id, $request->new_video_url))) {
-            return response()->json([
-                'success' => 'false',
-                'error' => 'There are something went wrong!',
-            ], 403);
+        if ($request->has('new_video_url') && (link::updatePostVideo($request->post_id, $request->new_video_url))) {
+            ++$val;
         }
 
-        return response()->json([
-            'success' => 'true',
-        ], 200);
+        if (0 == $val) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'There are something went wrong!',
+            ], 403);
+        } else {
+            return response()->json([
+                'success' => 'true',
+            ], 200);
+        }
     }
 
     /**
@@ -1366,7 +1362,7 @@ class InteractingController extends Controller
             ],
             'image_path' => [
                 'nullable',
-                'starts_with:storage/app/public/post_images/',
+                'starts_with:storage/post_images/',
             ],
         ]);
         if ($validator->fails()) {
