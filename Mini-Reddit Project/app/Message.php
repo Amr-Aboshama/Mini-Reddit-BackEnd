@@ -22,11 +22,15 @@ class Message extends Model
     {
 
 
-        $sentmessages = DB::select(" select receiver_username as receiver_name, receiver.photo_url as receiver_photo, message_subject, content as message_content, message_id 
+        $sentmessages = DB::select(" select receiver_username as receiver_name, receiver.photo_url as receiver_photo, message_subject, content as message_content, message_id, message_date as duration  
             from Messages, Users as sender, Users as receiver
         	where (sender.username=sender_username and sender.username='$username' and receiver.username=receiver_username)");
 
-       
+        foreach($sentmessages as $sentmessage){
+
+            $sentmessage->duration= link::duration($sentmessage->duration);
+
+        }
 
         return $sentmessages;
     }
@@ -41,10 +45,16 @@ class Message extends Model
     public static function readInboxMessage($username)
     {
 
-        $inboxmessages = DB::select(" select sender_username as sender_name, photo_url as sender_photo,message_subject, content as message_content, message_id 
+        $inboxmessages = DB::select(" select sender_username as sender_name, photo_url as sender_photo,message_subject, content as message_content, message_id, message_date as duration  
             from Messages, Users
             where (Messages.read = 1 and receiver_username= '$username' and username=sender_username )");
 
+
+        foreach($inboxmessages as $inboxmessage){
+
+            $inboxmessage->duration= link::duration($inboxmessage->duration);
+
+        }
 
         
         return $inboxmessages;
@@ -61,11 +71,15 @@ class Message extends Model
     public static function unreadInboxMessage($username)
     {
 
-        $inboxmessages = DB::select(" select sender_username as sender_name, photo_url as sender_photo,message_subject, content as message_content, message_id 
+        $inboxmessages = DB::select(" select sender_username as sender_name, photo_url as sender_photo,message_subject, content as message_content, message_id, message_date as duration 
             from Messages, Users
             where (Messages.read = 0 and receiver_username= '$username' and username=sender_username)");
 
+        foreach($inboxmessages as $inboxmessage){
 
+            $inboxmessage->duration= link::duration($inboxmessage->duration);
+
+        }
         
         return $inboxmessages;
     }
@@ -84,9 +98,15 @@ class Message extends Model
     {
 
 
-        $inboxmessages = DB::select(" select sender_username as sender_name, photo_url as sender_photo,message_subject, content as message_content, message_id 
+        $inboxmessages = DB::select(" select sender_username as sender_name, photo_url as sender_photo,message_subject, content as message_content, message_id, message_date as duration 
             from Messages, Users
             where (receiver_username= '$username' and username=sender_username)");
+
+        foreach($inboxmessages as $inboxmessage){
+
+            $inboxmessage->duration= link::duration($inboxmessage->duration);
+
+        }
 
         return $inboxmessages;
     }
@@ -104,8 +124,8 @@ class Message extends Model
         Message::where('message_id', $id)->update(['read'=> true]);
 
         return Message::where('message_id', $id)
-               -> leftJoin('Users', 'username', '=', 'sender_username')
-               -> select ('sender_username', 'photo_url', 'content', 'message_subject')
+               -> leftJoin('users', 'username', '=', 'sender_username')
+               -> select ('sender_username', 'photo_url', 'content', 'message_subject', 'message_date')
                ->first();
     }
 
