@@ -257,14 +257,14 @@ class InteractingController extends Controller
             return response()->json([
                 'success' => 'false',
                 'error' => 'post doesn\'t exist',
-            ]);
+            ], 403);
         }
         //a non-owner user trying to edit the post
         if ($user->username != Link::getAuthor($request->post_id)) {
             return response()->json([
                 'success' => 'false',
                 'error' => 'Only the author of the post can edit it',
-            ]);
+            ], 403);
         }
 
         if ((!$request->has('new_content')) && (!$request->has('new_title')) && (!$request->has('new_image'))
@@ -359,7 +359,7 @@ class InteractingController extends Controller
             return response()->json([
                 'success' => 'false',
                 'error' => 'comment/reply doesn\'t exist',
-            ]);
+            ], 403);
         }
 
         //a non-owner user trying to edit the comment
@@ -367,7 +367,7 @@ class InteractingController extends Controller
             return response()->json([
                 'success' => 'false',
                 'error' => 'Only the author of the comment/reply can edit it',
-            ]);
+            ], 403);
         }
 
         if ($request->has('new_content') && (!link::updateLinkContent($request->comment_id, $request->new_content))) {
@@ -1367,9 +1367,9 @@ class InteractingController extends Controller
         ]);
         if ($validator->fails()) {
             return response()->json([
-            'success' => 'false',
-            'error' => 'There are some missing or invalid data!',
-        ], 403);
+                'success' => 'false',
+                'error' => 'There are some missing or invalid data!',
+            ], 403);
         }
 
         //setting data::
@@ -1677,21 +1677,60 @@ class InteractingController extends Controller
      *
      * @authenticated
      *@response 200 {
-     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" , "community" : "laravel" ,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true",  "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none" ,"subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "false", "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","subscribed" : "false" ,"author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "comments_num" : 0, "saved": "true",  "upvoted" : "true" , "downvoted" : "false" }]
+     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" , "community" : "laravel" ,"community_id":1,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " ,"duration" : 1 min ago ,"comments_num" : 0, "saved": "true",  "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none" ,"community_id":-1"subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " ,"duration" : 1 min ago , "comments_num" : 0, "saved": "false", "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","community_id":-1"subscribed" : "false" ,"author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "duration" : 1 min ago ,"comments_num" : 0, "saved": "true",  "upvoted" : "true" , "downvoted" : "false"  }]
      *}
-     * @response 404 {
-     *	"error" :"somethimg wrong!!!!"
-     * }
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
      */
-    public function viewHiddenPosts()
+    public function viewHiddenPosts(Request $request)
     {
-        //..
+        $username = auth()->user()->username;
+        $posts = Link::getHiddenPosts($username);
+        $renamed_posts = [];
+        $i = 0;
+        foreach ($posts as $post) {
+            $renamed_posts[$i] = (object) [
+                'post_id' => $post->link_id,
+                'body' => $post->content,
+                'video_url' => null != $post->video_url ? $post->video_url : -1,
+                'image' => null != $post->content_image ? $post->content_image : -1,
+                'title' => $post->title,
+                'username' => $post->author_username,
+                'community' => null != $post->community_id ? Community::getCommunity($post->community_id)->name : 'none',
+                'community_id' => null != $post->community_id ? $post->community_id : -1,
+                'subscribed' => 'false',
+                'author_photo_path' => User::where('username', $post->author_username)->get()->first()->photo_url,
+                'downvotes' => $post->downvotes,
+                'upvotes' => $post->upvotes,
+                'date' => $post->link_date,
+                'duration' => Link::Duration($post->link_date),
+                'comments_num' => $post->comments_num = Link::commentsNum($post->link_id),
+                'saved' => 'false',
+                'upvoted' => 'false',
+                'downvoted' => 'false',
+                'pinned' => $post->pinned,
+            ];
+
+            if (UpvotedLink::upvoted($post->link_id, $username)) {
+                $renamed_posts[$i]->upvoted = 'true';
+            } elseif (DownvotedLink::downvoted($post->link_id, $username)) {
+                $renamed_posts[$i]->downvoted = 'true';
+            }
+            if (SavedLink::isSaved($post->link_id, $username)) {
+                $renamed_posts[$i]->saved = 'true';
+            }
+
+            if (null != $post->community_id && Subscribtion::subscribed($post->community_id, $username)) {
+                $renamed_posts[$i]->subscribed = 'true';
+            }
+            ++$i;
+        }
+
+        return response()->json(['posts' => $renamed_posts], 200);
     }
 
     /**
@@ -1953,8 +1992,6 @@ class InteractingController extends Controller
             $imageName = $image->getClientOriginalName();
             $name = $user->username.'-'.time().'-'.$imageName;
             $path = $image->storeAs('public/post_images', $name);
-            //Storage::setVisibility($path, 'public');
-            //dd(Storage::getVisibility($path));
             if ($path) {
                 return response()->json([
                     'success' => 'true',
