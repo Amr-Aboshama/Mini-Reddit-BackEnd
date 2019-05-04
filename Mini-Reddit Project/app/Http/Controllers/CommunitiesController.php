@@ -87,9 +87,23 @@ class CommunitiesController extends Controller
      * 	"success": "false",
      * 	"error": "community doesn't exist"
      * }
+     * @response 422 {
+     * 	"success": "false",
+     * 	"error": "Invalid or some data missed"
+     * }
      */
     public function viewCommunityInformation(Request $request)
     {
+        $valid = Validator::make($request->all(), [
+            'community_id' => 'required',
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Invalid or some data missed',
+            ], 422);
+        }
         $existance = Community::communityExist($request->community_id);
         if (!$existance) {
             return response()->json([
@@ -368,9 +382,24 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "you are not a modirator to add another modirator"
      * }
+     * @response 422 {
+     *  "success": "false",
+     *  "error": "Invalid or some data missed"
+     * }
      */
     public function addModretorForCommunity(Request $request)
     {
+        $valid = Validator::make($request->all(), [
+            'community_id' => 'required',
+            'moderator_username' => 'required',
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Invalid or some data missed',
+            ], 422);
+        }
         $user = auth()->user();
         $existance = Community::communityExist($request->community_id);
         if (!$existance) {
@@ -446,9 +475,25 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "there is no moderators except you"
      * }
+     * @response 422 {
+     *  "success": "false",
+     *  "error": "Invalid or some data missed"
+     * }
      */
     public function removeModretorFromCommunity(Request $request)
     {
+        $valid = Validator::make($request->all(), [
+            'community_id' => 'required',
+            'moderator_username' => 'required',
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Invalid or some data missed',
+            ], 422);
+        }
+
         $user = auth()->user();
         $user_exist = User::userExist($request->moderator_username);
         if (!$user_exist) {
@@ -517,9 +562,24 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "UnAuthorized"
      * }
+     * @response 422 {
+     *  "success": "false",
+     *  "error": "Invalid or some data missed"
+     * }
      */
     public function viewModeratorsCommunity(Request $request)
     {
+
+        $valid = Validator::make($request->all(), [
+            'community_id' => 'required',
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Invalid or some data missed',
+            ], 422);
+        }
         $existance = Community::communityExist($request->community_id);
         if (!$existance) {
             return response()->json([

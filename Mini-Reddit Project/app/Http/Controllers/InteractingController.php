@@ -1805,9 +1805,23 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "already saved"
      * }
+     * @response 422 {
+     *  "success": "false",
+     *  "error": "Invalid or some data missed"
+     * }
      */
     public function saveLink(Request $request)
     {
+        $valid = Validator::make($request->all(), [
+            'link_id' => 'required',
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Invalid or some data missed',
+            ], 422);
+        }
         $user = auth()->user();
         $result = Link::checkExisting($request->link_id);
         if (!$result) {
@@ -1851,9 +1865,23 @@ class InteractingController extends Controller
      *  "success": "false",
      *  "error": "already unsaved"
      * }
+     * @response 422 {
+     *  "success": "false",
+     *  "error": "Invalid or some data missed"
+     * }
      */
     public function unsaveLink(Request $request)
     {
+        $valid = Validator::make($request->all(), [
+            'link_id' => 'required',
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Invalid or some data missed',
+            ], 422);
+        }
         $user = auth()->user();
         $result = Link::checkExisting($request->link_id);
         if (!$result) {

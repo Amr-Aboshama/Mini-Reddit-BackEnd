@@ -39,9 +39,11 @@ class ViewUserCommunitiesTest extends TestCase
             ->assertJson([
                 "success" => "true",
                 "communities" => [[
-                    "community_id" => $community1->community_id,
+                  "community_id" => $community1->community_id ,
+                  "community_name"=>$community1->name ,
                 ],[
-                    "community_id" => $community2->community_id,
+                    "community_id" => $community2->community_id ,
+                    "community_name"=>$community2->name ,
                 ]]
             ]);
         //$subscribtion1->delete();
