@@ -1676,11 +1676,11 @@ class InteractingController extends Controller
      * Viewing the hidden posts of the user.
      *
      * @authenticated
-     *@response 200 {
-     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" , "community" : "laravel" ,"community_id":1,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " ,"duration" : 1 min ago ,"comments_num" : 0, "saved": "true",  "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none" ,"community_id":-1"subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " ,"duration" : 1 min ago , "comments_num" : 0, "saved": "false", "upvoted" : "true" , "downvoted" : "false" } ,
-     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","community_id":-1"subscribed" : "false" ,"author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "duration" : 1 min ago ,"comments_num" : 0, "saved": "true",  "upvoted" : "true" , "downvoted" : "false"  }]
-     *}
+     * @response 200 {
+     * "posts" :[ { "post_id": 1 , "body" : "post1" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" , "community" : "laravel" ,"community_id":1,"subscribed" : "true","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 17, "upvotes" : 30 , "date":" 2 days ago " ,"duration" : "1 min ago" ,"comments_num" : 0, "saved": "true",  "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "post_id": 2 , "body" : "post2" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none" ,"community_id":-1,"subscribed" : "false","author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " ,"duration" : "1 min ago" , "comments_num" : 0, "saved": "false", "upvoted" : "true" , "downvoted" : "false" } ,
+     *		{ "post_id": 3 , "body" : "post3" ,"image":"storage/app/avater.jpg","video_url" : "https://www.youtube.com","title" : "title1","username": "ahmed" ,"community" : "none","community_id":-1,"subscribed" : "false" ,"author_photo_path" : "storage/app/avater.jpg" ,"downvotes" : 15, "upvotes": 20 , "date":" 2 days ago " , "duration" : "1 min ago" ,"comments_num" : 0, "saved": "true",  "upvoted" : "true" , "downvoted" : "false"  }]
+     * }
      * @response 401 {
      *  "success": "false",
      *  "error": "UnAuthorized"
