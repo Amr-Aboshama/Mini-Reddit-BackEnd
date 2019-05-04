@@ -16,20 +16,6 @@
 /vendor/laravel/framework/src/Illuminate/Auth/Middleware/*
 !/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php
 
-!/vendor/swiftmailer
-/vendor/swiftmailer/*
-!/vendor/swiftmailer/swiftmailer
-/vendor/swiftmailer/swiftmailer/*
-!/vendor/swiftmailer/swiftmailer/lib
-/vendor/swiftmailer/swiftmailer/lib/*
-!/vendor/swiftmailer/swiftmailer/lib/classes
-/vendor/swiftmailer/swiftmailer/lib/classes/*
-!/vendor/swiftmailer/swiftmailer/lib/classes/Swift
-/vendor/swiftmailer/swiftmailer/lib/classes/Swift/*
-!/vendor/swiftmailer/swiftmailer/lib/classes/Swift/Transport
-/vendor/swiftmailer/swiftmailer/lib/classes/Swift/Transport/*
-!/vendor/swiftmailer/swiftmailer/lib/classes/Swift/Transport/StreamBuffer.php
-
 .env
 .phpunit.result.cache
 Homestead.json
