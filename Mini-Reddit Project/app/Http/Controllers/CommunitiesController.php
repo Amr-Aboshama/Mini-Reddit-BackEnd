@@ -496,7 +496,6 @@ class CommunitiesController extends Controller
     /**
      * view moderators of a specific community.
      *
-     * @authenticated
      * @bodyParam community_id int required The ID of the community to view its modirators.
      * @response 200 {
      *  "success": "true",
@@ -519,9 +518,8 @@ class CommunitiesController extends Controller
      *  "error": "UnAuthorized"
      * }
      */
-    public function viewModretorsCommunity(Request $request)
+    public function viewModeratorsCommunity(Request $request)
     {
-        $user = auth()->user();
         $existance = Community::communityExist($request->community_id);
         if (!$existance) {
             return response()->json([

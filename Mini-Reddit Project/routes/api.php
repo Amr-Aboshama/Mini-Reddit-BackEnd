@@ -37,7 +37,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/auth/removeCommunity', 'CommunitiesController@removeCommunity');
     Route::post('/auth/addModerator', 'CommunitiesController@addModretorForCommunity');
     Route::post('/auth/removeModerator', 'CommunitiesController@removeModretorFromCommunity');
-    Route::get('/auth/viewModerators', 'CommunitiesController@viewModretorsCommunity');
     Route::post('/auth/subscribeCommunity', 'CommunitiesController@subscribeCommunity');
     Route::post('/auth/unSubscribeCommunity', 'CommunitiesController@unsubscribeCommunity');
     Route::post('/auth/saveLink', 'InteractingController@saveLink');
@@ -66,6 +65,7 @@ Route::post('/unauth/signIn', 'AuthenticationController@signIn');
 Route::post('/unauth/signUp', 'AuthenticationController@signUp');
 Route::post('/unauth/forgetPassword', 'AuthenticationController@forgetPassword');
 Route::post('/unauth/resetPassword/{hash}', 'AuthenticationController@resetPassword');
+Route::get('/unauth/viewModerators', 'CommunitiesController@viewModeratorsCommunity');
 Route::get('/unauth/viewUserCommunities', 'CommunitiesController@viewUserCommunities');
 Route::get('/unauth/communityInformation', 'CommunitiesController@viewCommunityInformation');
 Route::get('/unauth/ViewPosts', 'InteractingController@viewPosts');
