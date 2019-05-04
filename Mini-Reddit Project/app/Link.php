@@ -552,12 +552,24 @@ class Link extends Model
         return $result[0]->post_id;
     }
 
+    /**
+     * [function to get the comment by comment id]
+     * @param  int $comment_id
+     * @return object             [the comment info]
+     */
+
     public static function getComment($comment_id)
     {
         $comment = self::where('link_id', $comment_id)->get()->first();
 
         return $comment;
     }
+
+    /**
+     *  [ this function take the date and return the diffrence in time ]
+     * @param string $link_date
+     *  @return string [the duration for example "1 min ago"]
+     */
 
     public static function Duration($link_date)
     {
@@ -670,5 +682,20 @@ class Link extends Model
         } catch (\Exception $e) {
             return 0;
         }
+    }
+
+    /**
+     * [ funciton to get all the hidden posts ]
+     * @param  string $username
+     * @return array           [ list of objects each object is a hidden post ]
+     */
+
+    public static function getHiddenPosts($username)
+    {
+        $posts = DB::Select("SELECT * from links as l where l.parent_id is null and l.link_id in (
+          select h.link_id from hidden_posts as h where h.username = '$username'
+        ) order by l.link_date DESC");
+
+        return $posts;
     }
 }
