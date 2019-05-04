@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Message;
 use App\PushNotification;
+use App\Link;
 
 /**
  * @group Messages
@@ -22,7 +23,8 @@ class MessagesController extends Controller
      * 	"username2":"lolo",
      *  "user_photo":"photo3",
      *  "message_subject": "hello world",
-     *  "message_content":"hello world"
+     *  "message_content":"hello world",
+     *  "duration": "1 min ago"
      * }
      *
      * @response 401 {
@@ -55,13 +57,13 @@ class MessagesController extends Controller
 
         $message = Message::getMessageOfSpecificId($request->message_id);
 
-
         return response()->json([
                 'success' => 'true',
                 'username2' => $message->sender_username,
                 'user_photo' => $message->photo_url,
                 'message_subject'=> $message->message_subject,
-                'message_content' => $message->content
+                'message_content' => $message->content,
+                'duration' => link::duration($message->message_date)
             ], 200);
     }
 
@@ -76,13 +78,15 @@ class MessagesController extends Controller
      *   	 "receiver_photo":"photo1",
      *       "message_subject": "hello world",
      *   	 "message_content":"hello world",
-     *       "message_id":"5"
+     *       "message_id":"5",
+     *       "duration": "1 min ago"
      *    }, {
      *   	 "receiver_name":"nour",
      *   	 "receiver_photo":"photo2",
      *       "message_subject": "hello world tany",
      *   	 "message_content":"hello world tany",
-     *       "message_id":"6"
+     *       "message_id":"6",
+     *       "duration": "1 min ago"
      *   }]
      * }
      * @response 401 {
@@ -121,13 +125,15 @@ class MessagesController extends Controller
      *   	 "sender_photo":"photo1",
      *       "message_subject": "hello world",
      *   	 "message_content":"hello world",
-     *     "message_id":"1"
+     *       "message_id":"1",
+     *       "duration": "1 min ago"
      *   	}, {
      *   	 "sender_name":"nour",
      *   	 "sender_photo":"photo2",
      *       "message_subject": "hello world",
      *   	 "message_content":"hello world tany",
-     *     "message_id":"3"
+     *       "message_id":"3",
+     *       "duration": "1 min ago"
      *   }]
      * }
      * @response 401 {
@@ -189,8 +195,6 @@ class MessagesController extends Controller
              $inboxmessages= Message::unreadInboxMessage($user->username);
         }
 
-
-        $inboxmessages = Message::inboxMessage($user->username);
 
         return response()->json([
                 'success' => 'true',

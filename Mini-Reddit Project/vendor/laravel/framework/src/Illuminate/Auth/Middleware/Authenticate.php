@@ -38,12 +38,7 @@ class Authenticate
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        if($this->authenticate($request, $guards)) {
-            return response()->json([
-              'success' => 'false',
-              'error' => 'UnAuthorized',
-            ],401);
-        }
+        $this->authenticate($request, $guards);
 
         return $next($request);
     }
@@ -68,10 +63,10 @@ class Authenticate
                 return $this->auth->shouldUse($guard);
             }
         }
-        return true;
-        // throw new AuthenticationException(
-        //     'Unauthenticated.', $guards, $this->redirectTo($request)
-        // );
+
+        throw new AuthenticationException(
+            'Unauthenticated.', $guards, $this->redirectTo($request)
+        );
     }
 
     /**
