@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ,DownvotedLinksSeeder::class
             ,MessagesSeeder::class
             ,HiddenPostsSeeder::class
+            ,moderateCommunitiesSeeder::class
         ]);
     }
 }

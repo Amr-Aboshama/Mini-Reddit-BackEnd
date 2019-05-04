@@ -40,5 +40,23 @@ class HiddenPostsSeeder extends Seeder
               'username'=>'menna',
               'link_id' => 1
           ]);
+
+          DB::table('hidden_posts')->insert([
+
+              'username'=>'mini-reddit',
+              'link_id' => 3
+          ]);
+
+          DB::table('hidden_posts')->insert([
+
+              'username'=>'mini-reddit',
+              'link_id' => 6
+          ]);
+
+          DB::table('hidden_posts')->insert([
+
+              'username'=>'menna',
+              'link_id' => 7
+          ]);
     }
 }

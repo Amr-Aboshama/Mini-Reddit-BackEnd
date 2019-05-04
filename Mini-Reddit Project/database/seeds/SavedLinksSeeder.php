@@ -50,5 +50,15 @@ class SavedLinksSeeder extends Seeder
             'username' => 'mini-reddit',
             'link_id' => '12'
         ]);
+
+        DB::table('saved_links')->insert([
+            'username' => 'mini-reddit',
+            'link_id' => '1'
+        ]);
+
+        DB::table('saved_links')->insert([
+            'username' => 'mini-reddit',
+            'link_id' => '2'
+        ]);
     }
 }

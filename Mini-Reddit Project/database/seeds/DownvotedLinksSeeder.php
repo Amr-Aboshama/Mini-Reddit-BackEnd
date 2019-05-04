@@ -41,5 +41,20 @@ class DownvotedLinksSeeder extends Seeder
             'username' => 'ahmed',
             'link_id' => 19
         ]);
+
+        DB::table('downvoted_links')->insert([
+            'username' => 'mini-reddit',
+            'link_id' => 1
+        ]);
+
+        DB::table('downvoted_links')->insert([
+            'username' => 'mini-reddit',
+            'link_id' => 8
+        ]);
+
+        DB::table('downvoted_links')->insert([
+            'username' => 'mini-reddit',
+            'link_id' => 9
+        ]);
     }
 }
