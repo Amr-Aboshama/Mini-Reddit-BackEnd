@@ -249,29 +249,37 @@ class InteractingController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'success' => 'false',
-                'error' => 'There are some missing or invalid data!',
+                'error' => 'There are some missing or invalid data!'
             ], 403);
         }
         // the post doesn't exist
         if (!link::checkExisting($request->post_id)) {
             return response()->json([
                 'success' => 'false',
-                'error' => 'post doesn\'t exist',
-            ], 403);
+                'error' => 'post doesn\'t exist'
+            ],403);
         }
         //a non-owner user trying to edit the post
         if ($user->username != Link::getAuthor($request->post_id)) {
             return response()->json([
                 'success' => 'false',
-                'error' => 'Only the author of the post can edit it',
-            ], 403);
+                'error' => 'Only the author of the post can edit it'
+            ],403);
         }
 
         if ((!$request->has('new_content')) && (!$request->has('new_title')) && (!$request->has('new_image'))
         && (!$request->has('new_video_url'))) {
             return response()->json([
                 'success' => 'false',
-                'error' => 'There are some missing or invalid data!',
+                'error' => 'There are some missing or invalid data!'
+            ], 403);
+        }
+
+        if(Link::getParent($request->post_id)!=null)
+        {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'There are some missing or invalid data!'
             ], 403);
         }
 
@@ -292,7 +300,7 @@ class InteractingController extends Controller
         if (0 == $val) {
             return response()->json([
                 'success' => 'false',
-                'error' => 'There are something went wrong!',
+                'error' => 'There are something went wrong!'
             ], 403);
         } else {
             return response()->json([
