@@ -11,11 +11,11 @@ use App\community;
 /**
  *@group Searching
  */
-
 class SearchingController extends Controller
 {
     /**
-     * Search for a community or a user
+     * Search for a community or a user.
+     *
      * @bodyParam search_content string required The string the user searching for.
      * @response 200 {
      *  "usernames": ["johnsmith", "stevenkay"],
@@ -29,12 +29,10 @@ class SearchingController extends Controller
      */
     public function search(Request $request)
     {
-        if ($request->search_content == '' || !$request->has('search_content')) {
+        if ('' == $request->search_content || !$request->has('search_content')) {
             return response()->json([
-
-                "success" => "false",
-                "error" => "search content is empty"
-
+                'success' => 'false',
+                'error' => 'search content is empty',
             ], 403);
         }
 
@@ -56,10 +54,8 @@ class SearchingController extends Controller
         $community_list = Community::getCommunitiesByName($request->search_content);
 
         return response()->json([
-
-            "usernames" => $users_list,
-            "community_IDs" => $community_list
-
+            'usernames' => $users_list,
+            'community_IDs' => $community_list,
         ], 200);
     }
 }

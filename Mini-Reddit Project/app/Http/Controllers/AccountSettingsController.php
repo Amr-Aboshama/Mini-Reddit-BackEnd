@@ -1,8 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Request;
 use App\User;
 use Validator;
@@ -13,7 +12,8 @@ use Validator;
 class AccountSettingsController extends Controller
 {
     /**
-     * Delete current user account
+     * Delete current user account.
+     *
      * @authenticated
      * @bodyParam password string required the password of te current user
      * @response 200 {
@@ -36,38 +36,30 @@ class AccountSettingsController extends Controller
 
         if (!$user) {
             return response()->json([
-
-                "success" => "false",
-                "error" => "UnAuthorized"
+                'success' => 'false',
+                'error' => 'UnAuthorized',
             ], 401);
+        }
 
-        }  
-
-        if ($request->password == '' || !$request->has('password') ||
-            ! User::checkIfPasswordRight($user->username, $request->password)) {
+        if ('' == $request->password || !$request->has('password') ||
+            !User::checkIfPasswordRight($user->username, $request->password)) {
             return response()->json([
-
-                "success" => "false",
-                "error" => "password isn't correct"
+                'success' => 'false',
+                'error' => "password isn't correct",
             ], 403);
         }
 
-        $result= User::deleteAccount($user->username);
-        if ($result){
-
+        $result = User::deleteAccount($user->username);
+        if ($result) {
             return response()->json([
-                'success' => 'true'
+                'success' => 'true',
             ], 200);
-
         }
-
-
-    
     }
 
-
     /**
-     * Change current user password
+     * Change current user password.
+     *
      * @bodyParam password string required the current password of the current user
      * @bodyParam new_password string required the new password of the current user
      * @bodyParam confirm_new_password string required the new password of the current user
@@ -97,37 +89,32 @@ class AccountSettingsController extends Controller
 
         if (!$user) {
             return response()->json([
-
-                "success" => "false",
-                "error" => "UnAuthorized"
+                'success' => 'false',
+                'error' => 'UnAuthorized',
             ], 401);
-        } elseif ($request->password == '' || !$request->has('password') ||
-            ! User::checkIfPasswordRight($user->username, $request->password)) {
+        } elseif ('' == $request->password || !$request->has('password') ||
+            !User::checkIfPasswordRight($user->username, $request->password)) {
             return response()->json([
-
-                "success" => "false",
-                "error" => "wrong old passwords"
-
+                'success' => 'false',
+                'error' => 'wrong old passwords',
             ], 404);
         } elseif (strcmp($request->new_password, $request->confirm_new_password) ||
-            $request->new_password == '' || !$request->has('new_password') ||
-            $request->confirm_new_password == '' || !$request->has('confirm_new_password')) {
+            '' == $request->new_password || !$request->has('new_password') ||
+            '' == $request->confirm_new_password || !$request->has('confirm_new_password')) {
             return response()->json([
-
-                "success" => "false",
-                "error" => "new password doesn't match the confirmation"
-
+                'success' => 'false',
+                'error' => "new password doesn't match the confirmation",
             ], 404);
         } elseif (user::changeUserPassword($user->username, $request->new_password)) {
             return response()->json([
-                'success' => 'true'
+                'success' => 'true',
             ], 200);
         }
     }
 
-
     /**
-     * Update current user Displayed Name
+     * Update current user Displayed Name.
+     *
      * @authenticated
      * @bodyParam name string required The new name of user to update.
      * @response 200 {
@@ -156,38 +143,33 @@ class AccountSettingsController extends Controller
 
         if (!$user) {
             return response()->json([
-
-                "success" => "false",
-                "error" => "UnAuthorized"
+                'success' => 'false',
+                'error' => 'UnAuthorized',
             ], 401);
         }
 
-        if ($request->name == '' || !$request->has('name')) {
+        if ('' == $request->name || !$request->has('name')) {
             return response()->json([
-
-                "success" => "false",
-                "error" => "user must have a name"
-
+                'success' => 'false',
+                'error' => 'user must have a name',
             ], 403);
         }
 
         if (User::updateDisplayNameFunction($user->username, $request->name)) {
             return response()->json([
-                'success' => 'true'
+                'success' => 'true',
             ], 200);
         } else {
             return response()->json([
-
-                "success" => "false",
-                "error" => "you are trying to update with the old value"
-
+                'success' => 'false',
+                'error' => 'you are trying to update with the old value',
             ], 400);
         }
     }
 
-
     /**
-     * Update current user About
+     * Update current user About.
+     *
      * @authenticated
      * @bodyParam about string required the content of about to be updated to
      * @response 200 {
@@ -215,37 +197,33 @@ class AccountSettingsController extends Controller
 
         if (!$user) {
             return response()->json([
-
-                "success" => "false",
-                "error" => "UnAuthorized"
+                'success' => 'false',
+                'error' => 'UnAuthorized',
             ], 401);
         }
 
-        if ($request->about == '' || !$request->has('about')) {
+        if ('' == $request->about || !$request->has('about')) {
             return response()->json([
-
-                "success" => "false",
-                "error" => "no about is written"
-
+                'success' => 'false',
+                'error' => 'no about is written',
             ], 403);
         }
 
         if (User::updateAboutFunction($user->username, $request->about)) {
             return response()->json([
-                'success' => 'true'
+                'success' => 'true',
             ], 200);
         } else {
             return response()->json([
-
-                "success" => "false",
-                "error" => "you are trying to update with the old value"
-
+                'success' => 'false',
+                'error' => 'you are trying to update with the old value',
             ], 400);
         }
     }
 
     /**
-     * Update user profile image or cover image
+     * Update user profile image or cover image.
+     *
      * @authenticated
      * @bodyParam profile_image file required User's new profile image.
      * @bodyParam profile_or_cover int required 1 for profile 2 for cover.
@@ -269,13 +247,12 @@ class AccountSettingsController extends Controller
      *  "success": "false",
      *  "error": "photo is not categorized neither profile nor cover photo"
      * }
-     *
      */
     public function updateCoverAndProfileImage(Request $request)
     {
         $valid = Validator::make($request->all(), [
             'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3072',
-            'profile_or_cover' => 'required'
+            'profile_or_cover' => 'required',
         ]);
 
         if ($valid->fails()) {
@@ -289,28 +266,25 @@ class AccountSettingsController extends Controller
 
         if (!$user) {
             return response()->json([
-
                 'success' => 'false',
-                'error' => 'UnAuthorized'
+                'error' => 'UnAuthorized',
             ], 401);
         }
 
         if (!$request->has('profile_or_cover') ||
-            !($request->profile_or_cover == 1 || $request->profile_or_cover == 2)) {
+            !(1 == $request->profile_or_cover || 2 == $request->profile_or_cover)) {
             return response()->json([
-
                 'success' => 'false',
-                'error' => 'photo is not categorized neither profile nor cover photo'
+                'error' => 'photo is not categorized neither profile nor cover photo',
             ], 403);
         }
-
 
         $image = $request->profile_image;
         $avatarName = $image->getClientOriginalName();
 
         $request->profile_image->storeAs('avatars', $avatarName);
 
-        if ($request->profile_or_cover == 1) {
+        if (1 == $request->profile_or_cover) {
             $user->photo_url = $avatarName;
             $user->save();
         } else {
@@ -318,17 +292,11 @@ class AccountSettingsController extends Controller
             $user->save();
         }
 
-
-
         $response = response()->json([
             'success' => 'true',
-            'path' => ('storage/'.'app/'.'avatars/'.$avatarName)
+            'path' => ('storage/'.'app/'.'avatars/'.$avatarName),
         ], 200);
-
-
 
         return $response;
     }
-
-
 }
