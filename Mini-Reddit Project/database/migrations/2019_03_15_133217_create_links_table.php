@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Storage;
 
 class CreateLinksTable extends Migration
 {
@@ -33,8 +34,9 @@ class CreateLinksTable extends Migration
             $table->foreign('author_username')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('parent_id')->references('link_id')->on('links')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('post_id')->references('link_id')->on('links')->onUpdate('cascade')->onDelete('cascade');
-          
+
         });
+
     }
 
     /**
