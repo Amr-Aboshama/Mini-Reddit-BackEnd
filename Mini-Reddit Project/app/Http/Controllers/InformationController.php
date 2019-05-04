@@ -8,11 +8,13 @@ use App\User;
 /**
  * @group User Information
  */
+
+
 class InformationController extends Controller
 {
+
     /**
-     * Show user's private information.
-     *
+     * Show user's private information
      * @authenticated
      * @response 200 {
      *  "success": "true",
@@ -30,20 +32,21 @@ class InformationController extends Controller
 
         if (!$user) {
             return response()->json([
-                'success' => 'false',
-                'error' => 'UnAuthorized',
+
+                "success" => "false",
+                "error" => "UnAuthorized"
             ], 401);
         }
 
         return response()->json([
             'success' => 'true',
-            'email' => $user->email,
+            'email' => $user->email
         ], 200);
     }
 
     /**
-     * Show user's public information.
      *
+     * Show user's public information
      * @bodyParam username string required username to show his public info
      * @response 200 {
      *  "success": "true",
@@ -64,30 +67,33 @@ class InformationController extends Controller
      */
     public function viewPublicUserInfo(Request $request)
     {
-        if (!$request->username || !User::userExist($request->username)) {
+        if (! $request->username || ! User::userExist($request->username)) {
             return response()->json([
-                'success' => 'false',
-                'error' => "username doesn't exist",
+
+                "success" => "false",
+                "error" => "username doesn't exist"
+
             ], 403);
         }
 
         $selected_user = User::getUserWholeRecord($request->username);
 
         return response()->json([
-            'success' => 'true',
-            'username' => $selected_user->username,
-            'name' => $selected_user->display_name,
-            'karma' => $selected_user->karma,
-            'cake_day' => $selected_user->cake_date,
-            'about' => $selected_user->about,
-            'photo_path' => $selected_user->photo_url,
-            'cover_path' => $selected_user->cover_url,
+
+            "success" => "true",
+            "username" => $selected_user->username,
+            "name" => $selected_user->display_name,
+            "karma" => $selected_user->karma,
+            "cake_day" => $selected_user->cake_date,
+            "about" => $selected_user->about,
+            "photo_path" => $selected_user->photo_url,
+            "cover_path" => $selected_user->cover_url
+
         ], 200);
     }
 
     /**
-     * Show user's username.
-     *
+     * Show user's username
      * @authenticated
      * @response 200 {
      *  "success": "true",
@@ -103,7 +109,7 @@ class InformationController extends Controller
     {
         return response()->json([
             'success' => 'true',
-            'username' => auth()->user()->username,
+            'username' => auth()->user()->username
         ]);
     }
 }

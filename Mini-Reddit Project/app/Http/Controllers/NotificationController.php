@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 /**
  * @group Notification
  */
+
 class NotificationController extends Controller
 {
     /**
-     * Check if there are new notifications fo the current user.
-     *
+     * Check if there are new notifications fo the current user
      * @authenticated
      * @response 200 {
      *  "success": "true",
@@ -26,9 +28,9 @@ class NotificationController extends Controller
         // code...
     }
 
+
     /**
-     * Return last 20 notifications for the current user.
-     *
+     * Return last 20 notifications for the current user
      * @authenticated
      * @response 200 {
      *  "success": "true",
