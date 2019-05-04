@@ -53,7 +53,7 @@ class Message extends Model
     public static function getMessageOfSpecificId($id)
     {
         return self::where('message_id', $id)
-               ->leftJoin('Users', 'username', '=', 'sender_username')
+               ->leftJoin('users', 'username', '=', 'sender_username')
                ->select('sender_username', 'photo_url', 'content')
                ->first();
     }
