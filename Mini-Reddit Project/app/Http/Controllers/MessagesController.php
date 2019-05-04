@@ -208,6 +208,7 @@ class MessagesController extends Controller
      * @authenticated
      * @bodyParam rec_username string required The username of the reciever user.
      * @bodyParam msg_content string required The content of the message to be sent.
+     * @bodyParam msg_subject string required The subject of the message to be sent.
      * @response 200{
      * 	"success":"true"
      * }
@@ -224,6 +225,11 @@ class MessagesController extends Controller
      * @response 403 {
      *  "success": "false",
      * 	"error": "message must have a content"
+     * }
+     *
+     * @response 403 {
+     *  "success": "false",
+     *  "error": "message must have a subject"
      * }
      */
     public function sendMessage(Request $request)
@@ -248,6 +254,13 @@ class MessagesController extends Controller
             return response()->json([
                 'success' => 'false',
                 'error' => 'message must have a content',
+            ], 403);
+        }
+
+        if (!$request->has('msg_subject') || '' == $request->msg_subject) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'message must have a subject',
             ], 403);
         }
 
