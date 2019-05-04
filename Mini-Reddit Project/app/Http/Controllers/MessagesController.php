@@ -10,13 +10,11 @@ use App\PushNotification;
 /**
  * @group Messages
  */
-
-
 class MessagesController extends Controller
 {
     /**
+     * View the content of a specific message.
      *
-     * View the content of a specific message
      * @authenticated
      * @bodyParam message_id integer required the id of  the message that the user wants to see
      * @response 200 {
@@ -41,41 +39,32 @@ class MessagesController extends Controller
 
         if (!$user) {
             return response()->json([
-
                 'success' => 'false',
-                'error' => 'UnAuthorized'
+                'error' => 'UnAuthorized',
             ], 401);
         }
 
-
-        if ($request->message_id == '' || !$request->has('message_id') ||
+        if ('' == $request->message_id || !$request->has('message_id') ||
             !Message::checkMessageExistance($request->message_id)) {
-
             return response()->json([
-
-                "success" => "false",
-                "error" => "message doesn't exist"
-
+                'success' => 'false',
+                'error' => "message doesn't exist",
             ], 403);
         }
 
-
-        $message= Message::getMessageOfSpecificId($request->message_id);
+        $message = Message::getMessageOfSpecificId($request->message_id);
 
         return response()->json([
-
-                'success' => 'true', 
+                'success' => 'true',
                 'username2' => $message->sender_username,
                 'user_photo' => $message->photo_url,
-                'message_content' => $message->content
+                'message_content' => $message->content,
             ], 200);
-
-
     }
 
-
     /**
-     * View current user outbox messages
+     * View current user outbox messages.
+     *
      * @authenticated
      * @response 200{
      *  "success": "true",
@@ -102,28 +91,22 @@ class MessagesController extends Controller
 
         if (!$user) {
             return response()->json([
-
                 'success' => 'false',
-                'error' => 'UnAuthorized'
+                'error' => 'UnAuthorized',
             ], 401);
         }
 
-
-
-        $sentmessages= Message::sentMessages($user->username);
-
+        $sentmessages = Message::sentMessages($user->username);
 
         return response()->json([
-
                 'success' => 'true',
-                'messages' => $sentmessages
+                'messages' => $sentmessages,
             ], 200);
-
     }
 
-
     /**
-     * View current user inbox Message
+     * View current user inbox Message.
+     *
      * @authenticated
      * @bodyParam state integer required 1 if unread messages ,2 if all messages,3 if notified messages
      * @response 200{
@@ -149,42 +132,29 @@ class MessagesController extends Controller
      *  "success": "false",
      * 	"error": "undefined state"
      * }
-     *
      */
-
-
-
-
     public function viewUserInboxMessages(Request $request)
     {
-
         $user = auth()->user();
-
-
 
         if (!$user) {
             return response()->json([
-
                 'success' => 'false',
-                'error' => 'UnAuthorized'
+                'error' => 'UnAuthorized',
             ], 401);
         }
 
-
-
-        $inboxmessages= Message::inboxMessage($user->username);
-
+        $inboxmessages = Message::inboxMessage($user->username);
 
         return response()->json([
-
                 'success' => 'true',
-                'messages' => $inboxmessages
+                'messages' => $inboxmessages,
             ], 200);
     }
 
-
     /**
-     * Send a message to user from current user
+     * Send a message to user from current user.
+     *
      * @authenticated
      * @bodyParam rec_username string required The username of the reciever user.
      * @bodyParam msg_content string required The content of the message to be sent.
@@ -212,40 +182,31 @@ class MessagesController extends Controller
 
         if (!$user) {
             return response()->json([
-
-
                 'success' => 'false',
-                'error' => 'UnAuthorized'
+                'error' => 'UnAuthorized',
             ], 401);
         }
 
-        if ( $request->rec_username=='' || !$request->has('rec_username') || !User::userExist($request->rec_username)){
+        if ('' == $request->rec_username || !$request->has('rec_username') || !User::userExist($request->rec_username)) {
             return response()->json([
-
                 'success' => 'false',
-                'error' => 'username doesn\'t exist'
+                'error' => 'username doesn\'t exist',
             ], 403);
-
         }
 
-        if (!$request->has('msg_content') || $request->msg_content==''){
+        if (!$request->has('msg_content') || '' == $request->msg_content) {
             return response()->json([
-
                 'success' => 'false',
-                'error' => 'message must have a content'
+                'error' => 'message must have a content',
             ], 403);
-
         }
 
         //sending notification to user who received the messages
 
-        PushNotification::sendNotificationToSpecificUsers(" you have a new message from '$user->username'" , [$request->rec_username]);
+        PushNotification::sendNotificationToSpecificUsers(" you have a new message from '$user->username' \n '$request->msg_content' ", [$request->rec_username]);
 
         return response()->json([
-
-                'success' => 'true'
+                'success' => 'true',
             ], 200);
-
-
     }
 }
