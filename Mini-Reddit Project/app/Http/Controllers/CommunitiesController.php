@@ -276,10 +276,6 @@ class CommunitiesController extends Controller
      * }
      * @response 403 {
      *  "success": "false",
-     *  "error" : "some of the needed contents are missed"
-     * }
-     * @response 403 {
-     *  "success": "false",
      *  "error" : "you have to complete 30 days "
      * }
      *
@@ -317,12 +313,6 @@ class CommunitiesController extends Controller
             ], 403);
         }
 
-        if (!$request->has('community_name') || '' == $request->community_name) {
-            return response()->json([
-                'success' => 'false',
-                'error' => 'some of the needed contents are missed',
-            ], 403);
-        }
 
         $community_name_existance = Community::communityNameExist($request->community_name);
         if ($community_name_existance) {
