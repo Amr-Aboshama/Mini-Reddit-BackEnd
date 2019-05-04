@@ -11,6 +11,7 @@ use App\Following;
 
 class FollowUserTest extends TestCase
 {
+
     public function testUnAuthorizedUser()
     {
         $this->json('POST', 'api/auth/follow', [], [])
@@ -177,4 +178,5 @@ class FollowUserTest extends TestCase
         $user1->delete();
         $user2->delete();
     }
+    
 }

@@ -94,3 +94,4 @@ class Following extends Model
                         ->whereNotIn('followed_username', Blocking::getUsersWhoBlockedUsername($requesting_user))
                         ->pluck('followed_username');
     }
+}
