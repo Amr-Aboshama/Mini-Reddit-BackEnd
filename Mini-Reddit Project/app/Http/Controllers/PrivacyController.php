@@ -10,11 +10,11 @@ use App\Following;
 /**
  * @group Privacy settings
  */
-
 class PrivacyController extends Controller
 {
     /**
-     * Show current user blocklist
+     * Show current user blocklist.
+     *
      * @authenticated
      * @response 200 {
      * 	"success": "true",
@@ -32,20 +32,19 @@ class PrivacyController extends Controller
             $blocked_list = Blocking::getUsersBlockedByUsername(auth()->user()->username);
         } catch (\Exception $e) {
             return response()->json([
-                "success" => "false"
+                'success' => 'false',
             ], 404);
         }
 
         return response()->json([
-            "success" => "true",
-            "blockedList" => $blocked_list
+            'success' => 'true',
+            'blockedList' => $blocked_list,
         ]);
     }
 
-
     /**
+     * Block a user.
      *
-     * Block a user
      * @authenticated
      * @bodyParam username string required the username of the user being blocked
      * @response 200 {
@@ -72,10 +71,11 @@ class PrivacyController extends Controller
         $current_username = auth()->user()->username;
         $block_username = $request->username;
 
-        if (! User::userExist($block_username) || Blocking::checkBlock($block_username, $current_username)) {
+        if (!User::userExist($block_username) || Blocking::checkBlock($block_username, $current_username)
+            || $current_username == $block_username) {
             return response()->json([
-                "success" => "false",
-                "error" => "username doesn't exist"
+                'success' => 'false',
+                'error' => "username doesn't exist",
             ], 403);
         }
 
@@ -85,24 +85,24 @@ class PrivacyController extends Controller
                 Following::deleteFollow($block_username, $current_username);
 
                 return response()->json([
-                    "success" => "true"
+                    'success' => 'true',
                 ], 200);
             } else {
                 return response()->json([
-                    "success" => "false",
-                    "error" => "Already blocked"
+                    'success' => 'false',
+                    'error' => 'Already blocked',
                 ], 403);
             }
         } catch (\Exception $e) {
             return response()->json([
-                "success" => "false"
+                'success' => 'false',
             ], 404);
         }
     }
 
     /**
+     * Unblock a user.
      *
-     * Unblock a user
      * @authenticated
      * @bodyParam username string required the username of the user being unblocked
      * @response 200 {
@@ -129,27 +129,28 @@ class PrivacyController extends Controller
         $current_username = auth()->user()->username;
         $unblock_username = $request->username;
 
-        if (! User::userExist($unblock_username) || Blocking::checkBlock($unblock_username, $current_username)) {
+        if (!User::userExist($unblock_username) || Blocking::checkBlock($unblock_username, $current_username)
+            || $current_username == $unblock_username) {
             return response()->json([
-                "success" => "false",
-                "error" => "username doesn't exist"
+                'success' => 'false',
+                'error' => "username doesn't exist",
             ], 403);
         }
 
         try {
             if (Blocking::unblockUser($current_username, $unblock_username)) {
                 return response()->json([
-                    "success" => "true"
+                    'success' => 'true',
                 ], 200);
             } else {
                 return response()->json([
-                    "success" => "false",
-                    "error" => "Already unblocked"
+                    'success' => 'false',
+                    'error' => 'Already unblocked',
                 ], 403);
             }
         } catch (\Exception $e) {
             return response()->json([
-                "success" => "false"
+                'success' => 'false',
             ], 404);
         }
     }

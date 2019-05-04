@@ -29,6 +29,11 @@ class CreateUsersTable extends Migration
             $table->unique('email');
             $table->primary('username');
         });
+
+
+        Schema::table('password_resets', function (Blueprint $table) {
+            $table->foreign('email')->references('email')->on('users')->onUpdate('cascade')->onDelete('cascade');
+        });
     }
 
     /**
