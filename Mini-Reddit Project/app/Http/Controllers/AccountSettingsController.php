@@ -280,9 +280,9 @@ class AccountSettingsController extends Controller
         }
 
         $image = $request->profile_image;
-        $avatarName = $image->getClientOriginalName();
+        $avatarName = $user->username.'-'.time().'-'.$image->getClientOriginalName();
 
-        $request->profile_image->storeAs('avatars', $avatarName);
+        $request->profile_image->storeAs('public/avatars', $avatarName);
 
         if (1 == $request->profile_or_cover) {
             $user->photo_url = $avatarName;
@@ -294,7 +294,7 @@ class AccountSettingsController extends Controller
 
         $response = response()->json([
             'success' => 'true',
-            'path' => ('storage/'.'app/'.'avatars/'.$avatarName),
+            'path' => ('storage/'.'avatars/'.$avatarName)
         ], 200);
 
         return $response;

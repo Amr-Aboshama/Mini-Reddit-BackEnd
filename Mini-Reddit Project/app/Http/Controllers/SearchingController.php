@@ -37,7 +37,7 @@ class SearchingController extends Controller
         }
 
         $Auth = 1;
-        $posts = [];
+        //$posts = [];
         try {
             $tokenFetch = JWTAuth::parseToken()->authenticate();
         } catch (JWTException $e) {
