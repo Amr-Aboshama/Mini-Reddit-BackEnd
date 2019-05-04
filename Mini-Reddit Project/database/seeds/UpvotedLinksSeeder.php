@@ -36,5 +36,30 @@ class UpvotedLinksSeeder extends Seeder
             'username' => 'menna',
             'link_id' => 19
         ]);
+
+        DB::table('upvoted_links')->insert([
+            'username' => 'mini-reddit',
+            'link_id' => 2
+        ]);
+
+        DB::table('upvoted_links')->insert([
+            'username' => 'mini-reddit',
+            'link_id' => 10
+        ]);
+
+        DB::table('upvoted_links')->insert([
+            'username' => 'mini-reddit',
+            'link_id' => 12
+        ]);
+
+        DB::table('upvoted_links')->insert([
+            'username' => 'mini-reddit',
+            'link_id' => 5
+        ]);
+
+        DB::table('upvoted_links')->insert([
+            'username' => 'mini-reddit',
+            'link_id' => 15
+        ]);
     }
 }

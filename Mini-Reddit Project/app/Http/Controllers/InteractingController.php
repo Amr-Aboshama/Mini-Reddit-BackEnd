@@ -2072,7 +2072,7 @@ class InteractingController extends Controller
                 $post->downvoted = 'true';
             }
 
-            if (SavedLink::saved($request->post_id, $username)) {
+            if (SavedLink::isSaved($request->post_id, $username)) {
                 $post->saved = 'true';
             }
             if (HiddenPost::hidden($request->post_id, $username)) {

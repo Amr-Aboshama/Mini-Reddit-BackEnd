@@ -211,6 +211,33 @@ class LinksSeeder extends Seeder
 
         DB::table('links')->insert([
 
+            'content' => 'badr post4',
+            'title' => 'post4 by badr',
+            'link_date' => date('Y-m-d H:i:s'),
+            'author_username' => 'mini-reddit'
+
+        ]);
+
+        DB::table('links')->insert([
+
+            'content' => 'badr post5',
+            'title' => 'post5 by badr',
+            'link_date' => date('Y-m-d H:i:s'),
+            'author_username' => 'mini-reddit'
+
+        ]);
+
+        DB::table('links')->insert([
+
+            'content' => 'badr post6',
+            'title' => 'post6 by badr',
+            'link_date' => date('Y-m-d H:i:s'),
+            'author_username' => 'mini-reddit'
+
+        ]);
+
+        DB::table('links')->insert([
+
             'content' => 'comment on post 1 by badr',
             'link_date' => date('Y-m-d H:i:s'),
             'author_username' => 'mini-reddit',
