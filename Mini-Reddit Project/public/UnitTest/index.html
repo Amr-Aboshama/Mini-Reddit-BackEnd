@@ -28,6 +28,26 @@
         </style>
     </head>
     <body>
+        <h2 id="Tests\Unit\AddModretorForCommunityTest">Unit\AddModretorForCommunity</h2>
+        <ul>
+            <li style="color: #555753;">✓ Data missed</li>
+            <li style="color: #555753;">✓ Un authorization of user</li>
+            <li style="color: #555753;">✓ Unexistance of user</li>
+            <li style="color: #555753;">✓ Unexistance of community</li>
+            <li style="color: #555753;">✓ Already moderate</li>
+            <li style="color: #555753;">✓ Non moderator</li>
+            <li style="color: #555753;">✓ Success</li>
+        </ul>
+        <h2 id="Tests\Unit\AddNewLinkTest">Unit\AddNewLink</h2>
+        <ul>
+            <li style="color: #555753;">✓ Add link by unauthorized user</li>
+            <li style="color: #555753;">✓ Add link without data</li>
+            <li style="color: #555753;">✓ Add link in community with non moderator nor subscriber user</li>
+            <li style="color: #555753;">✓ Add post by user</li>
+            <li style="color: #555753;">✓ Add comment by user</li>
+            <li style="color: #555753;">✓ Add post by moderator in community</li>
+            <li style="color: #555753;">✓ Add comment in community not inclde its post</li>
+        </ul>
         <h2 id="Tests\Unit\BlockUserTest">Unit\BlockUser</h2>
         <ul>
             <li style="color: #555753;">✓ Un authorized user</li>
@@ -47,7 +67,6 @@
         <ul>
             <li style="color: #555753;">✓ Un authorization of user</li>
             <li style="color: #555753;">✓ Non exceeding thirty days</li>
-            <li style="color: #555753;">✓ Missing contents</li>
             <li style="color: #555753;">✓ Community name exist</li>
             <li style="color: #555753;">✓ Community creation</li>
         </ul>
@@ -71,6 +90,15 @@
             <li style="color: #555753;">✓ Unauthorized users</li>
             <li style="color: #555753;">✓ Authorized users</li>
         </ul>
+        <h2 id="Tests\Unit\EditCommentTest">Unit\EditComment</h2>
+        <ul>
+            <li style="color: #555753;">✓ Edit comment by unauthorized user</li>
+            <li style="color: #555753;">✓ Edit comment byauthorized user without content</li>
+            <li style="color: #555753;">✓ Edit comment byauthorized unowner user</li>
+            <li style="color: #555753;">✓ Edit post byauthorizedowner user</li>
+            <li style="color: #555753;">✓ Edit comment byauthorized user successfully</li>
+            <li style="color: #555753;">✓ Edit non existing comment byauthorized user</li>
+        </ul>
         <h2 id="Tests\Unit\EditCommunityTest">Unit\EditCommunity</h2>
         <ul>
             <li style="color: #555753;">✓ Un authorization of user</li>
@@ -80,6 +108,16 @@
             <li style="color: #555753;">✓ Un validbanner</li>
             <li style="color: #555753;">✓ Success edit</li>
         </ul>
+        <h2 id="Tests\Unit\EditPostTest">Unit\EditPost</h2>
+        <ul>
+            <li style="color: #555753;">✓ Edit post by unauthorized user</li>
+            <li style="color: #555753;">✓ Edit post without data</li>
+            <li style="color: #555753;">✓ Edit non existing post</li>
+            <li style="color: #555753;">✓ Edit comment</li>
+            <li style="color: #555753;">✓ Edit post with non owner user</li>
+            <li style="color: #555753;">✓ Edit post without changes</li>
+            <li style="color: #555753;">✓ Edit postsuccessfully</li>
+        </ul>
         <h2 id="Tests\Unit\FollowUserTest">Unit\FollowUser</h2>
         <ul>
             <li style="color: #555753;">✓ Un authorized user</li>
@@ -88,6 +126,11 @@
             <li style="color: #555753;">✓ View followers with blocking</li>
             <li style="color: #555753;">✓ Already following user</li>
             <li style="color: #555753;">✓ Successful following</li>
+        </ul>
+        <h2 id="Tests\Unit\ForgetPasswordTest">Unit\ForgetPassword</h2>
+        <ul>
+            <li style="color: #555753;">✓ Email non existance</li>
+            <li style="color: #555753;">✓ Valid email</li>
         </ul>
         <h2 id="Tests\Unit\GetUsernameTest">Unit\GetUsername</h2>
         <ul>
@@ -132,6 +175,30 @@
             <li style="color: #555753;">✓ Remove link in community by author</li>
             <li style="color: #555753;">✓ Remov link in community by non authour nor moderator</li>
         </ul>
+        <h2 id="Tests\Unit\RemoveModretorFromCommunityTest">Unit\RemoveModretorFromCommunity</h2>
+        <ul>
+            <li style="color: #555753;">✓ Un authorization of user</li>
+            <li style="color: #555753;">✓ Data missed</li>
+            <li style="color: #555753;">✓ Unexistance of user</li>
+            <li style="color: #555753;">✓ Unexistance of community</li>
+            <li style="color: #555753;">✓ Already not moderate</li>
+            <li style="color: #555753;">✓ Non moderator</li>
+            <li style="color: #555753;">✓ Success</li>
+        </ul>
+        <h2 id="Tests\Unit\ResetPasswordTest">Unit\ResetPassword</h2>
+        <ul>
+            <li style="color: #555753;">✓ Wrong link</li>
+            <li style="color: #555753;">✓ Password mis match</li>
+            <li style="color: #555753;">✓ Valid reset password</li>
+        </ul>
+        <h2 id="Tests\Unit\SaveLinkTest">Unit\SaveLink</h2>
+        <ul>
+            <li style="color: #555753;">✓ Data missed</li>
+            <li style="color: #555753;">✓ Success</li>
+            <li style="color: #555753;">✓ Un authorization of user</li>
+            <li style="color: #555753;">✓ Already saved</li>
+            <li style="color: #555753;">✓ Link non existance</li>
+        </ul>
         <h2 id="Tests\Unit\SavedLinksTest">Unit\SavedLinks</h2>
         <ul>
             <li style="color: #555753;">✓ Unauthorized users</li>
@@ -148,6 +215,7 @@
             <li style="color: #555753;">✓ Unauthorized send message</li>
             <li style="color: #555753;">✓ Non existance of name</li>
             <li style="color: #555753;">✓ Non existance of message content</li>
+            <li style="color: #555753;">✓ Non existance of message subject</li>
             <li style="color: #555753;">✓ Valid send message</li>
         </ul>
         <h2 id="Tests\Unit\SignInTest">Unit\SignIn</h2>
@@ -198,6 +266,14 @@
             <li style="color: #555753;">✓ Unhide unhidden post</li>
             <li style="color: #555753;">✓ Unhide post</li>
         </ul>
+        <h2 id="Tests\Unit\UnsaveLinkTest">Unit\UnsaveLink</h2>
+        <ul>
+            <li style="color: #555753;">✓ Data missed</li>
+            <li style="color: #555753;">✓ Un authorization of user</li>
+            <li style="color: #555753;">✓ Already saved</li>
+            <li style="color: #555753;">✓ Link non existance</li>
+            <li style="color: #555753;">✓ Success</li>
+        </ul>
         <h2 id="Tests\Unit\UnsubscribeCommunityTest">Unit\UnsubscribeCommunity</h2>
         <ul>
             <li style="color: #555753;">✓ None existance of community</li>
@@ -226,6 +302,14 @@
             <li style="color: #555753;">✓ Uncategorized image to update profile image</li>
             <li style="color: #555753;">✓ Valid update of user profile image</li>
         </ul>
+        <h2 id="Tests\Unit\UploadImageTest">Unit\UploadImage</h2>
+        <ul>
+            <li style="color: #555753;">✓ Upload image by un authorized user</li>
+            <li style="color: #555753;">✓ Upload image by authorized user</li>
+            <li style="color: #555753;">✓ Upload image by authorized user exceeds max size</li>
+            <li style="color: #555753;">✓ Upload non image file by authorized user</li>
+            <li style="color: #555753;">✓ Upload image by authorized user with no file</li>
+        </ul>
         <h2 id="Tests\Unit\UpvotedLinkTest">Unit\UpvotedLink</h2>
         <ul>
             <li style="color: #555753;">✓ Authorized upvote</li>
@@ -240,6 +324,23 @@
         <ul>
             <li style="color: #555753;">✓ Un authorized user</li>
             <li style="color: #555753;">✓ Successful view</li>
+        </ul>
+        <h2 id="Tests\Unit\ViewCommunityInformationTest">Unit\ViewCommunityInformation</h2>
+        <ul>
+            <li style="color: #555753;">✓ Data missed</li>
+            <li style="color: #555753;">✓ Community non existance</li>
+            <li style="color: #555753;">✓ Success</li>
+        </ul>
+        <h2 id="Tests\Unit\ViewHiddenPostsTest">Unit\ViewHiddenPosts</h2>
+        <ul>
+            <li style="color: #555753;">✓ Unauthorized</li>
+            <li style="color: #555753;">✓ Authorized</li>
+        </ul>
+        <h2 id="Tests\Unit\ViewModeratorsCommunityTest">Unit\ViewModeratorsCommunity</h2>
+        <ul>
+            <li style="color: #555753;">✓ Data missed</li>
+            <li style="color: #555753;">✓ Community existance</li>
+            <li style="color: #555753;">✓ Success</li>
         </ul>
         <h2 id="Tests\Unit\ViewPostsTest">Unit\ViewPosts</h2>
         <ul>
@@ -277,6 +378,13 @@
             <li style="color: #555753;">✓ View following with blocking</li>
             <li style="color: #555753;">✓ Successful view</li>
         </ul>
+        <h2 id="Tests\Unit\ViewUserInboxMessagesTest">Unit\ViewUserInboxMessages</h2>
+        <ul>
+            <li style="color: #555753;">✓ Unauthorized return of user inbox messages</li>
+            <li style="color: #555753;">✓ No state</li>
+            <li style="color: #555753;">✓ Undefined state</li>
+            <li style="color: #555753;">✓ Valid return of user sent messages</li>
+        </ul>
         <h2 id="Tests\Unit\ViewUserMessageTest">Unit\ViewUserMessage</h2>
         <ul>
             <li style="color: #555753;">✓ Unauthorized return of user message</li>
@@ -286,6 +394,7 @@
         <h2 id="Tests\Unit\ViewUserSentMessagesTest">Unit\ViewUserSentMessages</h2>
         <ul>
             <li style="color: #555753;">✓ Unauthorized return of user sent messages</li>
+            <li style="color: #555753;">✓ Valid return of user sent messages</li>
         </ul>
         <h2 id="Tests\Unit\viewCommentsAndRepliesTest">Unit\viewCommentsAndReplies</h2>
         <ul>

@@ -19,7 +19,7 @@ class PasswordReset extends Model
      * @var array
      */
     protected $fillable = [
-        'email', 'hash', 'expires_at',
+        'email', 'hash', 'created_at',
     ];
 
     /**
