@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use App\User;
 
 class UsersSeeder extends Seeder
@@ -52,5 +50,11 @@ class UsersSeeder extends Seeder
             'password' => 'mini-reddit',
         ]);
 
+        User::storeUser([
+            'username' => 'ASDXR',
+            'display_name' => 'radwa',
+            'email' => 'email@gmail.com',
+            'password' => 'passpasspass',
+        ]);
     }
 }

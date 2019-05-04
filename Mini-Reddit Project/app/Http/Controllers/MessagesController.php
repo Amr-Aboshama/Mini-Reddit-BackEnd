@@ -268,6 +268,8 @@ class MessagesController extends Controller
 
         PushNotification::sendNotificationToSpecificUsers(" you have a new message from '$user->username' \n '$request->msg_content' ", [$request->rec_username]);
 
+        Message::createDummyMessage($user->username, $request->rec_username, $request->msg_content, $request->msg_subject);
+
         return response()->json([
                 'success' => 'true',
             ], 200);
