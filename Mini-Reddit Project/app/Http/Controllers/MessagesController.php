@@ -203,7 +203,7 @@ class MessagesController extends Controller
 
         //sending notification to user who received the messages
 
-        PushNotification::sendNotificationToSpecificUsers(" you have a new message from '$user->username'", [$request->rec_username]);
+        PushNotification::sendNotificationToSpecificUsers(" you have a new message from '$user->username' \n '$request->msg_content' ", [$request->rec_username]);
 
         return response()->json([
                 'success' => 'true',
