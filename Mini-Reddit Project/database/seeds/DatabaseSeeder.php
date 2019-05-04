@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ,UpvotedLinksSeeder::class
             ,DownvotedLinksSeeder::class
             ,MessagesSeeder::class
+            ,HiddenPostsSeeder::class
         ]);
     }
 }
