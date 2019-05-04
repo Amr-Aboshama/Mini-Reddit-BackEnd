@@ -21,7 +21,6 @@ use Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 
-
 /**
  * @group Interacting Actions
  * posts , comments and anything related
@@ -239,12 +238,12 @@ class InteractingController extends Controller
             ],
             'new_video_url' => [
                 'nullable',
-                'url'
+                'url',
             ],
             'new_image' => [
                 'nullable',
-                'starts_with:storage/app/public/post_images/'
-            ]
+                'starts_with:storage/app/public/post_images/',
+            ],
         ]);
 
         if ($validator->fails()) {
@@ -825,8 +824,8 @@ class InteractingController extends Controller
         $posts_comments = [];
         $i = 0;
         foreach ($Commentedposts as $post) {
-            $post->community_id = $post->community_id != null ? $post->community_id : -1;
-            $post->community = "none";
+            $post->community_id = null != $post->community_id ? $post->community_id : -1;
+            $post->community = 'none';
             $post->duration = Link::Duration($post->link_date);
             $post->subscribed = 'false';
 
@@ -893,7 +892,7 @@ class InteractingController extends Controller
         }
 
         $links = Link::linksOflink($request->link_id);
-        foreach($links as $link) {
+        foreach ($links as $link) {
             $link->duration = Link::Duration($link->link_date);
             $link->comments_num = Link::commentsNum($link->link_id);
             $link->upvoted = 'false';
@@ -1143,20 +1142,20 @@ class InteractingController extends Controller
         $links_comments = [];
         $i = 0;
         foreach ($links as $link) {
-              if (!Link::isPostByUser( $username , $link->link_id)) {
-                  $links_comments[$i]['type'] = 'comment';
-                  $links_comments[$i]['post']['title'] = $link->title;
-                  $links_comments[$i]['post']['post_id'] = $link->link_id;
-                  $links_comments[$i]['post']['body'] = $link->content;
-                  $links_comments[$i]['post']['community_id'] = $link->community_id != null ? $link->community_id : -1;
-                  $links_comments[$i]['post']['author_username'] = $link->author_username;
-                  $links_comments[$i]['post']['community'] = 'none';
-                  $links_comments[$i]['post']['subscribed'] = 'false';
-                  $links_comments[$i]['post']['duration'] = Link::Duration($link->link_date);
+            if (!Link::isPostByUser($username, $link->link_id)) {
+                $links_comments[$i]['type'] = 'comment';
+                $links_comments[$i]['post']['title'] = $link->title;
+                $links_comments[$i]['post']['post_id'] = $link->link_id;
+                $links_comments[$i]['post']['body'] = $link->content;
+                $links_comments[$i]['post']['community_id'] = null != $link->community_id ? $link->community_id : -1;
+                $links_comments[$i]['post']['author_username'] = $link->author_username;
+                $links_comments[$i]['post']['community'] = 'none';
+                $links_comments[$i]['post']['subscribed'] = 'false';
+                $links_comments[$i]['post']['duration'] = Link::Duration($link->link_date);
 
-                  if($link->community_id != null) {
-                      $links_comments[$i]['post']['community'] = Community::getCommunity($link->community_id)->name;
-                  }
+                if (null != $link->community_id) {
+                    $links_comments[$i]['post']['community'] = Community::getCommunity($link->community_id)->name;
+                }
 
                 try {
                     $tokenFetch = JWTAuth::parseToken()->authenticate();
@@ -1189,10 +1188,9 @@ class InteractingController extends Controller
                             $comment->saved = 'true';
                         }
                     } catch (JWTException $e) {
-                      }
-                  }
-
-              }  else {
+                    }
+                }
+            } else {
                 $links_comments[$i]['duration'] = Link::Duration($link->link_date);
                 $links_comments[$i]['body'] = $link->content;
                 $links_comments[$i]['title'] = $link->title;
@@ -1241,20 +1239,20 @@ class InteractingController extends Controller
                 }
 
                 if (Link::ispostHasCommentsByUser($link->link_id, $username)) {
-                      $i++;
-                      $links_comments[$i]['post']['title'] = $link->title;
-                      $links_comments[$i]['post']['post_id'] = $link->link_id;
-                      $links_comments[$i]['post']['body'] = $link->content;
-                      $links_comments[$i]['post']['community_id'] = $link->community_id != null ? $link->community_id : -1;
-                      $links_comments[$i]['post']['author_username'] = $link->author_username;
-                      $links_comments[$i]['post']['community'] = 'none';
-                      $links_comments[$i]['post']['subscribed'] = 'false';
-                      $links_comments[$i]['type'] = 'comment';
-                      $links_comments[$i]['post']['duration'] = Link::Duration($link->link_date);
+                    ++$i;
+                    $links_comments[$i]['post']['title'] = $link->title;
+                    $links_comments[$i]['post']['post_id'] = $link->link_id;
+                    $links_comments[$i]['post']['body'] = $link->content;
+                    $links_comments[$i]['post']['community_id'] = null != $link->community_id ? $link->community_id : -1;
+                    $links_comments[$i]['post']['author_username'] = $link->author_username;
+                    $links_comments[$i]['post']['community'] = 'none';
+                    $links_comments[$i]['post']['subscribed'] = 'false';
+                    $links_comments[$i]['type'] = 'comment';
+                    $links_comments[$i]['post']['duration'] = Link::Duration($link->link_date);
 
-                      if($link->community_id != null) {
-                          $links_comments[$i]['post']['community'] = Community::getCommunity($link->community_id)->name;
-                      }
+                    if (null != $link->community_id) {
+                        $links_comments[$i]['post']['community'] = Community::getCommunity($link->community_id)->name;
+                    }
 
                     try {
                         $tokenFetch = JWTAuth::parseToken()->authenticate();
@@ -1271,22 +1269,21 @@ class InteractingController extends Controller
 
                     foreach ($links_comments[$i]['comments'] as $comment) {
                         try {
-                          $comment->duration = Link::Duration($comment->link_date);
-                          $comment->upvoted = 'false';
-                          $comment->downvoted = 'false';
-                          $comment->saved = 'false';
+                            $comment->duration = Link::Duration($comment->link_date);
+                            $comment->upvoted = 'false';
+                            $comment->downvoted = 'false';
+                            $comment->saved = 'false';
 
-                          $tokenFetch = JWTAuth::parseToken()->authenticate();
-                          $username2 = auth()->user()->username;
-                          if (UpvotedLink::upvoted($comment->comment_id, $username2)) {
-                              $comment->upvoted = 'true';
-                          } elseif (DownvotedLink::downvoted($comment->comment_id, $username2)) {
-                              $comment->downvoted = 'true';
-                          }
-                          if(SavedLink::isSaved($comment->comment_id , $username2)) {
-                              $comment->saved = 'true';
-                          }
-
+                            $tokenFetch = JWTAuth::parseToken()->authenticate();
+                            $username2 = auth()->user()->username;
+                            if (UpvotedLink::upvoted($comment->comment_id, $username2)) {
+                                $comment->upvoted = 'true';
+                            } elseif (DownvotedLink::downvoted($comment->comment_id, $username2)) {
+                                $comment->downvoted = 'true';
+                            }
+                            if (SavedLink::isSaved($comment->comment_id, $username2)) {
+                                $comment->saved = 'true';
+                            }
                         } catch (JWTException $e) {
                         }
                     }
@@ -1365,13 +1362,12 @@ class InteractingController extends Controller
             ],
             'video_url' => [
                 'nullable',
-                'url'
+                'url',
             ],
             'image_path' => [
                 'nullable',
-                'starts_with:storage/app/public/post_images/'
-            ]
-
+                'starts_with:storage/app/public/post_images/',
+            ],
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -1391,7 +1387,7 @@ class InteractingController extends Controller
         $p['link_date'] = date('Y-m-d H:i:s');
         if ($request->has('parent_link_id')) {
             $p['title'] = null;
-            $p['post_id'] = link::getPostID($request->parent_link_id) == null ? $request->parent_link_id :link::getPostID($request->parent_link_id) ;
+            $p['post_id'] = null == link::getPostID($request->parent_link_id) ? $request->parent_link_id : link::getPostID($request->parent_link_id);
             if ($request->has('community_id') && (link::getCommunity($request->parent_link_id) != $request->community_id)) {
                 return response()->json([
                     'success' => 'false',
@@ -1652,7 +1648,7 @@ class InteractingController extends Controller
 
                 $links_comments[$i]['type'] = 'post';
                 if (Link::isPostHasSavedCommentsByUser($link->link_id, $username)) {
-                    $i++;
+                    ++$i;
                     $links_comments[$i]['post']['duration'] = Link::Duration($link->link_date);
                     $links_comments[$i]['post']['title'] = $link->title;
                     $links_comments[$i]['post']['post_id'] = $link->link_id;
@@ -1917,34 +1913,6 @@ class InteractingController extends Controller
     }
 
     /**
-     * Give Karma to a user.
-     *
-     * @authenticated
-     * @bodyParam username string required Username to give to a reward.
-     * @response 200 {
-     * 	"success": "true"
-     * }
-     *
-     * @response 401 {
-     *  "success": "false",
-     *  "error": "UnAuthorized"
-     * }
-     *
-     * @response 403 {
-     * 	"success": "false",
-     * 	"error": "Already given before"
-     * }
-     * @response 403 {
-     *  "success": "false",
-     *  "error": "username doesn't exist"
-     * }
-     */
-    public function giveReward()
-    {
-        // ...
-    }
-
-    /**
      * Upload an image.
      *
      * @authenticated
@@ -1974,43 +1942,40 @@ class InteractingController extends Controller
     {
         $user = auth()->user();
         $valid = Validator::make($request->all(), [
-            'uploaded_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2000'
-
+            'uploaded_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2000',
         ]);
 
         if ($valid->fails()) {
             return response()->json([
                 'success' => 'false',
-                'error' => 'Unsupported media type'
+                'error' => 'Unsupported media type',
             ], 403);
         }
-        if($request->hasFile('uploaded_image')) {
+        if ($request->hasFile('uploaded_image')) {
             $image = $request->uploaded_image;
 
             $imageName = $image->getClientOriginalName();
-            $name=$user->username.'-'.time().'-'.$imageName;
-            $path =$image->storeAs('public/post_images', $name );
+            $name = $user->username.'-'.time().'-'.$imageName;
+            $path = $image->storeAs('public/post_images', $name);
             //Storage::setVisibility($path, 'public');
             //dd(Storage::getVisibility($path));
-            if($path) {
+            if ($path) {
                 return response()->json([
                     'success' => 'true',
-                    'path' => ('storage/'.'post_images/'.$name)
+                    'path' => ('storage/'.'post_images/'.$name),
                 ], 200);
             } else {
                 return response()->json([
                     'success' => 'false',
-                    'error' => 'Cannot upload the image'
+                    'error' => 'Cannot upload the image',
                 ], 400);
             }
         }
+
         return response()->json([
             'success' => 'false',
-            'error' => 'Cannot upload the image'
+            'error' => 'Cannot upload the image',
         ], 400);
-
-
-
     }
 
     /**
@@ -2081,33 +2046,32 @@ class InteractingController extends Controller
                 $post->hidden = 'true';
             }
 
-            if($post->community_id != null && Subscribtion::subscribed($post->community_id , $username)) {
+            if (null != $post->community_id && Subscribtion::subscribed($post->community_id, $username)) {
                 $post->subscribed = 'true';
             }
         }
 
         return response()->json([
-          "post_id" => $post->link_id,
-          "body" => $post->content,
-          "video_url"=> $post->video_url != null ? $post->video_url : -1 ,
-          "image"=> $post->image_content != null ? $post->image_content : -1,
-          "title"=> $post->title,
-          "username"=> $post->author_username,
-          "community_id" => $post->community_id != null ? $post->community_id != null : -1  ,
-          "community"=> $post->community_id != null ? Community::getCommunity($post->community_id)->name : "none" ,
-          "author_photo_path"=> User::where('username', $post->author_username)->get()->first()->photo_url,
-          "downvotes"=> $post->downvotes,
-          "upvotes" => $post->upvotes,
-          "date" => $post->link_date,
-          "duration" => Link::Duration($post->link_date),
-          "comments_num"=>Link::commentsNum($post->link_id) ,
-          "saved"=>$post->saved,
-          "hidden"=> $post->hidden,
-          "upvoted"=> $post->upvoted,
-          "downvoted"=> $post->downvoted,
-          "subscribed"=> $post->subscribed,
-          "pinned" => $post->pinned
-        ],200);
-
+          'post_id' => $post->link_id,
+          'body' => $post->content,
+          'video_url' => null != $post->video_url ? $post->video_url : -1,
+          'image' => null != $post->image_content ? $post->image_content : -1,
+          'title' => $post->title,
+          'username' => $post->author_username,
+          'community_id' => null != $post->community_id ? null != $post->community_id : -1,
+          'community' => null != $post->community_id ? Community::getCommunity($post->community_id)->name : 'none',
+          'author_photo_path' => User::where('username', $post->author_username)->get()->first()->photo_url,
+          'downvotes' => $post->downvotes,
+          'upvotes' => $post->upvotes,
+          'date' => $post->link_date,
+          'duration' => Link::Duration($post->link_date),
+          'comments_num' => Link::commentsNum($post->link_id),
+          'saved' => $post->saved,
+          'hidden' => $post->hidden,
+          'upvoted' => $post->upvoted,
+          'downvoted' => $post->downvoted,
+          'subscribed' => $post->subscribed,
+          'pinned' => $post->pinned,
+        ], 200);
     }
 }

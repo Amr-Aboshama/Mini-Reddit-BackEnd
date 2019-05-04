@@ -198,7 +198,7 @@ class AuthenticationController extends Controller
         // Get the email of the hash and delete the hash
         if (!$email = PasswordReset::getEmailByHash($request->hash)) {
             return response()->json([
-              'sucess' => 'false',
+              'success' => 'false',
               'error' => 'Link is wrong or expired',
             ], 404);
         }
@@ -224,7 +224,7 @@ class AuthenticationController extends Controller
         User::changeUserPassword($username, $request->password);
 
         return response()->json([
-          'sucess' => 'true',
+          'success' => 'true',
         ], 200);
     }
 
