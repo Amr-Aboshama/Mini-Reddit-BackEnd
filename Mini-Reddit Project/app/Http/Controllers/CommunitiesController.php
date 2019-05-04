@@ -36,9 +36,23 @@ class CommunitiesController extends Controller
      * 	"success": "false",
      * 	"error": "username doesn't exist"
      * }
+     * @response 422 {
+     * 	"success": "false",
+     * 	"error": "Invalid or some data missed"
+     * }
      */
     public function viewUserCommunities(Request $request)
     {
+        $valid = Validator::make($request->all(), [
+            'username' => 'required',
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Invalid or some data missed',
+            ], 422);
+        }
         $existance = User::userExist($request->username);
         if (!$existance) {
             return response()->json([
@@ -143,8 +157,8 @@ class CommunitiesController extends Controller
      * @authenticated
      * @bodyParam community_id int required The ID of the community the user want to edit its rules& description.
      * @bodyParam rules_content string required The edited rules of the community.
-     * @bodyParam des_content string required The edited discription of the community.
      * @bodyParam banner file required The banner of the community.
+     * @bodyParam des_content string required The edited discription of the community.
      * @bodyParam logo file required The logo of the community.
      *
      * @response 200 {
@@ -171,9 +185,28 @@ class CommunitiesController extends Controller
      * 	"success": "false",
      * 	"error": "invalid banner"
      * }
+     * @response 422 {
+     * 	"success": "false",
+     * 	"error": "Invalid or some data missed"
+     * }
      */
     public function editCommunity(Request $request)
     {
+        $valid = Validator::make($request->all(), [
+            'community_id' => 'required',
+            'rules_content' => 'required',
+            'des_content' => 'required',
+            'banner' => 'required',
+            'logo' => 'required',
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Invalid or some data missed',
+            ], 422);
+        }
+
         $user = auth()->user();
 
         $existance = Community::communityExist($request->community_id);
@@ -254,9 +287,24 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "this name already exists"
      * }
+     * @response 422 {
+     * 	"success": "false",
+     * 	"error": "Invalid or some data missed"
+     * }
      */
     public function createCommunity(Request $request)
     {
+
+        $valid = Validator::make($request->all(), [
+            'community_name' => 'required|min:3',
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Invalid or some data missed',
+            ], 422);
+        }
         $user = auth()->user();
 
         $current_date_time = now();
@@ -320,9 +368,24 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "this user is not a moderator"
      * }
+     * @response 422 {
+     * 	"success": "false",
+     * 	"error": "Invalid or some data missed"
+     * }
      */
     public function removeCommunity(Request $request)
     {
+
+        $valid = Validator::make($request->all(), [
+            'community_id' => 'required',
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Invalid or some data missed',
+            ], 422);
+        }
         $user = auth()->user();
 
         $existance = Community::communityExist($request->community_id);
@@ -629,9 +692,23 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "user already is subscribed in that community"
      * }
+     * @response 422 {
+     *  "success": "false",
+     *  "error": "Invalid or some data missed"
+     * }
      */
     public function subscribeCommunity(Request $request)
     {
+        $valid = Validator::make($request->all(), [
+            'community_id' => 'required',
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Invalid or some data missed',
+            ], 422);
+        }
         $user = auth()->user();
 
         $existance = Community::communityExist($request->community_id);
@@ -680,9 +757,23 @@ class CommunitiesController extends Controller
      *  "success": "false",
      *  "error": "user already is not subscribed in that community"
      * }
+     * @response 422 {
+     *  "success": "false",
+     *  "error": "Invalid or some data missed"
+     * }
      */
     public function unsubscribeCommunity(Request $request)
     {
+        $valid = Validator::make($request->all(), [
+            'community_id' => 'required',
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Invalid or some data missed',
+            ], 422);
+        }
         $user = auth()->user();
 
         $existance = Community::communityExist($request->community_id);
