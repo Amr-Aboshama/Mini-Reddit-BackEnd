@@ -258,14 +258,14 @@ class InteractingController extends Controller
             return response()->json([
                 'success' => 'false',
                 'error' => 'post doesn\'t exist',
-            ]);
+            ],403);
         }
         //a non-owner user trying to edit the post
         if ($user->username != Link::getAuthor($request->post_id)) {
             return response()->json([
                 'success' => 'false',
                 'error' => 'Only the author of the post can edit it',
-            ]);
+            ],403);
         }
 
         if ((!$request->has('new_content')) && (!$request->has('new_title')) && (!$request->has('new_image'))
@@ -361,7 +361,7 @@ class InteractingController extends Controller
             return response()->json([
                 'success' => 'false',
                 'error' => 'comment/reply doesn\'t exist',
-            ]);
+            ],403);
         }
 
         //a non-owner user trying to edit the comment
@@ -369,7 +369,7 @@ class InteractingController extends Controller
             return response()->json([
                 'success' => 'false',
                 'error' => 'Only the author of the comment/reply can edit it',
-            ]);
+            ],403);
         }
 
         if ($request->has('new_content') && (!link::updateLinkContent($request->comment_id, $request->new_content))) {
@@ -1372,9 +1372,9 @@ class InteractingController extends Controller
         ]);
         if ($validator->fails()) {
             return response()->json([
-            'success' => 'false',
-            'error' => 'There are some missing or invalid data!',
-        ], 403);
+                'success' => 'false',
+                'error' => 'There are some missing or invalid data!',
+            ], 403);
         }
 
         //setting data::
@@ -2027,8 +2027,6 @@ class InteractingController extends Controller
             $imageName = $image->getClientOriginalName();
             $name=$user->username.'-'.time().'-'.$imageName;
             $path =$image->storeAs('public/post_images', $name );
-            //Storage::setVisibility($path, 'public');
-            //dd(Storage::getVisibility($path));
             if($path) {
                 return response()->json([
                     'success' => 'true',
