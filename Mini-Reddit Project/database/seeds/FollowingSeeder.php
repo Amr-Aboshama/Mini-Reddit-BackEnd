@@ -41,5 +41,43 @@ class FollowingSeeder extends Seeder
             'followed_username' => 'ahmed'
 
         ]);
+
+        DB::table('followings')->insert([
+
+            'follower_username' => 'menna',
+            'followed_username' => 'mini-reddit'
+
+        ]);
+
+
+        DB::table('followings')->insert([
+
+            'follower_username' => 'ahmed',
+            'followed_username' => 'mini-reddit'
+
+        ]);
+
+
+        DB::table('followings')->insert([
+
+            'follower_username' => 'amro',
+            'followed_username' => 'mini-reddit'
+
+        ]);
+
+
+        DB::table('followings')->insert([
+
+            'follower_username' => 'mini-reddit',
+            'followed_username' => 'ahmed'
+
+        ]);
+
+        DB::table('followings')->insert([
+
+            'follower_username' => 'mini-reddit',
+            'followed_username' => 'reham'
+
+        ]);
     }
 }

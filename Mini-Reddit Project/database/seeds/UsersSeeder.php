@@ -44,13 +44,13 @@ class UsersSeeder extends Seeder
             'email' => 'reham@reham.com',
             'password' => '123456789',
         ]);
-        for ($counter = 0; $counter < 10; $counter++) {
-            User::storeUser([
-                'username' => Str::random(10),
-                'display_name' => Str::random(10),
-                'email' => Str::random(10).'@mail.com',
-                'password' => bcrypt(Str::random(10)),
-            ]);
-        }
+
+        User::storeUser([
+            'username' => 'mini-reddit',
+            'display_name' => 'badr',
+            'email' => 'badr@gmail.com',
+            'password' => 'mini-reddit',
+        ]);
+
     }
 }

@@ -38,12 +38,12 @@ class ViewUserSentMessagesTest extends TestCase
             'password' => '123456789'
         ]);
 
-        
+
         $message1= Message::createDummyMessage($senderuser->username, $receiveruser1->username, 'test_hii1');
 
         $message2= Message::createDummyMessage($senderuser->username, $receiveruser2->username, 'test_hii2');
 
-       
+
 
         $this->json('GET', 'api/auth/viewUserMessage', [], $headers)
             ->assertStatus(401)
@@ -84,12 +84,12 @@ class ViewUserSentMessagesTest extends TestCase
     //         'password' => '123456789'
     //     ]);
 
-        
+
     //     $message1= Message::createDummyMessage($senderuser->username, $receiveruser1->username, 'test_hii1');
 
     //     $message2= Message::createDummyMessage($senderuser->username, $receiveruser2->username, 'test_hii2');
 
-       
+
 
     //     $this->json('GET', 'api/auth/viewUserMessage', [], $headers)
     //         ->assertStatus(200)
@@ -110,7 +110,7 @@ class ViewUserSentMessagesTest extends TestCase
     //             ]]
     //         ]);
 
-          
+
 
     //     $senderuser->delete();
     //     $receiveruser1->delete();

@@ -26,5 +26,15 @@ class UpvotedLinksSeeder extends Seeder
             'username' => 'ahmed',
             'link_id' => 15
         ]);
+
+        DB::table('upvoted_links')->insert([
+            'username' => 'ahmed',
+            'link_id' => 19
+        ]);
+
+        DB::table('upvoted_links')->insert([
+            'username' => 'menna',
+            'link_id' => 19
+        ]);
     }
 }
