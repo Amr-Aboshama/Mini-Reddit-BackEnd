@@ -53,7 +53,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/auth/viewUpOrDownvotedPosts', 'InteractingController@ViewUpVotedOrDownVotedPosts');
     Route::get('/auth/viewSavedLinks', 'InteractingController@ViewSavedLinks');
     Route::get('/auth/viewHiddenPosts', 'InteractingController@viewHiddenPosts');
-    Route::post('/auth/giveReward', 'InteractingController@giveReward');
     Route::post('/auth/uploadImage', 'InteractingController@uploadImage');
     Route::get('/auth/getUsername', 'InformationController@getUsername');
 });
