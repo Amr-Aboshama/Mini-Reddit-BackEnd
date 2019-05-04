@@ -20,6 +20,8 @@ use App\PushNotification;
 use Validator;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+
 
 /**
  * @group Interacting Actions
@@ -247,6 +249,10 @@ class InteractingController extends Controller
             'new_video_url' => [
                 'nullable',
                 'url'
+            ],
+            'new_image' => [
+                'nullable',
+                'starts_with:storage/app/public/post_images/'
             ]
         ]);
 
@@ -1434,6 +1440,10 @@ class InteractingController extends Controller
             'video_url' => [
                 'nullable',
                 'url'
+            ],
+            'image_path' => [
+                'nullable',
+                'starts_with:storage/app/public/post_images/'
             ]
 
         ]);
@@ -2019,9 +2029,47 @@ class InteractingController extends Controller
      * 	"error": "Cannot upload the image"
      * }
      */
-    public function uploadImage()
+    public function uploadImage(Request $request)
     {
-        // code...
+        $user = auth()->user();
+        $valid = Validator::make($request->all(), [
+            'uploaded_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2000'
+
+        ]);
+
+        if ($valid->fails()) {
+            return response()->json([
+                'success' => 'false',
+                'error' => 'Unsupported media type'
+            ], 403);
+        }
+        if($request->hasFile('uploaded_image')) {
+            $image = $request->uploaded_image;
+
+            $imageName = $image->getClientOriginalName();
+            $name=$user->username.'-'.time().'-'.$imageName;
+            $path =$image->storeAs('public/post_images', $name );
+            //Storage::setVisibility($path, 'public');
+            //dd(Storage::getVisibility($path));
+            if($path) {
+                return response()->json([
+                    'success' => 'true',
+                    'path' => ('storage/'.'post_images/'.$name)
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => 'false',
+                    'error' => 'Cannot upload the image'
+                ], 400);
+            }
+        }
+        return response()->json([
+            'success' => 'false',
+            'error' => 'Cannot upload the image'
+        ], 400);
+
+
+
     }
 
     /**

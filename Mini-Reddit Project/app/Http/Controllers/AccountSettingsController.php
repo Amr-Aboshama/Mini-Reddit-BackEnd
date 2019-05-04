@@ -41,7 +41,7 @@ class AccountSettingsController extends Controller
                 "error" => "UnAuthorized"
             ], 401);
 
-        }  
+        }
 
         if ($request->password == '' || !$request->has('password') ||
             ! User::checkIfPasswordRight($user->username, $request->password)) {
@@ -62,7 +62,7 @@ class AccountSettingsController extends Controller
         }
 
 
-    
+
     }
 
 
@@ -306,9 +306,9 @@ class AccountSettingsController extends Controller
 
 
         $image = $request->profile_image;
-        $avatarName = $image->getClientOriginalName();
+        $avatarName = $user->username.'-'.time().'-'.$image->getClientOriginalName();
 
-        $request->profile_image->storeAs('avatars', $avatarName);
+        $request->profile_image->storeAs('public/avatars', $avatarName);
 
         if ($request->profile_or_cover == 1) {
             $user->photo_url = $avatarName;
@@ -322,7 +322,7 @@ class AccountSettingsController extends Controller
 
         $response = response()->json([
             'success' => 'true',
-            'path' => ('storage/'.'app/'.'avatars/'.$avatarName)
+            'path' => ('storage/'.'avatars/'.$avatarName)
         ], 200);
 
 
