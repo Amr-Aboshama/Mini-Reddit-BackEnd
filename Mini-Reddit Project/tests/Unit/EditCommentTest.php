@@ -42,7 +42,7 @@ class EditCommentTest extends TestCase
         auth()->logout($user);
 
         $payload = ['comment_id' => $comment->id, 'new_content' => 'edit comment'];
-        $this->json('PATCH', 'api/auth/editComment', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/editComment', $payload, $headers)
           ->assertStatus(401)
           ->assertJson([
               'success' => 'false',
@@ -82,7 +82,7 @@ class EditCommentTest extends TestCase
         $headers = [$token];
 
         $payload = ['comment_id' => $comment->id];
-        $this->json('PATCH', 'api/auth/editComment', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/editComment', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -128,7 +128,7 @@ class EditCommentTest extends TestCase
         $headers = [$token];
 
         $payload = ['comment_id' => $comment->id, 'new_content' => 'edit comment'];
-        $this->json('PATCH', 'api/auth/editComment', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/editComment', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -164,7 +164,7 @@ class EditCommentTest extends TestCase
         $headers = [$token];
 
         $payload = ['comment_id' => $link->id, 'new_content' => 'edit comment'];
-        $this->json('PATCH', 'api/auth/editComment', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/editComment', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -204,7 +204,7 @@ class EditCommentTest extends TestCase
         $headers = [$token];
 
         $payload = ['comment_id' => $comment->id, 'new_content' => 'edit'];
-        $this->json('PATCH', 'api/auth/editComment', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/editComment', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'
@@ -246,7 +246,7 @@ class EditCommentTest extends TestCase
         $headers = [$token];
 
         $payload = ['comment_id' => $comment->id, 'new_content' => 'edit'];
-        $this->json('PATCH', 'api/auth/editComment', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/editComment', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
             'success' => 'false',

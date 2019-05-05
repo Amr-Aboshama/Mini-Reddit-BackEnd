@@ -25,7 +25,7 @@ class UpdateAboutTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('PATCH', 'api/auth/updateAbout', ['about' => 'testabout'], $headers)
+        $this->json('PATCH', 'api/v1/auth/updateAbout', ['about' => 'testabout'], $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true"
@@ -53,7 +53,7 @@ class UpdateAboutTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('PATCH', 'api/auth/updateAbout', ['about' => 'testabout'], $headers)
+        $this->json('PATCH', 'api/v1/auth/updateAbout', ['about' => 'testabout'], $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true"
@@ -62,7 +62,7 @@ class UpdateAboutTest extends TestCase
         $userabout = User::getUserWholeRecord($user->username)->about;
         Assert::assertEquals('testabout', $userabout);
 
-        $this->json('PATCH', 'api/auth/updateAbout', ['about' => 'testabout'], $headers)
+        $this->json('PATCH', 'api/v1/auth/updateAbout', ['about' => 'testabout'], $headers)
             ->assertStatus(400)
             ->assertJson([
                 'success' => 'false',
@@ -89,7 +89,7 @@ class UpdateAboutTest extends TestCase
         auth()->logout();
 
 
-        $this->json('PATCH', 'api/auth/updateAbout', ['about' => 'testabout'], $headers)
+        $this->json('PATCH', 'api/v1/auth/updateAbout', ['about' => 'testabout'], $headers)
             ->assertStatus(401)
             ->assertJson([
                 'success' => 'false',
@@ -114,14 +114,14 @@ class UpdateAboutTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('PATCH', 'api/auth/updateAbout', ['about' => ''], $headers)
+        $this->json('PATCH', 'api/v1/auth/updateAbout', ['about' => ''], $headers)
             ->assertStatus(403)
             ->assertJson([
                 'success' => 'false',
                 'error' => 'no about is written'
             ]);
 
-        $this->json('PATCH', 'api/auth/updateAbout', [], $headers)
+        $this->json('PATCH', 'api/v1/auth/updateAbout', [], $headers)
             ->assertStatus(403)
             ->assertJson([
                 'success' => 'false',

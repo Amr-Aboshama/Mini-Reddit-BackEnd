@@ -30,7 +30,7 @@ class UpdateProfileImageTest extends TestCase
         auth()->logout();
 
 
-        $this->json('POST', 'api/auth/updateCoverAndProfileImage', ['profile_image' => UploadedFile::fake()->image('avatar.jpg'), 'profile_or_cover' => 1], $headers)
+        $this->json('POST', 'api/v1/auth/updateCoverAndProfileImage', ['profile_image' => UploadedFile::fake()->image('avatar.jpg'), 'profile_or_cover' => 1], $headers)
             ->assertStatus(401)
             ->assertJson([
                 'success' => 'false',
@@ -58,7 +58,7 @@ class UpdateProfileImageTest extends TestCase
 
         $this->json(
             'POST',
-            'api/auth/updateCoverAndProfileImage',
+            'api/v1/auth/updateCoverAndProfileImage',
             ['profile_image' => UploadedFile::fake()->image('avatar.jpp'),
                 'profile_or_cover' => 1],
             $headers
@@ -90,7 +90,7 @@ class UpdateProfileImageTest extends TestCase
 
         $this->json(
             'POST',
-            'api/auth/updateCoverAndProfileImage',
+            'api/v1/auth/updateCoverAndProfileImage',
             ['profile_image' => UploadedFile::fake()->image('avatar.jpg'),
                 'profile_or_cover' => 3],
             $headers
@@ -121,7 +121,7 @@ class UpdateProfileImageTest extends TestCase
 
         $this->json(
             'POST',
-            'api/auth/updateCoverAndProfileImage',
+            'api/v1/auth/updateCoverAndProfileImage',
             ['profile_image' => UploadedFile::fake()->image('avatar.jpg'),
                 'profile_or_cover' => 1],
             $headers
@@ -134,7 +134,7 @@ class UpdateProfileImageTest extends TestCase
 
         $this->json(
             'POST',
-            'api/auth/updateCoverAndProfileImage',
+            'api/v1/auth/updateCoverAndProfileImage',
             ['profile_image' => UploadedFile::fake()->image('avatar.jpg'),
                 'profile_or_cover' => 2],
             $headers

@@ -36,7 +36,7 @@ StudlyCaps => Objects
 
    in our project Run this command
 
-  .\vendor\bin\phpdoc-md --ignore=Console,Exceptions,Http,Providers generate app > api.md
+  .\vendor\bin\phpdoc-md --ignore=Console,Exceptions,Http,Providers generate app > public\FunctionalDocumentation\api.md
 
   //this command is for Generating docs for all classes in a source directory (our directory is "app" which includes all model classes) and send output to the file api.md (ingnoring any extra files in the directory )
 

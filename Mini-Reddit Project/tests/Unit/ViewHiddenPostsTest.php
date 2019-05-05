@@ -41,7 +41,7 @@ class ViewHiddenPostsTest extends TestCase
      */
     public function testUnauthorized()
     {
-          $this->json('GET' , 'api/auth/viewHiddenPosts' , [])->assertStatus(401)->assertJson([
+          $this->json('GET' , 'api/v1/auth/viewHiddenPosts' , [])->assertStatus(401)->assertJson([
               'success' => 'false',
               "error" => "UnAuthorized"
           ]);
@@ -52,12 +52,12 @@ class ViewHiddenPostsTest extends TestCase
     public function testAuthorized()
     {
         //log in
-        $signin = $this->json('POST', 'api/unauth/signIn', ['username' => 'ahmed' , 'password' => '123456789' ]);
+        $signin = $this->json('POST', 'api/v1/unauth/signIn', ['username' => 'ahmed' , 'password' => '123456789' ]);
         $token = $signin->json('token');
         $headers = ["Authorization" => "Bearer $token"];
 
 
-        $response = $this->json('GET' , 'api/auth/viewHiddenPosts' , [] , $headers);
+        $response = $this->json('GET' , 'api/v1/auth/viewHiddenPosts' , [] , $headers);
         $response->assertStatus(200);
         $posts = $response->json('posts');
         $this->assertTrue($this->check_Hidden($posts , 'ahmed')==1);
@@ -65,18 +65,18 @@ class ViewHiddenPostsTest extends TestCase
 
         //logingout
 
-        $logout = $this->json('POST', 'api/auth/signOut')->withHeaders([
+        $logout = $this->json('POST', 'api/v1/auth/signOut')->withHeaders([
             'Authorization' => "Bearer $token"
         ]);
 
 
         //log in
-        $signin = $this->json('POST', 'api/unauth/signIn', ['username' => 'amro' , 'password' => '123456789' ]);
+        $signin = $this->json('POST', 'api/v1/unauth/signIn', ['username' => 'amro' , 'password' => '123456789' ]);
         $token = $signin->json('token');
         $headers = ["Authorization" => "Bearer $token"];
 
 
-        $response = $this->json('GET' , 'api/auth/viewHiddenPosts' , [] , $headers);
+        $response = $this->json('GET' , 'api/v1/auth/viewHiddenPosts' , [] , $headers);
         $response->assertStatus(200);
         $posts = $response->json('posts');
         $this->assertTrue($this->check_Hidden($posts , 'amro')==1);
@@ -84,18 +84,18 @@ class ViewHiddenPostsTest extends TestCase
 
         //logingout
 
-        $logout = $this->json('POST', 'api/auth/signOut')->withHeaders([
+        $logout = $this->json('POST', 'api/v1/auth/signOut')->withHeaders([
             'Authorization' => "Bearer $token"
         ]);
 
 
         //log in
-        $signin = $this->json('POST', 'api/unauth/signIn', ['username' => 'menna' , 'password' => '123456789' ]);
+        $signin = $this->json('POST', 'api/v1/unauth/signIn', ['username' => 'menna' , 'password' => '123456789' ]);
         $token = $signin->json('token');
         $headers = ["Authorization" => "Bearer $token"];
 
 
-        $response = $this->json('GET' , 'api/auth/viewHiddenPosts' , [] , $headers);
+        $response = $this->json('GET' , 'api/v1/auth/viewHiddenPosts' , [] , $headers);
         $response->assertStatus(200);
         $posts = $response->json('posts');
         $this->assertTrue($this->check_Hidden($posts , 'menna')==1);
@@ -103,7 +103,7 @@ class ViewHiddenPostsTest extends TestCase
 
         //logingout
 
-        $logout = $this->json('POST', 'api/auth/signOut')->withHeaders([
+        $logout = $this->json('POST', 'api/v1/auth/signOut')->withHeaders([
             'Authorization' => "Bearer $token"
         ]);
 

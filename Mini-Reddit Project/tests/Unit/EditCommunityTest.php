@@ -18,7 +18,7 @@ class EditCommunityTest extends TestCase
         $payload = ['community_id' => $community1->community_id,'rules_content' => "nnnnn",'des_content' => "llllll",
             'banner' => UploadedFile::fake()->image('random.jpg'),'logo' => UploadedFile::fake()->image('random.jpg')];
 
-        $this->json('POST', 'api/auth/editCommunity', $payload, [])
+        $this->json('POST', 'api/v1/auth/editCommunity', $payload, [])
           ->assertStatus(401)
           ->assertJson([
               "success" => "false",
@@ -37,7 +37,7 @@ class EditCommunityTest extends TestCase
         $payload = ['community_id' => (Community::getMaxId() + 1),'rules_content' => "nnnnn",'des_content' => "llllll",
             'banner' => UploadedFile::fake()->image('random.jpg'),'logo' => UploadedFile::fake()->image('random.jpg')];
 
-        $this->json('POST', 'api/auth/editCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/editCommunity', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               "success" => "false",
@@ -59,7 +59,7 @@ class EditCommunityTest extends TestCase
         $payload = ['community_id' => $community1->community_id,'rules_content' => "nnnnn",'des_content' => "llllll",
             'banner' => UploadedFile::fake()->image('random.jpg'),'logo' => UploadedFile::fake()->image('random.jpg')];
 
-        $this->json('POST', 'api/auth/editCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/editCommunity', $payload, $headers)
         ->assertStatus(403)
         ->assertJson([
             "success" => "false",
@@ -84,7 +84,7 @@ class EditCommunityTest extends TestCase
         $payload = ['community_id' => $community1->community_id,'rules_content' => "nnnnn",'des_content' => "llllll",
             'banner' => UploadedFile::fake()->image('random.jpg'),'logo' => 'kkk'];
 
-        $this->json('POST', 'api/auth/editCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/editCommunity', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               "success" => "false",
@@ -109,7 +109,7 @@ class EditCommunityTest extends TestCase
         $payload = ['community_id' => $community1->community_id,'rules_content' => "nnnnn",'des_content' => "llllll",
             'banner' => 'kkk','logo' => UploadedFile::fake()->image('random.jpg')];
 
-        $this->json('POST', 'api/auth/editCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/editCommunity', $payload, $headers)
         ->assertStatus(403)
         ->assertJson([
             "success" => "false",
@@ -135,7 +135,7 @@ class EditCommunityTest extends TestCase
         $payload = ['community_id' => $community1->community_id,'rules_content' => "nnnnn",'des_content' => "llllll",
             'banner' => UploadedFile::fake()->image('random.jpg'),'logo' => UploadedFile::fake()->image('random.jpg')];
 
-        $this->json('POST', 'api/auth/editCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/editCommunity', $payload, $headers)
         ->assertStatus(200)
         ->assertJson([
             "success" => "true"

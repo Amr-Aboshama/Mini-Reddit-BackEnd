@@ -40,52 +40,52 @@ class viewCommentsAndRepliesTest extends TestCase
 
     public function testAll()
     {
-        $this->json('GET' , 'api/unauth/viewCommentsReplies' , [] )->assertStatus(403)->assertJson([
+        $this->json('GET' , 'api/v1/unauth/viewCommentsReplies' , [] )->assertStatus(403)->assertJson([
             'success' => 'false',
             'error' => 'the link_id is required'
         ]);
 
-        $response = $this->json('GET' , 'api/unauth/viewCommentsReplies' , ['link_id' => 1]);
+        $response = $this->json('GET' , 'api/v1/unauth/viewCommentsReplies' , ['link_id' => 1]);
         $response->assertStatus(200);
         $links = $response->json('comments');
         $this->assertTrue($this->doTheAlreadyBelong($links , 1) == 1);
         $this->assertTrue($this->sorted($links)==1);
 
 
-        $response = $this->json('GET' , 'api/unauth/viewCommentsReplies' , ['link_id' => 2]);
+        $response = $this->json('GET' , 'api/v1/unauth/viewCommentsReplies' , ['link_id' => 2]);
         $response->assertStatus(200);
         $links = $response->json('comments');
         $this->assertTrue($this->doTheAlreadyBelong($links , 2) == 1);
         $this->assertTrue($this->sorted($links)==1);
 
 
-        $response = $this->json('GET' , 'api/unauth/viewCommentsReplies' , ['link_id' => 11]);
+        $response = $this->json('GET' , 'api/v1/unauth/viewCommentsReplies' , ['link_id' => 11]);
         $response->assertStatus(200);
         $links = $response->json('comments');
         $this->assertTrue($this->doTheAlreadyBelong($links , 11) == 1);
         $this->assertTrue($this->sorted($links)==1);
 
 
-        $response = $this->json('GET' , 'api/unauth/viewCommentsReplies' , ['link_id' => 12]);
+        $response = $this->json('GET' , 'api/v1/unauth/viewCommentsReplies' , ['link_id' => 12]);
         $response->assertStatus(200);
         $links = $response->json('comments');
         $this->assertTrue($this->doTheAlreadyBelong($links , 12) == 1);
         $this->assertTrue($this->sorted($links)==1);
 
-        $response = $this->json('GET' , 'api/unauth/viewCommentsReplies' , ['link_id' => 13]);
+        $response = $this->json('GET' , 'api/v1/unauth/viewCommentsReplies' , ['link_id' => 13]);
         $response->assertStatus(200);
         $links = $response->json('comments');
         $this->assertTrue($this->doTheAlreadyBelong($links , 13) == 1);
         $this->assertTrue($this->sorted($links)==1);
 
-        $response = $this->json('GET' , 'api/unauth/viewCommentsReplies' , ['link_id' => 14]);
+        $response = $this->json('GET' , 'api/v1/unauth/viewCommentsReplies' , ['link_id' => 14]);
         $response->assertStatus(200);
         $links = $response->json('comments');
         $this->assertTrue($this->doTheAlreadyBelong($links , 14) == 1);
         $this->assertTrue($this->sorted($links)==1);
 
 
-        $response = $this->json('GET' , 'api/unauth/viewCommentsReplies' , ['link_id' => 2]);
+        $response = $this->json('GET' , 'api/v1/unauth/viewCommentsReplies' , ['link_id' => 2]);
         $response->assertStatus(200);
         $links = $response->json('comments');
         $this->assertTrue($this->doTheAlreadyBelong($links , 2) == 1);

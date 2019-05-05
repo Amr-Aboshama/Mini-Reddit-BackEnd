@@ -28,7 +28,7 @@ class ChangePasswordTest extends TestCase
         auth()->logout();
 
 
-        $this->json('PATCH', 'api/auth/changePassword', ['password' => 'armne123456',
+        $this->json('PATCH', 'api/v1/auth/changePassword', ['password' => 'armne123456',
             'new_password' => 'newarmne123456', 'confirm_new_password' => 'newarmne123456'], $headers)
             ->assertStatus(401)
             ->assertJson([
@@ -56,7 +56,7 @@ class ChangePasswordTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('PATCH', 'api/auth/changePassword', ['password' => 'armne123456',
+        $this->json('PATCH', 'api/v1/auth/changePassword', ['password' => 'armne123456',
             'new_password' => 'newarmne123456', 'confirm_new_password' => 'newarmne123456'], $headers)
             ->assertStatus(200)
             ->assertJson([
@@ -87,7 +87,7 @@ class ChangePasswordTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('PATCH', 'api/auth/changePassword', ['password' => 'armne12345',
+        $this->json('PATCH', 'api/v1/auth/changePassword', ['password' => 'armne12345',
             'new_password' => 'newarmne123456', 'confirm_new_password' => 'newarmne123456'], $headers)
             ->assertStatus(404)
             ->assertJson([
@@ -115,7 +115,7 @@ class ChangePasswordTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('PATCH', 'api/auth/changePassword', ['password' => 'armne123456',
+        $this->json('PATCH', 'api/v1/auth/changePassword', ['password' => 'armne123456',
             'new_password' => 'newarmne123456', 'confirm_new_password' => 'nnewarmne123456'], $headers)
             ->assertStatus(404)
             ->assertJson([

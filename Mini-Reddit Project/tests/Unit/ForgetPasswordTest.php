@@ -12,14 +12,14 @@ class ForgetPasswordTest extends TestCase
      */
     public function testEmailNonExistance()
     {
-        $this->json('POST', 'api/unauth/forgetPassword', [], [])
+        $this->json('POST', 'api/v1/unauth/forgetPassword', [], [])
               ->assertStatus(404)
               ->assertJson([
                   'success' => 'false',
                   'error' => 'email doesn\'t exist',
                 ]);
 
-        $this->json('POST', 'api/unauth/forgetPassword', [], [])
+        $this->json('POST', 'api/v1/unauth/forgetPassword', [], [])
               ->assertStatus(404)
               ->assertJson([
                   'success' => 'false',
@@ -38,7 +38,7 @@ class ForgetPasswordTest extends TestCase
           'email' => 'testFP1@testFP1.com',
         ]);
 
-        $this->json('POST', 'api/unauth/forgetPassword', ['email' => $user->email], [])
+        $this->json('POST', 'api/v1/unauth/forgetPassword', ['email' => $user->email], [])
               ->assertStatus(200)
               ->assertJson([
                   'success' => 'true',

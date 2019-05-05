@@ -13,7 +13,7 @@ class CreateCommunityTest extends TestCase
     public function testUnAuthorizationOfUser()
     {
         $payload = ['community_name' => 'testkokowawa'];
-        $this->json('POST', 'api/auth/createCommunity', $payload, [])
+        $this->json('POST', 'api/v1/auth/createCommunity', $payload, [])
           ->assertStatus(401)
           ->assertJson([
               "success" => "false",
@@ -27,7 +27,7 @@ class CreateCommunityTest extends TestCase
         $headers = [$token];
 
         $payload = ['community_name' => 'testkokowawa'];
-        $this->json('POST', 'api/auth/createCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/createCommunity', $payload, $headers)
         ->assertStatus(403)
         ->assertJson([
             "success" => "false",
@@ -51,7 +51,7 @@ class CreateCommunityTest extends TestCase
         $community1 = Community::createDummyCommunity('testkokowawa');
 
         $payload = ['community_name' => 'testkokowawa'];
-        $this->json('POST', 'api/auth/createCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/createCommunity', $payload, $headers)
         ->assertStatus(403)
         ->assertJson([
             "success" => "false",
@@ -73,7 +73,7 @@ class CreateCommunityTest extends TestCase
         $headers = [$token];
 
         $payload = ['community_name' => 'testkokowawa'];
-        $this->json('POST', 'api/auth/createCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/createCommunity', $payload, $headers)
         ->assertStatus(200)
         ->assertJson([
             "success" => "true",

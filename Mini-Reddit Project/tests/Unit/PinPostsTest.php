@@ -36,7 +36,7 @@ class PinPostsTest extends TestCase
         auth()->logout($user);
 
         $payload = ['post_id' => $post->id];
-        $this->json('PATCH', 'api/auth/pinPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/pinPost', $payload, $headers)
           ->assertStatus(401)
           ->assertJson([
               'success' => 'false',
@@ -71,7 +71,7 @@ class PinPostsTest extends TestCase
         Link::removeLink($post->id);
         $this->assertEquals(DB::table('links')->count(), $links_cnt);
         $payload = ['post_id' => $post->id];
-        $this->json('PATCH', 'api/auth/pinPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/pinPost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -96,7 +96,7 @@ class PinPostsTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('PATCH', 'api/auth/pinPost', [], $headers)
+        $this->json('PATCH', 'api/v1/auth/pinPost', [], $headers)
            ->assertStatus(403)
            ->assertJson([
                'success' => 'false',
@@ -129,7 +129,7 @@ class PinPostsTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['post_id' => $comment->id];
-        $this->json('PATCH', 'api/auth/pinPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/pinPost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -161,7 +161,7 @@ class PinPostsTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['post_id' => $post->id];
-        $this->json('PATCH', 'api/auth/pinPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/pinPost', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true',
@@ -192,7 +192,7 @@ class PinPostsTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['post_id' => $post->id];
-        $this->json('PATCH', 'api/auth/pinPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/pinPost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -229,7 +229,7 @@ class PinPostsTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['post_id' => $post->id];
-        $this->json('PATCH', 'api/auth/pinPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/pinPost', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'
@@ -263,7 +263,7 @@ class PinPostsTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['post_id' => $post->id];
-        $this->json('PATCH', 'api/auth/pinPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/pinPost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',

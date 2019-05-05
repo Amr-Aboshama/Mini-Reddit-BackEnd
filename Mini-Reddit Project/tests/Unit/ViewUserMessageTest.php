@@ -36,7 +36,7 @@ class ViewUserMessageTest extends TestCase
 
         auth()->logout();
 
-        $this->json('GET', 'api/auth/viewUserMessage', ['message_id'=>$message->message_id], $headers)
+        $this->json('GET', 'api/v1/auth/viewUserMessage', ['message_id'=>$message->message_id], $headers)
             ->assertStatus(401);
 
         $senderuser->delete();
@@ -70,7 +70,7 @@ class ViewUserMessageTest extends TestCase
 
        
 
-        $this->json('GET', 'api/auth/viewUserMessage', ['message_id'=>''], $headers)
+        $this->json('GET', 'api/v1/auth/viewUserMessage', ['message_id'=>''], $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -79,14 +79,14 @@ class ViewUserMessageTest extends TestCase
 
 
 
-        $this->json('GET', 'api/auth/viewUserMessage', [], $headers)
+        $this->json('GET', 'api/v1/auth/viewUserMessage', [], $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
                 "error" => "message doesn't exist"
             ]);
 
-        $this->json('GET', 'api/auth/viewUserMessage', ['message_id'=>$message->message_id+1], $headers)
+        $this->json('GET', 'api/v1/auth/viewUserMessage', ['message_id'=>$message->message_id+1], $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -127,7 +127,7 @@ class ViewUserMessageTest extends TestCase
         $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
 
-        $this->json('GET', 'api/auth/viewUserMessage', ['message_id'=>$message->message_id], $headers)
+        $this->json('GET', 'api/v1/auth/viewUserMessage', ['message_id'=>$message->message_id], $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true",

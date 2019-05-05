@@ -14,7 +14,7 @@ class ViewCommunityInformationTest extends TestCase
 
       $community1 = Community::createDummyCommunity('testkokowawa');
       $payload = [];
-      $this->json('get', 'api/unauth/communityInformation', $payload, [])
+      $this->json('get', 'api/v1/unauth/communityInformation', $payload, [])
           ->assertStatus(422)
           ->assertJson([
               "success" => "false",
@@ -31,7 +31,7 @@ class ViewCommunityInformationTest extends TestCase
       $community_idd=$community1->community_id;
       $community1->delete();
       $payload = ['community_id'=>$community_idd];
-      $this->json('get', 'api/unauth/communityInformation', $payload, [])
+      $this->json('get', 'api/v1/unauth/communityInformation', $payload, [])
           ->assertStatus(403)
           ->assertJson([
               "success" => "false",
@@ -44,7 +44,7 @@ class ViewCommunityInformationTest extends TestCase
 
       $community1 = Community::createDummyCommunity('testkokowawa');
       $payload = ['community_id'=>$community1->community_id];
-      $this->json('get', 'api/unauth/communityInformation', $payload, [])
+      $this->json('get', 'api/v1/unauth/communityInformation', $payload, [])
           ->assertStatus(200)
           ->assertJson([
               "success" => "true",

@@ -47,7 +47,7 @@ class SignOutTest extends TestCase
 
         $headers = [$token];
 
-        $this->json('POST', 'api/auth/signOut', [], $headers)
+        $this->json('POST', 'api/v1/auth/signOut', [], $headers)
             ->assertStatus(200)
             ->assertJson([
                 'success' => 'true'
@@ -62,7 +62,7 @@ class SignOutTest extends TestCase
      */
     public function InvalidResponse($headers)
     {
-        $this->json('POST', 'api/auth/signOut', [], $headers)
+        $this->json('POST', 'api/v1/auth/signOut', [], $headers)
             ->assertStatus(401)
             ->assertJson([
                 'success' => 'false',

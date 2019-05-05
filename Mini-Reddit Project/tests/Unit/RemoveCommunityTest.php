@@ -16,7 +16,7 @@ class RemoveCommunityTest extends TestCase
         $community1 = Community::createDummyCommunity('testkokowawa');
 
         $payload = ['community_id' => $community1->community_id ];
-        $this->json('POST', 'api/auth/removeCommunity', $payload, [])
+        $this->json('POST', 'api/v1/auth/removeCommunity', $payload, [])
           ->assertStatus(401)
           ->assertJson([
               "success" => "false",
@@ -32,7 +32,7 @@ class RemoveCommunityTest extends TestCase
         $headers = [$token];
 
         $payload = ['community_id' => (Community::getMaxId() + 1) ];
-        $this->json('POST', 'api/auth/removeCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/removeCommunity', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               "success" => "false",
@@ -54,7 +54,7 @@ class RemoveCommunityTest extends TestCase
 
         $payload = ['community_id' => $community1->community_id ];
 
-        $this->json('POST', 'api/auth/removeCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/removeCommunity', $payload, $headers)
         ->assertStatus(403)
         ->assertJson([
             "success" => "false",
@@ -78,7 +78,7 @@ class RemoveCommunityTest extends TestCase
 
         $payload = ['community_id' => $community1->community_id ];
 
-        $this->json('POST', 'api/auth/removeCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/removeCommunity', $payload, $headers)
         ->assertStatus(200)
         ->assertJson([
             "success" => "true"

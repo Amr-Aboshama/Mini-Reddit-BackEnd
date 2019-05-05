@@ -36,7 +36,7 @@ class UpvotedPostsTest extends TestCase
 
     public function testUnauthorizedUsers()
     {
-        $this->json('GET', 'api/auth/viewUpOrDownvotedPosts', ['type' => '1'])->assertStatus(401)->assertJson([
+        $this->json('GET', 'api/v1/auth/viewUpOrDownvotedPosts', ['type' => '1'])->assertStatus(401)->assertJson([
             "success" => "false",
             "error" => "UnAuthorized"
         ]);
@@ -46,27 +46,27 @@ class UpvotedPostsTest extends TestCase
     {
         //logging in a user "ahmed"...
 
-        $signIn = $this->json('POST', 'api/unauth/signIn', ['username' => 'ahmed' , 'password' => '123456789']);
+        $signIn = $this->json('POST', 'api/v1/unauth/signIn', ['username' => 'ahmed' , 'password' => '123456789']);
         $token = $signIn->json('token');
         $headers = ["Authorization" => "Bearer $token"];
 
         //type of posts is missed...
 
-        $response = $this->json('GET', 'api/auth/viewUpOrDownvotedPosts', [], $headers)->assertStatus(403)->assertJson([
+        $response = $this->json('GET', 'api/v1/auth/viewUpOrDownvotedPosts', [], $headers)->assertStatus(403)->assertJson([
             'success' => 'false',
             'error' => 'type is required'
         ]);
 
         //sending undefined type....
 
-        $response = $this->json('GET', 'api/auth/viewUpOrDownvotedPosts', ['type' => 5], $headers)->assertStatus(403)->assertJson([
+        $response = $this->json('GET', 'api/v1/auth/viewUpOrDownvotedPosts', ['type' => 5], $headers)->assertStatus(403)->assertJson([
             'success' => 'false',
             'error' => 'type is undefined it must be one for upvoted posts and 0 for downvoted ones'
         ]);
 
         //sending a type of upvoted posts....
 
-        $response = $this->json('GET', 'api/auth/viewUpOrDownvotedPosts', ['type' => 1], $headers);
+        $response = $this->json('GET', 'api/v1/auth/viewUpOrDownvotedPosts', ['type' => 1], $headers);
         $posts = $response->json('posts');
 
         //testing the are already posts...
@@ -78,7 +78,7 @@ class UpvotedPostsTest extends TestCase
 
         $this->assertTrue($this->checkUpvoted($posts, 'ahmed') == 1);
 
-        $logout = $this->json('POST', 'api/auth/signOut')->withHeaders([
+        $logout = $this->json('POST', 'api/v1/auth/signOut')->withHeaders([
             'Authorization' => "Bearer $token"
         ]);
     }

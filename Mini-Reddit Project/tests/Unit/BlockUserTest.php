@@ -13,7 +13,7 @@ class BlockUserTest extends TestCase
 {
     public function testUnAuthorizedUser()
     {
-        $this->json('POST', 'api/auth/blockUser', [], [])
+        $this->json('POST', 'api/v1/auth/blockUser', [], [])
             ->assertStatus(401)
             ->assertJson([
                 "success" => "false",
@@ -33,7 +33,7 @@ class BlockUserTest extends TestCase
 
         $headers = [$token];
         $payload = ['username' => 'tes'];
-        $this->json('POST', 'api/auth/blockUser', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/blockUser', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -41,7 +41,7 @@ class BlockUserTest extends TestCase
             ]);
 
         $payload = ['username' => ''];
-        $this->json('POST', 'api/auth/blockUser', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/blockUser', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -71,7 +71,7 @@ class BlockUserTest extends TestCase
 
         $headers = [$token];
         $payload = ['username' => $user2->username];
-        $this->json('POST', 'api/auth/blockUser', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/blockUser', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -102,7 +102,7 @@ class BlockUserTest extends TestCase
 
         $headers = [$token];
         $payload = ['username' => $user2->username];
-        $this->json('POST', 'api/auth/blockUser', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/blockUser', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -134,7 +134,7 @@ class BlockUserTest extends TestCase
 
         $headers = [$token];
         $payload = ['username' => $user2->username];
-        $this->json('POST', 'api/auth/blockUser', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/blockUser', $payload, $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true"

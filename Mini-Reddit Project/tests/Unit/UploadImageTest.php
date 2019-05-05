@@ -30,7 +30,7 @@ class UploadImageTest extends TestCase
 
         $payload = ['uploaded_image' => UploadedFile::fake()->image('test_image.jpg')];
 
-        $this->json('POST', 'api/auth/uploadImage', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/uploadImage', $payload, $headers)
           ->assertStatus(401)
           ->assertJson([
               'success' => 'false',
@@ -58,7 +58,7 @@ class UploadImageTest extends TestCase
 
         $payload = ['uploaded_image' => UploadedFile::fake()->image('test_image.jpg')];
 
-        $this->json('POST', 'api/auth/uploadImage', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/uploadImage', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true',
@@ -87,7 +87,7 @@ class UploadImageTest extends TestCase
 
         $payload = ['uploaded_image' => UploadedFile::fake()->image('test_image.jpg')->size(2001)];
 
-        $this->json('POST', 'api/auth/uploadImage', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/uploadImage', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
             'success' => 'false',
@@ -115,7 +115,7 @@ class UploadImageTest extends TestCase
 
         $payload = ['uploaded_image' => UploadedFile::fake()->image('test_image.mp3')];
 
-        $this->json('POST', 'api/auth/uploadImage', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/uploadImage', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
             'success' => 'false',
@@ -141,7 +141,7 @@ class UploadImageTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('POST', 'api/auth/uploadImage', [], $headers)
+        $this->json('POST', 'api/v1/auth/uploadImage', [], $headers)
           ->assertStatus(403)
           ->assertJson([
             'success' => 'false',

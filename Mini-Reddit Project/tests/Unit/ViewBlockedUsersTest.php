@@ -12,7 +12,7 @@ class ShowBlockedUsersTest extends TestCase
 {
     public function testUnAuthorizedUser()
     {
-        $this->json('GET', 'api/auth/blockedUsers', [], [])
+        $this->json('GET', 'api/v1/auth/blockedUsers', [], [])
             ->assertStatus(401)
             ->assertJson([
                 "success" => "false",
@@ -41,7 +41,7 @@ class ShowBlockedUsersTest extends TestCase
         $token = auth()->login($user[0]);
         $headers = [$token];
 
-        $this->json('GET', 'api/auth/blockedUsers', [], $headers)
+        $this->json('GET', 'api/v1/auth/blockedUsers', [], $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true",

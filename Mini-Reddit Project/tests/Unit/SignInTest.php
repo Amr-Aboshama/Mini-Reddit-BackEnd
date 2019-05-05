@@ -32,7 +32,7 @@ class SignInTest extends TestCase
 
         $payload = ['username' => 'testo' . 'x', 'password' => 'armne123456'];
 
-        $this->json('POST', 'api/unauth/signIn', $payload)
+        $this->json('POST', 'api/v1/unauth/signIn', $payload)
             ->assertStatus(404)
             ->assertJson([
                 'success' => 'false',
@@ -51,7 +51,7 @@ class SignInTest extends TestCase
 
         $payload = ['username' => 'testo', 'password' => 'armne123456'];
 
-        $this->json('POST', 'api/unauth/signIn', $payload)
+        $this->json('POST', 'api/v1/unauth/signIn', $payload)
             ->assertStatus(200)
             ->assertJson([
                 'success' => 'true'
@@ -68,7 +68,7 @@ class SignInTest extends TestCase
      */
     public function MissedResponse($payload)
     {
-        $this->json('POST', 'api/unauth/signIn', $payload)
+        $this->json('POST', 'api/v1/unauth/signIn', $payload)
             ->assertStatus(422)
             ->assertJson([
                 'success' => 'false',
