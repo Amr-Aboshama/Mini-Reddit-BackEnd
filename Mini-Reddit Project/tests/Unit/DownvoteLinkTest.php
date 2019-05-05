@@ -40,7 +40,7 @@ class DownvoteLinkTest extends TestCase
         $this->assertEquals(DB::table('upvoted_links')->count(), $upvoted_cnt + 1);
         Link::incrementUpvotes($link->id);
         $payload = ['link_id' => $link->id];
-        $this->json('POST', 'api/auth/downvoteLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/downvoteLink', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'
@@ -76,7 +76,7 @@ class DownvoteLinkTest extends TestCase
         $headers = [$token];
 
         $payload = ['link_id' => $link->id];
-        $this->json('POST', 'api/auth/downvoteLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/downvoteLink', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'
@@ -113,7 +113,7 @@ class DownvoteLinkTest extends TestCase
         Link::removeLink($link->id);
         $this->assertEquals(DB::table('links')->count(), $links_cnt);
         $payload = ['link_id' => $link->id];
-        $this->json('POST', 'api/auth/downvoteLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/downvoteLink', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -149,7 +149,7 @@ class DownvoteLinkTest extends TestCase
         auth()->logout($user);
 
         $payload = ['link_id' => $link->id];
-        $this->json('POST', 'api/auth/downvoteLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/downvoteLink', $payload, $headers)
           ->assertStatus(401)
           ->assertJson([
               'success' => 'false',
@@ -186,7 +186,7 @@ class DownvoteLinkTest extends TestCase
         $this->assertEquals(DB::table('downvoted_links')->count(), $downvoted_cnt + 1);
         Link::incrementDownvotes($link->id);
         $payload = ['link_id' => $link->id];
-        $this->json('POST', 'api/auth/downvoteLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/downvoteLink', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'
@@ -211,7 +211,7 @@ class DownvoteLinkTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('POST', 'api/auth/downvoteLink', [], $headers)
+        $this->json('POST', 'api/v1/auth/downvoteLink', [], $headers)
            ->assertStatus(403)
            ->assertJson([
                'success' => 'false',

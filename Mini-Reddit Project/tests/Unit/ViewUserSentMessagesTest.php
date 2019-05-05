@@ -48,7 +48,7 @@ class ViewUserSentMessagesTest extends TestCase
 
 
 
-        $this->json('GET', 'api/auth/viewUserSentMessages', [], $headers)
+        $this->json('GET', 'api/v1/auth/viewUserSentMessages', [], $headers)
             ->assertStatus(401)
             ->assertJson([
                 "success" => "false",
@@ -96,7 +96,7 @@ class ViewUserSentMessagesTest extends TestCase
 
 
 
-        $this->json('GET', 'api/auth/viewUserSentMessages', [], $headers)
+        $this->json('GET', 'api/v1/auth/viewUserSentMessages', [], $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true",

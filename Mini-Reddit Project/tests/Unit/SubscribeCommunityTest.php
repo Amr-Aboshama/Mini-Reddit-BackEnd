@@ -19,7 +19,7 @@ class SubscribeCommunityTest extends TestCase
         $headers = [$token];
 
         $payload = ['community_id' => 'lllll'];
-        $this->json('POST', 'api/auth/subscribeCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/subscribeCommunity', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -35,7 +35,7 @@ class SubscribeCommunityTest extends TestCase
         $community1 = Community::createDummyCommunity('testkokowawa');
 
         $payload = ['community_id' => $community1->community_id];
-        $this->json('POST', 'api/auth/subscribeCommunity', $payload, [])
+        $this->json('POST', 'api/v1/auth/subscribeCommunity', $payload, [])
             ->assertStatus(401)
             ->assertJson([
                 "success" => "false",
@@ -56,7 +56,7 @@ class SubscribeCommunityTest extends TestCase
         $headers = [$token];
 
         $payload = ['community_id' => $community1->community_id];
-        $this->json('POST', 'api/auth/subscribeCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/subscribeCommunity', $payload, $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true"
@@ -79,7 +79,7 @@ class SubscribeCommunityTest extends TestCase
         $subscribtion1 = Subscribtion::createDummySubscribtion($community1->community_id, 'test99');
 
         $payload = ['community_id' => $community1->community_id];
-        $this->json('POST', 'api/auth/subscribeCommunity', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/subscribeCommunity', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",

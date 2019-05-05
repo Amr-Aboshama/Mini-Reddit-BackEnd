@@ -37,7 +37,7 @@ class EditPostTest extends TestCase
         auth()->logout($user);
 
         $payload = ['post_id' => $link->id, 'new_content' => 'edit post'];
-        $this->json('PATCH', 'api/auth/editPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/editPost', $payload, $headers)
           ->assertStatus(401)
           ->assertJson([
               'success' => 'false',
@@ -71,7 +71,7 @@ class EditPostTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('PATCH', 'api/auth/editPost', [], $headers)
+        $this->json('PATCH', 'api/v1/auth/editPost', [], $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -109,7 +109,7 @@ class EditPostTest extends TestCase
         $headers = [$token];
 
         $payload = ['post_id' => $link->id, 'new_content' => 'edit post'];
-        $this->json('PATCH', 'api/auth/editPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/editPost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
             'success' => 'false',
@@ -150,7 +150,7 @@ class EditPostTest extends TestCase
         $headers = [$token];
 
         $payload = ['post_id' => $comment->id, 'new_content' => 'edit post'];
-        $this->json('PATCH', 'api/auth/editPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/editPost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
             'success' => 'false',
@@ -190,7 +190,7 @@ class EditPostTest extends TestCase
         $headers = [$token];
 
         $payload = ['post_id' => $link->id, 'new_content' => 'edit post'];
-        $this->json('PATCH', 'api/auth/editPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/editPost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
             'success' => 'false',
@@ -226,7 +226,7 @@ class EditPostTest extends TestCase
         $headers = [$token];
 
         $payload = ['post_id' => $link->id, 'new_content' => 'test link content'];
-        $this->json('PATCH', 'api/auth/editPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/editPost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
             'success' => 'false',
@@ -262,7 +262,7 @@ class EditPostTest extends TestCase
 
         $payload = ['post_id' => $link->id, 'new_content' => 'edit post', 'new_title' => 'edit title',
             'new_image' => 'storage/post_images/test.jpg', 'new_video_url' => 'https://www.youtube.com/'];
-        $this->json('PATCH', 'api/auth/editPost', $payload, $headers)
+        $this->json('PATCH', 'api/v1/auth/editPost', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
             'success' => 'true'

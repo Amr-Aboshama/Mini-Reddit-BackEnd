@@ -13,7 +13,7 @@ class ResetPasswordTest extends TestCase
      */
     public function testWrongLink()
     {
-        $this->json('POST', 'api/unauth/resetPassword/123', [
+        $this->json('POST', 'api/v1/unauth/resetPassword/123', [
           'password' => '123456789',
           'password_confirmation' => '123456789', ],
            [])
@@ -29,7 +29,7 @@ class ResetPasswordTest extends TestCase
      */
     public function testPasswordMisMatch()
     {
-        $this->json('POST', 'api/unauth/resetPassword/123', [
+        $this->json('POST', 'api/v1/unauth/resetPassword/123', [
           'password' => '123456789',
           'password_confirmation' => '1234', ],
             [])
@@ -39,7 +39,7 @@ class ResetPasswordTest extends TestCase
                   'error' => 'Passwords don\'t match',
               ]);
 
-        $this->json('POST', 'api/unauth/resetPassword/123', [
+        $this->json('POST', 'api/v1/unauth/resetPassword/123', [
           'password' => '123',
           'password_confirmation' => '123', ],
             [])
@@ -63,7 +63,7 @@ class ResetPasswordTest extends TestCase
 
         $hash = PasswordReset::createPasswordReset($user->email);
         $new_password = '987654321';
-        $this->json('POST', 'api/unauth/resetPassword/'.$hash, [
+        $this->json('POST', 'api/v1/unauth/resetPassword/'.$hash, [
           'password' => $new_password,
           'password_confirmation' => $new_password, ],
             [])

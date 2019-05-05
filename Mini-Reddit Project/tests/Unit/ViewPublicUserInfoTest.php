@@ -22,7 +22,7 @@ class ViewPublicUserInfoTest extends TestCase
             'password' => 'armne123456',
         ]);
 
-        $this->json('GET', 'api/unauth/viewPublicUserInfo', ['username' => 'testo1'])
+        $this->json('GET', 'api/v1/unauth/viewPublicUserInfo', ['username' => 'testo1'])
             ->assertStatus(200)
             ->assertJson($this->validReturn("testo1"));
 
@@ -35,14 +35,14 @@ class ViewPublicUserInfoTest extends TestCase
      */
     public function testNonexistingUserPublicInfo()
     {
-        $this->json('GET', 'api/unauth/viewPublicUserInfo', [])
+        $this->json('GET', 'api/v1/unauth/viewPublicUserInfo', [])
             ->assertStatus(403)
             ->assertJson([
                 'success' => 'false',
                 "error" => "username doesn't exist"
             ]);
 
-        $this->json('GET', 'api/unauth/viewPublicUserInfo', ['username' => 'nonexistinguser'])
+        $this->json('GET', 'api/v1/unauth/viewPublicUserInfo', ['username' => 'nonexistinguser'])
             ->assertStatus(403)
             ->assertJson([
                 'success' => 'false',

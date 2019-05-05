@@ -16,14 +16,14 @@ class SearchTest extends TestCase
      */
     public function testSearchWithNoContent()
     {
-        $this->json('GET', 'api/unauth/search', ['search_content' => null])
+        $this->json('GET', 'api/v1/unauth/search', ['search_content' => null])
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
                 "error" => "search content is empty"
             ]);
 
-        $this->json('GET', 'api/unauth/search', [])
+        $this->json('GET', 'api/v1/unauth/search', [])
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -47,7 +47,7 @@ class SearchTest extends TestCase
 
         $payload = ['search_content' => 'testo2'];
 
-        $this->json('GET', 'api/unauth/search', ['search_content' => 'testo'])
+        $this->json('GET', 'api/v1/unauth/search', ['search_content' => 'testo'])
             ->assertStatus(200)
             ->assertJson([
                 "usernames" => ["testo2zzzzzz"],
@@ -80,7 +80,7 @@ class SearchTest extends TestCase
 
         $headers = [$token];
         $payload = ['search_content' => 'tes'];
-        $this->json('GET', 'api/unauth/search', $payload, $headers)
+        $this->json('GET', 'api/v1/unauth/search', $payload, $headers)
             ->assertStatus(200)
             ->assertJson([
                 "usernames" => [],

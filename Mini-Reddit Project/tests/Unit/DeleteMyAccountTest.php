@@ -26,7 +26,7 @@ class DeleteMyAccountTest extends TestCase
         $headers = [$token];
 
 
-        // $this->json('POST', 'api/auth/deleteMyAccount', ['password'=>'123456789'], [])
+        // $this->json('POST', 'api/v1/auth/deleteMyAccount', ['password'=>'123456789'], [])
         //     ->assertStatus(401)
         //     ->assertJson([
         //         "success" => "false",
@@ -36,7 +36,7 @@ class DeleteMyAccountTest extends TestCase
         
         auth()->logout();
 
-        $this->json('POST', 'api/auth/deleteMyAccount', ['password'=>'123456789'], $headers)
+        $this->json('POST', 'api/v1/auth/deleteMyAccount', ['password'=>'123456789'], $headers)
             ->assertStatus(401)
             ->assertJson([
                 "success" => "false",
@@ -62,7 +62,7 @@ class DeleteMyAccountTest extends TestCase
         $headers = [$token];
 
 
-        $this->json('POST', 'api/auth/deleteMyAccount', ['password'=>'1234567899'], $headers)
+        $this->json('POST', 'api/v1/auth/deleteMyAccount', ['password'=>'1234567899'], $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -88,7 +88,7 @@ class DeleteMyAccountTest extends TestCase
         $headers = [$token];
 
 
-        $this->json('POST', 'api/auth/deleteMyAccount', ['password'=>'123456789'], $headers)
+        $this->json('POST', 'api/v1/auth/deleteMyAccount', ['password'=>'123456789'], $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true"

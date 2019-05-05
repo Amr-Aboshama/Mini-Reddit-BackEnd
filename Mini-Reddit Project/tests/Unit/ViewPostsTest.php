@@ -115,24 +115,24 @@ class ViewPostsTest extends TestCase
     {
         // unauthorized user
         //home page
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['page_type' => 0]);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['page_type' => 0]);
         $posts = $response1->json('posts');
         //testing that posts are sorted by upvotes
         $this->assertTrue($this->checkPopular($posts) == 1);
         //home page
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['page_type' => 1])->assertStatus(403)->assertJson([
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['page_type' => 1])->assertStatus(403)->assertJson([
             "success" => "false",
             "error" => "Something wrong!!"
         ]);
         //no parameters are sent
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', [])->assertStatus(403)->assertJson([
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', [])->assertStatus(403)->assertJson([
             "success" => "false",
             "error" => "Something wrong!!"
         ]);
 
 
         //posts of user "ahmed"
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['username' => 'ahmed']);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['username' => 'ahmed']);
         $posts = $response1->json('posts');
         //check that the posts are alredy belong to that user
         $this->assertTrue($this->checkPostOfUser($posts, 'ahmed') == 1);
@@ -143,7 +143,7 @@ class ViewPostsTest extends TestCase
 
         //posts of user "amr"
 
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['username' => 'amro']);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['username' => 'amro']);
         $posts = $response1->json('posts');
         //check that the posts are alredy belong to that user
         $this->assertTrue($this->checkPostOfUser($posts, 'amro') == 1);
@@ -154,7 +154,7 @@ class ViewPostsTest extends TestCase
 
         //posts of user "nour"
 
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['username' => 'nour']);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['username' => 'nour']);
         $posts = $response1->json('posts');
         //check that the posts are alredy belong to that user
         $this->assertTrue($this->checkPostOfUser($posts, 'nour') == 1);
@@ -165,7 +165,7 @@ class ViewPostsTest extends TestCase
 
         //posts of user "menna"
 
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['username' => 'menna']);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['username' => 'menna']);
         $posts = $response1->json('posts');
         //check that the posts are alredy belong to that user
         $this->assertTrue($this->checkPostOfUser($posts, 'menna') == 1);
@@ -176,7 +176,7 @@ class ViewPostsTest extends TestCase
 
         //posts of user "reham"
 
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['username' => 'reham']);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['username' => 'reham']);
         $posts = $response1->json('posts');
         //check that the posts are alredy belong to that user
         $this->assertTrue($this->checkPostOfUser($posts, 'reham') == 1);
@@ -187,7 +187,7 @@ class ViewPostsTest extends TestCase
 
         //posts of community 1
 
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['community_id' => 1]);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['community_id' => 1]);
         $posts = $response1->json('posts');
         //check that they are already posts not comments or replies
         $this->assertTrue($this->checkPosts($posts) == 1);
@@ -198,7 +198,7 @@ class ViewPostsTest extends TestCase
 
         //posts of community 2
 
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['community_id' => 2]);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['community_id' => 2]);
         $posts = $response1->json('posts');
         //check that they are already posts not comments or replies
         $this->assertTrue($this->checkPosts($posts) == 1);
@@ -215,14 +215,14 @@ class ViewPostsTest extends TestCase
     public function testAuthorizedUsers()
     {
         //log in
-        $signin = $this->json('POST', 'api/unauth/signIn', ['username' => 'ahmed' , 'password' => '123456789' ]);
+        $signin = $this->json('POST', 'api/v1/unauth/signIn', ['username' => 'ahmed' , 'password' => '123456789' ]);
         $token = $signin->json('token');
         $headers = ["Authorization" => "Bearer $token"];
 
         //authorized user
         //popular page
 
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['page_type' => 0], $headers);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['page_type' => 0], $headers);
         $posts = $response1->json('posts');
         //testing that posts are sorted by upvotes
         $this->assertTrue($this->checkPopular($posts) == 1);
@@ -230,13 +230,13 @@ class ViewPostsTest extends TestCase
 
 
         //no parameters are sent check that they are his posts
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', [], $headers);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', [], $headers);
         $posts = $response1->json('posts');
         $this->assertTrue($this->checkPostOfUser($posts, auth()->user()->username) == 1);
         $this->assertTrue($this->checkNew($posts) == 1);
 
         //homepage
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['page_type' => 1], $headers);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['page_type' => 1], $headers);
         $posts = $response1->json('posts');
         $this->assertTrue($this->checkHome($posts, auth()->user()->username) == 1);
         $this->assertTrue($this->checkNew($posts) == 1);
@@ -246,20 +246,20 @@ class ViewPostsTest extends TestCase
 
         //logingout
 
-        $logout = $this->json('POST', 'api/auth/signOut')->withHeaders([
+        $logout = $this->json('POST', 'api/v1/auth/signOut')->withHeaders([
             'Authorization' => "Bearer $token"
         ]);
 
 
         //log in
-        $signin = $this->json('POST', 'api/unauth/signIn', ['username' => 'amro' , 'password' => '123456789' ]);
+        $signin = $this->json('POST', 'api/v1/unauth/signIn', ['username' => 'amro' , 'password' => '123456789' ]);
         $token = $signin->json('token');
         $headers = ["Authorization" => "Bearer $token"];
 
         //authorized user
         //popular page
 
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['page_type' => 0], $headers);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['page_type' => 0], $headers);
         $posts = $response1->json('posts');
         //testing that posts are sorted by upvotes
         $this->assertTrue($this->checkPopular($posts) == 1);
@@ -267,14 +267,14 @@ class ViewPostsTest extends TestCase
 
 
         //no parameters are sent check that they are his posts
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', [], $headers);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', [], $headers);
         $posts = $response1->json('posts');
         $this->assertTrue($this->checkPostOfUser($posts, auth()->user()->username) == 1);
         $this->assertTrue($this->checkNew($posts) == 1);
 
         //homepage
 
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['page_type' => 1], $headers);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['page_type' => 1], $headers);
         $posts = $response1->json('posts');
         $this->assertTrue($this->checkHome($posts, auth()->user()->username) == 1);
         $this->assertTrue($this->checkNew($posts) == 1);
@@ -283,7 +283,7 @@ class ViewPostsTest extends TestCase
         //trying to view posts of blocked users
 
 
-        $this->json('GET', 'api/unauth/ViewPosts', ['username' => 'ahmed'], $headers)->assertStatus(403)->assertJson([
+        $this->json('GET', 'api/v1/unauth/ViewPosts', ['username' => 'ahmed'], $headers)->assertStatus(403)->assertJson([
             "success" => "false",
             "error" => "Something wrong!!"
         ]);
@@ -291,7 +291,7 @@ class ViewPostsTest extends TestCase
 
         //posts of community 1
 
-        $response1 = $this->json('GET', 'api/unauth/ViewPosts', ['community_id' => 1], $headers);
+        $response1 = $this->json('GET', 'api/v1/unauth/ViewPosts', ['community_id' => 1], $headers);
         $posts = $response1->json('posts');
         $this->assertTrue($this->checkCommunityPosts($posts, 1) == 1);
         $this->assertTrue($this->checkNew($posts) == 1);
@@ -300,7 +300,7 @@ class ViewPostsTest extends TestCase
 
         //logingout
 
-        $logout = $this->json('POST', 'api/auth/signOut')->withHeaders([
+        $logout = $this->json('POST', 'api/v1/auth/signOut')->withHeaders([
             'Authorization' => "Bearer $token"
         ]);
     }

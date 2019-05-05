@@ -24,7 +24,7 @@ class SaveLinkTest extends TestCase
         ]);
 
         $payload = [];
-        $this->json('POST', 'api/auth/saveLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/saveLink', $payload, $headers)
             ->assertStatus(422)
             ->assertJson([
                 "success" => "false",
@@ -48,7 +48,7 @@ class SaveLinkTest extends TestCase
         ]);
 
         $payload = ['link_id'=>$link->id];
-        $this->json('POST', 'api/auth/saveLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/saveLink', $payload, $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true"
@@ -69,7 +69,7 @@ class SaveLinkTest extends TestCase
         ]);
 
         $payload = ['link_id'=>$link->id];
-        $this->json('POST', 'api/auth/saveLink', $payload, [])
+        $this->json('POST', 'api/v1/auth/saveLink', $payload, [])
             ->assertStatus(401)
             ->assertJson([
                 "success" => "false",
@@ -93,7 +93,7 @@ class SaveLinkTest extends TestCase
         ]);
         $link_saved = SavedLink::store( $user->username, $link->id);
         $payload = ['link_id'=>$link->id];
-        $this->json('POST', 'api/auth/saveLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/saveLink', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -117,7 +117,7 @@ class SaveLinkTest extends TestCase
             'author_username' => $user->username
         ]);
         $payload = ['link_id'=>($link->id+1)];
-        $this->json('POST', 'api/auth/saveLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/saveLink', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",

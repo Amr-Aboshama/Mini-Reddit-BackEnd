@@ -25,7 +25,7 @@ class ViewPrivateUserInfoTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('GET', 'api/auth/viewPrivateUserInfo', [], $headers)
+        $this->json('GET', 'api/v1/auth/viewPrivateUserInfo', [], $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true",
@@ -54,15 +54,15 @@ class ViewPrivateUserInfoTest extends TestCase
 
         $returnedjson = ['success' => 'false', 'error' => 'UnAuthorized'];
 
-        $this->json('GET', 'api/auth/viewPrivateUserInfo', [], $headers)
+        $this->json('GET', 'api/v1/auth/viewPrivateUserInfo', [], $headers)
             ->assertStatus(401)
             ->assertJson($returnedjson);
 
-        $this->json('GET', 'api/auth/viewPrivateUserInfo', [], [])
+        $this->json('GET', 'api/v1/auth/viewPrivateUserInfo', [], [])
             ->assertStatus(401)
             ->assertJson($returnedjson);
 
-        $this->json('GET', 'api/auth/viewPrivateUserInfo', [])
+        $this->json('GET', 'api/v1/auth/viewPrivateUserInfo', [])
             ->assertStatus(401)
             ->assertJson($returnedjson);
 

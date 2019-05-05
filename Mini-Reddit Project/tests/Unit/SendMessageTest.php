@@ -35,7 +35,7 @@ class SendMessageTest extends TestCase
 
         $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
-        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+        $this->json('POST', 'api/v1/auth/sendMessage', ['rec_username'=> $receiveruser->username,
                                                      'msg_content'=> 'test_hii',
                                                      'msg_subject'=> 'test_subject'], $headers)
             ->assertStatus(401)
@@ -73,7 +73,7 @@ class SendMessageTest extends TestCase
 
         $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
-        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+        $this->json('POST', 'api/v1/auth/sendMessage', ['rec_username'=> $receiveruser->username,
                                                      'msg_content'=> 'test_hii',
                                                      'msg_subject'=> 'test_subject'], $headers)
             ->assertStatus(403)
@@ -82,7 +82,7 @@ class SendMessageTest extends TestCase
                 "error" => "username doesn't exist"
             ]);
 
-        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> '',
+        $this->json('POST', 'api/v1/auth/sendMessage', ['rec_username'=> '',
                                                      'msg_content'=> 'test_hii',
                                                      'msg_subject'=> 'test_subject'], $headers)
             ->assertStatus(403)
@@ -91,7 +91,7 @@ class SendMessageTest extends TestCase
                 "error" => "username doesn't exist"
             ]); 
             
-        $this->json('POST', 'api/auth/sendMessage', ['msg_content'=> 'test_hii',
+        $this->json('POST', 'api/v1/auth/sendMessage', ['msg_content'=> 'test_hii',
                                                      'msg_subject'=> 'test_subject'], $headers)
             ->assertStatus(403)
             ->assertJson([
@@ -128,7 +128,7 @@ class SendMessageTest extends TestCase
 
         $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
-        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+        $this->json('POST', 'api/v1/auth/sendMessage', ['rec_username'=> $receiveruser->username,
                                                      'msg_content'=> '',
                                                      'msg_subject'=> 'test_subject'], $headers)
             ->assertStatus(403)
@@ -137,7 +137,7 @@ class SendMessageTest extends TestCase
                 "error" => "message must have a content"
             ]);
 
-        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+        $this->json('POST', 'api/v1/auth/sendMessage', ['rec_username'=> $receiveruser->username,
                                                      'msg_subject'=> 'test_subject'], $headers)
             ->assertStatus(403)
             ->assertJson([
@@ -178,7 +178,7 @@ class SendMessageTest extends TestCase
 
         $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
-        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+        $this->json('POST', 'api/v1/auth/sendMessage', ['rec_username'=> $receiveruser->username,
                                                      'msg_content'=> 'test_hii'], $headers)
             ->assertStatus(403)
             ->assertJson([
@@ -186,7 +186,7 @@ class SendMessageTest extends TestCase
                 "error" => "message must have a subject"
             ]);
 
-        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+        $this->json('POST', 'api/v1/auth/sendMessage', ['rec_username'=> $receiveruser->username,
                                                      'msg_content'=> 'test_hii',
                                                      'msg_subject'=> ''], $headers)
             ->assertStatus(403)
@@ -227,7 +227,7 @@ class SendMessageTest extends TestCase
 
         $message= Message::createDummyMessage($senderuser->username, $receiveruser->username, 'test_hii', 'test_subject');
 
-        $this->json('POST', 'api/auth/sendMessage', ['rec_username'=> $receiveruser->username,
+        $this->json('POST', 'api/v1/auth/sendMessage', ['rec_username'=> $receiveruser->username,
                                                      'msg_content'=> 'test_hii',
                                                      'msg_subject'=> 'test_subject'], $headers)
             ->assertStatus(200)

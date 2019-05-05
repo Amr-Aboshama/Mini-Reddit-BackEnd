@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
      * The output path for the generated documentation.
      */
@@ -44,7 +43,6 @@ return [
              * A route must fulfill ALL conditions to pass.
              */
             'match' => [
-
                 /*
                  * Match only routes whose domains match this pattern (use * as a wildcard to match any characters).
                  */
@@ -57,7 +55,7 @@ return [
                  * Match only routes whose paths match this pattern (use * as a wildcard to match any characters).
                  */
                 'prefixes' => [
-                    'api/auth/*',
+                    'api/v1/auth/*',
                     // 'users/*',
                 ],
 
@@ -85,7 +83,6 @@ return [
              * Note that the route must be referenced by name here (wildcards are supported).
              */
             'exclude' => [
-
                 // 'users.create', 'admin.*'
             ],
 
@@ -162,13 +159,12 @@ return [
         ],
         [
             'match' => [
-
                 'domains' => [
                     '*',
                 ],
 
                 'prefixes' => [
-                    'api/unauth/*',
+                    'api/v1/unauth/*',
                 ],
 
                 'versions' => [

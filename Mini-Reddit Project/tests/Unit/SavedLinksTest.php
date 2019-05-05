@@ -31,7 +31,7 @@ class SavedLinksTest extends TestCase
 
     public function testUnauthorizedUsers()
     {
-        $this->json('GET', 'api/auth/viewSavedLinks')->assertStatus(401)->assertJson([
+        $this->json('GET', 'api/v1/auth/viewSavedLinks')->assertStatus(401)->assertJson([
             "success" => "false",
             "error" => "UnAuthorized"
         ]);
@@ -41,51 +41,51 @@ class SavedLinksTest extends TestCase
     {
         //logging in a user "ahmed"...
 
-        $signIn = $this->json('POST', 'api/unauth/signIn', ['username' => 'ahmed' , 'password' => '123456789']);
+        $signIn = $this->json('POST', 'api/v1/unauth/signIn', ['username' => 'ahmed' , 'password' => '123456789']);
         $token = $signIn->json('token');
         $headers = ["Authorization" => "Bearer $token"];
 
-        $response = $this->json('GET', 'api/auth/viewSavedLinks', [], $headers);
+        $response = $this->json('GET', 'api/v1/auth/viewSavedLinks', [], $headers);
         $links = $response->json();
 
         $this->assertTrue($this->checkSaved($links, 'ahmed') == 1);
 
         //logging out
 
-        $logout = $this->json('POST', 'api/auth/signOut')->withHeaders([
+        $logout = $this->json('POST', 'api/v1/auth/signOut')->withHeaders([
             'Authorization' => "Bearer $token"
         ]);
 
 
 
-        $signIn = $this->json('POST', 'api/unauth/signIn', ['username' => 'amro' , 'password' => '123456789']);
+        $signIn = $this->json('POST', 'api/v1/unauth/signIn', ['username' => 'amro' , 'password' => '123456789']);
         $token = $signIn->json('token');
         $headers = ["Authorization" => "Bearer $token"];
 
-        $response = $this->json('GET', 'api/auth/viewSavedLinks', [], $headers);
+        $response = $this->json('GET', 'api/v1/auth/viewSavedLinks', [], $headers);
         $links = $response->json();
 
         $this->assertTrue($this->checkSaved($links, 'amro') == 1);
 
         //logging out
 
-        $logout = $this->json('POST', 'api/auth/signOut')->withHeaders([
+        $logout = $this->json('POST', 'api/v1/auth/signOut')->withHeaders([
             'Authorization' => "Bearer $token"
         ]);
 
 
-        $signIn = $this->json('POST', 'api/unauth/signIn', ['username' => 'menna' , 'password' => '123456789']);
+        $signIn = $this->json('POST', 'api/v1/unauth/signIn', ['username' => 'menna' , 'password' => '123456789']);
         $token = $signIn->json('token');
         $headers = ["Authorization" => "Bearer $token"];
 
-        $response = $this->json('GET', 'api/auth/viewSavedLinks', [], $headers);
+        $response = $this->json('GET', 'api/v1/auth/viewSavedLinks', [], $headers);
         $links = $response->json();
 
         $this->assertTrue($this->checkSaved($links, 'menna') == 1);
 
         //logging out
 
-        $logout = $this->json('POST', 'api/auth/signOut')->withHeaders([
+        $logout = $this->json('POST', 'api/v1/auth/signOut')->withHeaders([
             'Authorization' => "Bearer $token"
         ]);
     }

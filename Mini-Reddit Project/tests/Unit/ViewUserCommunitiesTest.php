@@ -14,7 +14,7 @@ class ViewUserCommunitiesTest extends TestCase
     public function testNoneExistanceOfUser()
     {
         $payload = ['username' => 'lll'];
-        $this->json('GET', 'api/unauth/viewUserCommunities', $payload)
+        $this->json('GET', 'api/v1/unauth/viewUserCommunities', $payload)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -34,7 +34,7 @@ class ViewUserCommunitiesTest extends TestCase
         $subscribtion2 = Subscribtion::createDummySubscribtion($community2->community_id, 'test99');
 
         $payload = ['username' => 'test99'];
-        $this->json('GET', 'api/unauth/viewUserCommunities', $payload)
+        $this->json('GET', 'api/v1/unauth/viewUserCommunities', $payload)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true",

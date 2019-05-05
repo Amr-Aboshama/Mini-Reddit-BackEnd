@@ -21,7 +21,7 @@ class ViewModeratorsCommunityTest extends TestCase
         ModerateCommunity::store($community1->community_id, $user2->username);
 
         $payload = [];
-        $this->json('get', 'api/unauth/viewModerators', $payload,[])
+        $this->json('get', 'api/v1/unauth/viewModerators', $payload,[])
             ->assertStatus(422)
             ->assertJson([
                 "success" => "false",
@@ -44,7 +44,7 @@ class ViewModeratorsCommunityTest extends TestCase
           $community1->delete();
 
           $payload = ['community_id'=>$community_idd];
-          $this->json('get', 'api/unauth/viewModerators', $payload,[])
+          $this->json('get', 'api/v1/unauth/viewModerators', $payload,[])
               ->assertStatus(403)
               ->assertJson([
                   "success" => "false",
@@ -67,7 +67,7 @@ class ViewModeratorsCommunityTest extends TestCase
             ModerateCommunity::store($community1->community_id, $user2->username);
 
             $payload = ['community_id'=>$community1->community_id];
-            $this->json('get', 'api/unauth/viewModerators', $payload,[])
+            $this->json('get', 'api/v1/unauth/viewModerators', $payload,[])
                 ->assertStatus(200)
                 ->assertJson([
                     "success" => "true",

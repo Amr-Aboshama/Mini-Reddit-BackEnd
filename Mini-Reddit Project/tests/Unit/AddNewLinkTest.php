@@ -31,7 +31,7 @@ class AddNewLinkTest extends TestCase
         auth()->logout($user);
 
         $payload = ['post_content' => 'test add link', 'post_title' => 'post title'];
-        $this->json('POST', 'api/auth/addLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/addLink', $payload, $headers)
           ->assertStatus(401)
           ->assertJson([
               'success' => 'false',
@@ -58,7 +58,7 @@ class AddNewLinkTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('POST', 'api/auth/addLink', [], $headers)
+        $this->json('POST', 'api/v1/auth/addLink', [], $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -86,7 +86,7 @@ class AddNewLinkTest extends TestCase
         $headers = [$token];
 
         $payload = ['post_content' => 'test add link', 'post_title' => 'post title', 'community_id' => 1];
-        $this->json('POST', 'api/auth/addLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/addLink', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -114,7 +114,7 @@ class AddNewLinkTest extends TestCase
         $headers = [$token];
 
         $payload = ['post_content' => 'test add link', 'post_title' => 'post title'];
-        $this->json('POST', 'api/auth/addLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/addLink', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'
@@ -150,7 +150,7 @@ class AddNewLinkTest extends TestCase
         $headers = [$token];
 
         $payload = ['post_content' => 'test add link', 'post_title' => 'post title','parent_link_id' => $link->id];
-        $this->json('POST', 'api/auth/addLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/addLink', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'
@@ -183,7 +183,7 @@ class AddNewLinkTest extends TestCase
         $headers = [$token];
 
         $payload = ['post_content' => 'test add link', 'post_title' => 'post title', 'community_id' => 1];
-        $this->json('POST', 'api/auth/addLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/addLink', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'
@@ -221,7 +221,7 @@ class AddNewLinkTest extends TestCase
         $headers = [$token];
 
         $payload = ['post_content' => 'test add link', 'parent_link_id' => $link->id, 'community_id' => 1];
-        $this->json('POST', 'api/auth/addLink', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/addLink', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
             'success' => 'false',

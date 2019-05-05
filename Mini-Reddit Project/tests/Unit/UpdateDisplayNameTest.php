@@ -25,7 +25,7 @@ class UpdateDisplayNameTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('PATCH', 'api/auth/updateDisplayName', ['name' => 'testlolo'], $headers)
+        $this->json('PATCH', 'api/v1/auth/updateDisplayName', ['name' => 'testlolo'], $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true"
@@ -54,7 +54,7 @@ class UpdateDisplayNameTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('PATCH', 'api/auth/updateDisplayName', ['name' => 'testlolo'], $headers)
+        $this->json('PATCH', 'api/v1/auth/updateDisplayName', ['name' => 'testlolo'], $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true"
@@ -63,7 +63,7 @@ class UpdateDisplayNameTest extends TestCase
         $userdisplayname = User::getUserWholeRecord($user->username)->display_name;
         Assert::assertEquals('testlolo', $userdisplayname);
 
-        $this->json('PATCH', 'api/auth/updateDisplayName', ['name' => 'testlolo'], $headers)
+        $this->json('PATCH', 'api/v1/auth/updateDisplayName', ['name' => 'testlolo'], $headers)
             ->assertStatus(400)
             ->assertJson([
                 'success' => 'false',
@@ -90,7 +90,7 @@ class UpdateDisplayNameTest extends TestCase
         auth()->logout();
 
 
-        $this->json('PATCH', 'api/auth/updateDisplayName', ['name' => 'testlolo'], $headers)
+        $this->json('PATCH', 'api/v1/auth/updateDisplayName', ['name' => 'testlolo'], $headers)
             ->assertStatus(401)
             ->assertJson([
                 'success' => 'false',
@@ -115,14 +115,14 @@ class UpdateDisplayNameTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('PATCH', 'api/auth/updateDisplayName', ['name' => ''], $headers)
+        $this->json('PATCH', 'api/v1/auth/updateDisplayName', ['name' => ''], $headers)
             ->assertStatus(403)
             ->assertJson([
                 'success' => 'false',
                 'error' => 'user must have a name'
             ]);
 
-        $this->json('PATCH', 'api/auth/updateDisplayName', [], $headers)
+        $this->json('PATCH', 'api/v1/auth/updateDisplayName', [], $headers)
             ->assertStatus(403)
             ->assertJson([
                 'success' => 'false',

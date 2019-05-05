@@ -39,7 +39,7 @@ class UnhidePostTest extends TestCase
         auth()->logout($user);
 
         $payload = ['post_id' => $post->id];
-        $this->json('POST', 'api/auth/unhidePost', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/unhidePost', $payload, $headers)
           ->assertStatus(401)
           ->assertJson([
               'success' => 'false',
@@ -68,7 +68,7 @@ class UnhidePostTest extends TestCase
         $this->assertEquals(DB::table('users')->count(), $users_cnt + 1);
         $token = auth()->login($user);
         $headers = [$token];
-        $this->json('POST', 'api/auth/unhidePost', [], $headers)
+        $this->json('POST', 'api/v1/auth/unhidePost', [], $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -112,7 +112,7 @@ class UnhidePostTest extends TestCase
         HiddenPost::hidePost($comment->id, $user->username);
         $this->assertEquals(DB::table('hidden_posts')->count(), $hidden_cnt + 1);
 
-        $this->json('POST', 'api/auth/unhidePost', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/unhidePost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -152,7 +152,7 @@ class UnhidePostTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['post_id' => $post->id];
-        $this->json('POST', 'api/auth/unhidePost', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/unhidePost', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               'success' => 'false',
@@ -190,7 +190,7 @@ class UnhidePostTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
         $payload = ['post_id' => $post->id];
-        $this->json('POST', 'api/auth/unhidePost', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/unhidePost', $payload, $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true'

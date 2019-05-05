@@ -13,7 +13,7 @@ class ViewUserFollowingTest extends TestCase
 {
     public function testUnAuthorizedUser()
     {
-        $this->json('GET', 'api/auth/following', [], [])
+        $this->json('GET', 'api/v1/auth/following', [], [])
             ->assertStatus(401)
             ->assertJson([
                 "success" => "false",
@@ -33,7 +33,7 @@ class ViewUserFollowingTest extends TestCase
 
         $headers = [$token];
         $payload = ['username' => 'tes'];
-        $this->json('GET', 'api/auth/following', $payload, $headers)
+        $this->json('GET', 'api/v1/auth/following', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -41,7 +41,7 @@ class ViewUserFollowingTest extends TestCase
             ]);
 
         $payload = ['username' => ''];
-        $this->json('GET', 'api/auth/following', $payload, $headers)
+        $this->json('GET', 'api/v1/auth/following', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -72,7 +72,7 @@ class ViewUserFollowingTest extends TestCase
         $headers = [$token];
         $payload = ['username' => $user2->username];
 
-        $this->json('GET', 'api/auth/following', $payload, $headers)
+        $this->json('GET', 'api/v1/auth/following', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -104,7 +104,7 @@ class ViewUserFollowingTest extends TestCase
         $headers = [$token];
         $payload = ['username' => $user2->username];
 
-        $this->json('GET', 'api/auth/following', $payload, $headers)
+        $this->json('GET', 'api/v1/auth/following', $payload, $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -137,7 +137,7 @@ class ViewUserFollowingTest extends TestCase
         $headers = [$token];
         $payload = ['username' => $user[1]->username];
 
-        $this->json('GET', 'api/auth/following', $payload, $headers)
+        $this->json('GET', 'api/v1/auth/following', $payload, $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true",

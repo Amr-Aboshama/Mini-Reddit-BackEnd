@@ -25,7 +25,7 @@ class GetUsernameTest extends TestCase
         $token = auth()->login($user);
         $headers = [$token];
 
-        $this->json('GET', 'api/auth/getUsername', [], $headers)
+        $this->json('GET', 'api/v1/auth/getUsername', [], $headers)
           ->assertStatus(200)
           ->assertJson([
               'success' => 'true',
@@ -49,7 +49,7 @@ class GetUsernameTest extends TestCase
         $headers = [$token];
         auth()->logout($user);
 
-        $this->json('GET', 'api/auth/getUsername', [], $headers)
+        $this->json('GET', 'api/v1/auth/getUsername', [], $headers)
           ->assertStatus(401)
           ->assertJson([
               'success' => 'false',

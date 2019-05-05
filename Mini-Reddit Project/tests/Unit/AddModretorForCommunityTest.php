@@ -23,7 +23,7 @@ class AddModretorForCommunityTest extends TestCase
       ModerateCommunity::store($community1->community_id, $user->username);
 
       $payload = ['moderator_username'=>$user2->username];
-      $this->json('POST', 'api/auth/addModerator', $payload, $headers)
+      $this->json('POST', 'api/v1/auth/addModerator', $payload, $headers)
           ->assertStatus(422)
           ->assertJson([
               "success" => "false",
@@ -43,7 +43,7 @@ class AddModretorForCommunityTest extends TestCase
         $user = User::storeUser(['username' => 'test99', 'password' => 'armne123456', 'email' => 'test99@test.com']);
 
         $payload = ['community_id' => $community1->community_id,'moderator_username'=>$user->username];
-        $this->json('POST', 'api/auth/addModerator', $payload, [])
+        $this->json('POST', 'api/v1/auth/addModerator', $payload, [])
             ->assertStatus(401)
             ->assertJson([
                 "success" => "false",
@@ -65,7 +65,7 @@ class AddModretorForCommunityTest extends TestCase
       ModerateCommunity::store($community1->community_id, $user->username);
 
       $payload = ['community_id' => $community1->community_id,'moderator_username'=>'no'];
-      $this->json('POST', 'api/auth/addModerator', $payload, $headers)
+      $this->json('POST', 'api/v1/auth/addModerator', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               "success" => "false",
@@ -91,7 +91,7 @@ class AddModretorForCommunityTest extends TestCase
       $community1->delete();
 
       $payload = ['community_id' =>$community_idd ,'moderator_username'=>$user2->username];
-      $this->json('POST', 'api/auth/addModerator', $payload, $headers)
+      $this->json('POST', 'api/v1/auth/addModerator', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               "success" => "false",
@@ -116,7 +116,7 @@ class AddModretorForCommunityTest extends TestCase
       ModerateCommunity::store($community1->community_id, $user->username);
       ModerateCommunity::store($community1->community_id, $user2->username);
       $payload = ['community_id' =>$community1->community_id ,'moderator_username'=>$user2->username];
-      $this->json('POST', 'api/auth/addModerator', $payload, $headers)
+      $this->json('POST', 'api/v1/auth/addModerator', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               "success" => "false",
@@ -141,7 +141,7 @@ class AddModretorForCommunityTest extends TestCase
       $community1 = Community::createDummyCommunity('testkokowawa');
 
       $payload = ['community_id' =>$community1->community_id ,'moderator_username'=>$user2->username];
-      $this->json('POST', 'api/auth/addModerator', $payload, $headers)
+      $this->json('POST', 'api/v1/auth/addModerator', $payload, $headers)
           ->assertStatus(403)
           ->assertJson([
               "success" => "false",
@@ -167,7 +167,7 @@ class AddModretorForCommunityTest extends TestCase
         ModerateCommunity::store($community1->community_id, $user->username);
 
         $payload = ['community_id' =>$community1->community_id ,'moderator_username'=>$user2->username];
-        $this->json('POST', 'api/auth/addModerator', $payload, $headers)
+        $this->json('POST', 'api/v1/auth/addModerator', $payload, $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true",

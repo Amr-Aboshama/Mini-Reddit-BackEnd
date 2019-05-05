@@ -41,28 +41,28 @@ class viewOverviewTest extends TestCase
 
     public function testAll()
     {
-        $this->json('GET' , 'api/unauth/viewOverview' , [])->assertStatus(403)->assertJson([
+        $this->json('GET' , 'api/v1/unauth/viewOverview' , [])->assertStatus(403)->assertJson([
             "success" => "false",
             "error" => "username is required"
         ]);
 
-        $response = $this->json('GET' , 'api/unauth/viewOverview' , ['username'=>'menna']);
+        $response = $this->json('GET' , 'api/v1/unauth/viewOverview' , ['username'=>'menna']);
         $response->assertStatus(200);
         $links = $response->json();
         $this->assertTrue($this->isBelong($links , 'menna')==1);
 
-        $response = $this->json('GET' , 'api/unauth/viewOverview' , ['username'=>'ahmed']);
+        $response = $this->json('GET' , 'api/v1/unauth/viewOverview' , ['username'=>'ahmed']);
         $response->assertStatus(200);
         $links = $response->json();
         $this->assertTrue($this->isBelong($links , 'ahmed')==1);
 
 
-        $response = $this->json('GET' , 'api/unauth/viewOverview' , ['username'=>'amro']);
+        $response = $this->json('GET' , 'api/v1/unauth/viewOverview' , ['username'=>'amro']);
         $response->assertStatus(200);
         $links = $response->json();
         $this->assertTrue($this->isBelong($links , 'amro')==1);
 
-        $response = $this->json('GET' , 'api/unauth/viewOverview' , ['username'=>'nour']);
+        $response = $this->json('GET' , 'api/v1/unauth/viewOverview' , ['username'=>'nour']);
         $response->assertStatus(200);
         $links = $response->json();
         $this->assertTrue($this->isBelong($links , 'nour')==1);

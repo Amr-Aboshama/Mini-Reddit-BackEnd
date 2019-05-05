@@ -47,7 +47,7 @@ class ViewUserInboxMessagesTest extends TestCase
 
        
 
-        $this->json('GET', 'api/auth/viewUserInboxMessages', ['state'=>3], $headers)
+        $this->json('GET', 'api/v1/auth/viewUserInboxMessages', ['state'=>3], $headers)
             ->assertStatus(401)
             ->assertJson([
                 "success" => "false",
@@ -77,7 +77,7 @@ class ViewUserInboxMessagesTest extends TestCase
         $headers = [$token];
 
 
-        $this->json('GET', 'api/auth/viewUserInboxMessages', ['state'=>''], $headers)
+        $this->json('GET', 'api/v1/auth/viewUserInboxMessages', ['state'=>''], $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -86,7 +86,7 @@ class ViewUserInboxMessagesTest extends TestCase
 
 
 
-        $this->json('GET', 'api/auth/viewUserInboxMessages', [], $headers)
+        $this->json('GET', 'api/v1/auth/viewUserInboxMessages', [], $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -115,7 +115,7 @@ class ViewUserInboxMessagesTest extends TestCase
         $headers = [$token];
 
 
-        $this->json('GET', 'api/auth/viewUserInboxMessages', ['state'=>5], $headers)
+        $this->json('GET', 'api/v1/auth/viewUserInboxMessages', ['state'=>5], $headers)
             ->assertStatus(403)
             ->assertJson([
                 "success" => "false",
@@ -164,7 +164,7 @@ class ViewUserInboxMessagesTest extends TestCase
 
 
 
-        $this->json('GET', 'api/auth/viewUserInboxMessages', ['state' => 3], $headers)
+        $this->json('GET', 'api/v1/auth/viewUserInboxMessages', ['state' => 3], $headers)
             ->assertStatus(200)
             ->assertJson([
                 "success" => "true",

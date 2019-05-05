@@ -26,28 +26,28 @@ class viewCommentsTest extends TestCase
     {
         // username is missed
 
-        $this->json('GET', 'api/unauth/viewComments')->assertStatus(403)->assertJson([
+        $this->json('GET', 'api/v1/unauth/viewComments')->assertStatus(403)->assertJson([
             "success" => "false",
             "error" => "username is required"
         ]);
 
         //comments of user "ahmed"
 
-        $comments = $this->json('GET', 'api/unauth/viewComments', ['username' => 'ahmed']);
+        $comments = $this->json('GET', 'api/v1/unauth/viewComments', ['username' => 'ahmed']);
         $comments->assertStatus(200);
 
         $this->assertTrue($this->checkComments($comments->json(), 'ahmed') == 1);
 
         //comments of user "menna"
 
-        $comments = $this->json('GET', 'api/unauth/viewComments', ['username' => 'menna']);
+        $comments = $this->json('GET', 'api/v1/unauth/viewComments', ['username' => 'menna']);
         $comments->assertStatus(200);
 
         $this->assertTrue($this->checkComments($comments->json(), 'menna') == 1);
 
         //comments of user "amro"
 
-        $comments = $this->json('GET', 'api/unauth/viewComments', ['username' => 'amro']);
+        $comments = $this->json('GET', 'api/v1/unauth/viewComments', ['username' => 'amro']);
         $comments->assertStatus(200);
 
         $this->assertTrue($this->checkComments($comments->json(), 'amro') == 1);

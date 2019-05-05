@@ -20,32 +20,32 @@ class UpvotedLinkTest extends TestCase
       //signning In
 
 
-        $signin = $this->json('POST', 'api/unauth/signIn', ['username' => 'ahmed' , 'password' => '123456789' ]);
+        $signin = $this->json('POST', 'api/v1/unauth/signIn', ['username' => 'ahmed' , 'password' => '123456789' ]);
         $token = $signin->json('token');
 
         $response = $this->withHeaders([
             'Authorization' => "Bearer $token"
-        ])->json('POST', 'api/auth/upvoteLink', ['link_id' => 1 ])->assertStatus(200)->assertJson([
+        ])->json('POST', 'api/v1/auth/upvoteLink', ['link_id' => 1 ])->assertStatus(200)->assertJson([
             'success' => 'true',
         ]);
 
         $response = $this->withHeaders([
             'Authorization' => "Bearer $token"
-        ])->json('POST', 'api/auth/upvoteLink', [])->assertStatus(403)->assertJson([
+        ])->json('POST', 'api/v1/auth/upvoteLink', [])->assertStatus(403)->assertJson([
             'success' => 'false',
             'error' => 'link_id is required'
         ]);
 
         $response = $this->withHeaders([
             'Authorization' => "Bearer $token"
-        ])->json('POST', 'api/auth/upvoteLink', ['link_id' => 77])->assertStatus(403)->assertJson([
+        ])->json('POST', 'api/v1/auth/upvoteLink', ['link_id' => 77])->assertStatus(403)->assertJson([
             'success' => 'false',
             'error' => "link_id doesn't exist!!"
         ]);
 
         //logingout
 
-        $logout = $this->json('POST', 'api/auth/signOut')->withHeaders([
+        $logout = $this->json('POST', 'api/v1/auth/signOut')->withHeaders([
             'Authorization' => "Bearer $token"
         ]);
     }
@@ -54,7 +54,7 @@ class UpvotedLinkTest extends TestCase
     {
         $response = $this->withHeaders([
             'Authorization' => ''
-        ])->json('POST', 'api/auth/upvoteLink', ['link_id' => 1 ])->assertStatus(401)->assertJson([
+        ])->json('POST', 'api/v1/auth/upvoteLink', ['link_id' => 1 ])->assertStatus(401)->assertJson([
             'success' => 'false',
             "error" => "UnAuthorized"
         ]);
